@@ -27,27 +27,35 @@ Neben Diagrammen wurde auch ein visueller Erstentwurf der Benutzeroberfläche er
 
 == 4. Produktnutzung
 
-== 5. Systemgrenze und Top-Level-Architektur
+== 5. Randbedingungen
 
-== 6. Anwendungsfälle
+=== a) Hardware-Vorgaben
+
+=== b) Software-Vorgaben
+
+=== c) Vorgaben zum Betrieb der Software
+
+== 6. Systemgrenze und Top-Level-Architektur
+
+== 7. Anwendungsfälle
 === a) Akteure
 === b) Anwedungsfalldiagramm
 === c) Anwedungsfälle
 
-== 7. Funktionale Anforderungen
+== 8. Funktionale Anforderungen
 === a) Muss-Kriterien
 === b) Kann-Kriterien
 
-== 8. Nicht-Funktionale Anforderungen
+== 9. Nicht-Funktionale Anforderungen
 
-== 9. GUI Prototyp
+== 10. GUI Prototyp
 
-== 10. Datenmodell
+== 11. Datenmodell
 
 === a) Klassendiagramm
 
 === b) Klassen und Enumerationen
 
-== 11. Akzeptanztestfälle
+== 12. Akzeptanztestfälle
 
-== 12. Glossar
+== 13. Glossar
