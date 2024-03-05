@@ -30,18 +30,13 @@ Neben Diagrammen wurde auch ein visueller Erstentwurf der Benutzeroberfläche er
 == 5. Systemgrenze und Top-Level-Architektur
 
 == 6. Anwendungsfälle
-
-= a) Akteure
-
-= b) Anwedungsfalldiagramm
-
-= c) Anwedungsfälle
+=== a) Akteure
+=== b) Anwedungsfalldiagramm
+=== c) Anwedungsfälle
 
 == 7. Funktionale Anforderungen
-
-= a) Muss-Kriterien
-
-= b) Kann-Kriterien
+=== a) Muss-Kriterien
+=== b) Kann-Kriterien
 
 == 8. Nicht-Funktionale Anforderungen
 
@@ -49,9 +44,9 @@ Neben Diagrammen wurde auch ein visueller Erstentwurf der Benutzeroberfläche er
 
 == 10. Datenmodell
 
-= a) Klassendiagramm
+=== a) Klassendiagramm
 
-= b) Klassen und Enumerationen
+=== b) Klassen und Enumerationen
 
 == 11. Akzeptanztestfälle
 
