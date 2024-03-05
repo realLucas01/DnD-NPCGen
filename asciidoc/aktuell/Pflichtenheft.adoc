@@ -31,12 +31,18 @@ Nutzung des Programmes durch den DM vor oder während einer Dungeon and Dragons 
 == 5. Randbedingungen
 
 === a) Hardware-Vorgaben
-PC
+Folgende Geräte/Hardware wird zur Nutzen der Software benötigt.
+
+* Computer
+* Eingabegeräte(Tastatur,Maus)
 
 === b) Software-Vorgaben
-Windows 11
+Windows 11 und 10 nutzbar
+Java 21 LTS
 
 === c) Vorgaben zum Betrieb der Software
+Datenbank soll immer persistent gespeichert sein/werden, es soll eine History für die letzten 10 erstellten Charaktere geben.
+Datenbank sollen erweiter- bzw. wartbar sein.
 
 == 6. Systemgrenze und Top-Level-Architektur
 
@@ -47,6 +53,7 @@ Windows 11
 
 == 8. Funktionale Anforderungen
 === a) Muss-Kriterien
+
 === b) Kann-Kriterien
 
 == 9. Nicht-Funktionale Anforderungen
