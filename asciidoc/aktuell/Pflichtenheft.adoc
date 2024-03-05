@@ -1,0 +1,58 @@
+= Pflichtenheft
+:project_name: Projektname
+== __{project_name}__
+:toc:
+:toc-title: Inhaltsverzeichnis
+
+
+== 1. Version
+
+[options="header"]
+[cols="1, 1, 1, 1, 4"]
+|===
+|Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
+|0.1     |Abgeschlossen| 05.03.2024          | Lucas           | "intiallisierung" der Datei
+|===
+
+
+== 2. Zusammenfassung
+In diesem Dokument werden die wesentlichen Hauptmerkmale, Funktionen und Anforderungen des Systems niedergeschrieben.
+Insbesondere wird der konkrete Auftrag noch einmal erfasst, und die Nutzung des Produktes, sowie ihre Nutzer identifiziert. 
+Der Auftrag wird in essentielle und für die Funktionalität, nicht essentielle Bestandteile aufgeteilt.
+In diesem Dokument sind verschiedene Diagramme enthalten, welche Aufbau, Ablauf und Funktionalitäten des Sytsems abbilden.
+Neben Diagrammen wurde auch ein visueller Erstentwurf der Benutzeroberfläche erstellt.
+
+== 3. Aufgabenstellung und Zielsetzung
+(Luca)
+
+== 4. Produktnutzung
+
+== 5. Systemgrenze und Top-Level-Architektur
+
+== 6. Anwendungsfälle
+
+= a) Akteure
+
+= b) Anwedungsfalldiagramm
+
+= c) Anwedungsfälle
+
+== 7. Funktionale Anforderungen
+
+= a) Muss-Kriterien
+
+= b) Kann-Kriterien
+
+== 8. Nicht-Funktionale Anforderungen
+
+== 9. GUI Prototyp
+
+== 10. Datenmodell
+
+= a) Klassendiagramm
+
+= b) Klassen und Enumerationen
+
+== 11. Akzeptanztestfälle
+
+== 12. Glossar
