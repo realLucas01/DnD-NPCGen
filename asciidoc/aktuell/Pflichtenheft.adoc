@@ -23,15 +23,18 @@ In diesem Dokument sind verschiedene Diagramme enthalten, welche Aufbau, Ablauf 
 Neben Diagrammen wurde auch ein visueller Erstentwurf der Benutzeroberfläche erstellt.
 
 == 3. Aufgabenstellung und Zielsetzung
-(Luca)
+Ein Programm das es ermöglicht schnell und einfach Non-Player-Charakters, kurz NPCs, für das Pen und Paper Spiel Dungeons and Dragons zu generieren, speichern, exportieren und anzupassen. Bei der Generation können dabei verschieden Werte händisch festgelegt werden. Diese sind Rasse, Klasse, Geschlecht, Level und die Art wie die Ability Scores berechnet werden. Wenn hierbei keine Auswahl getroffen wird, werden diese Punkte, wie der Rest des NPCs Zufalls generiert. bei der Generation wird der der erstellte Datensatz in einer History gespeichert, um wenn nötig später erneut aufzurufen. Die erstellten NPCs sollen in der Lage sein bearbeitet zu werden, intern abzuspeichern als auch zu exportieren.
 
 == 4. Produktnutzung
+Nutzung des Programmes durch den DM vor oder während einer Dungeon and Dragons Sitzung.  
 
 == 5. Randbedingungen
 
 === a) Hardware-Vorgaben
+PC
 
 === b) Software-Vorgaben
+Windows 11
 
 === c) Vorgaben zum Betrieb der Software
 
