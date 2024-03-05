@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="612"
+   height="388"
+   id="svg366"
+   sodipodi:docname="seq_UhrenladenInventar.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview368"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.9705882"
+     inkscape:cx="293.0597"
+     inkscape:cy="193.85075"
+     inkscape:window-width="1842"
+     inkscape:window-height="1057"
+     inkscape:window-x="1990"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg366" />
+  <defs
+     id="defs2" />
+  <rect
+     style="fill:#ffffff;stroke-width:1.00304"
+     id="rect3198"
+     width="612"
+     height="387.19403"
+     x="0"
+     y="0" />
+  <g
+     id="g364"
+     inkscape:highlight-color="#ffffff">
+    <g
+       transform="translate(2,2)"
+       id="g110">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 8,8 H 600 V 376 H 8 V 8"
+         stroke-miterlimit="10"
+         id="path108" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g114">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         d="M 8,8 V 30 H 99.168945 L 110.16895,19 V 8 H 8"
+         id="path112" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g118">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 8,8 V 30 H 99.168945 L 110.16895,19 V 8 H 8 v 0"
+         stroke-miterlimit="10"
+         id="path116" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g126">
+      <g
+         id="g124">
+        <path
+           fill="none"
+           stroke="none"
+           id="path120"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="32.72998"
+           y="24"
+           id="text122"
+           style="text-decoration:none;text-decoration-line:none">seq_Lager</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g134">
+      <g
+         id="g132">
+        <path
+           fill="none"
+           stroke="none"
+           id="path128"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="12.279541"
+           y="24"
+           id="text130"
+           style="text-decoration:none;text-decoration-line:none">sd</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g138">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="39"
+         y="47"
+         width="79"
+         height="39"
+         opacity="0.2"
+         id="rect136" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g142">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="32"
+         y="40"
+         width="79"
+         height="39"
+         id="rect140" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g146">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 32,40 h 79 V 79 H 32 Z"
+         stroke-miterlimit="10"
+         id="path144" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g154">
+      <g
+         id="g152">
+        <path
+           fill="none"
+           stroke="none"
+           id="path148"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="55.605469"
+           y="58"
+           id="text150"
+           style="text-decoration:none;text-decoration-line:none">Boss</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g158">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 72.5,80 V 352"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path156" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g162">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="183"
+         y="47"
+         width="79"
+         height="39"
+         opacity="0.2"
+         id="rect160" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g166">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="176"
+         y="40"
+         width="79"
+         height="39"
+         id="rect164" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g170">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 176,40 h 79 v 39 h -79 z"
+         stroke-miterlimit="10"
+         id="path168" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g178">
+      <g
+         id="g176">
+        <path
+           fill="none"
+           stroke="none"
+           id="path172"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="190.21411"
+           y="58"
+           id="text174"
+           style="text-decoration:none;text-decoration-line:none">Inventar</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g182">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 216.5,80 V 352"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path180" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g186">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="343"
+         y="47"
+         width="84.736328"
+         height="39"
+         opacity="0.2"
+         id="rect184" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g190">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="336"
+         y="40"
+         width="84.736328"
+         height="39"
+         id="rect188" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g194">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 336,40 h 84.73633 V 79 H 336 Z"
+         stroke-miterlimit="10"
+         id="path192" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g202">
+      <g
+         id="g200">
+        <path
+           fill="none"
+           stroke="none"
+           id="path196"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="345.5"
+           y="58"
+           id="text198"
+           style="text-decoration:none;text-decoration-line:none">Salespoint</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g206">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 379.5,80 V 352"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path204" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g210">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="487"
+         y="47"
+         width="96"
+         height="39"
+         opacity="0.2"
+         id="rect208" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g214">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="480"
+         y="40"
+         width="96"
+         height="39"
+         id="rect212" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g218">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 480,40 h 96 v 39 h -96 z"
+         stroke-miterlimit="10"
+         id="path216" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g226">
+      <g
+         id="g224">
+        <path
+           fill="none"
+           stroke="none"
+           id="path220"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="507.41772"
+           y="58"
+           id="text222"
+           style="text-decoration:none;text-decoration-line:none">Spring</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g230">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 529.5,80 V 352"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path228" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g234">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 72,160 H 209"
+         stroke-miterlimit="10"
+         id="path232" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g238">
+      <path
+         fill="#000000"
+         stroke="none"
+         d="M 198.83733,164.20952 209,160 198.83733,155.79048"
+         id="path236" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g242">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 198.83733,164.20952 209,160 198.83733,155.79048 v 8.41904"
+         stroke-miterlimit="10"
+         id="path240" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g250">
+      <g
+         id="g248">
+        <path
+           fill="none"
+           stroke="none"
+           id="path244"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="109.53589"
+           y="155"
+           id="text246"
+           style="text-decoration:none;text-decoration-line:none">1 : Lager()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g254">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="209"
+         y="160"
+         width="13"
+         height="128"
+         id="rect252" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g258">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 209,160 h 13 v 128 h -13 z"
+         stroke-miterlimit="10"
+         id="path256" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g262">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 222,168 H 372"
+         stroke-miterlimit="10"
+         id="path260" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g266">
+      <path
+         fill="#000000"
+         stroke="none"
+         d="M 361.83733,172.20952 372,168 361.83733,163.79048"
+         id="path264" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g270">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 361.83733,172.20952 372,168 361.83733,163.79048 v 8.41904"
+         stroke-miterlimit="10"
+         id="path268" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g278">
+      <g
+         id="g276">
+        <path
+           fill="none"
+           stroke="none"
+           id="path272"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="238.5"
+           y="163"
+           id="text274"
+           style="text-decoration:none;text-decoration-line:none">2 : inventory.findAll()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g282">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="372"
+         y="168"
+         width="13"
+         height="28"
+         id="rect280" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g286">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 372,168 h 13 v 28 h -13 z"
+         stroke-miterlimit="10"
+         id="path284" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g290">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 372,192 H 222"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path288" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g294">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 232.16267,187.79048 222,192 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         id="path292" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g302">
+      <g
+         id="g300">
+        <path
+           fill="none"
+           stroke="none"
+           id="path296"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="286.5"
+           y="207"
+           id="text298"
+           style="text-decoration:none;text-decoration-line:none">3 :</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g306">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 222,224 H 522"
+         stroke-miterlimit="10"
+         id="path304" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g310">
+      <path
+         fill="#000000"
+         stroke="none"
+         d="M 511.83733,228.20952 522,224 511.83733,219.79048"
+         id="path308" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g314">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 511.83733,228.20952 522,224 511.83733,219.79048 v 8.41904"
+         stroke-miterlimit="10"
+         id="path312" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g322">
+      <g
+         id="g320">
+        <path
+           fill="none"
+           stroke="none"
+           id="path316"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="278.5"
+           y="219"
+           id="text318"
+           style="text-decoration:none;text-decoration-line:none">4 : alle Items ins Model einfügen</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g326">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="522"
+         y="224"
+         width="13"
+         height="28"
+         id="rect324" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g330">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 522,224 h 13 v 28 h -13 z"
+         stroke-miterlimit="10"
+         id="path328" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g334">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 522,248 H 222"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path332" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g338">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 232.16267,243.79048 222,248 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         id="path336" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g346">
+      <g
+         id="g344">
+        <path
+           fill="none"
+           stroke="none"
+           id="path340"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="344.5"
+           y="263"
+           id="text342"
+           style="text-decoration:none;text-decoration-line:none">5 : Model</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g350">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 216,288 H 72"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path348" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g354">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 82.162675,283.79048 72,288 l 10.162675,4.20952"
+         stroke-miterlimit="10"
+         id="path352" />
+    </g>
+    <g
+       transform="translate(2,2)"
+       id="g362">
+      <g
+         id="g360">
+        <path
+           fill="none"
+           stroke="none"
+           id="path356"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="75.5"
+           y="303"
+           id="text358"
+           style="text-decoration:none;text-decoration-line:none">6 : Template: lager.html</text>
+      </g>
+    </g>
+  </g>
+</svg>

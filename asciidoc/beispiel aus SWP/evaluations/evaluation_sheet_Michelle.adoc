@@ -1,0 +1,33 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2021/22
+// Auch wenn der Bogen nicht anonymisiert ist, dürfen Sie gern Ihre Meinung offen kundtun.
+// Sowohl positive als auch negative Anmerkungen werden gern gesehen und zur stetigen Verbesserung genutzt.
+// Versuchen Sie in dieser Auswertung also stets sowohl Positives wie auch Negatives zu erwähnen.
+
+**Von: Michelle Jaden Pattikawa**
+
+**Gruppe: 19**
+
+== Was habe ich gelernt / was habe ich nicht gelernt?
+Es ist meine erste Erfahrung in der Entwicklung einer funktionalen Website und das Projekt führt mich in den gesamten Prozess der Entwicklung ein 
+und nicht nur in die Implementierung. Ich habe etwas über neue Dinge gelernt, wie die Verwendung von Frameworks und auch von Sonarqube. 
+
+== Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+Die Zusammenarbeit mit meinem Team war einfach, da wir uns gegenseitig koordinieren und bei Bedarf unterstützen können. 
+Die Mitglieder sind für ihre eigene Aufgabe wirklich verantwortlich und haben die Initiative, bei Bedarf zusätzliche Verantwortung zu übernehmen. 
+Es gibt Zeiten, in denen es Zeit braucht, um voranzukommen, weil ein Teil der Arbeit, der sich auf die anderen auswirkt, noch nicht abgeschlossen ist. 
+Aber trotzdem können wir das projekt gemeinsam als team abschließen.
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
+Framework war für mich zunächst ein Fremdwort. Das projekt hat mir sehr geholfen, es zu verstehen.
+Viele Zeit wurde gebraucht, um die Was und Wie zu beantworten. 
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+Es wäre besser, wenn wir während der Zwischenpräsentation auch sehen könnten, woran andere Gruppen arbeiten. 
+Wir werden uns vielleicht von der Arbeit anderer inspirieren lassen oder unsere Probleme mit anderen teilen und einen guten Input bekommen.
+Es ist auch gut, wenn zu Beginn des Moduls einige Arbeiten aus dem vergangenen Jahr gezeigt werden. 
+Nur um den Studenten eine konkrete Vorstellung davon zu geben, woran sie arbeiten werden.
+
+== Feedback für den Tutor
+Der Tutor ist das Beste, was man sich wünschen kann. Er ist wirklich zugänglich und das macht es uns leicht, das Problem zu besprechen.
+
+== Sonstiges und Anmerkungen

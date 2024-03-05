@@ -1,0 +1,27 @@
+= Zeiterfassung für Gruppe 19
+
+Notieren Sie die Zeit in Minuten für jeden Entwickler und – getrennt davon – für Team-Treffen pro Woche (Wochengranularität).
+Die individuell erfasste Zeit beinhaltet auch das Lesen von Dokumentationen, Besprechungen mit Teamkollegen und sonstige auf das Praktikum bezogene Aufgaben, jedoch *nicht* das Team-Treffen (= letzte Spalte).
+
+// See http://asciidoctor.org/docs/user-manual/#tables
+[option="headers"]
+|===
+|Woche |Luca |Lenard |Marie |Chyntia |Michelle |Lucas |Meeting  |Durchschnittliche Arbeitzeit aller Studenten pro Woche
+|1  |90   |90    |70    |60    |90   |90    |90    |81,6
+|2  |270   |360    |380    |360    |300    |360    |90    |338,3
+|3  |450   |480    |420    |420    |420    |480   |90   |445
+|4  |120   |120    |120    |120    |180    |180   |60    |140
+|5  |810   |900    |700    |720  |720    |780    |100    |772,6
+|6  |620   |600    |720    |600    |480    |480    |90    |583,3
+|7  |300   |500    |420    |480    |320   |300    |90    |386,6
+|8  |200   |120    |500    |300    |260    |240    |90    |270
+|9  |1200   |1260    |1500    |1200    |720    |1980    |90   |1310
+|10  |500   |400    |360    |300    |400    |400    |90    |393,3
+|11  |930   |600    |1650    |1800  |1460    |840    |90    |1213,3
+|12  |840   |660    |480    |560    |60    |720    |90    |553,3
+|Summe der Arbeitsminuten  |6330   |6090    |7320    |6920    |5410    |6850    |-    |-   
+|Arbeitsminuten pro Woche  |527,5   |507,5    |610    |576,6    |450,8    |570,8    |-    |540,5
+|===
+
+
+Das Treffen in Woche 6 fand am 28.11 und nicht am 24.11 statt.
