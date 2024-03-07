@@ -63,6 +63,9 @@ Datenbank sollen erweiter- bzw. wartbar sein.
 == 11. Datenmodell
 
 === a) Klassendiagramm
+==== Komponente Datenbank:
+(DBMS und SQL-DB's noch sehr Vage, da noch für keinen Datenbanktyp bzw. Library entschieden, aktuelle Einträge ergebniss von schnellem Drüberschauen von JPA und H2)
+image:models/DBPackageReady.svg[DBPackage]
 
 === b) Klassen und Enumerationen
 
