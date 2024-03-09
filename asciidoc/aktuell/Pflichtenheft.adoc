@@ -49,6 +49,8 @@ Datenbank sollen erweiter- bzw. wartbar sein.
 == 7. Anwendungsfälle
 === a) Akteure
 === b) Anwedungsfalldiagramm
+Sequenzdiagramm NPC Generator
+image:models/Sequence_randomNPC.svg[sequencDiagramm]
 === c) Anwedungsfälle
 
 == 8. Funktionale Anforderungen
@@ -66,6 +68,9 @@ Datenbank sollen erweiter- bzw. wartbar sein.
 ==== Komponente Datenbank:
 (DBMS und SQL-DB's noch sehr Vage, da noch für keinen Datenbanktyp bzw. Library entschieden, aktuelle Einträge ergebniss von schnellem Drüberschauen von JPA und H2)
 image:models/DBPackageReady.svg[DBPackage]
+
+==== Komponente Random Generator
+image:models/RandomGenerator.svg[RandomGenerator]
 
 === b) Klassen und Enumerationen
 
