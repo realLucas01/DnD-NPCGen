@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="481.3916015625"
+   height="136"
+   id="svg119"
+   sodipodi:docname="Klassendiagramm.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview119"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="5.826857"
+     inkscape:cx="240.6958"
+     inkscape:cy="68.046977"
+     inkscape:window-width="3840"
+     inkscape:window-height="2066"
+     inkscape:window-x="2869"
+     inkscape:window-y="49"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg119" />
+  <defs
+     id="defs1" />
+  <g
+     id="g119">
+    <g
+       id="g84">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="263"
+         y="455"
+         width="252.3916015625"
+         height="116"
+         transform="matrix(1 0 0 1 -38 -438)"
+         fill-opacity="0.2"
+         id="rect84" />
+    </g>
+    <g
+       id="g85">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="256"
+         y="448"
+         width="252.3916015625"
+         height="116"
+         transform="matrix(1 0 0 1 -38 -438)"
+         id="rect85" />
+    </g>
+    <g
+       id="g86">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 218 10 L 470.3916015625 10 L 470.3916015625 126 L 218 126 L 218 10 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path85" />
+    </g>
+    <g
+       id="g87">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 218 35 L 471.3916015625 35"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path86" />
+    </g>
+    <g
+       id="g88">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 218 58 L 471.3916015625 58"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path87" />
+    </g>
+    <g
+       id="g90">
+      <g
+         id="g89">
+        <path
+           fill="none"
+           stroke="none"
+           id="path88" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="382.69580078125"
+           y="461.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text88">GenMain</text>
+      </g>
+    </g>
+    <g
+       id="g92">
+      <g
+         id="g91">
+        <path
+           fill="none"
+           stroke="none"
+           id="path90" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="261"
+           y="484.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text90">-npc: npc</text>
+      </g>
+    </g>
+    <g
+       id="g94">
+      <g
+         id="g93">
+        <path
+           fill="none"
+           stroke="none"
+           id="path92" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="261"
+           y="507.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text92">+genMain()</text>
+      </g>
+    </g>
+    <g
+       id="g96">
+      <g
+         id="g95">
+        <path
+           fill="none"
+           stroke="none"
+           id="path94" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="261"
+           y="522.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text94">+randomizeNPC(string, string, string): npc</text>
+      </g>
+    </g>
+    <g
+       id="g98">
+      <g
+         id="g97">
+        <path
+           fill="none"
+           stroke="none"
+           id="path96" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="261"
+           y="537.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text96">+exportNPC(npc): void</text>
+      </g>
+    </g>
+    <g
+       id="g100">
+      <g
+         id="g99">
+        <path
+           fill="none"
+           stroke="none"
+           id="path98" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="261"
+           y="552.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text98">+saveNPCHistory(): void</text>
+      </g>
+    </g>
+    <g
+       id="g101">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="55"
+         y="455"
+         width="116.5771484375"
+         height="116"
+         transform="matrix(1 0 0 1 -38 -438)"
+         fill-opacity="0.2"
+         id="rect100" />
+    </g>
+    <g
+       id="g102">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="48"
+         y="448"
+         width="116.5771484375"
+         height="116"
+         transform="matrix(1 0 0 1 -38 -438)"
+         id="rect101" />
+    </g>
+    <g
+       id="g103">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 10 L 126.5771484375 10 L 126.5771484375 126 L 10 126 L 10 10 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path102" />
+    </g>
+    <g
+       id="g104">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 35 L 127.5771484375 35"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path103" />
+    </g>
+    <g
+       id="g105">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 58 L 127.5771484375 58"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path104" />
+    </g>
+    <g
+       id="g107">
+      <g
+         id="g106">
+        <path
+           fill="none"
+           stroke="none"
+           id="path105" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="106.78857421875"
+           y="461.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text105">Main</text>
+      </g>
+    </g>
+    <g
+       id="g109">
+      <g
+         id="g108">
+        <path
+           fill="none"
+           stroke="none"
+           id="path107" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="53"
+           y="484.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text107">-button</text>
+      </g>
+    </g>
+    <g
+       id="g111">
+      <g
+         id="g110">
+        <path
+           fill="none"
+           stroke="none"
+           id="path109" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="53"
+           y="507.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text109">+main()</text>
+      </g>
+    </g>
+    <g
+       id="g113">
+      <g
+         id="g112">
+        <path
+           fill="none"
+           stroke="none"
+           id="path111" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="53"
+           y="522.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text111">+start(Stage): void</text>
+      </g>
+    </g>
+    <g
+       id="g115">
+      <g
+         id="g114">
+        <path
+           fill="none"
+           stroke="none"
+           id="path113" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="53"
+           y="537.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text113">+loadData(): void</text>
+      </g>
+    </g>
+    <g
+       id="g117">
+      <g
+         id="g116">
+        <path
+           fill="none"
+           stroke="none"
+           id="path115" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="53"
+           y="552.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -38 -438)"
+           id="text115">+saveData(): void</text>
+      </g>
+    </g>
+    <g
+       id="g118">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 128 68 L 217 68"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path117" />
+    </g>
+  </g>
+</svg>
