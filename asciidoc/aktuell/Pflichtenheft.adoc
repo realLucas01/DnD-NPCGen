@@ -53,8 +53,275 @@ Sequenzdiagramm NPC Generator
 image:models/Sequence_randomNPC.svg[sequencDiagramm]
 === c) Anwedungsfälle
 
+[[UC0010]]
+|===
+|ID                         |**<<UC0010>>**
+|Name                       |Auf Zufallsgenerator zugreifen
+|Description                |Der Benutzer soll in der Lage sein auf den Generator zugreifen zu können
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt in der Navigationsleiste den NPC generator aus
+|Precondition(s)           a|
+- Programm ist geöffnet
+
+- der Benutzer kann lesen
+
+|Essential Steps           a|
+
+1. Der Benutzer drückt einen Knopf
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0011]]
+|===
+|ID                         |**<<UC0011>>**
+|Name                       |Den Zufallsgenerator verwenden 
+|Description                |Der Benutzer soll in der Lage sein den Generator verwenden zu können  
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um einen NPC generieren zu lassen
+|Precondition(s)           a|
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- der Benutzer betätigt den Knopf zum generieren ohne eine Voreinstellung getroffen zu haben
+
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer betätigt den Knopf zum generieren ohne eine Vorauswahl getroffen zu haben
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0012]]
+|===
+|ID                         |**<<UC0012>>**
+|Name                       |Den Zufallsgenerator mit einer Voreinstellung für die Rasse verwenden
+|Description                |Der Benutzer soll in der Lage sein den Generator verwenden zu können wenn eine bestimmte Rasse ausgewählt ist  
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um einen NPC generieren zu lassen
+|Precondition(s)           a|
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Der Benutzer wählt im Feld Rasse eine aus
+
+- der Benutzer betätigt den Knopf zum generieren
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer wählt eine Rasse aus
+3. Der Benutzer betätigt den Knopf zum generieren 
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0013]]
+|===
+|ID                         |**<<UC0013>>**
+|Name                       |Den Zufallsgenerator mit einer Voreinstellung für die Klasse verwenden
+|Description                |Der Benutzer soll in der Lage sein den Generator verwenden zu können wenn eine bestimmte Klasse ausgewählt ist  
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um einen NPC generieren zu lassen
+|Precondition(s)           a|
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Der Benutzer wählt im Feld Klasse eine aus
+
+- der Benutzer betätigt den Knopf zum generieren
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer wählt eine Klasse aus
+3. Der Benutzer betätigt den Knopf zum generieren 
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0014]]
+|===
+|ID                         |**<<UC0014>>**
+|Name                       |Den Zufallsgenerator mit einer Voreinstellung für das Geschlecht verwenden
+|Description                |Der Benutzer soll in der Lage sein den Generator verwenden zu können wenn ein bestimmtes Geschlecht ausgewählt ist  
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um einen NPC generieren zu lassen
+|Precondition(s)           a|
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Der Benutzer wählt im Feld Geschlecht eins aus
+
+- der Benutzer betätigt den Knopf zum generieren
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer wählt ein Geschlecht aus
+3. Der Benutzer betätigt den Knopf zum generieren 
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0015]]
+|===
+|ID                         |**<<UC0015>>**
+|Name                       |Den Zufallsgenerator mit einer Voreinstellung für das Level verwenden
+|Description                |Der Benutzer soll in der Lage sein den Generator verwenden zu können wenn ein bestimmtes Level ausgewählt ist  
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um einen NPC generieren zu lassen
+|Precondition(s)           a|
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Der Benutzer wählt im Feld Level eins aus
+
+- der Benutzer betätigt den Knopf zum generieren
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer wählt ein Level aus
+3. Der Benutzer betätigt den Knopf zum generieren 
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0016]]
+|===
+|ID                         |**<<UC0016>>**
+|Name                       |Den Zufallsgenerator mit einer Voreinstellung für die Generationsmethode der AbilityScores verwenden
+|Description                |Der Benutzer soll in der Lage sein den Generator verwenden zu können wenn eine bestimmte generationsmethode ausgewählt ist  
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um einen NPC generieren zu lassen
+|Precondition(s)           a|
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Der Benutzer wählt im Feld Generationsmethode eine aus
+
+- der Benutzer betätigt den Knopf zum generieren
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer wählt eine Generationsmethode aus
+3. Der Benutzer betätigt den Knopf zum generieren 
+|Extensions |-
+|Functional Requirements | 
+|===
+
+
+
+[[UC0017]]
+|===
+|ID                         |**<<UC0017>>**
+|Name                       |Den erstellten NPC speichern
+|Description                |Der Benutzer soll in der Lage sein den erstellten NPC manuell zu speichern
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um den NPC zu speichern
+|Precondition(s)           a|
+
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Ein NPC wurde erstellt oder generiert
+ 
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer generiert einen NPC
+3. Der Benutzer wählt die Option aus für den erstellten NPC weitere Optionen anzeigen zu lassen
+4. Weitere Optionen werden angezeigt
+5. Der Benutzer betätigt den Knopf zum speichern des NPCs
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0018]]
+|===
+|ID                         |**<<UC0018>>**
+|Name                       |Den erstellten NPC exportieren 
+|Description                |Der Benutzer soll in der Lage sein den erstellten NPC manuell zu exportieren
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um den NPC zu exportiern
+|Precondition(s)           a|
+
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Ein NPC wurde erstellt oder generiert
+ 
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer generiert einen NPC
+3. Der Benutzer wählt die Option aus für den erstellten NPC weitere Optionen anzeigen zu lassen
+4. Weitere Optionen werden angezeigt
+5. Der Benutzer betätigt den Knopf zum exportieren des NPCs
+6. Es werden die Möglichkeiten zum exportieren angezeigt
+|Extensions |-
+|Functional Requirements | 
+|===
+
+[[UC0019]]
+|===
+|ID                         |**<<UC0019>>**
+|Name                       |Den erstellten NPC löschen
+|Description                |Der Benutzer soll in der Lage sein den erstellten NPC manuell zu löschen
+|Actors                     |Benutzer
+|Trigger                    |Benutzer wählt den Knopf aus um den NPC zu löschen
+|Precondition(s)           a|
+
+- Der Zufallsgenerator ist ausgewählt und geöffnet
+
+- Ein NPC wurde erstellt oder generiert
+ 
+|Essential Steps           a|
+
+1. Der Benutzer wählt den Zufallsgenerator aus
+2. Der Benutzer generiert einen NPC
+3. Der Benutzer wählt die Option aus für den erstellten NPC weitere Optionen anzeigen zu lassen
+4. Weitere Optionen werden angezeigt
+5. Der Benutzer betätigt den Knopf zum löschen des NPCs
+6. Der ausgewählte NPC wird aus der Ansicht, Historie und Datenbank gelöscht
+|Extensions |-
+|Functional Requirements | 
+|===
+
+
 == 8. Funktionale Anforderungen
 === a) Muss-Kriterien
+[options="header", cols="2h, 3, 12"]
+|===
+|ID
+|Name
+|Beschreibung
+
+|[[F0010]]<<F0010>>
+|Auswahlmöglichkeiten für die Zufallsgenerations
+a|
+Das System ist in der Lage für speziefische Eingabe für die generation, Ergebnisse zu liefern welche die vorher festgelegten Parameter beinhaltet. Die Auswahlmöglichkeiten sind:
+- Rasse
+- Klasse
+- Geschlecht
+- Level
+- Generationsmehtode für die Ability Scores
+
+|[[F0011]]<<F0011>>
+|Exportieren
+a|
+Das System ist in der Lage den erstellten NPC in verschiedenen Formaten zu exportieren. Die Formate sind:
+- PDF
+- JPEG
+- PNG
+- .Json Roll20 Format
+
+|[[F0012]]<<F0012>>
+|Löschen
+a|
+Das System ist in der Lage den erstellten NPC zu löschen.
+
+|[[F0013]]<<F0013>>
+|Bearbeiten generierter NPCs
+a|
+Das System soll in der Lage sein die Funktion anzubieten alle erstellten Parameter nach dem generieren oder erstellen manuell bearbeiten zu können. 
+
+|[[F0014]]<<F0014>>
+|Speichern
+a|
+Das System ist in der Lage erstellte NPCs intern in einer Datenbank speichern zu können.
+|===
+
 
 === b) Kann-Kriterien
 
