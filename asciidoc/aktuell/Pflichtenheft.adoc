@@ -51,7 +51,8 @@ Datenbank sollen erweiter- bzw. wartbar sein.
 === b) Anwedungsfalldiagramm
 Sequenzdiagramm NPC Generator
 image:models/Sequence_randomNPC.svg[sequencDiagramm]
-=== c) Anwedungsfälle
+
+=== c) Anwendungsfälle
 
 [[UC0010]]
 |===
@@ -288,9 +289,9 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 |Beschreibung
 
 |[[F0010]]<<F0010>>
-|Auswahlmöglichkeiten für die Zufallsgenerations
+|Auswahlmöglichkeiten für die Zufallsgeneration
 a|
-Das System ist in der Lage für speziefische Eingabe für die generation, Ergebnisse zu liefern welche die vorher festgelegten Parameter beinhaltet. Die Auswahlmöglichkeiten sind:
+Das System ist in der Lage für eine spezifische Eingabe bei der Generation Ergebnisse zu liefern welche die vorher festgelegten Parameter beinhaltet. Die Auswahlmöglichkeiten sind:
 - Rasse
 - Klasse
 - Geschlecht
@@ -304,7 +305,7 @@ Das System ist in der Lage den erstellten NPC in verschiedenen Formaten zu expor
 - PDF
 - JPEG
 - PNG
-- .Json Roll20 Format
+- .json Roll20 Format
 
 |[[F0012]]<<F0012>>
 |Löschen
@@ -314,7 +315,7 @@ Das System ist in der Lage den erstellten NPC zu löschen.
 |[[F0013]]<<F0013>>
 |Bearbeiten generierter NPCs
 a|
-Das System soll in der Lage sein die Funktion anzubieten alle erstellten Parameter nach dem generieren oder erstellen manuell bearbeiten zu können. 
+Das System soll in der Lage sein, die Funktion anzubieten, alle erstellten Parameter nach dem generieren oder erstellen manuell bearbeiten zu können. 
 
 |[[F0014]]<<F0014>>
 |Speichern
@@ -338,6 +339,9 @@ image:models/DBPackageReady.svg[DBPackage]
 
 ==== Komponente Random Generator
 image:models/RandomGenerator.svg[RandomGenerator]
+
+==== Komponente Main+GenMain
+image:models/KlassdiaMainGenmain.svg[MainGenmain]
 
 === b) Klassen und Enumerationen
 
