@@ -12,6 +12,7 @@
 |===
 |Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
 |0.1     |Abgeschlossen| 05.03.2024          | Lucas           | "intiallisierung" der Datei
+|0.2     |Abgeschlossen| 12.03.2024          | Luca            | Erste Anwendungsfälle und Füllung einiger leerer Punkte
 |===
 
 
@@ -48,6 +49,14 @@ Datenbank sollen erweiter- bzw. wartbar sein.
 
 == 7. Anwendungsfälle
 === a) Akteure
+// See http://asciidoctor.org/docs/user-manual/#tables
+[options="header"]
+[cols="1,4"]
+|===
+|Name |Beschreibung
+|DnDer | Nutzt das System zum Erstellen von NPCs
+|===
+
 === b) Anwedungsfalldiagramm
 Sequenzdiagramm NPC Generator
 image:models/Sequence_randomNPC.svg[sequencDiagramm]
@@ -112,7 +121,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 2. Der Benutzer wählt eine Rasse aus
 3. Der Benutzer betätigt den Knopf zum generieren 
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0010>>
 |===
 
 [[UC0013]]
@@ -134,7 +143,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 2. Der Benutzer wählt eine Klasse aus
 3. Der Benutzer betätigt den Knopf zum generieren 
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0010>>
 |===
 
 [[UC0014]]
@@ -156,7 +165,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 2. Der Benutzer wählt ein Geschlecht aus
 3. Der Benutzer betätigt den Knopf zum generieren 
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0010>>
 |===
 
 [[UC0015]]
@@ -178,7 +187,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 2. Der Benutzer wählt ein Level aus
 3. Der Benutzer betätigt den Knopf zum generieren 
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0010>>
 |===
 
 [[UC0016]]
@@ -200,10 +209,8 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 2. Der Benutzer wählt eine Generationsmethode aus
 3. Der Benutzer betätigt den Knopf zum generieren 
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0010>>
 |===
-
-
 
 [[UC0017]]
 |===
@@ -226,7 +233,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 4. Weitere Optionen werden angezeigt
 5. Der Benutzer betätigt den Knopf zum speichern des NPCs
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0014>>
 |===
 
 [[UC0018]]
@@ -276,7 +283,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 5. Der Benutzer betätigt den Knopf zum löschen des NPCs
 6. Der ausgewählte NPC wird aus der Ansicht, Historie und Datenbank gelöscht
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0012>>
 |===
 
 
@@ -321,12 +328,95 @@ Das System soll in der Lage sein, die Funktion anzubieten, alle erstellten Param
 |Speichern
 a|
 Das System ist in der Lage erstellte NPCs intern in einer Datenbank speichern zu können.
+
+|[[F0015]]<<F0015>>
+|NPC Builder
+a|
+Das System ist in der Lage ein Template anzubieten, welches ermöglicht schnell manuell einen NPC zu erstellen
+
 |===
 
 
 === b) Kann-Kriterien
 
+[options="header", cols="2h, 3, 12"]
+|===
+|ID
+|Name
+|Beschreibung
+
+|[[K0010]]<<K0010>>
+|Monster Builder
+a|
+Das System ist in der Lage ein Template anzubieten, welches ermöglicht schnell manuell ein Monster zu erstellen
+
+|[[K0011]]<<K0011>>
+|NPC Verwaltungssystem
+a|
+Das System ist in der Lage ein NPCs zu speichern und zu verwalten.
+
+|[[K0012]]<<K0012>>
+|Freier Zufallsgenerator
+a|
+Das System soll in der Lage sein ein Template anzubieten, welches ermöglicht eigene Tabellen zu erstellen aus dem das System anschließend zufällige Datensätze auswählt. 
+
+|[[K0013]]<<K0013>>
+|NPC Inventare
+a|
+Das System soll in der Lage sein jedem erstellten NPC ein Inventar hinzuzufügen, welches sowohl manuell als auch zufällig gefüllt werden kann.
+
+|[[K0014]]<<K0014>>
+|NPC Sätze
+a|
+Das System soll in der Lage sein anhand der Klasse, Rasse und Persönlichkeit eines NPCs passende Sätze zu generieren.    
+
+|===
+
 == 9. Nicht-Funktionale Anforderungen
+
+=== a. Qualitätsziele
+
+Die folgende Tabelle zeigt, welche Qualitätsanforderungen in welchem Umfang erfüllt werden müssen.
+
+
+|===
+|Qualtitätsanforderung    | 1 | 2 | 3 | 4 | 5
+|Benutzbarkeit            |   |   |   | x |
+|Effizienz                |   |   | x |   |
+|Korrektheit              |   |   |   | x |
+|Robustheit               |   |   |   | x |
+|===
+
+=== b. Konkrete Nicht-Funktionale Anforderungen
+(Erfüllung mindestens theoretisch)
+
+[options="header", cols="2h, 3, 12"]
+|===
+|ID
+|Name
+|Beschreibung
+
+|[[NF0010]]<<NF0010>>
+|Benutzbarkeit
+a|
+Das System soll einfach zu handhaben sein und eine gute Verständlichkeit bieten.
+
+|[[NF0020]]<<NF0020>>
+|Effizienz
+a|
+Das System soll eine niedrige Reaktionszeit vorweisen um flüssiges und schnelles Arbeiten zu ermöglichen.
+
+|[[NF0030]]<<NF0030>>
+|Korrektheit
+a|
+Es sollen innerhalb des Systems Daten richtig übertragen und Befehle ohne fehler ausgeführt werden.
+
+|[[NF0040]]<<NF0040>>
+|Robustheit
+a|
+Das System muss eine Betriebszeit von mindestens 99,5 % erreichen.
+
+|===
 
 == 10. GUI Prototyp
 
@@ -344,6 +434,20 @@ image:models/RandomGenerator.svg[RandomGenerator]
 image:models/KlassdiaMainGenmain.svg[MainGenmain]
 
 === b) Klassen und Enumerationen
+
+[options="header"]
+|===
+|Klasse/Enumeration |Beschreibung 
+|NPCClass             | Klasse die den NPC darstellt
+|RandomNPC              | Die Klasse dient dazu die NPC Teile sinnvoll zusammenzusetzen und auszubauen 
+|RandomGenerator	| Klasse zur zufällige Erstellung verschiedener Attribute
+|History	| WIP
+|DBInterface	| WIP
+|DBMS		| WIP
+|Main		| WIP
+|GenMain	| WIP
+
+|===
 
 == 12. Akzeptanztestfälle
 
