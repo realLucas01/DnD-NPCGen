@@ -19,12 +19,12 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="0.45066519"
-     inkscape:cx="523.67035"
-     inkscape:cy="1044.0123"
+     inkscape:zoom="0.90133038"
+     inkscape:cx="480.40098"
+     inkscape:cy="314.53505"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
-     inkscape:window-x="-8"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="g3624" />
@@ -47,7 +47,7 @@
      id="g3624"
      style="display:inline">
     <rect
-       style="display:none;fill:#ffffff"
+       style="display:inline;fill:#ffffff"
        id="rect3624"
        width="1455.6261"
        height="1786.2484"
@@ -193,7 +193,7 @@
            text-anchor="middle"
            dominant-baseline="central"
            transform="translate(-46,10)"
-           id="text3180">main</text>
+           id="text3180">Main</text>
       </g>
     </g>
     <g
@@ -265,7 +265,7 @@
            text-anchor="middle"
            dominant-baseline="central"
            transform="translate(-46,10)"
-           id="text3186">genMain</text>
+           id="text3186">GenMain</text>
       </g>
     </g>
     <g
@@ -337,7 +337,7 @@
            text-anchor="middle"
            dominant-baseline="central"
            transform="translate(-46,10)"
-           id="text3192">randomNPC</text>
+           id="text3192">RandomNPC</text>
       </g>
     </g>
     <g
@@ -409,7 +409,7 @@
            text-anchor="middle"
            dominant-baseline="central"
            transform="translate(-46,10)"
-           id="text3198">randomGeneratorClass</text>
+           id="text3198">RandomGeneratorClass</text>
       </g>
     </g>
     <g
@@ -5294,10 +5294,10 @@
     <text
        xml:space="preserve"
        id="text3114"
-       style="white-space:pre;shape-inside:url(#rect3114);fill:#ffffff" />
+       style="white-space:pre;shape-inside:url(#rect3114);display:inline;fill:#ffffff" />
     <text
        xml:space="preserve"
        id="text3116"
-       style="fill:#ffffff;white-space:pre;shape-inside:url(#rect3116)" />
+       style="white-space:pre;shape-inside:url(#rect3116);display:inline;fill:#ffffff" />
   </g>
 </svg>
