@@ -233,7 +233,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 4. Weitere Optionen werden angezeigt
 5. Der Benutzer betätigt den Knopf zum speichern des NPCs
 |Extensions |-
-|Functional Requirements | <<F0014>>
+|Functional Requirements | <<K0011>>
 |===
 
 [[UC0018]]
@@ -258,14 +258,14 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 5. Der Benutzer betätigt den Knopf zum exportieren des NPCs
 6. Es werden die Möglichkeiten zum exportieren angezeigt
 |Extensions |-
-|Functional Requirements | 
+|Functional Requirements | <<F0011>>
 |===
 
 [[UC0019]]
 |===
 |ID                         |**<<UC0019>>**
 |Name                       |Den erstellten NPC löschen
-|Description                |Der Benutzer soll in der Lage sein den erstellten NPC manuell zu löschen
+|Description                |Der Benutzer soll in der Lage sein den erstellten NPC manuell aus der History zu löschen
 |Actors                     |Benutzer
 |Trigger                    |Benutzer wählt den Knopf aus um den NPC zu löschen
 |Precondition(s)           a|
@@ -283,7 +283,7 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 5. Der Benutzer betätigt den Knopf zum löschen des NPCs
 6. Der ausgewählte NPC wird aus der Ansicht, Historie und Datenbank gelöscht
 |Extensions |-
-|Functional Requirements | <<F0012>>
+|Functional Requirements | <<F0012>>, <<K0011>>
 |===
 
 
@@ -315,9 +315,9 @@ Das System ist in der Lage den erstellten NPC in verschiedenen Formaten zu expor
 - .json Roll20 Format
 
 |[[F0012]]<<F0012>>
-|Löschen
+|History
 a|
-Das System ist in der Lage den erstellten NPC zu löschen.
+Das System ist in der Lage einen Verlauf der letzten 10 generationen zu speichern und up-to-Date zu halten
 
 |[[F0013]]<<F0013>>
 |Bearbeiten generierter NPCs
@@ -325,11 +325,6 @@ a|
 Das System soll in der Lage sein, die Funktion anzubieten, alle erstellten Parameter nach dem generieren oder erstellen manuell bearbeiten zu können. 
 
 |[[F0014]]<<F0014>>
-|Speichern
-a|
-Das System ist in der Lage erstellte NPCs intern in einer Datenbank speichern zu können.
-
-|[[F0015]]<<F0015>>
 |NPC Builder
 a|
 Das System ist in der Lage ein Template anzubieten, welches ermöglicht schnell manuell einen NPC zu erstellen
@@ -441,9 +436,9 @@ image:models/KlassdiaMainGenmain.svg[MainGenmain]
 |NPCClass             | Klasse die den NPC darstellt
 |RandomNPC              | Die Klasse dient dazu die NPC Teile sinnvoll zusammenzusetzen und auszubauen 
 |RandomGenerator	| Klasse zur zufällige Erstellung verschiedener Attribute
-|History	| WIP
-|DBInterface	| WIP
-|DBMS		| WIP
+|History	| Klasse die sich um die korrekte Befüllung des Erstellungsverlaufs der letzten 10 NPC's kümmert
+|DBInterface	| Klasse die als Interface zwischen dem DBMS und dem Generator dient
+|DBMS		| Klasse die sich um die DB's kümmert und sicherstellt das Datenerhaltungsgrundprinzipien wie Integrität und Konsistenz sichergestellt werden können
 |Main		| WIP
 |GenMain	| WIP
 
