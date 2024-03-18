@@ -414,6 +414,10 @@ Das System soll in der Lage sein jedem erstellten NPC ein Inventar hinzuzufügen
 a|
 Das System soll in der Lage sein anhand der Klasse, Rasse und Persönlichkeit eines NPCs passende Sätze zu generieren.    
 
+|[[K0015]]<<K0015>>
+|Hinzufügen neuer Datensätze
+a|
+Das System soll in der Lage sein neue Datensätze für Generierung dauerhaft zu speichern.    
 |===
 
 == 9. Nicht-Funktionale Anforderungen
