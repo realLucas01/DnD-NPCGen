@@ -337,6 +337,43 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 |Functional Requirements | <<K0011>>
 |===
 
+[[UC0025]]
+|===
+|ID                         |**<<UC0025>>**
+|Name                       |Programm starten
+|Description                |Das Programm sollte voll einsatzbereit nach dem start sein, und auf der Startseite beginnen 
+|Actors                     |Benutzer, DB
+|Trigger                    |Benutzer startet das Programm
+|Precondition(s)           a|
+
+ 
+|Essential Steps           a|
+
+1. Der Benutzer startet das Programm
+2. verbindung zum DBMS herstellen
+3. Startseite anzeigen
+|Extensions |-
+|Functional Requirements | <<K0011>>
+|===
+
+[[UC0026]]
+|===
+|ID                         |**<<UC0026>>**
+|Name                       |Programm beenden
+|Description                |Das Programm sollte die Daten speichern wenn es beendet wird 
+|Actors                     |Benutzer, DB
+|Trigger                    |Benutzer beendet/schließt das Programm
+|Precondition(s)           a|
+
+- Programm ist gestartet
+
+|Essential Steps           a|
+
+1. Der Benutzer beendet das Programm über das Menü oder schließt das Fenster
+2. aktuelle Daten an DBMS geben zum speichern
+|Extensions |-
+|Functional Requirements | <<K0011>>
+|===
 
 == 8. Funktionale Anforderungen
 === a) Muss-Kriterien
@@ -479,7 +516,7 @@ image:models/DBPackageReady.svg[DBPackage]
 image:models/RandomGenerator.svg[RandomGenerator]
 
 ==== Komponente Main+GenMain
-image:models/KlassdiaMainGenmain.svg[MainGenmain]
+image:models/Klassendiagramm_Main_GenMain.svg[MainGenmain]
 
 === b) Klassen und Enumerationen
 
@@ -492,8 +529,8 @@ image:models/KlassdiaMainGenmain.svg[MainGenmain]
 |History	| Klasse die sich um die korrekte Befüllung des Erstellungsverlaufs der letzten 10 NPC's kümmert
 |DBInterface	| Klasse die als Interface zwischen dem DBMS und dem Generator dient
 |DBMS		| Klasse die sich um die DB's kümmert und sicherstellt das Datenerhaltungsgrundprinzipien wie Integrität und Konsistenz sichergestellt werden können
-|Main		| WIP
-|GenMain	| WIP
+|Main		| Hauptklasse die zum Startzeitpunkt ausgeführt wird
+|GenMain	| Klasse für die Startseite und Navigation
 
 |===
 
