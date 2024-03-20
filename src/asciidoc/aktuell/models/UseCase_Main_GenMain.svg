@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1276"
+   height="588"
+   id="svg1015"
+   sodipodi:docname="UseCase_Main_GenMain.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1015"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.1982759"
+     inkscape:cx="638"
+     inkscape:cy="294.09412"
+     inkscape:window-width="3840"
+     inkscape:window-height="2066"
+     inkscape:window-x="2869"
+     inkscape:window-y="49"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1015" />
+  <defs
+     id="defs1" />
+  <g
+     id="g1015">
+    <g
+       id="g931">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="343"
+         y="375"
+         width="328"
+         height="448"
+         transform="matrix(1 0 0 1 -166 -294)"
+         fill-opacity="0.2"
+         id="rect931" />
+    </g>
+    <g
+       id="g932">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="336"
+         y="368"
+         width="328"
+         height="448"
+         transform="matrix(1 0 0 1 -166 -294)"
+         id="rect932" />
+    </g>
+    <g
+       id="g933">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 170 74 L 498 74 L 498 522 L 170 522 L 170 74 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path932" />
+    </g>
+    <g
+       id="g935">
+      <g
+         id="g934">
+        <path
+           fill="none"
+           stroke="none"
+           id="path933" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="500.5"
+           y="381.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text933">Main</text>
+      </g>
+    </g>
+    <g
+       id="g936">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="887"
+         y="375"
+         width="520"
+         height="456"
+         transform="matrix(1 0 0 1 -166 -294)"
+         fill-opacity="0.2"
+         id="rect935" />
+    </g>
+    <g
+       id="g937">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="880"
+         y="368"
+         width="520"
+         height="456"
+         transform="matrix(1 0 0 1 -166 -294)"
+         id="rect936" />
+    </g>
+    <g
+       id="g938">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 714 74 L 1234 74 L 1234 530 L 714 530 L 714 74 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path937" />
+    </g>
+    <g
+       id="g940">
+      <g
+         id="g939">
+        <path
+           fill="none"
+           stroke="none"
+           id="path938" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1140.5"
+           y="381.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text938">GenMain</text>
+      </g>
+    </g>
+    <g
+       id="g941">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="176"
+         y="304"
+         width="1256"
+         height="568"
+         transform="matrix(1 0 0 1 -166 -294)"
+         id="rect940" />
+    </g>
+    <g
+       id="g942">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 10 L 1266 10 L 1266 578 L 10 578 L 10 10 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path941" />
+    </g>
+    <g
+       id="g943">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="840"
+         y="320"
+         width="552"
+         height="512"
+         transform="matrix(1 0 0 1 -166 -294)"
+         id="rect942" />
+    </g>
+    <g
+       id="g944">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 674 26 L 1226 26 L 1226 538 L 674 538 L 674 26 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path943" />
+    </g>
+    <g
+       id="g945">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="336"
+         y="328"
+         width="312"
+         height="520"
+         transform="matrix(1 0 0 1 -166 -294)"
+         id="rect944" />
+    </g>
+    <g
+       id="g946">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 170 34 L 482 34 L 482 554 L 170 554 L 170 34 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path945" />
+    </g>
+    <g
+       id="g947">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 93.58089843750003 251.85000000000002 C 93.58089843750003 246.96227952000004 97.53870080550001 243 102.4208984375 243 C 107.30309606949999 243 111.26089843749997 246.96227952000004 111.26089843749997 251.85000000000002 C 111.26089843749997 256.73772048 107.30309606949999 260.70000000000005 102.4208984375 260.70000000000005 C 97.53870080550001 260.70000000000005 93.58089843750003 256.73772048 93.58089843750003 251.85000000000002 Z"
+         id="path946" />
+    </g>
+    <g
+       id="g948">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 93.58089843750003 251.85000000000002 C 93.58089843750003 246.96227952000004 97.53870080550001 243 102.4208984375 243 C 107.30309606949999 243 111.26089843749997 246.96227952000004 111.26089843749997 251.85000000000002 C 111.26089843749997 256.73772048 107.30309606949999 260.70000000000005 102.4208984375 260.70000000000005 C 97.53870080550001 260.70000000000005 93.58089843750003 256.73772048 93.58089843750003 251.85000000000002 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path947" />
+    </g>
+    <g
+       id="g949">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 102.4208984375 260.70000000000005 L 102.4208984375 278.29999999999995"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path948" />
+    </g>
+    <g
+       id="g950">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 93.06089843749999 267.29999999999995 L 111.78089843750001 267.29999999999995"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path949" />
+    </g>
+    <g
+       id="g951">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 102.4208984375 278.29999999999995 L 89.4208984375 296"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path950" />
+    </g>
+    <g
+       id="g952">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 102.4208984375 278.29999999999995 L 115.4208984375 296"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path951" />
+    </g>
+    <g
+       id="g954">
+      <g
+         id="g953">
+        <path
+           fill="none"
+           stroke="none"
+           id="path952" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="268.9208984375"
+           y="604.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text952">Anwender</text>
+      </g>
+    </g>
+    <g
+       id="g955">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 257 130.5 C 257 120.835016 283.862912 113 317 113 C 350.13708799999995 113 377 120.835016 377 130.5 C 377 140.164984 350.13708799999995 148 317 148 C 283.862912 148 257 140.164984 257 130.5 Z"
+         fill-opacity="0.2"
+         id="path954" />
+    </g>
+    <g
+       id="g956">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 250 123.5 C 250 113.835016 276.862912 106 310 106 C 343.137088 106 370 113.835016 370 123.5 C 370 133.164984 343.137088 141 310 141 C 276.862912 141 250 133.164984 250 123.5 Z"
+         id="path955" />
+    </g>
+    <g
+       id="g957">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 250 123.5 C 250 113.835016 276.862912 106 310 106 C 343.137088 106 370 113.835016 370 123.5 C 370 133.164984 343.137088 141 310 141 C 276.862912 141 250 133.164984 250 123.5 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path956" />
+    </g>
+    <g
+       id="g959">
+      <g
+         id="g958">
+        <path
+           fill="none"
+           stroke="none"
+           id="path957" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="476"
+           y="418.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text957">NPC's laden</text>
+      </g>
+    </g>
+    <g
+       id="g960">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 257 418.5 C 257 408.835016 292.5933584 401 336.5 401 C 380.40664160000006 401 416 408.835016 416 418.5 C 416 428.164984 380.40664160000006 436 336.5 436 C 292.5933584 436 257 428.164984 257 418.5 Z"
+         fill-opacity="0.2"
+         id="path959" />
+    </g>
+    <g
+       id="g961">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 250 411.5 C 250 401.835016 285.5933584 394 329.5 394 C 373.40664160000006 394 409 401.835016 409 411.5 C 409 421.164984 373.40664160000006 429 329.5 429 C 285.5933584 429 250 421.164984 250 411.5 Z"
+         id="path960" />
+    </g>
+    <g
+       id="g962">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 250 411.5 C 250 401.835016 285.5933584 394 329.5 394 C 373.40664160000006 394 409 401.835016 409 411.5 C 409 421.164984 373.40664160000006 429 329.5 429 C 285.5933584 429 250 421.164984 250 411.5 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path961" />
+    </g>
+    <g
+       id="g964">
+      <g
+         id="g963">
+        <path
+           fill="none"
+           stroke="none"
+           id="path962" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="495.5"
+           y="706.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text962">NPC's speichern</text>
+      </g>
+    </g>
+    <g
+       id="g965">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 249 282.5 C 249 272.835016 286.1603616 265 332 265 C 377.8396384 265 415 272.835016 415 282.5 C 415 292.164984 377.8396384 300 332 300 C 286.1603616 300 249 292.164984 249 282.5 Z"
+         fill-opacity="0.2"
+         id="path964" />
+    </g>
+    <g
+       id="g966">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 242 275.5 C 242 265.835016 279.1603616 258 325 258 C 370.8396384 258 408 265.835016 408 275.5 C 408 285.164984 370.8396384 293 325 293 C 279.1603616 293 242 285.164984 242 275.5 Z"
+         id="path965" />
+    </g>
+    <g
+       id="g967">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 242 275.5 C 242 265.835016 279.1603616 258 325 258 C 370.8396384 258 408 265.835016 408 275.5 C 408 285.164984 370.8396384 293 325 293 C 279.1603616 293 242 285.164984 242 275.5 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path966" />
+    </g>
+    <g
+       id="g969">
+      <g
+         id="g968">
+        <path
+           fill="none"
+           stroke="none"
+           id="path967" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="491"
+           y="570.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text967">NPC's generieren</text>
+      </g>
+    </g>
+    <g
+       id="g970">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 729 178.5 C 729 168.835016 760.340064 161 799 161 C 837.659936 161 869 168.835016 869 178.5 C 869 188.164984 837.659936 196 799 196 C 760.340064 196 729 188.164984 729 178.5 Z"
+         fill-opacity="0.2"
+         id="path969" />
+    </g>
+    <g
+       id="g971">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 722 171.5 C 722 161.835016 753.340064 154 792 154 C 830.659936 154 862 161.835016 862 171.5 C 862 181.164984 830.659936 189 792 189 C 753.340064 189 722 181.164984 722 171.5 Z"
+         id="path970" />
+    </g>
+    <g
+       id="g972">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 722 171.5 C 722 161.835016 753.340064 154 792 154 C 830.659936 154 862 161.835016 862 171.5 C 862 181.164984 830.659936 189 792 189 C 753.340064 189 722 181.164984 722 171.5 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path971" />
+    </g>
+    <g
+       id="g974">
+      <g
+         id="g973">
+        <path
+           fill="none"
+           stroke="none"
+           id="path972" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="958"
+           y="466.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text972">Wert festlegen</text>
+      </g>
+    </g>
+    <g
+       id="g975">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1065 170.5 C 1065 160.835016 1091.862912 153 1125 153 C 1158.137088 153 1185 160.835016 1185 170.5 C 1185 180.164984 1158.137088 188 1125 188 C 1091.862912 188 1065 180.164984 1065 170.5 Z"
+         fill-opacity="0.2"
+         id="path974" />
+    </g>
+    <g
+       id="g976">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1058 163.5 C 1058 153.835016 1084.862912 146 1118 146 C 1151.137088 146 1178 153.835016 1178 163.5 C 1178 173.164984 1151.137088 181 1118 181 C 1084.862912 181 1058 173.164984 1058 163.5 Z"
+         id="path975" />
+    </g>
+    <g
+       id="g977">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1058 163.5 C 1058 153.835016 1084.862912 146 1118 146 C 1151.137088 146 1178 153.835016 1178 163.5 C 1178 173.164984 1151.137088 181 1118 181 C 1084.862912 181 1058 173.164984 1058 163.5 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path976" />
+    </g>
+    <g
+       id="g979">
+      <g
+         id="g978">
+        <path
+           fill="none"
+           stroke="none"
+           id="path977" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1284"
+           y="458.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text977">NPC wählen</text>
+      </g>
+    </g>
+    <g
+       id="g980">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1025 338.5 C 1025 328.835016 1065.7420832 321 1116 321 C 1166.2579168 321 1207 328.835016 1207 338.5 C 1207 348.164984 1166.2579168 356 1116 356 C 1065.7420832 356 1025 348.164984 1025 338.5 Z"
+         fill-opacity="0.2"
+         id="path979" />
+    </g>
+    <g
+       id="g981">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1018 331.5 C 1018 321.835016 1058.7420832 314 1109 314 C 1159.2579168 314 1200 321.835016 1200 331.5 C 1200 341.164984 1159.2579168 349 1109 349 C 1058.7420832 349 1018 341.164984 1018 331.5 Z"
+         id="path980" />
+    </g>
+    <g
+       id="g982">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1018 331.5 C 1018 321.835016 1058.7420832 314 1109 314 C 1159.2579168 314 1200 321.835016 1200 331.5 C 1200 341.164984 1159.2579168 349 1109 349 C 1058.7420832 349 1018 341.164984 1018 331.5 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path981" />
+    </g>
+    <g
+       id="g984">
+      <g
+         id="g983">
+        <path
+           fill="none"
+           stroke="none"
+           id="path982" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1275"
+           y="626.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text982">neuen NPC würfeln</text>
+      </g>
+    </g>
+    <g
+       id="g985">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 140 253 L 285 142"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path984" />
+    </g>
+    <g
+       id="g986">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 140 281 L 241 278"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path985" />
+    </g>
+    <g
+       id="g987">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 140 304 L 297 393"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path986" />
+    </g>
+    <g
+       id="g988">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 605.5808984375 235.85000000000002 C 605.5808984375 230.96227952000004 609.5387008055 227 614.4208984375 227 C 619.3030960695 227 623.2608984375 230.96227952000004 623.2608984375 235.85000000000002 C 623.2608984375 240.73772048 619.3030960695 244.70000000000005 614.4208984375 244.70000000000005 C 609.5387008055 244.70000000000005 605.5808984375 240.73772048 605.5808984375 235.85000000000002 Z"
+         id="path987" />
+    </g>
+    <g
+       id="g989">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 605.5808984375 235.85000000000002 C 605.5808984375 230.96227952000004 609.5387008055 227 614.4208984375 227 C 619.3030960695 227 623.2608984375 230.96227952000004 623.2608984375 235.85000000000002 C 623.2608984375 240.73772048 619.3030960695 244.70000000000005 614.4208984375 244.70000000000005 C 609.5387008055 244.70000000000005 605.5808984375 240.73772048 605.5808984375 235.85000000000002 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path988" />
+    </g>
+    <g
+       id="g990">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 614.4208984375 244.70000000000005 L 614.4208984375 262.29999999999995"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path989" />
+    </g>
+    <g
+       id="g991">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 605.0608984375 251.29999999999995 L 623.7808984375 251.29999999999995"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path990" />
+    </g>
+    <g
+       id="g992">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 614.4208984375 262.29999999999995 L 601.4208984375 280"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path991" />
+    </g>
+    <g
+       id="g993">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 614.4208984375 262.29999999999995 L 627.4208984375 280"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path992" />
+    </g>
+    <g
+       id="g995">
+      <g
+         id="g994">
+        <path
+           fill="none"
+           stroke="none"
+           id="path993" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="780.9208984375"
+           y="588.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text993">Anwender</text>
+      </g>
+    </g>
+    <g
+       id="g996">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 409 272 L 577 267"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path995" />
+    </g>
+    <g
+       id="g997">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 652 246 L 756 190"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path996" />
+    </g>
+    <g
+       id="g998">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 889 258.5 C 889 248.835016 916.5344848 241 950.5 241 C 984.4655152 241 1012 248.835016 1012 258.5 C 1012 268.164984 984.4655152 276 950.5 276 C 916.5344848 276 889 268.164984 889 258.5 Z"
+         fill-opacity="0.2"
+         id="path997" />
+    </g>
+    <g
+       id="g999">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 882 251.5 C 882 241.835016 909.5344848 234 943.5 234 C 977.4655152 234 1005 241.835016 1005 251.5 C 1005 261.164984 977.4655152 269 943.5 269 C 909.5344848 269 882 261.164984 882 251.5 Z"
+         id="path998" />
+    </g>
+    <g
+       id="g1000">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 882 251.5 C 882 241.835016 909.5344848 234 943.5 234 C 977.4655152 234 1005 241.835016 1005 251.5 C 1005 261.164984 977.4655152 269 943.5 269 C 909.5344848 269 882 261.164984 882 251.5 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path999" />
+    </g>
+    <g
+       id="g1002">
+      <g
+         id="g1001">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1000" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1109.5"
+           y="546.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text1000">NPC würfeln</text>
+      </g>
+    </g>
+    <g
+       id="g1003">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 828 190 L 909 233"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path1002" />
+    </g>
+    <g
+       id="g1004">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 652 264 L 881 254"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path1003" />
+    </g>
+    <g
+       id="g1005">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 979 233 L 1080 182"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path1004" />
+    </g>
+    <g
+       id="g1006">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 982 270 L 1072 313"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path1005" />
+    </g>
+    <g
+       id="g1007">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="360"
+         y="344"
+         width="60"
+         height="25"
+         transform="matrix(1 0 0 1 -166 -294)"
+         id="rect1006" />
+    </g>
+    <g
+       id="g1008">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 194 50 L 254 50 L 254 75 L 194 75 L 194 50 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path1007" />
+    </g>
+    <g
+       id="g1010">
+      <g
+         id="g1009">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1008" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="365"
+           y="349"
+           text-anchor="start"
+           dominant-baseline="text-before-edge"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text1008">Main</text>
+      </g>
+    </g>
+    <g
+       id="g1011">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="864"
+         y="336"
+         width="62.7490234375"
+         height="25"
+         transform="matrix(1 0 0 1 -166 -294)"
+         id="rect1010" />
+    </g>
+    <g
+       id="g1012">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 698 42 L 760.7490234375 42 L 760.7490234375 67 L 698 67 L 698 42 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path1011" />
+    </g>
+    <g
+       id="g1014">
+      <g
+         id="g1013">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1012" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="869"
+           y="341"
+           text-anchor="start"
+           dominant-baseline="text-before-edge"
+           transform="matrix(1 0 0 1 -166 -294)"
+           id="text1012">GenMain</text>
+      </g>
+    </g>
+  </g>
+</svg>

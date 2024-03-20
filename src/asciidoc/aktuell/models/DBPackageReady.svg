@@ -1,0 +1,1250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1115.9246"
+   height="413.27112"
+   id="svg1198"
+   sodipodi:docname="DBPackage.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1200"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false" />
+  <defs
+     id="defs602" />
+  <g
+     id="g1196"
+     transform="translate(0,-0.92454392)">
+    <rect
+       style="fill:#ffffff"
+       id="rect2951"
+       width="1115.9246"
+       height="413.27115"
+       x="0"
+       y="0.92454392" />
+    <g
+       transform="translate(2,-14)"
+       id="g774">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 60.170401,105.60504 A 27.000005,27.000005 0 0 1 41.829599,156.39496"
+         stroke-miterlimit="10"
+         id="path772" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g782">
+      <g
+         id="g780">
+        <path
+           fill="none"
+           stroke="none"
+           id="path776"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="24.848145"
+           y="176"
+           id="text778"
+           style="text-decoration:none;text-decoration-line:none">genMain</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g786">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 51.021214,208.02268 a 23.000002,23.000002 0 0 1 -2.042428,45.95464"
+         stroke-miterlimit="10"
+         id="path784" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g794">
+      <g
+         id="g792">
+        <path
+           fill="none"
+           stroke="none"
+           id="path788"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="13.220459"
+           y="272"
+           id="text790"
+           style="text-decoration:none;text-decoration-line:none">randomNPC</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g798">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="183"
+         y="31"
+         width="304"
+         height="15"
+         opacity="0.2"
+         id="rect796" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g802">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="183"
+         y="45"
+         width="760"
+         height="378"
+         opacity="0.2"
+         id="rect800" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g806">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="176"
+         y="39"
+         width="760"
+         height="377"
+         id="rect804" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g810">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 176,39 H 936 V 416 H 176 Z"
+         stroke-miterlimit="10"
+         id="path808" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g814">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="176"
+         y="24"
+         width="304"
+         height="15"
+         id="rect812" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g818">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 176,24 H 480 V 39 H 176 Z"
+         stroke-miterlimit="10"
+         id="path816" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g822">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="176"
+         y="38"
+         width="760"
+         height="378"
+         id="rect820" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g826">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 176,38 H 936 V 416 H 176 Z"
+         stroke-miterlimit="10"
+         id="path824" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g834">
+      <g
+         id="g832">
+        <path
+           fill="none"
+           stroke="none"
+           id="path828"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="546.61182"
+           y="57"
+           id="text830"
+           style="text-decoration:none;text-decoration-line:none">DB</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g838">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="199"
+         y="79"
+         width="513.68311"
+         height="162"
+         opacity="0.2"
+         id="rect836" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g842">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="192"
+         y="72"
+         width="513.68311"
+         height="162"
+         id="rect840" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g846">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 192,72 H 705.68311 V 234 H 192 Z"
+         stroke-miterlimit="10"
+         id="path844" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g850">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 192,97 H 705.68311"
+         stroke-miterlimit="10"
+         id="path848" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g854">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 192,107 H 705.68311"
+         stroke-miterlimit="10"
+         id="path852" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g862">
+      <g
+         id="g860">
+        <path
+           fill="none"
+           stroke="none"
+           id="path856"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="412.3584"
+           y="90"
+           id="text858"
+           style="text-decoration:none;text-decoration-line:none">DBInterface</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g870">
+      <g
+         id="g868">
+        <path
+           fill="none"
+           stroke="none"
+           id="path864"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="123"
+           id="text866"
+           style="text-decoration:none;text-decoration-line:none">~connectToDb(): boolean</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g878">
+      <g
+         id="g876">
+        <path
+           fill="none"
+           stroke="none"
+           id="path872"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="138"
+           id="text874"
+           style="text-decoration:none;text-decoration-line:none">~saveDBonShutdown()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g886">
+      <g
+         id="g884">
+        <path
+           fill="none"
+           stroke="none"
+           id="path880"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="153"
+           id="text882"
+           style="text-decoration:none;text-decoration-line:none">~closeCon()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g894">
+      <g
+         id="g892">
+        <path
+           fill="none"
+           stroke="none"
+           id="path888"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="168"
+           id="text890"
+           style="text-decoration:none;text-decoration-line:none">+getGUI(): &lt;List&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g902">
+      <g
+         id="g900">
+        <path
+           fill="none"
+           stroke="none"
+           id="path896"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="183"
+           id="text898"
+           style="text-decoration:none;text-decoration-line:none">+getRow(DBName:String, IDName:String): &lt;List&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g910">
+      <g
+         id="g908">
+        <path
+           fill="none"
+           stroke="none"
+           id="path904"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="198"
+           id="text906"
+           style="text-decoration:none;text-decoration-line:none">+getRandRow(DBName: String): &lt;List&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g918">
+      <g
+         id="g916">
+        <path
+           fill="none"
+           stroke="none"
+           id="path912"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="213"
+           id="text914"
+           style="text-decoration:none;text-decoration-line:none">+getRowWithPref(DBName:String, Preferance: String): &lt;List&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g926">
+      <g
+         id="g924">
+        <path
+           fill="none"
+           stroke="none"
+           id="path920"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="228"
+           id="text922"
+           style="text-decoration:none;text-decoration-line:none">+getMultRowWithPref(DBName: String, Preferance: String, Count: Integer): &lt;List&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g930">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="751"
+         y="223"
+         width="175"
+         height="130"
+         opacity="0.2"
+         id="rect928" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g934">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="744"
+         y="216"
+         width="175"
+         height="130"
+         id="rect932" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g938">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 744,216 H 919 V 346 H 744 Z"
+         stroke-miterlimit="10"
+         id="path936" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g942">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 744,241 H 919"
+         stroke-miterlimit="10"
+         id="path940" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g946">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 744,264 H 919"
+         stroke-miterlimit="10"
+         id="path944" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g954">
+      <g
+         id="g952">
+        <path
+           fill="none"
+           stroke="none"
+           id="path948"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="812.36182"
+           y="234"
+           id="text950"
+           style="text-decoration:none;text-decoration-line:none">DBMS</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g962">
+      <g
+         id="g960">
+        <path
+           fill="none"
+           stroke="none"
+           id="path956"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="749"
+           y="257"
+           id="text958"
+           style="text-decoration:none;text-decoration-line:none">~?</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g970">
+      <g
+         id="g968">
+        <path
+           fill="none"
+           stroke="none"
+           id="path964"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="749"
+           y="280"
+           id="text966"
+           style="text-decoration:none;text-decoration-line:none">-translateDB()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g978">
+      <g
+         id="g976">
+        <path
+           fill="none"
+           stroke="none"
+           id="path972"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="749"
+           y="295"
+           id="text974"
+           style="text-decoration:none;text-decoration-line:none">-setupConParam()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g986">
+      <g
+         id="g984">
+        <path
+           fill="none"
+           stroke="none"
+           id="path980"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="italic"
+           font-weight="normal"
+           text-decoration="none"
+           x="749"
+           y="310"
+           id="text982"
+           style="text-decoration:none;text-decoration-line:none">~EntityManager()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g994">
+      <g
+         id="g992">
+        <path
+           fill="none"
+           stroke="none"
+           id="path988"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="749"
+           y="325"
+           id="text990"
+           style="text-decoration:none;text-decoration-line:none">~CAPI() {query}</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1002">
+      <g
+         id="g1000">
+        <path
+           fill="none"
+           stroke="none"
+           id="path996"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="749"
+           y="340"
+           id="text998"
+           style="text-decoration:none;text-decoration-line:none">~HQL() {query}</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1006">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 693,235 50,17"
+         stroke-miterlimit="10"
+         id="path1004" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1010">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         d="M 721.0464,253.42813 743,252 726.46662,237.4863"
+         id="path1008" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1014">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 721.0464,253.42813 743,252 726.46662,237.4863 721.0464,253.42813"
+         stroke-miterlimit="10"
+         id="path1012" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1018">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="983"
+         y="255"
+         width="50.799999"
+         height="15"
+         opacity="0.2"
+         id="rect1016" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1022">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="983"
+         y="269"
+         width="127"
+         height="114"
+         opacity="0.2"
+         id="rect1020" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1026">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="976"
+         y="263"
+         width="127"
+         height="113"
+         id="rect1024" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1030">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 976,263 h 127 V 376 H 976 Z"
+         stroke-miterlimit="10"
+         id="path1028" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1034">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="976"
+         y="248"
+         width="50.799999"
+         height="15"
+         id="rect1032" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1038">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 976,248 h 50.8 v 15 H 976 Z"
+         stroke-miterlimit="10"
+         id="path1036" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1042">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="976"
+         y="262"
+         width="127"
+         height="114"
+         id="rect1040" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1046">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 976,262 h 127 V 376 H 976 Z"
+         stroke-miterlimit="10"
+         id="path1044" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1050">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 1018.8,251 v 4"
+         stroke-miterlimit="10"
+         id="path1048" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1054">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 1015.8,259 v -4 h 6"
+         stroke-miterlimit="10"
+         id="path1052" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1058">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 1021.8,259 v -4 h -6"
+         stroke-miterlimit="10"
+         id="path1056" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1066">
+      <g
+         id="g1064">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1060"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="1009.4248"
+           y="281"
+           id="text1062"
+           style="text-decoration:none;text-decoration-line:none">SQL-DB's</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1070">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 975,302 -55,-8"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path1068" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1074">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 930.66276,291.29713 920,294 l 9.45093,5.6285"
+         stroke-miterlimit="10"
+         id="path1072" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1078">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 191,147 78.209961,140.82582"
+         stroke-miterlimit="10"
+         id="path1076" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1086">
+      <g
+         id="g1084">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1080"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="118.5"
+           y="161"
+           id="text1082"
+           style="text-decoration:none;text-decoration-line:none">+use</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1090">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 191,211 73.779541,232.05687"
+         stroke-miterlimit="10"
+         id="path1088" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1098">
+      <g
+         id="g1096">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1092"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="119.5"
+           y="239"
+           id="text1094"
+           style="text-decoration:none;text-decoration-line:none">+use</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1102">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="199"
+         y="263"
+         width="376"
+         height="144"
+         opacity="0.2"
+         id="rect1100" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1106">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="192"
+         y="256"
+         width="376"
+         height="144"
+         id="rect1104" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1110">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 192,256 H 568 V 400 H 192 Z"
+         stroke-miterlimit="10"
+         id="path1108" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1114">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 192,281 H 568"
+         stroke-miterlimit="10"
+         id="path1112" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1118">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 192,319 H 568"
+         stroke-miterlimit="10"
+         id="path1116" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1126">
+      <g
+         id="g1124">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1120"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="357.60547"
+           y="274"
+           id="text1122"
+           style="text-decoration:none;text-decoration-line:none">History</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1134">
+      <g
+         id="g1132">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1128"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="297"
+           id="text1130"
+           style="text-decoration:none;text-decoration-line:none">-delVar: Integer</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1142">
+      <g
+         id="g1140">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1136"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="312"
+           id="text1138"
+           style="text-decoration:none;text-decoration-line:none">-runVar: Integer</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1150">
+      <g
+         id="g1148">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1144"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="335"
+           id="text1146"
+           style="text-decoration:none;text-decoration-line:none">~addHistEntry() {query}</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1158">
+      <g
+         id="g1156">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1152"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="350"
+           id="text1154"
+           style="text-decoration:none;text-decoration-line:none">~delHistEntry() {query}</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1166">
+      <g
+         id="g1164">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1160"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="365"
+           id="text1162"
+           style="text-decoration:none;text-decoration-line:none">+manageHistEntry(currentNPC: &lt;List&gt;)</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1174">
+      <g
+         id="g1172">
+        <path
+           fill="none"
+           stroke="none"
+           id="path1168"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="197"
+           y="380"
+           id="text1170"
+           style="text-decoration:none;text-decoration-line:none">+getHist(): &lt;List&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1178">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 569,308 743,290"
+         stroke-miterlimit="10"
+         id="path1176" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1182">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         d="M 723.64885,300.46581 743,290 721.91623,283.71712"
+         id="path1180" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1186">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 723.64885,300.46581 743,290 l -21.08377,-6.28288 1.73262,16.74869"
+         stroke-miterlimit="10"
+         id="path1184" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1190">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="m 416,235 -8,20"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path1188" />
+    </g>
+    <g
+       transform="translate(2,-14)"
+       id="g1194">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 407.86588,244.00082 408,255 l 7.68276,-7.87243"
+         stroke-miterlimit="10"
+         id="path1192" />
+    </g>
+  </g>
+</svg>
