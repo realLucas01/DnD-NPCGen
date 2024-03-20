@@ -1,5 +1,7 @@
 package DBTest.TSWP1;
 
+import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +14,17 @@ public class NameController implements CommandLineRunner{
 	NameRepository nameRepository;
 
 	public static void main(String[] args) {
-		SpringApplication.run(NameController.class, args);
+		String entscheidung;
+		Scanner Event = new Scanner(System.in);
+		
+		entscheidung = Event.next();
+		if (entscheidung.equals("NEIN")) {
+			System.out.println("Ok dann nicht");
+		}else {
+			SpringApplication.run(NameController.class, args);
+		}
+		
+
 	}
 	
 	@Override
