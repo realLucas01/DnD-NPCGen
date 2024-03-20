@@ -515,8 +515,8 @@ image:models/DBPackageReady.svg[DBPackage]
 ==== Komponente Random Generator
 image:models/RandomGenerator.svg[RandomGenerator]
 
-==== Komponente Main+GenMain
-image:models/Klassendiagramm_Main_GenMain.svg[MainGenmain]
+==== Komponente Main
+image:models/Classdiagramm_Main.svg[MainGenmain]
 
 === b) Klassen und Enumerationen
 
@@ -529,8 +529,8 @@ image:models/Klassendiagramm_Main_GenMain.svg[MainGenmain]
 |History	| Klasse die sich um die korrekte Befüllung des Erstellungsverlaufs der letzten 10 NPC's kümmert
 |DBInterface	| Klasse die als Interface zwischen dem DBMS und dem Generator dient
 |DBMS		| Klasse die sich um die DB's kümmert und sicherstellt das Datenerhaltungsgrundprinzipien wie Integrität und Konsistenz sichergestellt werden können
-|Main		| Hauptklasse die zum Startzeitpunkt ausgeführt wird
-|GenMain	| Klasse für die Startseite und Navigation
+|Main		| Hauptklasse die zum Startzeitpunkt ausgeführt wird und die Oberflächenkomponenten enthält
+|MainController	| Klasse, welche die Events der Oberflächenkomponeten enthält. 
 
 |===
 
