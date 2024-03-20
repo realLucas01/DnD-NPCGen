@@ -59,7 +59,7 @@ Datenbank sollen erweiter- bzw. wartbar sein.
 
 === b) Anwedungsfalldiagramm
 Sequenzdiagramm NPC Generator
-image:models/Sequence_randomNPC.svg[sequencDiagramm]
+image:models/Sequence_random_NPC.svg[sequencDiagramm]
 
 === c) Anwendungsfälle
 
@@ -315,9 +315,9 @@ image:models/Sequence_randomNPC.svg[sequencDiagramm]
 |Functional Requirements | <<F0010>>
 |===
 
-[[UC0022]]
+[[UC0024]]
 |===
-|ID                         |**<<UC0022>>**
+|ID                         |**<<UC0024>>**
 |Name                       |Den erstellten NPC speichern
 |Description                |Der Benutzer soll in der Lage sein den erstellten NPC manuell zu speichern
 |Actors                     |Benutzer, DB
@@ -504,10 +504,15 @@ Das System muss eine Betriebszeit von mindestens 99,5 % erreichen.
 |===
 
 == 10. GUI Prototyp
+Erster Entwurf des GUI.
+image:models/GUI_0.1.svg[gui]
 
 == 11. Datenmodell
 
 === a) Klassendiagramm
+==== Klassendiagramm
+image:models/ClassDiagramm.svg[DBPackage]
+
 ==== Komponente Datenbank:
 (DBMS und SQL-DB's noch sehr Vage, da noch für keinen Datenbanktyp bzw. Library entschieden, aktuelle Einträge ergebniss von schnellem Drüberschauen von JPA und H2)
 image:models/DBPackageReady.svg[DBPackage]
@@ -523,7 +528,6 @@ image:models/Classdiagramm_Main.svg[MainGenmain]
 [options="header"]
 |===
 |Klasse/Enumeration |Beschreibung 
-|NPCClass             | Klasse die den NPC darstellt
 |RandomNPC              | Die Klasse dient dazu die NPC Teile sinnvoll zusammenzusetzen und auszubauen 
 |RandomGenerator	| Klasse zur zufällige Erstellung verschiedener Attribute
 |History	| Klasse die sich um die korrekte Befüllung des Erstellungsverlaufs der letzten 10 NPC's kümmert
