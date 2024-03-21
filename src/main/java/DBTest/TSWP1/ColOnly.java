@@ -1,6 +1,6 @@
 package DBTest.TSWP1;
 
-public interface RowOnly {
+public interface ColOnly {
 	
 	String getallNames();
 }
