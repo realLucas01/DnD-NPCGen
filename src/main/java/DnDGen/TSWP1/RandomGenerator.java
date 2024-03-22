@@ -69,36 +69,42 @@ public class RandomGenerator {
 		return finishedSetForAbilityScores;
 	}
 	
+	/* TO DO @Luca */
 	public static String randCharClass() {
 		String charClass = "NO CLASS";
 		
 		return charClass;
 	}
 	
+	/* TO DO @Lenard */
 	public static String randRace() {
 		String race = "NO RACE";
 		
 		return race;
 	}
 	
+	/* TO DO @Lenard */
 	public static String randJob() {
 		String job = "NO JOB";
 		
 		return job;
 	}
 	
+	/* TO DO @Luca */
 	public static int randLevel() {
 		int level = 0;
 		
 		return level;
 	}
 	
+	/* TO DO @Lenard */
 	public static String randDescription(String race) {
 		String description = "NO DESCRIPTION";
 		
 		return description;
 	}
 	
+	/* TO DO @Luca */
 	public static List<String> randTBF() {
 		List<String> tbf = new ArrayList<String>();
 		
@@ -107,42 +113,49 @@ public class RandomGenerator {
 		return tbf;
 	}
 	
+	/* TO DO @Lenard */
 	public static String randArmor(String charClass, String race) {
 		String armor = "NO ARMOR";
 		
 		return armor;
 	}
 	
+	/* TO DO @Luca */
 	public static String randWeapon(String charClass, String race) {
 		String weapon = "NO WEAPON";
 		
 		return weapon;
 	}
 	
+	/* TO DO @Lenard */
 	public static String randDeity(String alignment) {
 		String deity = "NO DEITY";
 		
 		return deity;
 	}
 	
+	/* TO DO @Luca */
 	public static String randLanguages() {
 		String language = "NO LANGUAGES";
 		
 		return language;
 	}
 	
+	/* TO DO @Lenard */
 	public static String randName(String gender, String race) {
 		String name = "NO NAME";
 		
 		return name;
 	}
 	
+	/* TO DO @Luca */
 	public static int randAge(String race) {
 		int age = 0;
 		
 		return age;
 	}
 	
+	/* TO DO @Luca */
 	public static List<String> randSkillProf(String charClass, String job) {
 		List<String> skillProf = new ArrayList<String>();
 		
@@ -151,12 +164,14 @@ public class RandomGenerator {
 		return skillProf;
 	}
 	
+	/* TO DO @Luca */
 	public static String randPlothook() {
 		String plothook = "NO PLOTHOOK";
 		
 		return plothook;
 	}
 	
+	/* TO DO @Lenard */
 	public static String randGender() {
 		Random rand = new Random();
 		int genderRandomNumber = rand.nextInt(2);
@@ -168,6 +183,7 @@ public class RandomGenerator {
 		return gender;
 	}
 	
+	/* TO DO @Luca */
 	public static List<String> randSpells(String charClass, int numbSpells) {
 		List<String> spells = new ArrayList<String>();
 		
