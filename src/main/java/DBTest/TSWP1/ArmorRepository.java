@@ -14,8 +14,9 @@ public interface ArmorRepository extends CrudRepository<ArmorModel, Integer>{
 	ArrayList<ArmorModel> findByArmorType(String type);
 	ArrayList<ArmorModel> findByArmorAC(Integer ac);
 	ArrayList<ArmorModel> findByArmorRmax(String rMax);
+	ArrayList<ArmorModel> findByArmorId(Integer id);
 	@Query("SELECT s.armorName AS ArmorName FROM ArmorModel s")
-	List<ColOnly> getallFirstNames();
+	List<ColOnly> getallArmortNames();
 	long count();
 	Page<ArmorModel> findAll(Pageable pageable);
 }
