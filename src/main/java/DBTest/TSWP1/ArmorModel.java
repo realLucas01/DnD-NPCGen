@@ -12,16 +12,16 @@ public class ArmorModel {
 	private Integer armorId;
 	private String armorName;
 	private String armorType;
-	private Integer armorAC;
+	private Integer armorAc;
 	private String armorRmax;
 	
 	public ArmorModel() {
 		
 	}
-	public ArmorModel(String armorName, String armorType, Integer armorAC, String armorRmax) {
+	public ArmorModel(String armorName, String armorType, Integer armorAc, String armorRmax) {
 		this.armorName= armorName;
 		this.armorType= armorType;
-		this.armorAC = armorAC;
+		this.armorAc = armorAc;
 		this.armorRmax= armorRmax;
 	}
 	
@@ -43,11 +43,11 @@ public class ArmorModel {
 	public void setArmorType(String armorType) {
 		this.armorType = armorType;
 	}
-	public Integer getArmorAC() {
-		return armorAC;
+	public Integer getArmorAc() {
+		return armorAc;
 	}
-	public void setArmorAC(Integer armorAC) {
-		this.armorAC = armorAC;
+	public void setArmorAc(Integer armorAc) {
+		this.armorAc = armorAc;
 	}
 	public String getArmorRmax() {
 		return armorRmax;
@@ -58,6 +58,6 @@ public class ArmorModel {
 	@Override
 	public String toString() {
 		return "ArmorModel [armorId=" + armorId + ", armorName=" + armorName + ", armorType=" + armorType + ", armorAC="
-				+ armorAC + ", armorRmax=" + armorRmax + "]";
+				+ armorAc + ", armorRmax=" + armorRmax + "]";
 	}
 }

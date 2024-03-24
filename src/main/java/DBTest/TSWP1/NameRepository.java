@@ -22,4 +22,6 @@ public interface NameRepository extends CrudRepository<NameModel, Integer>{
 	@Modifying
 	@Query("update NameModel u set u.nameFirstName = ?1, u.nameLastName = ?2, u.nameOccurance = ?3 where u.nameId = ?4")
 	void setNameInfoById(String nameFirstName, String nameLastName, String nameOccurance, Integer nameId);
+	@Query("SELECT p FROM ArmorModel p WHERE p.armorType = ?1")
+	Page<ArmorModel> findAllByNameOccurance(String armorType,Pageable pageable2);
 }

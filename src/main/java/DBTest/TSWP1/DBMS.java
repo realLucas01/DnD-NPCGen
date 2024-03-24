@@ -65,7 +65,7 @@ public class DBMS implements CommandLineRunner{
 		Scanner Event2 = new Scanner(System.in);
 		System.out.println("Für welche Datenbank soll eine Operation ausgeführt werden?(name/armor)");
 		String dbname = Event2.next();
-		System.out.println("Welche Operation soll ausgeführt werden?(row/randrow/rowpref/multrowpref/col/save/update)");
+		System.out.println("Welche Operation soll ausgeführt werden?(row/randrow/rowpref/rowmultpref/multrowpref/col/save/update)");
 		String entscheidung2 = Event2.next();
 		if (entscheidung2.equals("row")) {
 			System.out.println(getRow(dbname));
@@ -74,10 +74,13 @@ public class DBMS implements CommandLineRunner{
 			System.out.println(randomRow(dbname));
 		}
 		else if (entscheidung2.equals("rowpref")){
-			System.out.println(getRow(dbname));
+			System.out.println(rowPref(dbname,"Medium"));
+		}
+		else if (entscheidung2.equals("rowmultpref")){
+			System.out.println(rowMultPref(dbname,"Medium",12));
 		}
 		else if (entscheidung2.equals("multrowpref")){
-			System.out.println(getRow(dbname));
+			System.out.println(multRowPref(dbname,"Medium"));
 		}
 		else if (entscheidung2.equals("col")) {
 			System.out.println(onlyColumn());
@@ -105,6 +108,7 @@ public class DBMS implements CommandLineRunner{
 		}
 	}
 		
+
 	public void TestInitiallizeNameDB() {
 		
 		Long Zahl = nameRepository.count();
@@ -163,7 +167,7 @@ public class DBMS implements CommandLineRunner{
 				ConvertetDataset.add(0, Entryarmor.getArmorId().toString());
 				ConvertetDataset.add(1, Entryarmor.getArmorName());
 				ConvertetDataset.add(2, Entryarmor.getArmorType());
-				ConvertetDataset.add(3, Entryarmor.getArmorAC().toString());
+				ConvertetDataset.add(3, Entryarmor.getArmorAc().toString());
 				ConvertetDataset.add(4, Entryarmor.getArmorRmax());
 				System.out.println(ConvertetDataset.get(2));
 				break;
@@ -185,7 +189,7 @@ public class DBMS implements CommandLineRunner{
 	}
 
 
-	public ArrayList<?> randomRow(String dbname) {
+	public ArrayList<String> randomRow(String dbname) {
 	    Long qty;
 	    Page<?> questionPage;
 	    int idx;
@@ -196,7 +200,6 @@ public class DBMS implements CommandLineRunner{
 			qty = nameRepository.count();
 			idx = (int)(Math.random() * qty);
 		    questionPage = nameRepository.findAll(PageRequest.of(idx, 1));
-		    Question q = null;
 		    if (questionPage.hasContent()) {
 		    	NameModel randname = (NameModel) questionPage.getContent().get(0);
 		    	randRow.add(0, randname.getNameId().toString());
@@ -209,12 +212,13 @@ public class DBMS implements CommandLineRunner{
 			qty = armorRepository.count();
 			idx = (int)(Math.random() * qty);
 		    questionPage = armorRepository.findAll(PageRequest.of(idx, 1));
+		    System.out.println(questionPage.getSize());
 		    if (questionPage.hasContent()) {
 		    	ArmorModel randname = (ArmorModel) questionPage.getContent().get(0);
 		    	randRow.add(0, randname.getArmorId().toString());
 		    	randRow.add(1, randname.getArmorName());
 		    	randRow.add(2, randname.getArmorType());
-		    	randRow.add(3, randname.getArmorAC().toString());
+		    	randRow.add(3, randname.getArmorAc().toString());
 		    	randRow.add(4, randname.getArmorRmax());
 		    }
 			break;
@@ -225,18 +229,106 @@ public class DBMS implements CommandLineRunner{
 	    return randRow;
 	}
 	
-	public void rowPref(String dbname, String pref){
+	public ArrayList<String> rowPref(String dbname, String pref){
+	    int qty;
+	    Page<?> questionPage2;
+	    int idx;
+	    ArrayList<String> randRow = new ArrayList<String>();
 	    
 		switch(dbname) {
 		case "name":
-
+			qty = nameRepository.findByNameOccurance(pref).size();
+			idx = (int)(Math.random() * qty);
+		    questionPage2 = nameRepository.findAllByNameOccurance(pref,PageRequest.of(idx,1));
+		    if (questionPage2.hasContent()) {
+		    	NameModel randname = (NameModel) questionPage2.getContent().get(0);
+		    	randRow.add(0, randname.getNameId().toString());
+		    	randRow.add(1, randname.getNameFirstName());
+		    	randRow.add(2, randname.getNameLastName());
+		    	randRow.add(3, randname.getNameOccurance());
+		    }
 			break;
 		case "armor":
-
+			qty = armorRepository.findByArmorType(pref).size();
+			//System.out.println(qty);
+			idx = (int)(Math.random() * qty);
+			//System.out.println(idx);
+			//System.out.println(pref);
+		    questionPage2 = armorRepository.findAllByArmorType(pref,PageRequest.of(idx,1));
+		    //System.out.println(questionPage2.getSize());
+		    if (questionPage2.hasContent()) {
+		    	ArmorModel randname = (ArmorModel) questionPage2.getContent().get(0);
+		    	randRow.add(0, randname.getArmorId().toString());
+		    	randRow.add(1, randname.getArmorName());
+		    	randRow.add(2, randname.getArmorType());
+		    	randRow.add(3, randname.getArmorAc().toString());
+		    	randRow.add(4, randname.getArmorRmax());
+		    }
 			break;
 		default:
 		
 		}
+		return randRow;
+	}
+	
+	public ArrayList<String> rowMultPref(String dbname, String pref,Integer AC){
+	    int qty;
+	    Page<?> questionPage2;
+	    int idx;
+	    ArrayList<String> randRow = new ArrayList<String>();
+	    
+		switch(dbname) {
+		case "name":
+			break;
+		case "armor":
+			qty = armorRepository.findByMultPref(pref, AC).size();
+			System.out.println(qty);
+			System.out.println(armorRepository.findByMultPref(pref, AC).toString());
+			idx = (int)(Math.random() * qty);
+			System.out.println(idx);
+		    questionPage2 = armorRepository.findAllByArmorTypeAndArmorAc(pref,AC,PageRequest.of(idx,1));
+		    System.out.println(questionPage2.getSize());
+		    if (questionPage2.hasContent()) {
+		    	ArmorModel randname = (ArmorModel) questionPage2.getContent().get(0);
+		    	randRow.add(0, randname.getArmorId().toString());
+		    	randRow.add(1, randname.getArmorName());
+		    	randRow.add(2, randname.getArmorType());
+		    	randRow.add(3, randname.getArmorAc().toString());
+		    	randRow.add(4, randname.getArmorRmax());
+		    }
+			break;
+		default:
+		
+		}
+		return randRow;
+	}
+	
+	public ArrayList<?> multRowPref(String dbname, String pref){
+		ArrayList<String> rand1 = new ArrayList<String>();
+		ArrayList<String> rand2 = new ArrayList<String>();
+		ArrayList<String> randresult = new ArrayList<String>();
+		boolean unterschied;
+		
+		switch(dbname) {
+		case "name":
+			break;
+		case "armor":
+			unterschied = false;
+		    rand1.addAll(rowPref(dbname, pref));
+		    System.out.println(rand1);
+		    rand2.addAll(rowPref(dbname, pref));
+			while (rand1.equals(rand2)) {
+			    rand2.clear();
+				rand2.addAll(rowPref(dbname, pref));
+		    }
+			System.out.println(rand2);
+			randresult.addAll(rand1);
+			randresult.addAll(rand2);
+			break;
+		default:
+		
+		}
+		return randresult;
 	}
 	
 	public List<ColOnly> onlyColumn() {
