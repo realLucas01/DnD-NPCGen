@@ -9,6 +9,22 @@ public class RandomGenerator {
 		System.out.println("Hier ist die Main");
 		
 	}
+	//UNGETESTET
+	//Aufteilung eines großen String in kleinere
+	public static ArrayList<String> bigStringToDividedString(String bigString){
+		ArrayList<String> dividedString = new ArrayList<>(); //rückgabe, des aufgeteilten Strings als eine Liste
+		String[] partsOfTheBigString= bigString.split(","); //Teilung des großen Strings an den Stelle wo ein Komma ist
+		Integer numberOfPartStrings = partsOfTheBigString.length; // Anzahl der Strings die voneinander getrennt wurden
+
+		for (int currentPart=0; currentPart < numberOfPartStrings; currentPart++){ //jeder Teilstring wird der Liste hinzugefügt
+			if (dividedString.contains(partsOfTheBigString[currentPart])){
+
+			}else {
+				dividedString.add(partsOfTheBigString[currentPart]);
+			}
+		}
+		return dividedString;
+	}
 	
 	public static int diceThrower(Integer diceCount, Integer diceNumber) {
 		int rolled = 0;
@@ -70,7 +86,7 @@ public class RandomGenerator {
 	}
 
 	//UNGETESTET
-	/* TO DO @Luca */
+	/* @Luca */
 	public static String randCharClass() {
 		ArrayList<String> rndClass =  new ArrayList<String>();
 		rndClass= DBMS.getRandRow("Class");
@@ -94,7 +110,7 @@ public class RandomGenerator {
 	}
 
 	//UNGETESTET
-	/* TO DO @Luca */
+	/* @Luca */
 	public static int randLevel() {
 		Random rndLevel = new Random();
 
@@ -119,19 +135,87 @@ public class RandomGenerator {
 		
 		return tbf;
 	}
+
+	//UNGETESTET
+	// Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
+	/* @Luca */
+	public static ArrayList<String> figureOutProfList (String neededProfList, String charClass, String race ){
+		ArrayList<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurück gegeben wird
+		ArrayList<String> databaseReturn = new ArrayList<>(); // Liste die von der DB zurück kommt
+		ArrayList<String> featureList = new ArrayList<>(); // Rassen Features
+		ArrayList<String> dividedString = new ArrayList<>(); // Liste die die SubStrings einer Spalte aus der DB enthalten
+		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
+
+	switch(neededProfList){	// Entscheidung welche ProfListe man benötigt
+		case "armor":
+			databaseReturn = DBMS.getRow("Class", charClass );
+			profList = bigStringToDividedString(databaseReturn.get(4));
+
+			databaseReturn = DBMS.getRow("Race", race);
+			featureList = bigStringToDividedString(databaseReturn.get(3));	//Datensätzte werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
+
+			for ( String feature : featureList){	// die erhaltenen Rassen Features werden durchgecheckt ob welche dabei sind die Armor Prof geben
+				databaseReturn = DBMS.getRow("Features", feature);
+				kindOfFeature = databaseReturn.get(3);
+
+				if(kindOfFeature.contains("armor:")){	// der Teil des Features an dem man Feststellt ob es sich um einen Armor Prof handelt wird entfernt
+					kindOfFeature.replace("armor:", "");
+					profList.addAll(bigStringToDividedString(kindOfFeature));
+					break;
+				}
+			}
+			break;
+		case "weapon":	//siehe "armor" nur jetzt mit den waffen
+			databaseReturn = DBMS.getRow("Class", charClass );
+			profList = bigStringToDividedString(databaseReturn.get(3));
+
+			databaseReturn = DBMS.getRow("Race", race);
+			featureList = bigStringToDividedString(databaseReturn.get(3));
+
+			for ( String feature : featureList){
+				databaseReturn = DBMS.getRow("Features", feature);
+				kindOfFeature = databaseReturn.get(3);
+
+				if(kindOfFeature.contains("weapon:")){
+					kindOfFeature.replace("weapon:", "");
+					profList.addAll(bigStringToDividedString(kindOfFeature));
+					break;
+				}
+		//jederzeit erweiterbar mit weiteren cases
+			}
+			break;
+	}
+		Set<String> removeDuplicate = new HashSet<>(profList); // die ArrayList wird in ein Set gestopft um Duplicate innerhalb zu entfernen
+		profList.clear();
+		profList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
+		return profList;
+	}
 	
 	/* TO DO @Luca */
-	public static String randArmor(String charClass, String race) {
+	public static String randArmor(ArrayList<String> armorProf) {
 		String armor = "NO ARMOR";
 		//Pain
 		
 		return armor;
 	}
+	//UNGETESTET
+	/* @Luca */
+	public static String randWeapon(ArrayList<String> weaponProf) {
+		Random rndNumber = new Random();	// für zufallszahlen
+		//int rndWeaponProf  = 0;
+		int lengthOfWeaponProf = weaponProf.size();
+		String weapon;	//das Ergebniss was zurück gegeben wird
 	
-	/* TO DO @Luca */
-	public static String randWeapon(String charClass, String race) {
-		String weapon = "NO WEAPON";
-		//Pain
+		//rndWeaponProf = rndNumber.nextInt(lengthOfWeaponProf);
+
+		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
+
+		if(rndWeapon.contains("weapon")){ //hier wird gescheckt ob es direkt eine Waffe ist oder eine Prof in einem Waffenbereich
+			weapon= DBMS.getRowWithPref("weapon", rndWeapon).get(1);
+		}else {
+			weapon=rndWeapon;
+		}
+		//String weapon = "NO WEAPON";
 
 		return weapon;
 	}
@@ -144,7 +228,7 @@ public class RandomGenerator {
 	}
 
 	//UNGETESTET
-	/* TO DO @Luca */
+	/* @Luca */
 	public static String randLanguages() {
 
 		ArrayList<String> rndLang =  new ArrayList<String>();
@@ -161,10 +245,10 @@ public class RandomGenerator {
 	}
 
 	//UNGETESTET
-	/* TO DO @Luca */
+	/* @Luca */
 	public static int randAge(String race) {
 		ArrayList<String> raceList =  new ArrayList<String>();
-		raceList = DBMS.RowWithPref(race);
+		raceList = DBMS.getRow("Race", race);
 
 		int ageAdult = Integer.parseInt(raceList.get(4));
 		int ageMax = Integer.parseInt(raceList.get(5));
@@ -177,27 +261,27 @@ public class RandomGenerator {
 	}
 
 	//UNGETESTET
-	/* TO DO @Luca */
-	public static List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> skillList) {
+	/* @Luca */
+	public static List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> knownskillList) {
 		Random rndSkill= new Random();
 
-		//alle bereits bekannten Skills werden entfernt und wenn dann keine möglichen mehr frei sind wird die SkillList wieder zurück gegeben
-		possibleSkills.removeAll(skillList);
+		//alle bereits bekannten Skills werden entfernt und wenn dann keine möglichen mehr frei sind, wird die SkillList wieder zurückgegeben
+		possibleSkills.removeAll(knownskillList);
 		if(possibleSkills.isEmpty()){
-			return skillList;
+			return knownskillList;
 		}
 
-		//es werden solange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
+		//es werden so lange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
 		for (Integer currentNumberOfNewSkills =0; currentNumberOfNewSkills < numberSkill; currentNumberOfNewSkills++ ){
 
-			Integer lenghtListPossibleSkills = possibleSkills.size();
-			Integer skillIndex = rndSkill.nextInt(lenghtListPossibleSkills);
-			skillList.add(possibleSkills.get(skillIndex));
+			Integer lengthListPossibleSkills = possibleSkills.size();
+			Integer skillIndex = rndSkill.nextInt(lengthListPossibleSkills);
+			knownskillList.add(possibleSkills.get(skillIndex));
 			possibleSkills.remove(skillIndex);
 
 		}
 
-		return skillList;
+		return knownskillList;
 }
 	
 	/* TO DO @Luca */
