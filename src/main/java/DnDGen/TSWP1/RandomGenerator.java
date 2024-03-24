@@ -68,12 +68,15 @@ public class RandomGenerator {
 		System.out.println("sorted set of values for ability scores: " + finishedSetForAbilityScores);
 		return finishedSetForAbilityScores;
 	}
-	
+
+	//UNGETESTET
 	/* TO DO @Luca */
 	public static String randCharClass() {
-		String charClass = "NO CLASS";
-		
-		return charClass;
+		ArrayList<String> rndClass =  new ArrayList<String>();
+		rndClass= DBMS.getRandRow("Class");
+
+		return rndClass.get(1);
+
 	}
 	
 	/* TO DO @Lenard */
@@ -89,10 +92,14 @@ public class RandomGenerator {
 		
 		return job;
 	}
-	
+
+	//UNGETESTET
 	/* TO DO @Luca */
 	public static int randLevel() {
-		int level = 0;
+		Random rndLevel = new Random();
+
+		int level = rndLevel.nextInt(21);
+		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
 		
 		return level;
 	}
@@ -113,9 +120,10 @@ public class RandomGenerator {
 		return tbf;
 	}
 	
-	/* TO DO @Lenard */
+	/* TO DO @Luca */
 	public static String randArmor(String charClass, String race) {
 		String armor = "NO ARMOR";
+		//Pain
 		
 		return armor;
 	}
@@ -123,7 +131,8 @@ public class RandomGenerator {
 	/* TO DO @Luca */
 	public static String randWeapon(String charClass, String race) {
 		String weapon = "NO WEAPON";
-		
+		//Pain
+
 		return weapon;
 	}
 	
@@ -133,12 +142,15 @@ public class RandomGenerator {
 		
 		return deity;
 	}
-	
+
+	//UNGETESTET
 	/* TO DO @Luca */
 	public static String randLanguages() {
-		String language = "NO LANGUAGES";
-		
-		return language;
+
+		ArrayList<String> rndLang =  new ArrayList<String>();
+		rndLang = DBMS.getRandRow("Language");
+
+		return rndLang.get(1);
 	}
 	
 	/* TO DO @Lenard */
@@ -147,22 +159,46 @@ public class RandomGenerator {
 		
 		return name;
 	}
-	
+
+	//UNGETESTET
 	/* TO DO @Luca */
 	public static int randAge(String race) {
-		int age = 0;
+		ArrayList<String> raceList =  new ArrayList<String>();
+		raceList = DBMS.RowWithPref(race);
+
+		int ageAdult = Integer.parseInt(raceList.get(4));
+		int ageMax = Integer.parseInt(raceList.get(5));
+
+		Random rndAge = new Random();
+
+		int age = rndAge.nextInt(ageMax) + ageAdult;
 		
 		return age;
 	}
-	
+
+	//UNGETESTET
 	/* TO DO @Luca */
-	public static List<String> randSkillProf(String charClass, String job) {
-		List<String> skillProf = new ArrayList<String>();
-		
-		skillProf.add("NO SKILL PROF");
-		
-		return skillProf;
-	}
+	public static List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> skillList) {
+		Random rndSkill= new Random();
+
+		//alle bereits bekannten Skills werden entfernt und wenn dann keine möglichen mehr frei sind wird die SkillList wieder zurück gegeben
+		possibleSkills.removeAll(skillList);
+		if(possibleSkills.isEmpty()){
+			return skillList;
+		}
+
+		//es werden solange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
+		for (Integer currentNumberOfNewSkills =0; currentNumberOfNewSkills < numberSkill; currentNumberOfNewSkills++ ){
+
+			Integer lenghtListPossibleSkills = possibleSkills.size();
+			Integer skillIndex = rndSkill.nextInt(lenghtListPossibleSkills);
+			skillList.add(possibleSkills.get(skillIndex));
+			possibleSkills.remove(skillIndex);
+
+		}
+
+		return skillList;
+}
 	
 	/* TO DO @Luca */
 	public static String randPlothook() {
@@ -186,7 +222,7 @@ public class RandomGenerator {
 	/* TO DO @Luca */
 	public static List<String> randSpells(String charClass, int numbSpells) {
 		List<String> spells = new ArrayList<String>();
-		
+		//PAIN
 		spells.add("NO SPELLS");
 		
 		return spells;
