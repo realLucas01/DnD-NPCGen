@@ -41,6 +41,7 @@ public class Main extends Application {
         final ComboBox cbRace = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbRace, 2, 1);
         cbRace.getItems().addAll("Option 1", "Option 2", "Option 2");
+        cbRace.getSelectionModel().selectFirst();
 
 
         //Klasse
@@ -50,6 +51,7 @@ public class Main extends Application {
         final ComboBox cbClass = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbClass, 2, 2);
         cbClass.getItems().addAll("Option 1", "Option 2", "Option 2");
+        cbClass.getSelectionModel().selectFirst();
 
 
         //Job
@@ -59,6 +61,7 @@ public class Main extends Application {
         final ComboBox cbJob = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbJob, 2, 3);
         cbJob.getItems().addAll("Option 1", "Option 2", "Option 2");
+        cbJob.getSelectionModel().selectFirst();
 
 
         //Level
@@ -68,6 +71,7 @@ public class Main extends Application {
         final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbLevel, 2, 4);
         cbLevel.getItems().addAll("Option 1", "Option 2", "Option 2");
+        cbLevel.getSelectionModel().selectFirst();
 
 
         //Button
