@@ -356,11 +356,34 @@ public class DBMS implements CommandLineRunner{
 	}
 	 
 	 public void saveEntry(String vorname, String nachname, String occurance) {
-			nameRepository.save(new NameModel(vorname,nachname,occurance));
+		 HistoryModel newentry = new HistoryModel();
+		 newentry.setHistoryFirstName(vorname);
+		 newentry.setHistoryLastName(nachname);
+		 newentry.setHistoryOccurance(occurance);
+		 return ;
 	 }
 	 
 	 public void updateEntry(String vorname,String nachname,String occurance,Integer ID) {
-		 	nameRepository.setNameInfoById(vorname,nachname,occurance,ID);
+		 HistoryModel updatedentry = new HistoryModel();
+		 updatedentry.setHistoryFirstName(vorname);
+		 updatedentry.setHistoryLastName(nachname);
+		 updatedentry.setHistoryOccurance(occurance);
+		 updatedentry.setHistoryId(ID);
+		 return ;
+	 }
+	 
+	 @Transactional
+	 public void manageHistory(String typeOfChange, HistoryModel histchange) {
+		 Integer IDVAR;
+		 
+		 switch (typeOfChange) {
+		 case "create":
+			 
+			 break;
+			 
+		 case "update":
+			 break;
+		 }
 	 }
 			
 		/* nameRepository.findByNameFirstName("Adrik").forEach(
