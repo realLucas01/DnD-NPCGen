@@ -3,29 +3,37 @@ package DnDGen.TSWP1;
 import java.util.*;
 
 public class RandomGenerator {
-	
+
+	public static DBMS DBMS;
 	public static void main(String []args) {
 		
 		System.out.println("Hier ist die Main");
-		
+
 	}
-	//UNGETESTET
 	//Aufteilung eines großen String in kleinere
-	public static ArrayList<String> bigStringToDividedString(String bigString){
+	public static ArrayList<String> bigStringToDividedString(String bigString) {
 		ArrayList<String> dividedString = new ArrayList<>(); //rückgabe, des aufgeteilten Strings als eine Liste
-		String[] partsOfTheBigString= bigString.split(","); //Teilung des großen Strings an den Stelle wo ein Komma ist
-		Integer numberOfPartStrings = partsOfTheBigString.length; // Anzahl der Strings die voneinander getrennt wurden
+		String[] partsOfTheBigString = bigString.split(","); //Teilung des großen Strings an den Stellen wo ein Komma ist
+		//Integer numberOfPartStrings = partsOfTheBigString.length; // Anzahl der Strings die voneinander getrennt wurden
 
-		for (int currentPart=0; currentPart < numberOfPartStrings; currentPart++){ //jeder Teilstring wird der Liste hinzugefügt
-			if (dividedString.contains(partsOfTheBigString[currentPart])){
+		for (String s : partsOfTheBigString) { //jeder Teilstring wird der Liste hinzugefügt
+			if (dividedString.contains(s)) {
 
-			}else {
-				dividedString.add(partsOfTheBigString[currentPart]);
+			} else {
+				dividedString.add(s);
 			}
 		}
 		return dividedString;
+	/*}for (int currentPart=0; currentPart < numberOfPartStrings; currentPart++){ //jeder Teilstring wird der Liste hinzugefügt
+		if (dividedString.contains(partsOfTheBigString[currentPart])){
+
+		}else {
+			dividedString.add(partsOfTheBigString[currentPart]);
+		}
 	}
-	
+
+	 */
+	}
 	public static int diceThrower(Integer diceCount, Integer diceNumber) {
 		int rolled = 0;
 		int addedRolls = 0;
@@ -88,11 +96,9 @@ public class RandomGenerator {
 	//UNGETESTET
 	/* @Luca */
 	public static String randCharClass() {
-		ArrayList<String> rndClass =  new ArrayList<String>();
-		rndClass= DBMS.getRandRow("Class");
+		ArrayList<String> rndClass= DBMS.getRandRow("Class");
 
 		return rndClass.get(1);
-
 	}
 	
 	/* TO DO @Lenard */
@@ -109,15 +115,11 @@ public class RandomGenerator {
 		return job;
 	}
 
-	//UNGETESTET
 	/* @Luca */
 	public static int randLevel() {
 		Random rndLevel = new Random();
-
-		int level = rndLevel.nextInt(21);
-		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
-		
-		return level;
+        //Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
+		return rndLevel.nextInt(21);
 	}
 	
 	/* TO DO @Lenard */
@@ -129,7 +131,7 @@ public class RandomGenerator {
 	
 	/* TO DO @Luca */
 	public static List<String> randTBF() {
-		List<String> tbf = new ArrayList<String>();
+		List<String> tbf = new ArrayList<>();
 		
 		tbf.add("NO TBF");
 		
@@ -140,10 +142,10 @@ public class RandomGenerator {
 	// Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
 	/* @Luca */
 	public static ArrayList<String> figureOutProfList (String neededProfList, String charClass, String race ){
-		ArrayList<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurück gegeben wird
-		ArrayList<String> databaseReturn = new ArrayList<>(); // Liste die von der DB zurück kommt
-		ArrayList<String> featureList = new ArrayList<>(); // Rassen Features
-		ArrayList<String> dividedString = new ArrayList<>(); // Liste die die SubStrings einer Spalte aus der DB enthalten
+		ArrayList<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
+		ArrayList<String> databaseReturn ; // Liste die von der DB zurückkommt
+		ArrayList<String> featureList ; // Rassen Features
+		//ArrayList<String> dividedString = new ArrayList<>(); // Liste in der die SubStrings einer Spalte aus der DB enthalten
 		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
 
 	switch(neededProfList){	// Entscheidung welche ProfListe man benötigt
@@ -152,13 +154,13 @@ public class RandomGenerator {
 			profList = bigStringToDividedString(databaseReturn.get(4));
 
 			databaseReturn = DBMS.getRow("Race", race);
-			featureList = bigStringToDividedString(databaseReturn.get(3));	//Datensätzte werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
+			featureList = bigStringToDividedString(databaseReturn.get(3));	//Datensätze werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
 
-			for ( String feature : featureList){	// die erhaltenen Rassen Features werden durchgecheckt ob welche dabei sind die Armor Prof geben
+			for ( String feature : featureList){	// die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
 				databaseReturn = DBMS.getRow("Features", feature);
 				kindOfFeature = databaseReturn.get(3);
 
-				if(kindOfFeature.contains("armor:")){	// der Teil des Features an dem man Feststellt ob es sich um einen Armor Prof handelt wird entfernt
+				if(kindOfFeature.contains("armor:")){	// der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
 					kindOfFeature.replace("armor:", "");
 					profList.addAll(bigStringToDividedString(kindOfFeature));
 					break;
@@ -177,7 +179,7 @@ public class RandomGenerator {
 				kindOfFeature = databaseReturn.get(3);
 
 				if(kindOfFeature.contains("weapon:")){
-					kindOfFeature.replace("weapon:", "");
+					kindOfFeature.replace("weapon:", " ");
 					profList.addAll(bigStringToDividedString(kindOfFeature));
 					break;
 				}
@@ -185,17 +187,28 @@ public class RandomGenerator {
 			}
 			break;
 	}
-		Set<String> removeDuplicate = new HashSet<>(profList); // die ArrayList wird in ein Set gestopft um Duplicate innerhalb zu entfernen
+		Set<String> removeDuplicate = new HashSet<>(profList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
 		profList.clear();
 		profList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
 		return profList;
 	}
-	
+
+	//UNGETESTET
 	/* TO DO @Luca */
 	public static String randArmor(ArrayList<String> armorProf) {
-		String armor = "NO ARMOR";
-		//Pain
-		
+		String armor; //return value
+		Random rndNumber = new Random(); //Zufallszahlen
+		int lengthOfArmorProfList = armorProf.size();
+
+		String rndArmor = armorProf.get(rndNumber.nextInt(lengthOfArmorProfList));
+
+		if(rndArmor.contains("Armor")){
+			ArrayList<String> armorList=  DBMS.getRowWithPref("armor", rndArmor);
+			armor = armorList.get(1);
+		}else{
+			armor = rndArmor;
+		}
+
 		return armor;
 	}
 	//UNGETESTET
@@ -204,14 +217,16 @@ public class RandomGenerator {
 		Random rndNumber = new Random();	// für zufallszahlen
 		//int rndWeaponProf  = 0;
 		int lengthOfWeaponProf = weaponProf.size();
-		String weapon;	//das Ergebniss was zurück gegeben wird
+		String weapon;	//das Ergebnis was zurückgegeben wird
 	
 		//rndWeaponProf = rndNumber.nextInt(lengthOfWeaponProf);
 
 		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
 
-		if(rndWeapon.contains("weapon")){ //hier wird gescheckt ob es direkt eine Waffe ist oder eine Prof in einem Waffenbereich
-			weapon= DBMS.getRowWithPref("weapon", rndWeapon).get(1);
+		if(rndWeapon.contains("weapon")){ //hier wird gescheckt, ob es direkt eine Waffe ist oder eine Prof in einem Waffenbereich
+
+			ArrayList<String> armorList = DBMS.getRowWithPref("weapon", rndWeapon);
+			weapon = armorList.get(1);
 		}else {
 			weapon=rndWeapon;
 		}
@@ -230,9 +245,7 @@ public class RandomGenerator {
 	//UNGETESTET
 	/* @Luca */
 	public static String randLanguages() {
-
-		ArrayList<String> rndLang =  new ArrayList<String>();
-		rndLang = DBMS.getRandRow("Language");
+		ArrayList<String>rndLang = DBMS.getRandRow("Language");
 
 		return rndLang.get(1);
 	}
@@ -247,48 +260,45 @@ public class RandomGenerator {
 	//UNGETESTET
 	/* @Luca */
 	public static int randAge(String race) {
-		ArrayList<String> raceList =  new ArrayList<String>();
+		ArrayList<String> raceList;
 		raceList = DBMS.getRow("Race", race);
-
 		int ageAdult = Integer.parseInt(raceList.get(4));
 		int ageMax = Integer.parseInt(raceList.get(5));
 
 		Random rndAge = new Random();
 
-		int age = rndAge.nextInt(ageMax) + ageAdult;
-		
-		return age;
+		return rndAge.nextInt(ageMax) + ageAdult;
 	}
 
-	//UNGETESTET
+	//Schroedingers Funktion
 	/* @Luca */
-	public static List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> knownskillList) {
+	public static List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> knownSkillList) {
 		Random rndSkill= new Random();
 
 		//alle bereits bekannten Skills werden entfernt und wenn dann keine möglichen mehr frei sind, wird die SkillList wieder zurückgegeben
-		possibleSkills.removeAll(knownskillList);
 		if(possibleSkills.isEmpty()){
-			return knownskillList;
+			return knownSkillList;
 		}
-
 		//es werden so lange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
-		for (Integer currentNumberOfNewSkills =0; currentNumberOfNewSkills < numberSkill; currentNumberOfNewSkills++ ){
+		for (int currentNumberOfNewSkills = 0; currentNumberOfNewSkills < numberSkill; currentNumberOfNewSkills++ ){
 
-			Integer lengthListPossibleSkills = possibleSkills.size();
+			int lengthListPossibleSkills = possibleSkills.size();
 			Integer skillIndex = rndSkill.nextInt(lengthListPossibleSkills);
-			knownskillList.add(possibleSkills.get(skillIndex));
+			knownSkillList.add(possibleSkills.get(skillIndex));
 			possibleSkills.remove(skillIndex);
-
 		}
+		Set<String> removeDuplicate = new HashSet<>(knownSkillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
+		knownSkillList.clear();
+		knownSkillList.addAll(removeDuplicate);
 
-		return knownskillList;
+		return knownSkillList;
 }
 	
 	/* TO DO @Luca */
-	public static String randPlothook() {
-		String plothook = "NO PLOTHOOK";
+	public static String randPlotHook() {
+		String plotHook = "NO PLOT HOOK";
 		
-		return plothook;
+		return plotHook;
 	}
 	
 	/* TO DO @Lenard */
@@ -305,7 +315,7 @@ public class RandomGenerator {
 	
 	/* TO DO @Luca */
 	public static List<String> randSpells(String charClass, int numbSpells) {
-		List<String> spells = new ArrayList<String>();
+		List<String> spells = new ArrayList<>();
 		//PAIN
 		spells.add("NO SPELLS");
 		
