@@ -8,7 +8,6 @@ public class RandomGenerator {
 	public static void main(String []args) {
 		
 		System.out.println("Hier ist die Main");
-
 	}
 	//Aufteilung eines großen String in kleinere
 	public static ArrayList<String> bigStringToDividedString(String bigString) {
@@ -69,7 +68,7 @@ public class RandomGenerator {
 	//UNGETESTET
 	/* @Luca */
 	public static String randCharClass() {
-		ArrayList<String> rndClass= DBMS.getRandRow("Class");
+		ArrayList<String> rndClass= DBMS.getRandRow("class");
 
 		return rndClass.get(1);
 	}
@@ -132,14 +131,14 @@ public class RandomGenerator {
 
 	switch(neededProfList){	// Entscheidung welche ProfListe man benötigt
 		case "armor":
-			databaseReturn = DBMS.getRow("Class", charClass );
+			databaseReturn = DBMS.getRow("class", charClass );
 			profList = bigStringToDividedString(databaseReturn.get(4));
 
-			databaseReturn = DBMS.getRow("Race", race);
+			databaseReturn = DBMS.getRow("race", race);
 			featureList = bigStringToDividedString(databaseReturn.get(3));	//Datensätze werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
 
 			for ( String feature : featureList){	// die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
-				databaseReturn = DBMS.getRow("Features", feature);
+				databaseReturn = DBMS.getRow("features", feature);
 				kindOfFeature = databaseReturn.get(3);
 
 				if(kindOfFeature.contains("armor:")){	// der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
@@ -150,14 +149,14 @@ public class RandomGenerator {
 			}
 			break;
 		case "weapon":	//siehe "armor" nur jetzt mit den waffen
-			databaseReturn = DBMS.getRow("Class", charClass );
+			databaseReturn = DBMS.getRow("class", charClass );
 			profList = bigStringToDividedString(databaseReturn.get(3));
 
-			databaseReturn = DBMS.getRow("Race", race);
+			databaseReturn = DBMS.getRow("race", race);
 			featureList = bigStringToDividedString(databaseReturn.get(3));
 
 			for ( String feature : featureList){
-				databaseReturn = DBMS.getRow("Features", feature);
+				databaseReturn = DBMS.getRow("features", feature);
 				kindOfFeature = databaseReturn.get(3);
 
 				if(kindOfFeature.contains("weapon:")){
@@ -238,7 +237,7 @@ public class RandomGenerator {
 	//UNGETESTET
 	/* @Luca */
 	public static String randLanguages() {
-		ArrayList<String>rndLang = DBMS.getRandRow("Language");
+		ArrayList<String>rndLang = DBMS.getRandRow("language");
 
 		return rndLang.get(1);
 	}
@@ -272,7 +271,7 @@ public class RandomGenerator {
 	/* @Luca */
 	public static int randAge(String race) {
 		ArrayList<String> raceList;
-		raceList = DBMS.getRow("Race", race);
+		raceList = DBMS.getRow("race", race);
 		int ageAdult = Integer.parseInt(raceList.get(4));
 		int ageMax = Integer.parseInt(raceList.get(5));
 
