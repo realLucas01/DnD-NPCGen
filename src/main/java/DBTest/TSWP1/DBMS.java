@@ -37,6 +37,8 @@ public class DBMS implements CommandLineRunner{
 	NameRepository nameRepository;
 	@Autowired
 	ArmorRepository armorRepository;
+	@Autowired
+	HistoryRepository historyRepository;
 
 	public static void main(String[] args) {
 		String entscheidung;
@@ -58,6 +60,7 @@ public class DBMS implements CommandLineRunner{
 		
 		TestInitiallizeNameDB();
 		TestInitiallizeArmorDB();
+		TestInitiallizeHistoryDB();
 		tester();
 		}
 	
@@ -96,15 +99,17 @@ public class DBMS implements CommandLineRunner{
 			saveEntry(vorname, nachname, occurance);
 		}
 		else if (entscheidung2.equals("update")) {
-			System.out.println("Id des zu veränderten Charakter?");
-			int ID = Event2.nextInt();
+			//System.out.println("Id des zu veränderten Charakter?");
+			//int ID = Event2.nextInt();
 			System.out.println("Wie ist der neue Vorname des Charakters?");
 			String vorname = Event2.next();
 			System.out.println("Wie ist der neue Nachname des Charakters?");
 			String nachname = Event2.next();
 			System.out.println("Welcher neuen Rasse gehört der Charakter an?");
 			String occurance = Event2.next();
-			updateEntry(vorname, nachname, occurance, ID);
+			System.out.println("Welcher Eintrag soll geändert werden?(ID angeben)");
+			Integer id = Event2.nextInt();
+			updateEntry(vorname, nachname, occurance, id);
 		}
 	}
 		
@@ -122,6 +127,16 @@ public class DBMS implements CommandLineRunner{
 		nameRepository.save(NameInformation2);
 		nameRepository.save(NameInformation3);
 		nameRepository.save(NameInformation4);
+		}
+	}
+	
+	public void TestInitiallizeHistoryDB() {
+		
+		Long Zahl = historyRepository.count();
+		if (Zahl.toString().equals("0")) {
+		HistoryModel hist = new HistoryModel(1,"Zaeler","Zaeler","Zaeler");	
+		hist.setHistoryId(11);
+		historyRepository.save(hist);
 		}
 	}
 	
@@ -282,12 +297,12 @@ public class DBMS implements CommandLineRunner{
 			break;
 		case "armor":
 			qty = armorRepository.findByMultPref(pref, AC).size();
-			System.out.println(qty);
-			System.out.println(armorRepository.findByMultPref(pref, AC).toString());
+			//System.out.println(qty);
+			//System.out.println(armorRepository.findByMultPref(pref, AC).toString());
 			idx = (int)(Math.random() * qty);
-			System.out.println(idx);
+			//System.out.println(idx);
 		    questionPage2 = armorRepository.findAllByArmorTypeAndArmorAc(pref,AC,PageRequest.of(idx,1));
-		    System.out.println(questionPage2.getSize());
+		    //System.out.println(questionPage2.getSize());
 		    if (questionPage2.hasContent()) {
 		    	ArmorModel randname = (ArmorModel) questionPage2.getContent().get(0);
 		    	randRow.add(0, randname.getArmorId().toString());
@@ -315,13 +330,13 @@ public class DBMS implements CommandLineRunner{
 		case "armor":
 			unterschied = false;
 		    rand1.addAll(rowPref(dbname, pref));
-		    System.out.println(rand1);
+		    //System.out.println(rand1);
 		    rand2.addAll(rowPref(dbname, pref));
 			while (rand1.equals(rand2)) {
 			    rand2.clear();
 				rand2.addAll(rowPref(dbname, pref));
 		    }
-			System.out.println(rand2);
+			//System.out.println(rand2);
 			randresult.addAll(rand1);
 			randresult.addAll(rand2);
 			break;
@@ -360,30 +375,48 @@ public class DBMS implements CommandLineRunner{
 		 newentry.setHistoryFirstName(vorname);
 		 newentry.setHistoryLastName(nachname);
 		 newentry.setHistoryOccurance(occurance);
+		 manageHistory("save",newentry);
 		 return ;
 	 }
 	 
-	 public void updateEntry(String vorname,String nachname,String occurance,Integer ID) {
+	 public void updateEntry(String vorname,String nachname,String occurance, Integer HistID) {
 		 HistoryModel updatedentry = new HistoryModel();
 		 updatedentry.setHistoryFirstName(vorname);
 		 updatedentry.setHistoryLastName(nachname);
 		 updatedentry.setHistoryOccurance(occurance);
-		 updatedentry.setHistoryId(ID);
+		 updatedentry.setHistoryId(HistID);
+		 manageHistory("update",updatedentry);
 		 return ;
 	 }
 	 
 	 @Transactional
 	 public void manageHistory(String typeOfChange, HistoryModel histchange) {
-		 Integer IDVAR;
+		 HistoryModel histentry = histchange;
 		 
-		 switch (typeOfChange) {
-		 case "create":
-			 
-			 break;
-			 
+		 switch(typeOfChange) {
+		 case "save":
+			 //System.out.println(historyRepository.findById(11).get().getrunVar());
+			 if (historyRepository.count() == 0) {
+				 historyRepository.findById(11).get().setrunVar(1);
+			 }else if (historyRepository.findById(11).get().getrunVar() == 11) {
+				 historyRepository.findById(11).get().setrunVar(1);
+			 }
+			 histentry.setHistoryId(historyRepository.findById(11).get().getrunVar());
+			 //System.out.println(historyRepository.findById(11).get().getrunVar());
+			 historyRepository.save(histentry);
+			 historyRepository.findById(11).get().setrunVar(historyRepository.findById(11).get().getrunVar()+1);
 		 case "update":
-			 break;
+			 historyRepository.setNameInfoById(histentry.getHistoryFirstName(),histentry.getHistoryLastName(),histentry.getHistoryOccurance(),histentry.getHistoryId());
 		 }
+		 //switch (typeOfChange) {
+		 //case "create":
+		/*	 break;
+		 case "update":
+			 histentry.setrunVar(IDVAR);
+			 historyRepository.save(histentry);
+			 IDVAR++;
+			 break;
+		 }*/
 	 }
 			
 		/* nameRepository.findByNameFirstName("Adrik").forEach(

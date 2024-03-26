@@ -7,8 +7,8 @@ import jakarta.persistence.Id;
 public class HistoryModel {
 	
 	@Id
-	private Integer runVar;
 	private Integer historyId;
+	private Integer runVar;
 	private String historyFirstName;
 	private String historyLastName;
 	private String historyOccurance;
@@ -16,17 +16,17 @@ public class HistoryModel {
 	public HistoryModel() {
 		
 	}
-	public HistoryModel(Integer historyId,String historyFirstName, String historyLastName, String historyOccurance) {
-		this.historyId=historyId;
+	public HistoryModel(Integer runVar, String historyFirstName, String historyLastName, String historyOccurance) {
+		this.runVar=runVar;
 		this.historyFirstName= historyFirstName;
 		this.historyLastName= historyLastName;
 		this.historyOccurance= historyOccurance;
-		
+	
 	}
-	public Integer runVar() {
+	public Integer getrunVar() {
 		return runVar;
 	}
-	public void runVar(Integer runVar) {
+	public void setrunVar(Integer runVar) {
 		this.runVar = runVar;
 	}
 	public Integer getHistoryId() {
@@ -55,7 +55,7 @@ public class HistoryModel {
 	}
 	@Override
 	public String toString() {
-		return "HistoryModel [historyId=" + historyId + ", historyFirstName=" + historyFirstName + ", historyLastName="
+		return "HistoryModel [historyId=" + runVar + ", historyFirstName=" + historyFirstName + ", historyLastName="
 				+ historyLastName + ", historyOccurance=" + historyOccurance + "]";
 	}
 }

@@ -48,7 +48,7 @@ public class Test2 {
 			}
 			else if (entscheidung2.equals("update")) {
 				System.out.println("Id des zu veränderten Charakter?");
-				int ID = Event2.nextInt();
+				Integer ID = Event2.nextInt();
 				System.out.println("Wie ist der neue Vorname des Charakters?");
 				String vorname = Event2.next();
 				System.out.println("Wie ist der neue Nachname des Charakters?");

@@ -10,9 +10,9 @@ public interface HistoryRepository extends CrudRepository<HistoryModel, Integer>
 	ArrayList<HistoryModel> findByHistoryFirstName(String firstName);
 	ArrayList<HistoryModel> findByHistoryLastName(String lastName);
 	ArrayList<HistoryModel> findByHistoryOccurance(String occurance);
-	ArrayList<HistoryModel> findByHistoryId(Integer id);
+	ArrayList<HistoryModel> findByRunVar(Integer runVar);
 	@Modifying
-	@Query("update NameModel u set u.nameFirstName = ?1, u.nameLastName = ?2, u.nameOccurance = ?3 where u.nameId = ?4")
-	void setNameInfoById(String nameFirstName, String nameLastName, String nameOccurance, Integer nameId);
+	@Query("update HistoryModel u set u.historyFirstName = ?1, u.historyLastName = ?2, u.historyOccurance = ?3 where u.historyId = ?4")
+	void setNameInfoById(String historyFirstName, String historyLastName, String historyOccurance, Integer historyId);
 	long count();
 }
