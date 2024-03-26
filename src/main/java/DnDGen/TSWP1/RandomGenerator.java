@@ -76,7 +76,11 @@ public class RandomGenerator {
 	
 	/* TO DO @Lenard */
 	public static String randRace() {
-		String race = "NO RACE";
+		String race = "NO RACE";	
+		
+		ArrayList<String> newRace = new ArrayList<String>();
+		newRace = DBMS.getRandRow(race);		
+		race = newRace.get(1);
 		
 		return race;
 	}
@@ -84,6 +88,11 @@ public class RandomGenerator {
 	/* TO DO @Lenard */
 	public static String randJob() {
 		String job = "NO JOB";
+		
+		ArrayList<String> newJob = new ArrayList<String>();
+		newJob = DBMS.getRandRow(job);
+		
+		job = newJob.get(1);
 		
 		return job;
 	}
@@ -212,6 +221,17 @@ public class RandomGenerator {
 	public static String randDeity(String alignment) {
 		String deity = "NO DEITY";
 		
+		ArrayList<String> newDeity = new ArrayList<String>();
+		
+		newDeity = DBMS.getRowWithPref(deity, alignment);
+		
+		while (alignment != newDeity.get(2)) {
+			
+			newDeity = DBMS.getRowWithPref(deity, alignment);
+		}
+		
+		deity = newDeity.get(1);
+		
 		return deity;
 	}
 
@@ -226,6 +246,24 @@ public class RandomGenerator {
 	/* TO DO @Lenard */
 	public static String randName(String gender, String race) {
 		String name = "NO NAME";
+		
+		String firstName = "NO FIRSTNAME";
+		String secondName = "NO SECONDNAME";
+		
+		ArrayList<String> newName = new ArrayList<String>();
+		newName = DBMS.getRowWithPref(name, race);
+		
+		while (gender != newName.get(4)) {
+				
+			newName = DBMS.getRowWithPref(name, race);
+			firstName = newName.get(1);
+			
+		}
+		
+		newName = DBMS.getRowWithPref(name, race);
+		secondName = newName.get(2);
+		
+		name = firstName + secondName;
 		
 		return name;
 	}
