@@ -3,6 +3,10 @@ Desweiteren ist das ist das Projekt auch bereits mit Maven versehen und so mit q
 
 zu Beachten:
  das Projekt sollte bei euch starten aber mit einem Error exiten, das liegt daran das für die korrekte Funktion eine aktuelle MySQL Instanz der Version 8.0.36 nötig ist die unteranderem auch die richtigen Root-Einstellungen besitzen muss.
+
+
 Root einstellungen:
- benutzername: root
- password: IHaveGoodView11!
+
+benutzername: root
+
+password: IHaveGoodView11!
