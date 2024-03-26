@@ -35,62 +35,35 @@ public class RandomGenerator {
 	 */
 	}
 	public static int diceThrower(Integer diceCount, Integer diceNumber) {
-		int rolled = 0;
-		int addedRolls = 0;
-		Random rand = new Random();
-		for(int numOfDices = diceCount; numOfDices > 0; numOfDices--) {
-			rolled = rand.nextInt(diceNumber);
-			rolled += 1;
-			System.out.println("value: " + rolled);
-			addedRolls = addedRolls + rolled;
-			System.out.println("value after add: " + addedRolls);
 
-		}
+		int addedRolls = 0;
+			Random rand = new Random();
+
+			for (int i=0; i < diceCount; i++){
+				int value = rand.nextInt(diceNumber) + 1;
+				addedRolls = addedRolls + value;
+			}
 		
 		return addedRolls;
 	}
 	
-	public static List<Integer> randAbilityScore() {
-		Random rand = new Random();
-		List<Integer> abilityScoresValue = new ArrayList<Integer>();
-		List<Integer> finishedSetForAbilityScores = new ArrayList<Integer>();
-		
-		for(int k = 0; k < 6; k++) {
-		
-			int value;
-			for(int i = 0; i < 4; i++) {
-				value = rand.nextInt(6);
-				value += 1;
-				abilityScoresValue.add(value);
-			
+	public static ArrayList<Integer> randAbilityScore() {
+
+		ArrayList<Integer> value = new ArrayList<Integer>();
+		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<Integer>();
+
+			for ( int i=0; i < 6; i++){
+				value.add(diceThrower(1, 6));
+				value.add(diceThrower(1, 6));
+				value.add(diceThrower(1, 6));
+				value.add(diceThrower(1, 6));
+
+				int number = value.get(0) + value.get(1) + value.get(2);
+
+			finishedSetForAbilityScores.add(number);
+
+				value.clear();
 			}
-		
-			Collections.sort(abilityScoresValue);
-		
-			System.out.println("sorted: " + abilityScoresValue);
-		
-			abilityScoresValue.remove(0);
-		
-			System.out.println("removed lowest value: " + abilityScoresValue);
-			
-			int addValues = 0;
-			for(int j = 0; j <= 2; j++) {
-				addValues += abilityScoresValue.get(j);
-			}
-		
-			System.out.println("added values: " + addValues);
-			
-			finishedSetForAbilityScores.add(addValues);
-			
-			System.out.println("set of values for ability scores: " + finishedSetForAbilityScores);
-			
-			abilityScoresValue.clear();
-		
-		}
-		
-		Collections.sort(finishedSetForAbilityScores);
-		System.out.println("sorted set of values for ability scores: " + finishedSetForAbilityScores);
-		return finishedSetForAbilityScores;
 	}
 
 	//UNGETESTET
@@ -303,13 +276,17 @@ public class RandomGenerator {
 	
 	/* TO DO @Lenard */
 	public static String randGender() {
-		Random rand = new Random();
-		int genderRandomNumber = rand.nextInt(2);
-		String gender = "männlich";
-			if(genderRandomNumber == 1) {
-				gender = "weiblich";
+		
+		String gender;
+			Random rand = new Random();
+			int value = rand.nextInt(2);
+
+			if (value == 0){
+				gender = "female";
 			}
-		System.out.println(gender);
+			else{
+				gender = "male";
+			}
 		return gender;
 	}
 	
