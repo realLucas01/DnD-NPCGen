@@ -12,8 +12,12 @@ import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.hibernate.sql.results.graph.entity.EntityFetch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.CrudRepository;
@@ -25,6 +29,8 @@ import DBTest.Allesandere.Test2;
 
 @SpringBootApplication
 public class DBMS implements CommandLineRunner{
+	
+	private static ConfigurableApplicationContext ctx;
 	
 	/*
 	private Test2 test;
@@ -44,25 +50,51 @@ public class DBMS implements CommandLineRunner{
 		String entscheidung;
 		Scanner Event = new Scanner(System.in);
 		
+		System.out.println("Spring starten?(ja/nein)");
 		entscheidung = Event.next();
-		if (entscheidung.equals("NEIN")) {
+		if (entscheidung.equals("nein")) {
 			System.out.println("Ok dann nicht");
-		}else {
-			SpringApplication.run(DBMS.class, args);
-		}
-		
-		
+		}else if (entscheidung.equals("ja")){
+	        ctx = dbmsStarter(args);
+	    }
 	}
 	
 	@Override
 	@Transactional
 	public void run(String... args) {
-		
-		TestInitiallizeNameDB();
-		TestInitiallizeArmorDB();
-		TestInitiallizeHistoryDB();
-		tester();
+		Scanner Event = new Scanner(System.in);
+
+			TestInitiallizeNameDB();
+			TestInitiallizeArmorDB();
+			TestInitiallizeHistoryDB();
+			tester();
+		System.out.println("Spring schließen?(ja/nein)");
+		String entsch = Event.next();
+		System.out.println(ctx);
+		if (entsch.equals("ja")) {
+			dbmsClose(args, ctx);
+		}else if (entsch.equals("nein")){
+			tester();
 		}
+		
+		/*System.out.println("Spring schließen?(ja/nein)");
+		Scanner event = new Scanner(System.in);
+		String entsch = event.next();
+		if (entsch.equals("ja")) {
+			SpringApplication.exit(DBMS.class, args);
+		}else if (entsch.equals("nein")){
+			tester();
+		}*/
+		}
+	
+	public static ConfigurableApplicationContext dbmsStarter(String[] args) {
+		ctx = SpringApplication.run(DBMS.class, args);
+        System.out.println(ctx);
+		return ctx;
+	}
+	public static void dbmsClose(String[] args,ConfigurableApplicationContext ctx) {
+		ctx.close();
+	}
 	
 	public void tester() {
 		Scanner Event2 = new Scanner(System.in);
@@ -111,6 +143,7 @@ public class DBMS implements CommandLineRunner{
 			Integer id = Event2.nextInt();
 			updateEntry(vorname, nachname, occurance, id);
 		}
+		
 	}
 		
 
