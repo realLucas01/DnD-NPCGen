@@ -1,0 +1,129 @@
+= Cross-Testing Feedback
+
+__Durchführende Gruppe:__ 19
+
+__Anwendung von Gruppe:__ 20
+
+== Getestetes System
+Firmeninterne Software für einen Uhrenladen
+
+== Fehler-Report(Alles was zu einem Whitelabel Error geführt hat)
+// See http://asciidoctor.org/docs/user-manual/#tables
+
+=== Generell
+[options="header"]
+|===
+|Pfad |Parameter |Beschreibung |Rückgabe
+| /customer/deleteCustomer | - | Kunden denen Bestellungen zugewiesen sind können nicht gelöscht werden. | This application has no explicit mapping for /error, so you are seeing this as a fallback.
+| /customer/customerModify | - | Wenn man den Modifizieren Knopf drückt wird ein Fehler geworfen | This application has no explicit mapping for /error, so you are seeing this as a fallback.
+|===
+
+=== SELLER
+[options="header"]
+|===
+|Pfad |Parameter |Beschreibung |Rückgabe
+| /catalog/addItemToCatalog | Alles | Egal was eingegeben wird(auch wenn gar nichts eingegeben wird)wird ein Fehler geworfen | This application has no explicit mapping for /error, so you are seeing this as a fallback. 
+| /detail/edit | - | Wenn man den Button drückt wird ein Fehler geworfen | This application has no explicit mapping for /error, so you are seeing this as a fallback.
+| localhost:8080/staff | - | Wenn man als Seller den Button(im Dropdown) "Mitarbeiter" drückt wird ein Fehler geworfen. | This application has no explicit mapping for /error, so you are seeing this as a fallback. 
+|===
+
+=== MAKER
+[options="header"]
+|===
+|Pfad |Parameter |Beschreibung |Rückgabe
+| localhost:8080/staff | - | Wenn man als MAKER den Button(im Dropdown) "Mitarbeiter" drückt wird ein Fehler geworfen. | This application has no explicit mapping for /error, so you are seeing this as a fallback. 
+| /catalog/addItemToCatalog | Alles | Egal was eingegeben wird(auch wenn gar nichts eingegeben wird)wird ein Fehler geworfen | This application has no explicit mapping for /error, so you are seeing this as a fallback. 
+| /detail/edit | - | Wenn man den (edit Item) Button drückt wird ein Fehler geworfen | This application has no explicit mapping for /error, so you are seeing this as a fallback.
+|===
+
+=== BOSS
+[options="header"]
+|===
+|Pfad |Parameter |Beschreibung |Rückgabe
+| /catalog/addItemToCatalog | Alles | Bei leeren Feldern oder Feldern mit einer für das System unerwateten Eingabe wird ein Fehler geworfen | This application has no explicit mapping for /error, so you are seeing this as a fallback. 
+| /detail/edit | Price | Wenn man einen String eingibt wird ein Fehler geworfen | This application has no explicit mapping for /error, so you are seeing this as a fallback.
+|===
+
+== Sonstiges
+
+=== UI
+Es ist Ersichtlich wo ihr hinwolltet(Darkmode, warum auch immer in einer Firmeninternen Software die nur wähhrend der Arbeitszeit verwendet wird) aber dann macht es doch bitte ganz oder gar nicht, überall ist alles gemixt(fängt damit an das man Nachts von der Loginseite geflashbanged wird,weil man von einer (fast)komplett dunklen auf eine komplett weiße seite geleitet wird) durch Komponenten wie Label oder Knöpfe die euer Theme nicht unterstützen. Abgesehen davon kann man dadurch einge Knöpfe, je nach Bildschirm Farbabgleich, kaum bis garnicht mehr lesen(grau auf grau, z.B. Mitarbeiterübersicht). Das gleiche gilt für mehrere Labels über die Eingaben getätigt werden müssen(z.B. die Suchleiste im Katalog, hier weiß auf weiß). Aktuell ist es auf keinen Fall Benutzerfreundlickeit Priorität 4.
+
+=== Ohne Login
+
+Es ist möglich durch das manuelle eintragen in die Browserleiste folgende Komponenten zu erreichen:
+  
+  * /cart
+  * /orders(hier hat man auch die Möglichkeit Reparaturaufträge abzuschließen)
+  * /repairCart
+  * /Customer(Mit allen Funktionen)
+
+=== Generell(betrifft alle Accounts)
+
+* Gutscheintabelle: "Expiration" ist kein deutsches Wort.
+* Knöpfe auf der Detailseite sind auf englisch(+kleingeschrieben).
+* Bestellungen ohne ausgewählten Kunden werden "boss boss" zugewiesen.
+* Bestellungen mit unregistriertem Kunden werden "boss boss" zugewiesen.
+* Add Customer: Birth kann mit jedem String gefüllt werden bzw ist kein "Kalender" Feld.
+* Abgeschlossene Reparaturen kann man nicht als solche erkennen, sie sehen aus wie normale Bestellungen.
+* Bestellungen-Tabelle: auf Englisch(+kleingeschrieben) und Datum wird kompliziert dargestellt.
+* Wenn man einer Bestellung einen Kunden zuweist der nicht existiert(z.B. durch typo) passiert nichts, am besten eine Meldung oder ähnliches anzeigen(Pflichtenheft "Benutzerfreundlichkeit" Priorität 4).
+* Bestellungen: Ware und Quantität wird nicht angezeigt. Über "detail" kann man nur eine Quantity von 1 per Gegnstand in den Warenkorb legen.
+* Coupons können nicht direkt im Warenkorb hinzugefügt werden(Pflichtenheft "Benutzerfreundlichkeit" Priorität 4).
+* Gutschein: Es ist möglich mehr als einen Gutschein mit demselben Code hinzufügen (Value egal).
+* Gutschein wird nicht angewendet. 5 Euro-Bestellung & 5-Euro-Gutschein -> Summe 5 Euro (?)
+* Warenkorb: Link customer ist manuell obwohl es eine Kundenliste gibt(Pflichtenheft "Benutzerfreundlichkeit" Priorität 4).
+* Reorder macht keinen Sinn.
+* Es gibt bereits einen Preis, wenn man das Produkt zur Reparatur hinzufügt. Es sollte null sein, da die benötigten Materialien und die Zeit, die für die Reparatur des   Produkts benötigt werden, noch nicht bestimmt wurden.
+* Es können nur Waren die sich im Katalog befinden repariert werden(im sinne von: in der Regel reparieren Uhrenläden bis auf wenige Ausnahmen alle Uhren).
+* Im Katalog kann man nicht nach Reparaturmaterialien filtern.
+* Express Reparatur hat keinerlei Auswirkungen.
+* Default Role für Urlaubsanfrage ist Boss (?). Aber nur Verkäufer und Uhrmacher brauchen Bestätigung von Boss.
+* Es können keine Reparatur Materialien und Zeit angegeben werden.
+* Es ist aus dem Reparaturauftrag nicht ersichtlich um welche Uhr und welchen Schaden es sich hier handelt.
+* Wenn man einer Bestellung einen Kunden zuweist der nicht existiert(z.B. durch typo) passiert nichts, am besten eine Meldung oder ähnliches anzeigen(Pflichtenheft "Benutzerfreundlichkeit" Priorität 4).
+* Reparaturaufträge: Wenn man keinen Kunden oder einen Falschen angibt wird als "Watchmaker" "SELLER" bzw. "MAKER" eingetragen.
+* Reparatur: Link customer ist manuell obwohl es eine Kundenliste gibt(Pflichtenheft "Benutzerfreundlichkeit" Priorität 4).
+* Coupons werden im Lager angezeigt und aufgrund von Quantity=1 direkt als Item mit geringer Quantität angezeigt.
+* Coupon Wert und Name können negativ sein.
+* Negativer Wert von Gutschein macht den Preis teurer.
+* Preis eines Items kann negativ sein.
+* Passwort ändern möglich, Name wird nicht geändert.
+* Reparatur Materialien können repariert werden.
+* Reparatur: link watchmaker lässt den Auftrag verschwinden.
+* Urlaub beantragen: Jahr mit 5 Zahlen führt zu einem Fehler.
+* Katalog Suche: Es sollte nach Keywords gesucht werden die auch direkt im Katalog angezeigt werden, also nur Name und Preis(Beisp. habe "ros" in Suchleiste eingegeben und bekomme als Ergebniss Roslex1;Roslex2;Roslex3;Roslex4;Not A Watch).
+* Katalog: im Tabellenkopf steht an der Stelle wo so etwas wie "Name" stehen sollte "Katalog".
+
+
+=== SELLLER
+
+* Kann Urlaub für Boss und MAKER erstellen.
+* (kann Reparaturaufträge fertigstellen.)(Klammer weil keine Ahnung, steht nicht im Pflichtenheft und deswegen nicht ersichtlich wer das dürfen soll und wer nicht)
+
+=== MAKER
+
+* Kann Urlaub für Boss und SELLER erstellen.
+* Kann Uhren verkaufen wie der SELLER, aber dabei keine Gutscheine anwenden.
+
+=== BOSS
+
+* (kann Reparaturaufträge fertigstellen.)(Klammer weil keine Ahnung, steht nicht im Pflichtenheft und deswegen nicht ersichtlich wer das dürfen soll und wer nicht)
+* Im Katalog erstellte Items erscheinen nicht im Inventar.
+* Keine Möglichkeit Bestand zu erhöhen.
+* Keine Möglichkeit neue Hersteller hinzu zufügen (bei neuem Produkt oder modified Produkt) obwohl es möglich ist, im Katalog den “Hersteller” Filter anzuwenden.
+* Informationen in der Zugriffshistorie sehr unübersichtlich/wenig Informationen bzw. scheinen fehlerhaft zu sein(z.B. Programm gerade gestartet und Items gehen "OUT" also AUS dem Inventar?)
+* Überschrift in der Mitarbeiterübersicht wird falsch angezeigt: PersonalÃ ¼bersicht
+* Personal bearbeiten führt zu einer Seite in der oben ein Item modifiziert werden kann(funktioniert nicht), dann wird eine zweite Nav Bar angezeigt und darunter kann man dann einen Mitarbeiter bearbeiten.
+* Personal Suche funktioniert nicht(es passiert nichts).
+* Urlaubsanfragen sind standardmäßig bestätigt.
+* Mitarbeiter: Status von Vacation ist immer falsch.
+* Boss kann Boss Login löschen, wenn man sich dann ausloggt gibt es keine Möglichkeit mehr andere Login hinzufügen weil nur Boss das machen kann.
+* Coupon Suche funktioniert nicht(es passiert nichts).
+* Die Personalliste sollte wie die Kundenliste sein. Es gibt einen Namen, ein Geburtsdatum usw. Anstatt nur die Rollen, dadurch wirkt sie auf den ersten Blick sehr unübersichtlich.
+* Wenn man neues Personal hinzufügt, braucht man kein Password (Neues Personal != Neues Konto). Es gibt mehrere Personen mit derselben Rolle.
+* keine Möglichkeit Item zu löschen.
+* Die Detailseite im Inventar ist wie im Katalog und man kann Produkte in Warenkorb legen (?). Es sollte für den Boss im Lager eher möglich sein Items nachzubestellen oder zulöschen als die Detailseite aus dem Katalog zu doppeln.
+
+== Verbesserungsvorschläge
+Alles was oben aufgeführt ist.

@@ -1,0 +1,66 @@
+= Protokoll Gruppe 19
+
+Treffen am 03.11.2022
+
+Ort:      APB 2077 +
+Beginn:   14:50 Uhr +
+Ende:     16:24 Uhr
+
+__Schriftführer:__ Lucas
+
+*Nächstes Treffen:* +
+10.11.2022, 14:50 Uhr, APB 2077
+
+__Teilnehmer:__
+
+Fabian Hecker (Tutor/Kunde)
+
+Luca Tauscher (SCRUM-Master)
+
+Lenard Marx (Dev)
+
+Marie Lange (Dev)
+
+Chyntia Lie (Dev)
+
+Michelle Pattikawa (Dev)
+
+Lucas Rumann (Dev/Schriftführer)
+
+== Bemerkungen
+Kurze Einführung in Sonarqube.
+
+Vorstellungen der fertigen Videoshoperweiterungen.
+
+Feedback zum Pflichtenheft durch Tutor, Deadline für Verbesserung: 07.11.2022, Zeit: Abend.
+
+Einführung in die Arbeit der nächsten 2 Wochen, dazu: gemeinsames Schauen und Sprechen über eine 
+beispiel-Entwicklerdoku und Sprechen über den Entwicklungsprototypen.
+
+Festgelegte Zeit für Zwischenpräsentation: 20min(15min doku,5min Prototyp)
+
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
+// Wie ist der Status der im letzten Sprint erstellten Issues/veteilten Aufgaben?
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Aufgabe |Status |Bemerkung
+|…     |…       |…      |…
+|===
+
+
+== Aktueller Stand
+Anmerkungen und Kritik zum aktuellen Stand der Software, den Diagrammen und den
+Dokumenten.
+
+== Planung des nächsten Sprints
+*Issue referenziert die Issue ID von GitHub*
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+|…     |…     |…            |…                |…
+|===

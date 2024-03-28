@@ -1,0 +1,2938 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1516"
+   height="1075"
+   id="svg2819"
+   sodipodi:docname="CustomerClassDiagram.svg"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2821"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.41112623"
+     inkscape:cx="988.74743"
+     inkscape:cy="571.60061"
+     inkscape:window-width="1440"
+     inkscape:window-height="900"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1491" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer 1">
+    <rect
+       style="fill:#ffffff"
+       id="rect2882"
+       width="1510.4851"
+       height="1070.231"
+       x="4.864686"
+       y="2.432343" />
+  </g>
+  <g
+     id="g2817">
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="300"
+       id="text1801">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="330"
+       id="text1803">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="360"
+       id="text1805">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="390"
+       id="text1807">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="420"
+       id="text1809">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="450"
+       id="text1811">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="480"
+       id="text1813">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="510"
+       id="text1815">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="540"
+       id="text1817">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="570"
+       id="text1819">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="600"
+       id="text1821">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="630"
+       id="text1823">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="660"
+       id="text1825">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="690"
+       id="text1827">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="720"
+       id="text1829">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="750"
+       id="text1831">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="780"
+       id="text1833">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="810"
+       id="text1835">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="840"
+       id="text1837">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="800"
+       y="870"
+       id="text1839">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="60"
+       id="text1857">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="90"
+       id="text1859">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="120"
+       id="text1861">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="150"
+       id="text1863">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="180"
+       id="text1865">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="210"
+       id="text1867">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="240"
+       id="text1869">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="270"
+       id="text1871">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="300"
+       id="text1873">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="330"
+       id="text1875">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="360"
+       id="text1877">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="390"
+       id="text1879">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="420"
+       id="text1881">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="450"
+       id="text1883">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="480"
+       id="text1885">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="510"
+       id="text1887">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="540"
+       id="text1889">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="570"
+       id="text1891">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="600"
+       id="text1893">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="630"
+       id="text1895">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="660"
+       id="text1897">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="690"
+       id="text1899">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="720"
+       id="text1901">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="750"
+       id="text1903">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="780"
+       id="text1905">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="810"
+       id="text1907">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="840"
+       id="text1909">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1000"
+       y="870"
+       id="text1911">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="60"
+       id="text1929">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="90"
+       id="text1931">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="120"
+       id="text1933">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="150"
+       id="text1935">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="180"
+       id="text1937">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="210"
+       id="text1939">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="240"
+       id="text1941">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="270"
+       id="text1943">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="300"
+       id="text1945">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="330"
+       id="text1947">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="360"
+       id="text1949">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="390"
+       id="text1951">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="420"
+       id="text1953">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="450"
+       id="text1955">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="480"
+       id="text1957">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="510"
+       id="text1959">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="540"
+       id="text1961">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="570"
+       id="text1963">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="600"
+       id="text1965">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="630"
+       id="text1967">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="660"
+       id="text1969">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="690"
+       id="text1971">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="720"
+       id="text1973">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="750"
+       id="text1975">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="780"
+       id="text1977">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="810"
+       id="text1979">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="840"
+       id="text1981">UNREGISTERED</text>
+    <text
+       fill="#eeeeee"
+       stroke="none"
+       font-family="Arial"
+       font-size="24px"
+       font-style="normal"
+       font-weight="normal"
+       text-decoration="none"
+       x="1200"
+       y="870"
+       id="text1983">UNREGISTERED</text>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2071">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1208 773 L 1397.7890625 770.2189764492754"
+         stroke-miterlimit="10"
+         id="path2069" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2075">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="103"
+         y="223"
+         width="598.4"
+         height="15"
+         opacity="0.2"
+         id="rect2073" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2079">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="103"
+         y="237"
+         width="1496"
+         height="866"
+         opacity="0.2"
+         id="rect2077" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2083">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="96"
+         y="231"
+         width="1496"
+         height="865"
+         id="rect2081" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2087">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 96 231 L 1592 231 L 1592 1096 L 96 1096 L 96 231 Z Z"
+         stroke-miterlimit="10"
+         id="path2085" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2091">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="96"
+         y="216"
+         width="598.4"
+         height="15"
+         id="rect2089" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2095">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 96 216 L 694.4 216 L 694.4 231 L 96 231 L 96 216 Z Z"
+         stroke-miterlimit="10"
+         id="path2093" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2099">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="96"
+         y="230"
+         width="1496"
+         height="866"
+         id="rect2097" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2103">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 96 230 L 1592 230 L 1592 1096 L 96 1096 L 96 230 Z Z"
+         stroke-miterlimit="10"
+         id="path2101" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2111">
+      <g
+         id="g2109">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2105" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="813.661376953125"
+           y="248.53857421875"
+           id="text2107">Customer</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2115">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="335"
+         y="303"
+         width="520.89404296875"
+         height="205"
+         opacity="0.2"
+         id="rect2113" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2119">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="328"
+         y="296"
+         width="520.89404296875"
+         height="205"
+         id="rect2117" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2123">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 328 296 L 848.89404296875 296 L 848.89404296875 501 L 328 501 L 328 296 Z Z"
+         stroke-miterlimit="10"
+         id="path2121" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2127">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 328 321 L 848.89404296875 321"
+         stroke-miterlimit="10"
+         id="path2125" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2131">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 328 404 L 848.89404296875 404"
+         stroke-miterlimit="10"
+         id="path2129" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2139">
+      <g
+         id="g2137">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2133" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="558.1083984375"
+           y="313.53857421875"
+           id="text2135">Customer</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2147">
+      <g
+         id="g2145">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2141" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="336.7099609375"
+           id="text2143">-id : UUID</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2155">
+      <g
+         id="g2153">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2149" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="351.7099609375"
+           id="text2151">-name: String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2163">
+      <g
+         id="g2161">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2157" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="366.7099609375"
+           id="text2159">-address: String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2171">
+      <g
+         id="g2169">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2165" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="381.7099609375"
+           id="text2167">-phoneNumber: String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2179">
+      <g
+         id="g2177">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2173" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="396.7099609375"
+           id="text2175">-email: String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2187">
+      <g
+         id="g2185">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2181" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="419.7099609375"
+           id="text2183">+Customer(id: UUID, name: String, address: String, phoneNumber: String, email: String()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2195">
+      <g
+         id="g2193">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2189" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="434.7099609375"
+           id="text2191">+getId(): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2203">
+      <g
+         id="g2201">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2197" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="449.7099609375"
+           id="text2199">+getName(): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2211">
+      <g
+         id="g2209">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2205" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="464.7099609375"
+           id="text2207">+getAddress(): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2219">
+      <g
+         id="g2217">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2213" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="479.7099609375"
+           id="text2215">+getPhoneNumber(): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2227">
+      <g
+         id="g2225">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2221" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="333"
+           y="494.7099609375"
+           id="text2223">+getEmail(): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2231">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="903"
+         y="703"
+         width="311"
+         height="144"
+         opacity="0.2"
+         id="rect2229" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2235">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="896"
+         y="696"
+         width="311"
+         height="144"
+         id="rect2233" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2239">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 896 696 L 1207 696 L 1207 840 L 896 840 L 896 696 Z Z"
+         stroke-miterlimit="10"
+         id="path2237" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2243">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 896 721 L 1207 721"
+         stroke-miterlimit="10"
+         id="path2241" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2247">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 896 744 L 1207 744"
+         stroke-miterlimit="10"
+         id="path2245" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2255">
+      <g
+         id="g2253">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2249" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="992.25732421875"
+           y="713.7099609375"
+           id="text2251">CustomerDatabase</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2263">
+      <g
+         id="g2261">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2257" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="901"
+           y="736.7099609375"
+           id="text2259">-custDB: List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2271">
+      <g
+         id="g2269">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2265" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="901"
+           y="759.7099609375"
+           id="text2267">+insertCustomer(customer: Customer): int</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2279">
+      <g
+         id="g2277">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2273" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="901"
+           y="774.7099609375"
+           id="text2275">+selectAllCustomer(): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2287">
+      <g
+         id="g2285">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2281" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="901"
+           y="789.7099609375"
+           id="text2283">+deleteCust(cIndex: int): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2295">
+      <g
+         id="g2293">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2289" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="901"
+           y="804.7099609375"
+           id="text2291">+sortCustName(): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2303">
+      <g
+         id="g2301">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2297" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="901"
+           y="819.7099609375"
+           id="text2299">+sortCustAddress(): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2307">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="1079"
+         y="319"
+         width="338.10693359375"
+         height="152"
+         opacity="0.2"
+         id="rect2305" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2311">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1072"
+         y="312"
+         width="338.10693359375"
+         height="152"
+         id="rect2309" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2315">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1072 312 L 1410.10693359375 312 L 1410.10693359375 464 L 1072 464 L 1072 312 Z Z"
+         stroke-miterlimit="10"
+         id="path2313" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2319">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1072 337 L 1410.10693359375 337"
+         stroke-miterlimit="10"
+         id="path2317" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2323">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1072 360 L 1410.10693359375 360"
+         stroke-miterlimit="10"
+         id="path2321" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2331">
+      <g
+         id="g2329">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2325" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="1170.98486328125"
+           y="329.53857421875"
+           id="text2327">CustomerManagement</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2339">
+      <g
+         id="g2337">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2333" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="1077"
+           y="352.7099609375"
+           id="text2335">-custRepo: CustomerRepository</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2347">
+      <g
+         id="g2345">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2341" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="1077"
+           y="375.7099609375"
+           id="text2343">+CustomerManagement(custRepo: CustomerRepository)</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2355">
+      <g
+         id="g2353">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2349" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="1077"
+           y="390.7099609375"
+           id="text2351">+addCustomer(customer: Customer): int</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2363">
+      <g
+         id="g2361">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2357" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="1077"
+           y="405.7099609375"
+           id="text2359">+getAllCustomer(): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2371">
+      <g
+         id="g2369">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2365" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="1077"
+           y="420.7099609375"
+           id="text2367">+sortingCustName(): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2379">
+      <g
+         id="g2377">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2373" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="1077"
+           y="435.7099609375"
+           id="text2375">+sortingCustAddress(): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2387">
+      <g
+         id="g2385">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2381" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="1077"
+           y="450.7099609375"
+           id="text2383">+deleteCust(cIndex: int): List&lt;Customer&gt;</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2391">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="887"
+         y="919"
+         width="392.296875"
+         height="120"
+         opacity="0.2"
+         id="rect2389" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2395">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="880"
+         y="912"
+         width="392.296875"
+         height="120"
+         id="rect2393" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2399">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 880 912 L 1272.296875 912 L 1272.296875 1032 L 880 1032 L 880 912 Z Z"
+         stroke-miterlimit="10"
+         id="path2397" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2403">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 880 937 L 1272.296875 937"
+         stroke-miterlimit="10"
+         id="path2401" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2407">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 880 975 L 1272.296875 975"
+         stroke-miterlimit="10"
+         id="path2405" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2415">
+      <g
+         id="g2413">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2409" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="1003.547119140625"
+           y="929.7099609375"
+           id="text2411">CustomerDataInitializer</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2423">
+      <g
+         id="g2421">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2417" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="885"
+           y="952.53857421875"
+           id="text2419">-LOG: Logger</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2431">
+      <g
+         id="g2429">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2425" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="885"
+           y="967.53857421875"
+           id="text2427">-custManagement: CustomerManagement</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2439">
+      <g
+         id="g2437">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2433" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="885"
+           y="990.7099609375"
+           id="text2435">+CustomerDataInitializer(custMangement: CustomerManagement)</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2447">
+      <g
+         id="g2445">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2441" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="885"
+           y="1005.7099609375"
+           id="text2443">+initialize()</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2451">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         d="M 1404.7890625 774 C 1404.7890625 761.2974496 1415.0865121 751 1427.7890625 751 C 1440.4916129 751 1450.7890625 761.2974496 1450.7890625 774 C 1450.7890625 786.7025504 1440.4916129 797 1427.7890625 797 C 1415.0865121 797 1404.7890625 786.7025504 1404.7890625 774 Z"
+         opacity="0.2"
+         id="path2449" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2455">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         d="M 1397.7890625 767 C 1397.7890625 754.2974496 1408.0865121 744 1420.7890625 744 C 1433.4916129 744 1443.7890625 754.2974496 1443.7890625 767 C 1443.7890625 779.7025504 1433.4916129 790 1420.7890625 790 C 1408.0865121 790 1397.7890625 779.7025504 1397.7890625 767 Z"
+         id="path2453" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2459">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1397.7890625 767 C 1397.7890625 754.2974496 1408.0865121 744 1420.7890625 744 C 1433.4916129 744 1443.7890625 754.2974496 1443.7890625 767 C 1443.7890625 779.7025504 1433.4916129 790 1420.7890625 790 C 1408.0865121 790 1397.7890625 779.7025504 1397.7890625 767 Z"
+         stroke-miterlimit="10"
+         id="path2457" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2467">
+      <g
+         id="g2465">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2461" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="1356.5"
+           y="807.7099609375"
+           id="text2463">CustomerRepository</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2471">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="135"
+         y="631"
+         width="648.82470703125"
+         height="265"
+         opacity="0.2"
+         id="rect2469" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2475">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="128"
+         y="624"
+         width="648.82470703125"
+         height="265"
+         id="rect2473" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2479">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 128 624 L 776.82470703125 624 L 776.82470703125 889 L 128 889 L 128 624 Z Z"
+         stroke-miterlimit="10"
+         id="path2477" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2483">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 128 649 L 776.82470703125 649"
+         stroke-miterlimit="10"
+         id="path2481" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2487">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 128 747 L 776.82470703125 747"
+         stroke-miterlimit="10"
+         id="path2485" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2495">
+      <g
+         id="g2493">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2489" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="391.017822265625"
+           y="641.7099609375"
+           id="text2491">CustomerController</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2503">
+      <g
+         id="g2501">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2497" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="664.7099609375"
+           id="text2499">-lowkeyword: String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2511">
+      <g
+         id="g2509">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2505" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="679.7099609375"
+           id="text2507">-lowname: String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2519">
+      <g
+         id="g2517">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2513" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="694.53857421875"
+           id="text2515">-custManagement: CustomerManagement</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2527">
+      <g
+         id="g2525">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2521" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="709.7099609375"
+           id="text2523">-cIndex: int</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2535">
+      <g
+         id="g2533">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2529" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="724.7099609375"
+           id="text2531">-saveIndex: int</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2543">
+      <g
+         id="g2541">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2537" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="739.7099609375"
+           id="text2539">-custId: UUID</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2551">
+      <g
+         id="g2549">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2545" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="762.7099609375"
+           id="text2547">+CustomerController(custManagement: Customer Management)</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2559">
+      <g
+         id="g2557">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2553" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="777.7099609375"
+           id="text2555">+addCustomer(name: String, address: String, phoneNumber: String, email: String): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2567">
+      <g
+         id="g2565">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2561" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="792.7099609375"
+           id="text2563">+custData(model: Model): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2575">
+      <g
+         id="g2573">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2569" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="807.7099609375"
+           id="text2571">+custData2(model Model): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2583">
+      <g
+         id="g2581">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2577" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="822.7099609375"
+           id="text2579">+custSort(model; Model, sortkey: String): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2591">
+      <g
+         id="g2589">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2585" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="837.7099609375"
+           id="text2587">+searchCust(model: model, custKeyword: String): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2599">
+      <g
+         id="g2597">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2593" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="852.7099609375"
+           id="text2595">+deleteCust(model: Model, id: UUID): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2607">
+      <g
+         id="g2605">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2601" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="867.7099609375"
+           id="text2603">+editCust(model: Model, id: UUID): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2615">
+      <g
+         id="g2613">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2609" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="none"
+           x="133"
+           y="882.7099609375"
+           id="text2611">+finishEdit(model: Model, id2: String, name: String, address: String, phoneNumber: String, email: String): String</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2619">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1208 773 L 1397.7890625 770.2189764492754"
+         stroke-miterlimit="10"
+         id="path2617" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2623">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="967"
+         y="1175"
+         width="92.79999999999995"
+         height="15"
+         opacity="0.2"
+         id="rect2621" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2627">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="967"
+         y="1189"
+         width="232"
+         height="89"
+         opacity="0.2"
+         id="rect2625" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2631">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="960"
+         y="1183"
+         width="232"
+         height="88"
+         id="rect2629" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2635">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 960 1183 L 1192 1183 L 1192 1271 L 960 1271 L 960 1183 Z Z"
+         stroke-miterlimit="10"
+         id="path2633" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2639">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="960"
+         y="1168"
+         width="92.79999999999995"
+         height="15"
+         id="rect2637" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2643">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 960 1168 L 1052.8 1168 L 1052.8 1183 L 960 1183 L 960 1168 Z Z"
+         stroke-miterlimit="10"
+         id="path2641" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2647">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="960"
+         y="1182"
+         width="232"
+         height="89"
+         id="rect2645" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2651">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 960 1182 L 1192 1182 L 1192 1271 L 960 1271 L 960 1182 Z Z"
+         stroke-miterlimit="10"
+         id="path2649" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2659">
+      <g
+         id="g2657">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2653" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="1043.1318359375"
+           y="1200.7099609375"
+           id="text2655">Salespoint</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2663">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="375"
+         y="1159"
+         width="73.60000000000002"
+         height="15"
+         opacity="0.2"
+         id="rect2661" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2667">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="375"
+         y="1173"
+         width="184"
+         height="89"
+         opacity="0.2"
+         id="rect2665" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2671">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="368"
+         y="1167"
+         width="184"
+         height="88"
+         id="rect2669" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2675">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 368 1167 L 552 1167 L 552 1255 L 368 1255 L 368 1167 Z Z"
+         stroke-miterlimit="10"
+         id="path2673" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2679">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="368"
+         y="1152"
+         width="73.60000000000002"
+         height="15"
+         id="rect2677" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2683">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 368 1152 L 441.6 1152 L 441.6 1167 L 368 1167 L 368 1152 Z Z"
+         stroke-miterlimit="10"
+         id="path2681" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2687">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="368"
+         y="1166"
+         width="184"
+         height="89"
+         id="rect2685" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2691">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 368 1166 L 552 1166 L 552 1255 L 368 1255 L 368 1166 Z Z"
+         stroke-miterlimit="10"
+         id="path2689" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2699">
+      <g
+         id="g2697">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2693" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="439.417724609375"
+           y="1184.7099609375"
+           id="text2695">Spring</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2703">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="431"
+         y="1207"
+         width="72"
+         height="44"
+         opacity="0.2"
+         id="rect2701" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2707">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="424"
+         y="1200"
+         width="72"
+         height="44"
+         id="rect2705" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2711">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 424 1200 L 496 1200 L 496 1244 L 424 1244 L 424 1200 Z Z"
+         stroke-miterlimit="10"
+         id="path2709" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2715">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 424 1225 L 496 1225"
+         stroke-miterlimit="10"
+         id="path2713" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2719">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 424 1235 L 496 1235"
+         stroke-miterlimit="10"
+         id="path2717" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2727">
+      <g
+         id="g2725">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2721" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="441.2236328125"
+           y="1217.7099609375"
+           id="text2723">Model</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2731">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 454 890 L 459 1151"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path2729" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2735">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 454.59660292226437 1140.9198167588188 L 459 1151 L 463.0140939915183 1140.758562140634"
+         stroke-miterlimit="10"
+         id="path2733" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2739">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="1039"
+         y="1215"
+         width="93.525390625"
+         height="44"
+         opacity="0.2"
+         id="rect2737" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2743">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1032"
+         y="1208"
+         width="93.525390625"
+         height="44"
+         id="rect2741" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2747">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1032 1208 L 1125.525390625 1208 L 1125.525390625 1252 L 1032 1252 L 1032 1208 Z Z"
+         stroke-miterlimit="10"
+         id="path2745" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2751">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1032 1233 L 1125.525390625 1233"
+         stroke-miterlimit="10"
+         id="path2749" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2755">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1032 1243 L 1125.525390625 1243"
+         stroke-miterlimit="10"
+         id="path2753" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2763">
+      <g
+         id="g2761">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2757" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="none"
+           x="1036.5"
+           y="1225.7099609375"
+           id="text2759">DataInitializer</text>
+      </g>
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2767">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1076 1033 L 1076 1167"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path2765" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2771">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1071.7904822439841 1156.837325142376 L 1076 1167 L 1080.2095177560159 1156.837325142376"
+         stroke-miterlimit="10"
+         id="path2769" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2775">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1071 391 L 850 394"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path2773" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2779">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 860.104601130985 389.6529278837709 L 850 394 L 860.2188761525973 398.0711878092122"
+         stroke-miterlimit="10"
+         id="path2777" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2783">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1206 465 L 1136 616 L 1056 616 L 1053 695"
+         stroke-miterlimit="10"
+         id="path2781" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2787">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1049.1791605846995 684.6849049368178 L 1053 695 L 1057.5921322073762 685.0043848718561"
+         stroke-miterlimit="10"
+         id="path2785" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2791">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 895 765 L 778 763"
+         stroke-miterlimit="10"
+         id="path2789" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2795">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 788.2331374461907 758.9647926933834 L 778 763 L 788.0892433310174 767.3825984310133"
+         stroke-miterlimit="10"
+         id="path2793" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2799">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 644 502 L 680 568 L 848 576 L 974 695"
+         stroke-miterlimit="10"
+         id="path2797" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2803">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 566 890 L 632 968 L 879 970"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path2801" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2807">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 868.8035742326053 974.1270935984069 L 879 970 L 868.8717423259849 965.7083340660351"
+         stroke-miterlimit="10"
+         id="path2805" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2811">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1273 974 L 1512 976 L 1504 392 L 1411 391"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path2809" />
+    </g>
+    <g
+       transform="translate(-86,-206) scale(1,1)"
+       id="g2815">
+      <path
+         fill="none"
+         stroke="#000000"
+         d="M 1421.2073484181067 386.899995332762 L 1411 391 L 1421.1168263874777 395.31854418127654"
+         stroke-miterlimit="10"
+         id="path2813" />
+    </g>
+  </g>
+</svg>

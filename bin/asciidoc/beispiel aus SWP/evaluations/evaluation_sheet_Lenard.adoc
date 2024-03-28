@@ -1,0 +1,27 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2021/22
+// Auch wenn der Bogen nicht anonymisiert ist, dürfen Sie gern Ihre Meinung offen kundtun.
+// Sowohl positive als auch negative Anmerkungen werden gern gesehen und zur stetigen Verbesserung genutzt.
+// Versuchen Sie in dieser Auswertung also stets sowohl Positives wie auch Negatives zu erwähnen.
+
+**Von: Lenard Marx**
+
+**Gruppe: 19**
+
+== Was habe ich gelernt / was habe ich nicht gelernt?
+Gelernt mit GitHub umzugehen und Java Kenntnisse aufgefrischt und sehr vertieft. Zeitmanagement und Gruppenarbeit waren Kernkompetenzen, welche abgefordert wurden.
+
+== Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+Positiv ist es natürlich, andere mit mehr Wissen um Hilfe fragen zu können, auch wenn es manchmal frustrierend sein kann, wenn "lustige Sachen" über GitHub gepusht werden.
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
+Unglaublich Zeitsparend und effizient, wenn man sich nach einer gewissen Einarbeitungszeit damit zurecht gefunden hat. Auch sehr gut, wenn man kein Java-Profi ist.
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+Eine kleine Sache bezüglich StarUML, vielleicht den Studis zeigen, wie man mit Inkscape die Watermarks weg bekommt. Das ist aber nicht unbedingt wichtig, da man mit Inkscape
+teilweise schon arbeitet.
+
+== Feedback für den Tutor
+10/10 - Oft erreichbar, auch am Wochenende, viel Geduld, Probleme waren dank Fachkompetenz schnell gelöst.
+
+== Sonstiges und Anmerkungen
+Die ersten beiden Vorlesungen/Einführungen haben auch geholfen.

@@ -1,0 +1,5303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1468"
+   height="1804"
+   id="svg3624"
+   sodipodi:docname="Sequence_randomNPC.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview3624"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.90133038"
+     inkscape:cx="480.40098"
+     inkscape:cy="314.53505"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g3624" />
+  <defs
+     id="defs1">
+    <rect
+       x="1420.7558"
+       y="1479.5944"
+       width="241.63048"
+       height="316.15936"
+       id="rect3116" />
+    <rect
+       x="1360.3482"
+       y="1517.2511"
+       width="201.62023"
+       height="322.43547"
+       id="rect3114" />
+  </defs>
+  <g
+     id="g3624"
+     style="display:inline">
+    <rect
+       style="display:inline;fill:#ffffff"
+       id="rect3624"
+       width="1455.6261"
+       height="1786.2484"
+       x="2.255842"
+       y="0.33825171" />
+    <g
+       id="g3171"
+       style="display:inline">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 10,10 H 1458 V 1794 H 10 V 10"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3171" />
+    </g>
+    <g
+       id="g3172">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 10,10 v 23 h 144.63525 l 11.5,-11.5 V 10 H 10"
+         id="path3172" />
+    </g>
+    <g
+       id="g3173">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 10,10 v 23 h 144.63525 l 11.5,-11.5 V 10 H 10 v 0"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3173" />
+    </g>
+    <g
+       id="g3175">
+      <g
+         id="g3174">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3174"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="138.18262"
+           y="11.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3174">SequenceDiagram1</text>
+      </g>
+    </g>
+    <g
+       id="g3177">
+      <g
+         id="g3176">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3175"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="67.86499"
+           y="11.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3175">sd</text>
+      </g>
+    </g>
+    <g
+       id="g3178">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="95"
+         y="47"
+         width="72.736328"
+         height="40"
+         transform="translate(-46,10)"
+         fill-opacity="0.2"
+         id="rect3177" />
+    </g>
+    <g
+       id="g3179">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="88"
+         y="40"
+         width="72.736328"
+         height="40"
+         transform="translate(-46,10)"
+         id="rect3178" />
+    </g>
+    <g
+       id="g3180">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 42,50 h 72.73633 V 90 H 42 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3179" />
+    </g>
+    <g
+       id="g3182">
+      <g
+         id="g3181">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3180"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="124.86816"
+           y="53.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3180">Main</text>
+      </g>
+    </g>
+    <g
+       id="g3183">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 78.5,91 V 1562"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3182" />
+    </g>
+    <g
+       id="g3184">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="255"
+         y="47"
+         width="72.736328"
+         height="40"
+         transform="translate(-46,10)"
+         fill-opacity="0.2"
+         id="rect3183" />
+    </g>
+    <g
+       id="g3185">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="248"
+         y="40"
+         width="72.736328"
+         height="40"
+         transform="translate(-46,10)"
+         id="rect3184" />
+    </g>
+    <g
+       id="g3186">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 202,50 h 72.73633 V 90 H 202 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3185" />
+    </g>
+    <g
+       id="g3188">
+      <g
+         id="g3187">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3186"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="284.86816"
+           y="53.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3186">GenMain</text>
+      </g>
+    </g>
+    <g
+       id="g3189">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 238.5,91 V 1576"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3188" />
+    </g>
+    <g
+       id="g3190">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="495"
+         y="47"
+         width="95.118164"
+         height="40"
+         transform="translate(-46,10)"
+         fill-opacity="0.2"
+         id="rect3189" />
+    </g>
+    <g
+       id="g3191">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="488"
+         y="40"
+         width="95.118164"
+         height="40"
+         transform="translate(-46,10)"
+         id="rect3190" />
+    </g>
+    <g
+       id="g3192">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 442,50 h 95.11816 V 90 H 442 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3191" />
+    </g>
+    <g
+       id="g3194">
+      <g
+         id="g3193">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3192"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="536.05908"
+           y="53.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3192">RandomNPC</text>
+      </g>
+    </g>
+    <g
+       id="g3195">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 490.5,91 V 1576"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3194" />
+    </g>
+    <g
+       id="g3196">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="711"
+         y="47"
+         width="164.4917"
+         height="40"
+         transform="translate(-46,10)"
+         fill-opacity="0.2"
+         id="rect3195" />
+    </g>
+    <g
+       id="g3197">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="704"
+         y="40"
+         width="164.4917"
+         height="40"
+         transform="translate(-46,10)"
+         id="rect3196" />
+    </g>
+    <g
+       id="g3198">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 658,50 H 822.4917 V 90 H 658 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3197" />
+    </g>
+    <g
+       id="g3200">
+      <g
+         id="g3199">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3198"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="786.74585"
+           y="53.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3198">RandomGeneratorClass</text>
+      </g>
+    </g>
+    <g
+       id="g3201">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 740.5,91 V 1562"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3200" />
+    </g>
+    <g
+       id="g3202">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="991"
+         y="47"
+         width="72.736328"
+         height="40"
+         transform="translate(-46,10)"
+         fill-opacity="0.2"
+         id="rect3201" />
+    </g>
+    <g
+       id="g3203">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="984"
+         y="40"
+         width="72.736328"
+         height="40"
+         transform="translate(-46,10)"
+         id="rect3202" />
+    </g>
+    <g
+       id="g3204">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 938,50 h 72.7363 V 90 H 938 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3203" />
+    </g>
+    <g
+       id="g3206">
+      <g
+         id="g3205">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3204"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1020.8682"
+           y="53.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3204">DBMS</text>
+      </g>
+    </g>
+    <g
+       id="g3207">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 974.5,91 V 1562"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3206" />
+    </g>
+    <g
+       id="g3208">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 79,106 H 231"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3207" />
+    </g>
+    <g
+       id="g3209">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 220.83733,110.20952 231,106 220.83733,101.79048"
+         id="path3208" />
+    </g>
+    <g
+       id="g3210">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 220.83733,110.20952 231,106 220.83733,101.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3209" />
+    </g>
+    <g
+       id="g3211">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="160"
+         y="79"
+         width="78.044434"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3210" />
+    </g>
+    <g
+       id="g3213">
+      <g
+         id="g3212">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3211"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="199.02222"
+           y="85.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3211">1 : Button</text>
+      </g>
+    </g>
+    <g
+       id="g3214">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="277"
+         y="96"
+         width="14"
+         height="1440"
+         transform="translate(-46,10)"
+         id="rect3213" />
+    </g>
+    <g
+       id="g3215">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 231,106 h 14 v 1440 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3214" />
+    </g>
+    <g
+       id="g3216">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 245,114 H 483"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3215" />
+    </g>
+    <g
+       id="g3217">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 472.83733,118.20952 483,114 472.83733,109.79048"
+         id="path3216" />
+    </g>
+    <g
+       id="g3218">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 472.83733,118.20952 483,114 472.83733,109.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3217" />
+    </g>
+    <g
+       id="g3219">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="345"
+         y="88"
+         width="130.78076"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3218" />
+    </g>
+    <g
+       id="g3221">
+      <g
+         id="g3220">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3219"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="410.39038"
+           y="94.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3219">2 : createRandomNPC</text>
+      </g>
+    </g>
+    <g
+       id="g3222">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="529"
+         y="104"
+         width="14"
+         height="1432"
+         transform="translate(-46,10)"
+         id="rect3221" />
+    </g>
+    <g
+       id="g3223">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 483,114 h 14 v 1432 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3222" />
+    </g>
+    <g
+       id="g3224">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,130 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3223" />
+    </g>
+    <g
+       id="g3225">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,134.20952 733,130 722.83733,125.79048"
+         id="path3224" />
+    </g>
+    <g
+       id="g3226">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,134.20952 733,130 722.83733,125.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3225" />
+    </g>
+    <g
+       id="g3227">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="622"
+         y="104"
+         width="78.044434"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3226" />
+    </g>
+    <g
+       id="g3229">
+      <g
+         id="g3228">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3227"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.02222"
+           y="110.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3227">3 : randRace</text>
+      </g>
+    </g>
+    <g
+       id="g3230">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="120"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3229" />
+    </g>
+    <g
+       id="g3231">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,130 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3230" />
+    </g>
+    <g
+       id="g3232">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,138 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3231" />
+    </g>
+    <g
+       id="g3233">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,142.20952 967,138 956.83733,133.79048"
+         id="path3232" />
+    </g>
+    <g
+       id="g3234">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,142.20952 967,138 956.83733,133.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3233" />
+    </g>
+    <g
+       id="g3235">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="864"
+         y="112"
+         width="78.044434"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3234" />
+    </g>
+    <g
+       id="g3237">
+      <g
+         id="g3236">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3235"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.02222"
+           y="118.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3235">4 : Race</text>
+      </g>
+    </g>
+    <g
+       id="g3238">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="128"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3237" />
+    </g>
+    <g
+       id="g3239">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,138 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3238" />
+    </g>
+    <g
+       id="g3240">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,154 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3239" />
+    </g>
+    <g
+       id="g3241">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,149.79048 497,154 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3240" />
+    </g>
+    <g
+       id="g3242">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="620"
+         y="148"
+         width="80.92627"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3241" />
+    </g>
+    <g
+       id="g3244">
+      <g
+         id="g3243">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3242"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.46313"
+           y="154.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3242">5 : return race</text>
+      </g>
+    </g>
+    <g
+       id="g3245">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,154 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3244" />
+    </g>
+    <g
+       id="g3246">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,149.79048 747,154 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3245" />
+    </g>
+    <g
+       id="g3247">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="881"
+         y="148"
+         width="43.354492"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3246" />
+    </g>
+    <g
+       id="g3249">
+      <g
+         id="g3248">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3247"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.67725"
+           y="154.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3247">6 : race</text>
+      </g>
+    </g>
+    <g
+       id="g3250">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,187 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3249" />
+    </g>
+    <g
+       id="g3251">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,191.20952 733,187 722.83733,182.79048"
+         id="path3250" />
+    </g>
+    <g
+       id="g3252">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,191.20952 733,187 722.83733,182.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3251" />
+    </g>
+    <g
+       id="g3253">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="622"
+         y="161"
+         width="78.044434"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3252" />
+    </g>
+    <g
+       id="g3255">
+      <g
+         id="g3254">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3253"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.02222"
+           y="167.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3253">7 : randLevel</text>
+      </g>
+    </g>
+    <g
+       id="g3256">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="177"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3255" />
+    </g>
+    <g
+       id="g3257">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,187 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3256" />
+    </g>
+    <g
+       id="g3258">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,210 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3257" />
+    </g>
+    <g
+       id="g3259">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,205.79048 497,210 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3258" />
+    </g>
+    <g
+       id="g3260">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="619"
+         y="204"
+         width="82.373535"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3259" />
+    </g>
+    <g
+       id="g3262">
+      <g
+         id="g3261">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3260"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.18677"
+           y="210.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3260">8 : return level</text>
+      </g>
+    </g>
+    <g
+       id="g3263">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,242 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3262" />
+    </g>
+    <g
+       id="g3264">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,246.20952 733,242 722.83733,237.79048"
+         id="path3263" />
+    </g>
+    <g
+       id="g3265">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,246.20952 733,242 722.83733,237.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3264" />
+    </g>
+    <g
+       id="g3266">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="622"
+         y="216"
+         width="78.044434"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3265" />
+    </g>
+    <g
+       id="g3268">
+      <g
+         id="g3267">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3266"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.02222"
+           y="222.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3266">9 : randJob</text>
+      </g>
+    </g>
+    <g
+       id="g3269">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="232"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3268" />
+    </g>
+    <g
+       id="g3270">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,242 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3269" />
+    </g>
+    <g
+       id="g3271">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,250 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3270" />
+    </g>
+    <g
+       id="g3272">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,254.20952 967,250 956.83733,245.79048"
+         id="path3271" />
+    </g>
+    <g
+       id="g3273">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,254.20952 967,250 956.83733,245.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3272" />
+    </g>
+    <g
+       id="g3274">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="224"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3273" />
+    </g>
+    <g
+       id="g3276">
+      <g
+         id="g3275">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3274"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="230.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3274">10 : Job</text>
+      </g>
+    </g>
+    <g
+       id="g3277">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="240"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3276" />
+    </g>
+    <g
+       id="g3278">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,250 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3277" />
+    </g>
+    <g
+       id="g3279">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,266 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3278" />
+    </g>
+    <g
+       id="g3280">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,261.79048 497,266 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3279" />
+    </g>
+    <g
+       id="g3281">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="620"
+         y="260"
+         width="80.215332"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3280" />
+    </g>
+    <g
+       id="g3283">
+      <g
+         id="g3282">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3281"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.10767"
+           y="266.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3281">11 : return job</text>
+      </g>
+    </g>
+    <g
+       id="g3284">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,267 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3283" />
+    </g>
+    <g
+       id="g3285">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,262.79048 747,267 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3284" />
+    </g>
+    <g
+       id="g3286">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="881"
+         y="261"
+         width="42.643555"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3285" />
+    </g>
+    <g
+       id="g3288">
+      <g
+         id="g3287">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3286"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.32178"
+           y="267.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3286">12 : job</text>
+      </g>
+    </g>
+    <g
+       id="g3289">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,298 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3288" />
+    </g>
+    <g
+       id="g3290">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,302.20952 733,298 722.83733,293.79048"
+         id="path3289" />
+    </g>
+    <g
+       id="g3291">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,302.20952 733,298 722.83733,293.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3290" />
+    </g>
+    <g
+       id="g3292">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="620"
+         y="272"
+         width="83.820801"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3291" />
+    </g>
+    <g
+       id="g3294">
+      <g
+         id="g3293">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3292"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.9104"
+           y="278.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3292">13 : randClass</text>
+      </g>
+    </g>
+    <g
+       id="g3295">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="288"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3294" />
+    </g>
+    <g
+       id="g3296">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,298 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3295" />
+    </g>
+    <g
+       id="g3297">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,306 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3296" />
+    </g>
+    <g
+       id="g3298">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,310.20952 967,306 956.83733,301.79048"
+         id="path3297" />
+    </g>
+    <g
+       id="g3299">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,310.20952 967,306 956.83733,301.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3298" />
+    </g>
+    <g
+       id="g3300">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="280"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3299" />
+    </g>
+    <g
+       id="g3302">
+      <g
+         id="g3301">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3300"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="286.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3300">14 : Class</text>
+      </g>
+    </g>
+    <g
+       id="g3303">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="296"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3302" />
+    </g>
+    <g
+       id="g3304">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,306 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3303" />
+    </g>
+    <g
+       id="g3305">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,323 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3304" />
+    </g>
+    <g
+       id="g3306">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,318.79048 497,323 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3305" />
+    </g>
+    <g
+       id="g3307">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="614"
+         y="317"
+         width="92.485352"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3306" />
+    </g>
+    <g
+       id="g3309">
+      <g
+         id="g3308">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3307"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.24268"
+           y="323.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3307">15 : return class</text>
+      </g>
+    </g>
+    <g
+       id="g3310">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,323 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3309" />
+    </g>
+    <g
+       id="g3311">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,318.79048 747,323 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3310" />
+    </g>
+    <g
+       id="g3312">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="875"
+         y="317"
+         width="54.913574"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3311" />
+    </g>
+    <g
+       id="g3314">
+      <g
+         id="g3313">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3312"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.45679"
+           y="323.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3312">16 : class</text>
+      </g>
+    </g>
+    <g
+       id="g3315">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,362 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3314" />
+    </g>
+    <g
+       id="g3316">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,366.20952 733,362 722.83733,357.79048"
+         id="path3315" />
+    </g>
+    <g
+       id="g3317">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,366.20952 733,362 722.83733,357.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3316" />
+    </g>
+    <g
+       id="g3318">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="602"
+         y="336"
+         width="119.95166"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3317" />
+    </g>
+    <g
+       id="g3320">
+      <g
+         id="g3319">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3318"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.97583"
+           y="342.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3318">17 : randAbilityScore</text>
+      </g>
+    </g>
+    <g
+       id="g3321">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="352"
+         width="14"
+         height="72"
+         transform="translate(-46,10)"
+         id="rect3320" />
+    </g>
+    <g
+       id="g3322">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,362 h 14 v 72 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3321" />
+    </g>
+    <g
+       id="g3323">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 747,370 h 30 v 20 h -23"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3322" />
+    </g>
+    <g
+       id="g3324">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 764.16267,385.79048 754,390 l 10.16267,4.20952"
+         id="path3323" />
+    </g>
+    <g
+       id="g3325">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 764.16267,385.79048 754,390 l 10.16267,4.20952 v -8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3324" />
+    </g>
+    <g
+       id="g3326">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="784"
+         y="363"
+         width="96.820801"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3325" />
+    </g>
+    <g
+       id="g3328">
+      <g
+         id="g3327">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3326"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="832.4104"
+           y="369.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3326">18 : diceThrower</text>
+      </g>
+    </g>
+    <g
+       id="g3329">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="786"
+         y="380"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3328" />
+    </g>
+    <g
+       id="g3330">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 740,390 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3329" />
+    </g>
+    <g
+       id="g3331">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,428 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3330" />
+    </g>
+    <g
+       id="g3332">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,423.79048 497,428 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3331" />
+    </g>
+    <g
+       id="g3333">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="585"
+         y="422"
+         width="151.73438"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3332" />
+    </g>
+    <g
+       id="g3335">
+      <g
+         id="g3334">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3333"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.86719"
+           y="428.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3333">19 : return AbilityScoreList</text>
+      </g>
+    </g>
+    <g
+       id="g3336">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 497,442 h 30 v 20 h -23"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3335" />
+    </g>
+    <g
+       id="g3337">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 514.16267,457.79048 504,462 l 10.16267,4.20952"
+         id="path3336" />
+    </g>
+    <g
+       id="g3338">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 514.16267,457.79048 504,462 l 10.16267,4.20952 v -8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3337" />
+    </g>
+    <g
+       id="g3339">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="509"
+         y="435"
+         width="146.68164"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3338" />
+    </g>
+    <g
+       id="g3341">
+      <g
+         id="g3340">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3339"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="582.34082"
+           y="441.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3339">20 : distributeAbilityScore</text>
+      </g>
+    </g>
+    <g
+       id="g3342">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="536"
+         y="452"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3341" />
+    </g>
+    <g
+       id="g3343">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 490,462 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3342" />
+    </g>
+    <g
+       id="g3344">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,498 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3343" />
+    </g>
+    <g
+       id="g3345">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,502.20952 733,498 722.83733,493.79048"
+         id="path3344" />
+    </g>
+    <g
+       id="g3346">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,502.20952 733,498 722.83733,493.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3345" />
+    </g>
+    <g
+       id="g3347">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="613"
+         y="472"
+         width="96.820801"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3346" />
+    </g>
+    <g
+       id="g3349">
+      <g
+         id="g3348">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3347"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.4104"
+           y="478.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3347">21 : diceThrower</text>
+      </g>
+    </g>
+    <g
+       id="g3350">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="488"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3349" />
+    </g>
+    <g
+       id="g3351">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,498 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3350" />
+    </g>
+    <g
+       id="g3352">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,522 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3351" />
+    </g>
+    <g
+       id="g3353">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,517.79048 497,522 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3352" />
+    </g>
+    <g
+       id="g3354">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="604"
+         y="516"
+         width="112.72168"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3353" />
+    </g>
+    <g
+       id="g3356">
+      <g
+         id="g3355">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3354"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.36084"
+           y="522.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3354">22 : return rolledHP</text>
+      </g>
+    </g>
+    <g
+       id="g3357">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,554 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3356" />
+    </g>
+    <g
+       id="g3358">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,558.20952 733,554 722.83733,549.79048"
+         id="path3357" />
+    </g>
+    <g
+       id="g3359">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,558.20952 733,554 722.83733,549.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3358" />
+    </g>
+    <g
+       id="g3360">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="618"
+         y="528"
+         width="86.702637"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3359" />
+    </g>
+    <g
+       id="g3362">
+      <g
+         id="g3361">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3360"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.35132"
+           y="534.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3360">23 : randArmor</text>
+      </g>
+    </g>
+    <g
+       id="g3363">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="544"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3362" />
+    </g>
+    <g
+       id="g3364">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,554 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3363" />
+    </g>
+    <g
+       id="g3365">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,562 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3364" />
+    </g>
+    <g
+       id="g3366">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,566.20952 967,562 956.83733,557.79048"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3365" />
+    </g>
+    <g
+       id="g3367">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="536"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3366" />
+    </g>
+    <g
+       id="g3369">
+      <g
+         id="g3368">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3367"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="542.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3367">24 : armor</text>
+      </g>
+    </g>
+    <g
+       id="g3370">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="552"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3369" />
+    </g>
+    <g
+       id="g3371">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,562 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3370" />
+    </g>
+    <g
+       id="g3372">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,578 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3371" />
+    </g>
+    <g
+       id="g3373">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,573.79048 497,578 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3372" />
+    </g>
+    <g
+       id="g3374">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="612"
+         y="572"
+         width="96.814453"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3373" />
+    </g>
+    <g
+       id="g3376">
+      <g
+         id="g3375">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3374"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.40723"
+           y="578.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3374">25 : return armor</text>
+      </g>
+    </g>
+    <g
+       id="g3377">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,578 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3376" />
+    </g>
+    <g
+       id="g3378">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,573.79048 747,578 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3377" />
+    </g>
+    <g
+       id="g3379">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="873"
+         y="572"
+         width="59.242676"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3378" />
+    </g>
+    <g
+       id="g3381">
+      <g
+         id="g3380">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3379"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.62134"
+           y="578.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3379">26 : armor</text>
+      </g>
+    </g>
+    <g
+       id="g3382">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,618 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3381" />
+    </g>
+    <g
+       id="g3383">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,622.20952 733,618 722.83733,613.79048"
+         id="path3382" />
+    </g>
+    <g
+       id="g3384">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,622.20952 733,618 722.83733,613.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3383" />
+    </g>
+    <g
+       id="g3385">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="609"
+         y="592"
+         width="105.99951"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3384" />
+    </g>
+    <g
+       id="g3387">
+      <g
+         id="g3386">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3385"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.99976"
+           y="598.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3385">27 : randWeapons</text>
+      </g>
+    </g>
+    <g
+       id="g3388">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="608"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3387" />
+    </g>
+    <g
+       id="g3389">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,618 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3388" />
+    </g>
+    <g
+       id="g3390">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,626 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3389" />
+    </g>
+    <g
+       id="g3391">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,630.20952 967,626 956.83733,621.79048"
+         id="path3390" />
+    </g>
+    <g
+       id="g3392">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,630.20952 967,626 956.83733,621.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3391" />
+    </g>
+    <g
+       id="g3393">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="600"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3392" />
+    </g>
+    <g
+       id="g3395">
+      <g
+         id="g3394">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3393"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="606.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3393">28 : Weapons</text>
+      </g>
+    </g>
+    <g
+       id="g3396">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="616"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3395" />
+    </g>
+    <g
+       id="g3397">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,626 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3396" />
+    </g>
+    <g
+       id="g3398">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,642 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3397" />
+    </g>
+    <g
+       id="g3399">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,637.79048 497,642 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3398" />
+    </g>
+    <g
+       id="g3400">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="593"
+         y="636"
+         width="135.13525"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3399" />
+    </g>
+    <g
+       id="g3402">
+      <g
+         id="g3401">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3400"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.56763"
+           y="642.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3400">29 : return weaponsList</text>
+      </g>
+    </g>
+    <g
+       id="g3403">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,642 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3402" />
+    </g>
+    <g
+       id="g3404">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,637.79048 747,642 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3403" />
+    </g>
+    <g
+       id="g3405">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="864"
+         y="636"
+         width="77.333496"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3404" />
+    </g>
+    <g
+       id="g3407">
+      <g
+         id="g3406">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3405"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.66675"
+           y="642.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3405">30 : weapons</text>
+      </g>
+    </g>
+    <g
+       id="g3408">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,682 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3407" />
+    </g>
+    <g
+       id="g3409">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,686.20952 733,682 722.83733,677.79048"
+         id="path3408" />
+    </g>
+    <g
+       id="g3410">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,686.20952 733,682 722.83733,677.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3409" />
+    </g>
+    <g
+       id="g3411">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="612"
+         y="656"
+         width="98.991699"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3410" />
+    </g>
+    <g
+       id="g3413">
+      <g
+         id="g3412">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3411"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.49585"
+           y="662.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3411">31 : randSkillProf</text>
+      </g>
+    </g>
+    <g
+       id="g3414">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="672"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3413" />
+    </g>
+    <g
+       id="g3415">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,682 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3414" />
+    </g>
+    <g
+       id="g3416">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,690 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3415" />
+    </g>
+    <g
+       id="g3417">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,694.20952 967,690 956.83733,685.79048"
+         id="path3416" />
+    </g>
+    <g
+       id="g3418">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,694.20952 967,690 956.83733,685.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3417" />
+    </g>
+    <g
+       id="g3419">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="664"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3418" />
+    </g>
+    <g
+       id="g3421">
+      <g
+         id="g3420">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3419"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="670.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3419">32 : Skills</text>
+      </g>
+    </g>
+    <g
+       id="g3422">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="680"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3421" />
+    </g>
+    <g
+       id="g3423">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,690 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3422" />
+    </g>
+    <g
+       id="g3424">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,706 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3423" />
+    </g>
+    <g
+       id="g3425">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,701.79048 497,706 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3424" />
+    </g>
+    <g
+       id="g3426">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="596"
+         y="700"
+         width="128.60352"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3425" />
+    </g>
+    <g
+       id="g3428">
+      <g
+         id="g3427">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3426"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.30176"
+           y="706.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3426">33 : return skillProfList</text>
+      </g>
+    </g>
+    <g
+       id="g3429">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,706 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3428" />
+    </g>
+    <g
+       id="g3430">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,701.79048 747,706 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3429" />
+    </g>
+    <g
+       id="g3431">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="876"
+         y="700"
+         width="53.459961"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3430" />
+    </g>
+    <g
+       id="g3433">
+      <g
+         id="g3432">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3431"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.72998"
+           y="706.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3431">34 : skills</text>
+      </g>
+    </g>
+    <g
+       id="g3434">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,754 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3433" />
+    </g>
+    <g
+       id="g3435">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,758.20952 733,754 722.83733,749.79048"
+         id="path3434" />
+    </g>
+    <g
+       id="g3436">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,758.20952 733,754 722.83733,749.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3435" />
+    </g>
+    <g
+       id="g3437">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="603"
+         y="728"
+         width="116.33984"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3436" />
+    </g>
+    <g
+       id="g3439">
+      <g
+         id="g3438">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3437"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.16992"
+           y="734.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3437">35 : randDescription</text>
+      </g>
+    </g>
+    <g
+       id="g3440">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="744"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3439" />
+    </g>
+    <g
+       id="g3441">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,754 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3440" />
+    </g>
+    <g
+       id="g3442">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,762 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3441" />
+    </g>
+    <g
+       id="g3443">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,766.20952 967,762 956.83733,757.79048"
+         id="path3442" />
+    </g>
+    <g
+       id="g3444">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,766.20952 967,762 956.83733,757.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3443" />
+    </g>
+    <g
+       id="g3445">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="858"
+         y="736"
+         width="90.320801"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3444" />
+    </g>
+    <g
+       id="g3447">
+      <g
+         id="g3446">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3445"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.1604"
+           y="742.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3445">36 : Description</text>
+      </g>
+    </g>
+    <g
+       id="g3448">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="752"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3447" />
+    </g>
+    <g
+       id="g3449">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,762 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3448" />
+    </g>
+    <g
+       id="g3450">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,778 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3449" />
+    </g>
+    <g
+       id="g3451">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,773.79048 747,778 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3450" />
+    </g>
+    <g
+       id="g3452">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="858"
+         y="772"
+         width="88.162598"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3451" />
+    </g>
+    <g
+       id="g3454">
+      <g
+         id="g3453">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3452"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.0813"
+           y="778.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3452">37 : description</text>
+      </g>
+    </g>
+    <g
+       id="g3455">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,779 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3454" />
+    </g>
+    <g
+       id="g3456">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,774.79048 497,779 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3455" />
+    </g>
+    <g
+       id="g3457">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="597"
+         y="773"
+         width="127.89258"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3456" />
+    </g>
+    <g
+       id="g3459">
+      <g
+         id="g3458">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3457"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.94629"
+           y="779.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3457">38 : return Description</text>
+      </g>
+    </g>
+    <g
+       id="g3460">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,818 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3459" />
+    </g>
+    <g
+       id="g3461">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,822.20952 733,818 722.83733,813.79048"
+         id="path3460" />
+    </g>
+    <g
+       id="g3462">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,822.20952 733,818 722.83733,813.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3461" />
+    </g>
+    <g
+       id="g3463">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="603"
+         y="792"
+         width="116.33984"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3462" />
+    </g>
+    <g
+       id="g3465">
+      <g
+         id="g3464">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3463"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.16992"
+           y="798.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3463">39 : randTBF</text>
+      </g>
+    </g>
+    <g
+       id="g3466">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="808"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3465" />
+    </g>
+    <g
+       id="g3467">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,818 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3466" />
+    </g>
+    <g
+       id="g3468">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,826 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3467" />
+    </g>
+    <g
+       id="g3469">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,830.20952 967,826 956.83733,821.79048"
+         id="path3468" />
+    </g>
+    <g
+       id="g3470">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,830.20952 967,826 956.83733,821.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3469" />
+    </g>
+    <g
+       id="g3471">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="800"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3470" />
+    </g>
+    <g
+       id="g3473">
+      <g
+         id="g3472">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3471"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="806.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3471">40 : TBF</text>
+      </g>
+    </g>
+    <g
+       id="g3474">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="816"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3473" />
+    </g>
+    <g
+       id="g3475">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,826 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3474" />
+    </g>
+    <g
+       id="g3476">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,842 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3475" />
+    </g>
+    <g
+       id="g3477">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,837.79048 747,842 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3476" />
+    </g>
+    <g
+       id="g3478">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="878"
+         y="836"
+         width="49.848145"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3477" />
+    </g>
+    <g
+       id="g3480">
+      <g
+         id="g3479">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3478"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.92407"
+           y="842.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3478">41 : TBF</text>
+      </g>
+    </g>
+    <g
+       id="g3481">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,843 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3480" />
+    </g>
+    <g
+       id="g3482">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,838.79048 497,843 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3481" />
+    </g>
+    <g
+       id="g3483">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="579"
+         y="837"
+         width="162.57617"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3482" />
+    </g>
+    <g
+       id="g3485">
+      <g
+         id="g3484">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3483"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.28809"
+           y="843.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3483">42 : return traitBondFlawList</text>
+      </g>
+    </g>
+    <g
+       id="g3486">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,874 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3485" />
+    </g>
+    <g
+       id="g3487">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,878.20952 733,874 722.83733,869.79048"
+         id="path3486" />
+    </g>
+    <g
+       id="g3488">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,878.20952 733,874 722.83733,869.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3487" />
+    </g>
+    <g
+       id="g3489">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="607"
+         y="848"
+         width="109.12256"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3488" />
+    </g>
+    <g
+       id="g3491">
+      <g
+         id="g3490">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3489"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.56128"
+           y="854.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3489">43 : randAlignment</text>
+      </g>
+    </g>
+    <g
+       id="g3492">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="864"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3491" />
+    </g>
+    <g
+       id="g3493">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,874 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3492" />
+    </g>
+    <g
+       id="g3494">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,900 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3493" />
+    </g>
+    <g
+       id="g3495">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,895.79048 497,900 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3494" />
+    </g>
+    <g
+       id="g3496">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="600"
+         y="894"
+         width="120.67529"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3495" />
+    </g>
+    <g
+       id="g3498">
+      <g
+         id="g3497">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3496"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.33765"
+           y="900.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3496">44 : return Alignment</text>
+      </g>
+    </g>
+    <g
+       id="g3499">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,938 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3498" />
+    </g>
+    <g
+       id="g3500">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,942.20952 733,938 722.83733,933.79048"
+         id="path3499" />
+    </g>
+    <g
+       id="g3501">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,942.20952 733,938 722.83733,933.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3500" />
+    </g>
+    <g
+       id="g3502">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="619"
+         y="912"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3501" />
+    </g>
+    <g
+       id="g3504">
+      <g
+         id="g3503">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3502"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.63721"
+           y="918.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3502">45 : rand deity</text>
+      </g>
+    </g>
+    <g
+       id="g3505">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="928"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3504" />
+    </g>
+    <g
+       id="g3506">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,938 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3505" />
+    </g>
+    <g
+       id="g3507">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,946 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3506" />
+    </g>
+    <g
+       id="g3508">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,950.20952 967,946 956.83733,941.79048"
+         id="path3507" />
+    </g>
+    <g
+       id="g3509">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,950.20952 967,946 956.83733,941.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3508" />
+    </g>
+    <g
+       id="g3510">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="920"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3509" />
+    </g>
+    <g
+       id="g3512">
+      <g
+         id="g3511">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3510"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="926.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3510">46 : Deity</text>
+      </g>
+    </g>
+    <g
+       id="g3513">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="936"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3512" />
+    </g>
+    <g
+       id="g3514">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,946 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3513" />
+    </g>
+    <g
+       id="g3515">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,963 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3514" />
+    </g>
+    <g
+       id="g3516">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,958.79048 497,963 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3515" />
+    </g>
+    <g
+       id="g3517">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="614"
+         y="957"
+         width="92.485352"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3516" />
+    </g>
+    <g
+       id="g3519">
+      <g
+         id="g3518">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3517"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.24268"
+           y="963.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3517">47 : return Deity</text>
+      </g>
+    </g>
+    <g
+       id="g3520">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,963 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3519" />
+    </g>
+    <g
+       id="g3521">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,958.79048 747,963 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3520" />
+    </g>
+    <g
+       id="g3522">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="876"
+         y="957"
+         width="52.755371"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3521" />
+    </g>
+    <g
+       id="g3524">
+      <g
+         id="g3523">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3522"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.37769"
+           y="963.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3522">48 : deity</text>
+      </g>
+    </g>
+    <g
+       id="g3525">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,994 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3524" />
+    </g>
+    <g
+       id="g3526">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,998.20952 733,994 722.83733,989.79048"
+         id="path3525" />
+    </g>
+    <g
+       id="g3527">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,998.20952 733,994 722.83733,989.79048 v 8.41904"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3526" />
+    </g>
+    <g
+       id="g3528">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="604"
+         y="968"
+         width="115.6543"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3527" />
+    </g>
+    <g
+       id="g3530">
+      <g
+         id="g3529">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3528"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.82715"
+           y="974.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3528">49 : randLanguages</text>
+      </g>
+    </g>
+    <g
+       id="g3531">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="984"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3530" />
+    </g>
+    <g
+       id="g3532">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,994 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3531" />
+    </g>
+    <g
+       id="g3533">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,1002 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3532" />
+    </g>
+    <g
+       id="g3534">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,1006.2095 967,1002 956.83733,997.79048"
+         id="path3533" />
+    </g>
+    <g
+       id="g3535">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,1006.2095 967,1002 956.83733,997.79048 v 8.41902"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3534" />
+    </g>
+    <g
+       id="g3536">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="859"
+         y="976"
+         width="89.635254"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3535" />
+    </g>
+    <g
+       id="g3538">
+      <g
+         id="g3537">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3536"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.81763"
+           y="982.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3536">50 : Languages</text>
+      </g>
+    </g>
+    <g
+       id="g3539">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="992"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3538" />
+    </g>
+    <g
+       id="g3540">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,1002 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3539" />
+    </g>
+    <g
+       id="g3541">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,1018 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3540" />
+    </g>
+    <g
+       id="g3542">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,1013.7905 747,1018 l 10.16267,4.2095"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3541" />
+    </g>
+    <g
+       id="g3543">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="860"
+         y="1012"
+         width="85.293457"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3542" />
+    </g>
+    <g
+       id="g3545">
+      <g
+         id="g3544">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3543"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.64673"
+           y="1018.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3543">51 : languages</text>
+      </g>
+    </g>
+    <g
+       id="g3546">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,1021 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3545" />
+    </g>
+    <g
+       id="g3547">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,1016.7905 497,1021 l 10.16267,4.2095"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3546" />
+    </g>
+    <g
+       id="g3548">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="599"
+         y="1015"
+         width="122.86523"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3547" />
+    </g>
+    <g
+       id="g3550">
+      <g
+         id="g3549">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3548"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.43262"
+           y="1021.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3548">52 : return languages</text>
+      </g>
+    </g>
+    <g
+       id="g3551">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,1058 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3550" />
+    </g>
+    <g
+       id="g3552">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,1062.2095 733,1058 l -10.16267,-4.2095"
+         id="path3551" />
+    </g>
+    <g
+       id="g3553">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,1062.2095 733,1058 l -10.16267,-4.2095 v 8.419"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3552" />
+    </g>
+    <g
+       id="g3554">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="614"
+         y="1032"
+         width="94.675293"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3553" />
+    </g>
+    <g
+       id="g3556">
+      <g
+         id="g3555">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3554"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.33765"
+           y="1038.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3554">53 : randGender</text>
+      </g>
+    </g>
+    <g
+       id="g3557">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="1048"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3556" />
+    </g>
+    <g
+       id="g3558">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,1058 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3557" />
+    </g>
+    <g
+       id="g3559">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,1085 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3558" />
+    </g>
+    <g
+       id="g3560">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,1080.7905 497,1085 l 10.16267,4.2095"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3559" />
+    </g>
+    <g
+       id="g3561">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="609"
+         y="1079"
+         width="103.34619"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3560" />
+    </g>
+    <g
+       id="g3563">
+      <g
+         id="g3562">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3561"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.6731"
+           y="1085.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3561">54 : return gender</text>
+      </g>
+    </g>
+    <g
+       id="g3564">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,1122 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3563" />
+    </g>
+    <g
+       id="g3565">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,1126.2095 733,1122 l -10.16267,-4.2095"
+         id="path3564" />
+    </g>
+    <g
+       id="g3566">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,1126.2095 733,1122 l -10.16267,-4.2095 v 8.419"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3565" />
+    </g>
+    <g
+       id="g3567">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="619"
+         y="1096"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3566" />
+    </g>
+    <g
+       id="g3569">
+      <g
+         id="g3568">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3567"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="661.63721"
+           y="1102.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3567">55 : randAge</text>
+      </g>
+    </g>
+    <g
+       id="g3570">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="1112"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3569" />
+    </g>
+    <g
+       id="g3571">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,1122 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3570" />
+    </g>
+    <g
+       id="g3572">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,1146 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3571" />
+    </g>
+    <g
+       id="g3573">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,1141.7905 497,1146 l 10.16267,4.2095"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3572" />
+    </g>
+    <g
+       id="g3574">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="618"
+         y="1140"
+         width="85.998047"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3573" />
+    </g>
+    <g
+       id="g3576">
+      <g
+         id="g3575">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3574"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.99902"
+           y="1146.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3574">56 : return age</text>
+      </g>
+    </g>
+    <g
+       id="g3577">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 497,1194 H 733"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3576" />
+    </g>
+    <g
+       id="g3578">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 722.83733,1198.2095 733,1194 l -10.16267,-4.2095"
+         id="path3577" />
+    </g>
+    <g
+       id="g3579">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 722.83733,1198.2095 733,1194 l -10.16267,-4.2095 v 8.419"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3578" />
+    </g>
+    <g
+       id="g3580">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="612"
+         y="1167"
+         width="85.991699"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3579" />
+    </g>
+    <g
+       id="g3582">
+      <g
+         id="g3581">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3580"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="654.99585"
+           y="1173.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3580">57 : randName</text>
+      </g>
+    </g>
+    <g
+       id="g3583">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="779"
+         y="1184"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3582" />
+    </g>
+    <g
+       id="g3584">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 733,1194 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3583" />
+    </g>
+    <g
+       id="g3585">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 747,1202 H 967"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3584" />
+    </g>
+    <g
+       id="g3586">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 956.83733,1206.2095 967,1202 l -10.16267,-4.2095"
+         id="path3585" />
+    </g>
+    <g
+       id="g3587">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 956.83733,1206.2095 967,1202 l -10.16267,-4.2095 v 8.419"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3586" />
+    </g>
+    <g
+       id="g3588">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="861"
+         y="1176"
+         width="85.274414"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3587" />
+    </g>
+    <g
+       id="g3590">
+      <g
+         id="g3589">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3588"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="903.63721"
+           y="1182.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3588">58 : Name</text>
+      </g>
+    </g>
+    <g
+       id="g3591">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1013"
+         y="1192"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3590" />
+    </g>
+    <g
+       id="g3592">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 967,1202 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3591" />
+    </g>
+    <g
+       id="g3593">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 967,1218 H 747"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3592" />
+    </g>
+    <g
+       id="g3594">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 757.16267,1213.7905 747,1218 l 10.16267,4.2095"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3593" />
+    </g>
+    <g
+       id="g3595">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="874"
+         y="1212"
+         width="57.814453"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3594" />
+    </g>
+    <g
+       id="g3597">
+      <g
+         id="g3596">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3595"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="902.90723"
+           y="1218.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3595">59 : name</text>
+      </g>
+    </g>
+    <g
+       id="g3598">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 733,1219 H 497"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3597" />
+    </g>
+    <g
+       id="g3599">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 507.16267,1214.7905 497,1219 l 10.16267,4.2095"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3598" />
+    </g>
+    <g
+       id="g3600">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="612"
+         y="1213"
+         width="97.544434"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3599" />
+    </g>
+    <g
+       id="g3602">
+      <g
+         id="g3601">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3600"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="660.77222"
+           y="1219.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3600">60 : return Name</text>
+      </g>
+    </g>
+    <g
+       id="g3603">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 497,1250 h 30 v 20 h -23"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3602" />
+    </g>
+    <g
+       id="g3604">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 514.16267,1265.7905 504,1270 l 10.16267,4.2095"
+         id="path3603" />
+    </g>
+    <g
+       id="g3605">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 514.16267,1265.7905 504,1270 l 10.16267,4.2095 v -8.419"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3604" />
+    </g>
+    <g
+       id="g3606">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="531"
+         y="1240"
+         width="103.34619"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3605" />
+    </g>
+    <g
+       id="g3608">
+      <g
+         id="g3607">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3606"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="582.6731"
+           y="1246.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3606">61 : chooseAction</text>
+      </g>
+    </g>
+    <g
+       id="g3609">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="536"
+         y="1260"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3608" />
+    </g>
+    <g
+       id="g3610">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 490,1270 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3609" />
+    </g>
+    <g
+       id="g3611">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 497,1306 h 30 v 20 h -23"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3610" />
+    </g>
+    <g
+       id="g3612">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="M 514.16267,1321.7905 504,1326 l 10.16267,4.2095"
+         id="path3611" />
+    </g>
+    <g
+       id="g3613">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 514.16267,1321.7905 504,1326 l 10.16267,4.2095 v -8.419"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3612" />
+    </g>
+    <g
+       id="g3614">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="534"
+         y="1299"
+         width="96.122559"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3613" />
+    </g>
+    <g
+       id="g3616">
+      <g
+         id="g3615">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3614"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="582.06128"
+           y="1305.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3614">62 : chooseSpell</text>
+      </g>
+    </g>
+    <g
+       id="g3617">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="536"
+         y="1316"
+         width="14"
+         height="28"
+         transform="translate(-46,10)"
+         id="rect3616" />
+    </g>
+    <g
+       id="g3618">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 490,1326 h 14 v 28 h -14 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3617" />
+    </g>
+    <g
+       id="g3619">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 483,1545 H 245"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path3618" />
+    </g>
+    <g
+       id="g3620">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 255.16267,1540.7905 245,1545 l 10.16267,4.2095"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3619" />
+    </g>
+    <g
+       id="g3621">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="361"
+         y="1539"
+         width="96.820801"
+         height="13"
+         transform="translate(-46,10)"
+         id="rect3620" />
+    </g>
+    <g
+       id="g3623">
+      <g
+         id="g3622">
+        <path
+           fill="none"
+           stroke="none"
+           id="path3621"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="409.4104"
+           y="1545.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-46,10)"
+           id="text3621">63 : randomNPC</text>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       id="text3114"
+       style="white-space:pre;shape-inside:url(#rect3114);display:inline;fill:#ffffff" />
+    <text
+       xml:space="preserve"
+       id="text3116"
+       style="white-space:pre;shape-inside:url(#rect3116);display:inline;fill:#ffffff" />
+  </g>
+</svg>
