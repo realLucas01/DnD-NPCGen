@@ -7,10 +7,9 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class UI extends Application {
@@ -30,6 +29,23 @@ public class UI extends Application {
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         window.setTitle("DnD NPC Generator");
+
+        //Menü
+        Menu menu = new Menu("Menu 1");
+        MenuBar menuBar = new MenuBar();
+
+        menu.setOnShowing(e -> { System.out.println("Showing Menu 1"); });
+        menu.setOnShown  (e -> { System.out.println("Shown Menu 1"); });
+        menu.setOnHiding (e -> { System.out.println("Hiding Menu 1"); });
+        menu.setOnHidden (e -> { System.out.println("Hidden Menu 1"); });
+
+        MenuItem menuItem1 = new MenuItem("Item 1");
+        MenuItem menuItem2 = new MenuItem("Item 2");
+
+        menu.getItems().add(menuItem1);
+        menu.getItems().add(menuItem2);
+
+        menuBar.getMenus().add(menu);
 
 
         //Seite generatePage
@@ -79,12 +95,15 @@ public class UI extends Application {
 
 
         //Layout der Seite
-        GridPane layoutGenerate = new GridPane();
-        layoutGenerate.setPadding(new Insets(10, 10, 10, 10));
-        layoutGenerate.setVgap(7);
-        layoutGenerate.setHgap(10);
-        layoutGenerate.getChildren().addAll(labelRace, labelClass, labelJob, labelLevel, cbRace, cbClass, cbJob, cbLevel, buttonGenerate);
-        generatePage = new Scene(layoutGenerate, 300, 400);
+        GridPane layoutGenerateGrid = new GridPane();
+        layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
+        layoutGenerateGrid.setVgap(7);
+        layoutGenerateGrid.setHgap(10);
+        layoutGenerateGrid.getChildren().addAll(labelRace, labelClass, labelJob, labelLevel, cbRace, cbClass, cbJob, cbLevel, buttonGenerate);
+        VBox layoutGenerateVBox = new VBox(20);
+        layoutGenerateVBox.getChildren().addAll(menuBar,layoutGenerateGrid);
+
+        generatePage = new Scene(layoutGenerateVBox, 300, 400);
 
 
 
