@@ -7,11 +7,11 @@ zu Beachten:
 Zu Beachten wärhend der Installation:
 1. Server Only reicht
 2. Netzwerkeinstellung(Port+TCP/IP) beim standart lassen!
-3.Root einstellungen:
-  *benutzername: root
-  *password: IHaveGoodView11!
+3. Root einstellungen:
+  * Benutzername: root
+  * Password: IHaveGoodView11!
 
-Nach der installation zu machen:
+Nach der Installation zu machen:
 1. MySQL 8.0 Comand Line Client starten
 2. Folgende zeile Copy-Pasten: CREATE DATABASE dbtest;
 
