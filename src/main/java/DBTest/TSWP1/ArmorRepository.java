@@ -22,9 +22,9 @@ public interface ArmorRepository extends CrudRepository<ArmorModel, Integer>{
 	@Query("SELECT p FROM ArmorModel p WHERE p.armorType = ?1")
 	Page<ArmorModel> findAllByArmorType(String armorType,Pageable pageable2);
 	@Query("SELECT m FROM ArmorModel m WHERE m.armorType = ?1 AND m.armorAc = ?2")
-	Page<ArmorModel> findAllByArmorTypeAndArmorAc(String armorType,Integer armorAc,Pageable pageable3);
+	Page<ArmorModel> findAllByArmorTypeAndArmorAc(String armorType,String armorAc,Pageable pageable3);
 	@Query("SELECT l FROM ArmorModel l WHERE l.armorType = ?1 AND l.armorAc = ?2")
-	ArrayList<ArmorModel> findByMultPref(String armorType,Integer armorAc);
+	ArrayList<ArmorModel> findByMultPref(String armorType,String armorAc);
 }
 //WHERE armorType = 'Medium'
 //p WHERE p.armorType = 'Medium'

@@ -34,7 +34,7 @@ public class Test2 {
 				System.out.println(dbms.getRow(dbname));
 			}
 			else if (entscheidung2.equals("col")) {
-				System.out.println(dbms.onlyColumn());
+				System.out.println(dbms.onlyColumn(dbname));
 			}
 
 			else if (entscheidung2.equals("save")) {

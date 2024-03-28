@@ -57,6 +57,14 @@ public class DBMS implements CommandLineRunner{
 		}else if (entscheidung.equals("ja")){
 	        ctx = dbmsStarter(args);
 	    }
+		//System.out.println("Spring schließen?(ja/nein)");
+		String entsch = Event.next();
+		System.out.println(ctx);
+		if (entsch.equals("ja")) {
+			dbmsClose(args, ctx);
+		}else if (entsch.equals("nein")){
+			main(args);
+		}
 	}
 	
 	@Override
@@ -64,27 +72,11 @@ public class DBMS implements CommandLineRunner{
 	public void run(String... args) {
 		Scanner Event = new Scanner(System.in);
 
-			TestInitiallizeNameDB();
-			TestInitiallizeArmorDB();
-			TestInitiallizeHistoryDB();
+			//TestInitiallizeNameDB();
+			//TestInitiallizeArmorDB();
+			//TestInitiallizeHistoryDB();
 			tester();
-		System.out.println("Spring schließen?(ja/nein)");
-		String entsch = Event.next();
-		System.out.println(ctx);
-		if (entsch.equals("ja")) {
-			dbmsClose(args, ctx);
-		}else if (entsch.equals("nein")){
-			tester();
-		}
 		
-		/*System.out.println("Spring schließen?(ja/nein)");
-		Scanner event = new Scanner(System.in);
-		String entsch = event.next();
-		if (entsch.equals("ja")) {
-			SpringApplication.exit(DBMS.class, args);
-		}else if (entsch.equals("nein")){
-			tester();
-		}*/
 		}
 	
 	public static ConfigurableApplicationContext dbmsStarter(String[] args) {
@@ -112,13 +104,13 @@ public class DBMS implements CommandLineRunner{
 			System.out.println(rowPref(dbname,"Medium"));
 		}
 		else if (entscheidung2.equals("rowmultpref")){
-			System.out.println(rowMultPref(dbname,"Medium",12));
+			System.out.println(rowMultPref(dbname,"Medium","12"));
 		}
 		else if (entscheidung2.equals("multrowpref")){
 			System.out.println(multRowPref(dbname,"Medium"));
 		}
 		else if (entscheidung2.equals("col")) {
-			System.out.println(onlyColumn());
+			System.out.println(onlyColumn(dbname));
 		}
 
 		else if (entscheidung2.equals("save")) {
@@ -208,6 +200,7 @@ public class DBMS implements CommandLineRunner{
 				break;
 			case "armor":
 				Dataset = armorRepository.findByArmorId(3);
+				System.out.println(armorRepository.existsById(3));
 
 				armorRepository.findById(3).ifPresent(val -> System.out.println(val));
 				ArmorModel Entryarmor = (ArmorModel) Dataset.get(0);
@@ -319,7 +312,7 @@ public class DBMS implements CommandLineRunner{
 		return randRow;
 	}
 	
-	public ArrayList<String> rowMultPref(String dbname, String pref,Integer AC){
+	public ArrayList<String> rowMultPref(String dbname, String pref1,String pref2){
 	    int qty;
 	    Page<?> questionPage2;
 	    int idx;
@@ -329,20 +322,20 @@ public class DBMS implements CommandLineRunner{
 		case "name":
 			break;
 		case "armor":
-			qty = armorRepository.findByMultPref(pref, AC).size();
+			qty = armorRepository.findByMultPref(pref1, pref2).size();
 			//System.out.println(qty);
 			//System.out.println(armorRepository.findByMultPref(pref, AC).toString());
 			idx = (int)(Math.random() * qty);
 			//System.out.println(idx);
-		    questionPage2 = armorRepository.findAllByArmorTypeAndArmorAc(pref,AC,PageRequest.of(idx,1));
+		    questionPage2 = armorRepository.findAllByArmorTypeAndArmorAc(pref1,pref2,PageRequest.of(idx,1));
 		    //System.out.println(questionPage2.getSize());
 		    if (questionPage2.hasContent()) {
-		    	ArmorModel randname = (ArmorModel) questionPage2.getContent().get(0);
-		    	randRow.add(0, randname.getArmorId().toString());
-		    	randRow.add(1, randname.getArmorName());
-		    	randRow.add(2, randname.getArmorType());
-		    	randRow.add(3, randname.getArmorAc().toString());
-		    	randRow.add(4, randname.getArmorRmax());
+		    	ArmorModel mulpref = (ArmorModel) questionPage2.getContent().get(0);
+		    	randRow.add(0, mulpref.getArmorId().toString());
+		    	randRow.add(1, mulpref.getArmorName());
+		    	randRow.add(2, mulpref.getArmorType());
+		    	randRow.add(3, mulpref.getArmorAc().toString());
+		    	randRow.add(4, mulpref.getArmorRmax());
 		    }
 			break;
 		default:
@@ -379,10 +372,16 @@ public class DBMS implements CommandLineRunner{
 		return randresult;
 	}
 	
-	public List<ColOnly> onlyColumn() {
-		String onlycol = nameRepository.getallFirstNames().toString();
-		System.out.println(onlycol.toString());
-		return null;
+	public ArrayList<String> onlyColumn(String dbname) {
+		ArrayList<String> onlycol = null;
+		
+		switch(dbname) {
+		case "name":
+			onlycol = nameRepository.getallFirstNames();
+		case "armor":
+			
+		}
+		return onlycol;
 	}
 	
 	//Funktioniert halbwegs allerdings ist das Problem bei den weiteren "automatisierungen"
@@ -409,7 +408,7 @@ public class DBMS implements CommandLineRunner{
 		 newentry.setHistoryLastName(nachname);
 		 newentry.setHistoryOccurance(occurance);
 		 manageHistory("save",newentry);
-		 return ;
+		 return;
 	 }
 	 
 	 public void updateEntry(String vorname,String nachname,String occurance, Integer HistID) {
@@ -419,7 +418,7 @@ public class DBMS implements CommandLineRunner{
 		 updatedentry.setHistoryOccurance(occurance);
 		 updatedentry.setHistoryId(HistID);
 		 manageHistory("update",updatedentry);
-		 return ;
+		 return;
 	 }
 	 
 	 @Transactional

@@ -16,7 +16,7 @@ public interface NameRepository extends CrudRepository<NameModel, Integer>{
 	ArrayList<NameModel> findByNameOccurance(String occurance);
 	ArrayList<NameModel> findByNameId(Integer id);
 	@Query("SELECT s.nameFirstName FROM NameModel s")
-	List<ColOnly> getallFirstNames();
+	ArrayList<String> getallFirstNames();
 	long count();
 	Page<NameModel> findAll(Pageable pageable);
 	@Modifying
