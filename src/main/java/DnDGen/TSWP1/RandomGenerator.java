@@ -78,7 +78,7 @@ public class RandomGenerator {
 		String race = "NO RACE";	
 		
 		ArrayList<String> newRace = new ArrayList<String>();
-		newRace = DBMS.getRandRow(race);		
+		newRace = DBMS.getRandRow("race");		
 		race = newRace.get(1);
 		
 		return race;
@@ -89,7 +89,7 @@ public class RandomGenerator {
 		String job = "NO JOB";
 		
 		ArrayList<String> newJob = new ArrayList<String>();
-		newJob = DBMS.getRandRow(job);
+		newJob = DBMS.getRandRow("job");
 		
 		job = newJob.get(1);
 		
@@ -222,11 +222,11 @@ public class RandomGenerator {
 		
 		ArrayList<String> newDeity = new ArrayList<String>();
 		
-		newDeity = DBMS.getRowWithPref(deity, alignment);
+		newDeity = DBMS.getRowWithPref("deity", alignment);
 		
 		while (alignment != newDeity.get(2)) {
 			
-			newDeity = DBMS.getRowWithPref(deity, alignment);
+			newDeity = DBMS.getRowWithPref("deity", alignment);
 		}
 		
 		deity = newDeity.get(1);
@@ -250,16 +250,16 @@ public class RandomGenerator {
 		String secondName = "NO SECONDNAME";
 		
 		ArrayList<String> newName = new ArrayList<String>();
-		newName = DBMS.getRowWithPref(name, race);
+		newName = DBMS.getRowWithPref("name", race);
 		
 		while (gender != newName.get(4)) {
 				
-			newName = DBMS.getRowWithPref(name, race);
+			newName = DBMS.getRowWithPref("name", race);
 			firstName = newName.get(1);
 			
 		}
 		
-		newName = DBMS.getRowWithPref(name, race);
+		newName = DBMS.getRowWithPref("name", race);
 		secondName = newName.get(2);
 		
 		name = firstName + secondName;
