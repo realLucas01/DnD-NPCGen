@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,8 +29,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootApplication
-public class DBMS {
+public class DBMS implements ApplicationContextAware{
 	private static ConfigurableApplicationContext ctx;
+    private static ApplicationContext atx;
 	
 	/* @author Lucas
 	 *
@@ -77,6 +80,19 @@ public class DBMS {
 	public static void main(String[] args) {
 		ctx = SpringApplication.run(DBMS.class, args);
 	}
+
+	/* @author Lucas
+	 * 
+	 * Finden und setzen des ApplicationContextes damit andere Klassen in der
+	 * Lage sind genau diese Version der Klasse DBMS aufzurufen um auch wirklich Daten zu erhalten.
+	 */
+    @Override
+    public void setApplicationContext(ApplicationContext appContext) {
+      atx = appContext;
+    }
+    public static ApplicationContext getApplicationContext() {
+      return atx;
+    }
 	
 	/* @author Lucas
 	 * 
@@ -197,7 +213,7 @@ public class DBMS {
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getrandomRow(String dbname) {
+	public ArrayList<String> getRandomRow(String dbname) {
 	    Long qty;
 	    Page<?> questionPage;
 	    int idx;
@@ -247,6 +263,26 @@ public class DBMS {
 		    	randRow.add(3, randjob.getJobLanguage());
 		    }
 			break;
+		case "race":
+			qty = jobRepository.count();
+			idx = (int)(Math.random() * qty);
+		    questionPage = jobRepository.findAll(PageRequest.of(idx, 1));
+		    if (questionPage.hasContent()) {
+		    	RaceModel randrace = (RaceModel) questionPage.getContent().get(0);
+		    randRow.add(0, randrace.getRaceId().toString());
+		    randRow.add(1, randrace.getRaceName());
+		    randRow.add(2, randrace.getRaceAbilityScore());
+		    randRow.add(3, randrace.getRaceFeatures());
+		    randRow.add(4, randrace.getRaceAgeAdult().toString());
+		    randRow.add(5, randrace.getRaceAgeMax().toString());
+		    randRow.add(6, randrace.getRaceSkills());
+		    randRow.add(7, randrace.getRaceHeight());
+		    randRow.add(8, randrace.getRaceSize());
+		    randRow.add(9, randrace.getRaceSpeed());
+		    randRow.add(10, randrace.getRaceLanguages());
+		    randRow.add(11, randrace.getRaceCreatureType());
+		    }
+			break;
 		default:
 			randRow = null;
 		}
@@ -265,7 +301,7 @@ public class DBMS {
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getrowPref(String dbname, String pref){
+	public ArrayList<String> getRowPref(String dbname, String pref){
 	    int qty;
 	    Page<?> questionPage2;
 	    int idx;
@@ -348,7 +384,7 @@ public class DBMS {
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getmultRowPref(String dbname, String pref, Integer numberofrow){
+	public ArrayList<String> getMultRowPref(String dbname, String pref, Integer numberofrow){
 		ArrayList<String> rand1 = new ArrayList<String>();
 		ArrayList<String> rand2 = new ArrayList<String>();
 		ArrayList<String> randresult = new ArrayList<String>();
@@ -378,7 +414,7 @@ public class DBMS {
 	 * @return ArrayList gefüllt mit den Attributen der Zeile, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getrowMultPref(String dbname, String pref1,String pref2){
+	public ArrayList<String> getRowMultPref(String dbname, String pref1,String pref2){
 	    int qty;
 	    Page<?> questionPage2;
 	    int idx;

@@ -1,5 +1,10 @@
 package DnDGen.UI;
 
+
+import org.springframework.context.ApplicationContext;
+import DnDGen.DB.DBMS;
+
+
 //import java.awt.Button;
 //import java.awt.Insets;
 
@@ -21,8 +26,15 @@ public class UI extends Application {
     Stage window;
     Scene generatePage, npcPage, historyPage, editPage;
     String name, klasse, rasse;
-
-
+    
+	/* @author Lucas
+	 * 
+	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
+	 * neu-konstruktion von DBMS wäre sonst leer
+	 */
+    ApplicationContext appCtx = DBMS.getApplicationContext();
+    DBMS dbms = appCtx.getBean(DBMS.class);
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -32,7 +44,7 @@ public class UI extends Application {
     //Scene -> Ist der Inhalt des Fensters
     @Override
     public void start(Stage primaryStage) throws Exception {
-        window = primaryStage;
+    	window = primaryStage;
         window.setTitle("DnD NPC Generator");
 
         GridPane layoutGenerateGrid = new GridPane();
