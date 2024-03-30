@@ -17,16 +17,14 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
+import DnDGen.DB.DBMS;
+
 public class UI extends Application {
     Stage window;
     Scene generatePage, npcPage, historyPage, editPage;
     String name, klasse, rasse;
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+    DBMS db;
+    public static void main(String[] args) {launch(args);}
 
     //Stage -> Ist ein Fenster
     //Scene -> Ist der Inhalt des Fensters
@@ -35,10 +33,12 @@ public class UI extends Application {
         window = primaryStage;
         window.setTitle("DnD NPC Generator");
 
+
         GridPane layoutGenerateGrid = new GridPane();
         layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
         layoutGenerateGrid.setVgap(7);
         layoutGenerateGrid.setHgap(10);
+
 
 
         //Menü
@@ -206,7 +206,7 @@ public class UI extends Application {
         GridPane.setConstraints(buttonGenerate, 1, 6);
         buttonGenerate.setOnAction(e -> {
            //Parameter für generieren  (cbRace.getValue(),cbClass.getValue(),cbJob.getValue(),cbLevel.getValue())
-
+            cbRace.getItems().addAll(db.onlyColumn("race"));
         npcStack.setVisible(true);
 
 
