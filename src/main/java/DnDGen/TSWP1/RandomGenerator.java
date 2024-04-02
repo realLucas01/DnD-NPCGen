@@ -10,24 +10,25 @@ import DnDGen.DB.DBMS;
 public class RandomGenerator {
 
 	/* @author Lucas
-	 * 
+	 *
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
 	 * neu-konstruktion von DBMS wäre sonst leer.
-	 * Ich musste es etwas anpassen, weil ihr aus irgendeinem Grund nur Static nutzt,
+	 * Ich musste es etwas anpassen, weil ihr aus irgendeinem Grund nur   nutzt,
 	 * ich hoffe/denke das es auch so funktionieren sollte, übernehme aber keine Verantwortung dafür.
 	 */
-	static ApplicationContext appCtx = DBMS.getApplicationContext();
-    static DBMS dbms = appCtx.getBean(DBMS.class);
-    
+	ApplicationContext appCtx = DBMS.getApplicationContext();
+	DBMS dbms = appCtx.getBean(DBMS.class);
+
 	public static void main(String []args) {
-		
+
 		System.out.println("Hier ist die Main");
+
 	}
 
 	//Aufteilung eines großen String in kleinere
 	public static ArrayList<String> bigStringToDividedString(String bigString) {
 		ArrayList<String> dividedString = new ArrayList<>(); //rückgabe, des aufgeteilten Strings als eine Liste
-		String[] partsOfTheBigString = bigString.split(","); //Teilung des großen Strings an den Stellen wo ein Komma ist
+		String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
 
 		for (String s : partsOfTheBigString) { //jeder Teilstring wird der Liste hinzugefügt
 			if (dividedString.contains(s)) {
@@ -39,7 +40,7 @@ public class RandomGenerator {
 		return dividedString;
 	}
 
-	public static int diceThrower(Integer diceCount, Integer diceNumber) {
+	public   int diceThrower(Integer diceCount, Integer diceNumber) {
 
 		int addedRolls = 0;
 		Random rand = new Random();
@@ -52,7 +53,7 @@ public class RandomGenerator {
 		return addedRolls;
 	}
 
-	public static ArrayList<Integer> randAbilityScore() {
+	public   ArrayList<Integer> randAbilityScore() {
 
 		ArrayList<Integer> value = new ArrayList<>();
 		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
@@ -74,27 +75,25 @@ public class RandomGenerator {
 		return finishedSetForAbilityScores;
 	}
 
-	//UNGETESTET
 	/* @Luca */
-	public static String randCharClass() {
+	public   String randCharClass() {
 		ArrayList<String> rndClass = dbms.getRandomRow("class");
 
 		return rndClass.get(1);
 	}
 
 	/* TO DO @Lenard */
-	public static String randRace() {
+	public   String randRace() {
 		String race = "NO RACE";
 
-		ArrayList<String> newRace = new ArrayList<String>();
-		newRace = dbms.getRandomRow("race");
+        ArrayList<String> newRace = dbms.getRandomRow("race");
 		race = newRace.get(1);
 
 		return race;
 	}
 
 	/* TO DO @Lenard */
-	public static String randJob() {
+	public   String randJob() {
 		String job = "NO JOB";
 
 		ArrayList<String> newJob = new ArrayList<String>();
@@ -106,21 +105,21 @@ public class RandomGenerator {
 	}
 
 	/* @Luca */
-	public static int randLevel() {
+	public int randLevel() {
 		Random rndLevel = new Random();
 		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
 		return rndLevel.nextInt(21);
 	}
 
 	/* TO DO @Lenard */
-	public static String randDescription(String race) {
+	public String randDescription(String race) {
 		String description = "NO DESCRIPTION";
 
 		return description;
 	}
 
 	/* TO DO @Luca */
-	public static List<String> randTBF() {
+	public List<String> randTBF() {
 		List<String> tbf = new ArrayList<>();
 
 		tbf.add("NO TBF");
@@ -131,7 +130,7 @@ public class RandomGenerator {
 	//UNGETESTET
 	// Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
 	/* @Luca */
-	public static ArrayList<String> figureOutProfList(String neededProfList, String charClass, String race) {
+	public   ArrayList<String> figureOutProfList(String neededProfList, String charClass, String race) {
 		ArrayList<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
 		ArrayList<String> databaseReturn; // Liste die von der DB zurückkommt
 		ArrayList<String> featureList; // Rassen Features
@@ -140,20 +139,22 @@ public class RandomGenerator {
 
 		switch (neededProfList) {    // Entscheidung welche ProfListe man benötigt
 			case "armor":
-				databaseReturn = dbms.getRow("class", charClass);
-				profList = bigStringToDividedString(databaseReturn.get(4));
+				/*databaseReturn = dbms.getRow("class", charClass);
+				profList = bigStringToDividedString(databaseReturn.get(4));*/
+				profList = bigStringToDividedString(dbms.getRow("class", charClass).get(4));
 
 				databaseReturn = dbms.getRow("race", race);
 				featureList = bigStringToDividedString(databaseReturn.get(3));    //Datensätze werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
+				if (featureList !=null){
+					for (String feature : featureList) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
+						databaseReturn = dbms.getRow("features", feature);
+						kindOfFeature = databaseReturn.get(3);
 
-				for (String feature : featureList) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
-					databaseReturn = dbms.getRow("features", feature);
-					kindOfFeature = databaseReturn.get(3);
-
-					if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
-						kindOfFeature.replace("armor:", "");
-						profList.addAll(bigStringToDividedString(kindOfFeature));
-						break;
+						if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
+							kindOfFeature.replace("armor:", "");
+							profList.addAll(bigStringToDividedString(kindOfFeature));
+							break;
+						}
 					}
 				}
 				break;
@@ -163,17 +164,18 @@ public class RandomGenerator {
 
 				databaseReturn = dbms.getRow("race", race);
 				featureList = bigStringToDividedString(databaseReturn.get(3));
+				if(featureList != null) {
+					for (String feature : featureList) {
+						databaseReturn = dbms.getRow("features", feature);
+						kindOfFeature = databaseReturn.get(3);
 
-				for (String feature : featureList) {
-					databaseReturn = dbms.getRow("features", feature);
-					kindOfFeature = databaseReturn.get(3);
-
-					if (kindOfFeature.contains("weapon:")) {
-						kindOfFeature.replace("weapon:", " ");
-						profList.addAll(bigStringToDividedString(kindOfFeature));
-						break;
+						if (kindOfFeature.contains("weapon:")) {
+							kindOfFeature.replace("weapon:", " ");
+							profList.addAll(bigStringToDividedString(kindOfFeature));
+							break;
+						}
+						//jederzeit erweiterbar mit weiteren cases
 					}
-					//jederzeit erweiterbar mit weiteren cases
 				}
 				break;
 		}
@@ -185,11 +187,11 @@ public class RandomGenerator {
 
 	//UNGETESTET
 	/* TO DO @Luca */
-	public static String randArmor(ArrayList<String> armorProf) {
+	public   String randArmor(ArrayList<String> armorProf) {
 		String armor; //return value
 		Random rndNumber = new Random(); //Zufallszahlen
-		int lengthOfArmorProfList = armorProf.size();
 		armorProf.remove("Shield");
+		int lengthOfArmorProfList = armorProf.size();
 		String rndArmor = armorProf.get(rndNumber.nextInt(lengthOfArmorProfList));
 		ArrayList<String> armorList = dbms.getRowPref("armor", rndArmor);
 		armor = armorList.get(1);
@@ -197,32 +199,24 @@ public class RandomGenerator {
 		return armor;
 	}
 
-	//UNGETESTET
 	/* @Luca */
-	public static String randWeapon(ArrayList<String> weaponProf) {
+	public   String randWeapon(ArrayList<String> weaponProf) {
 		Random rndNumber = new Random();    // für zufallszahlen
 		//int rndWeaponProf  = 0;
 		int lengthOfWeaponProf = weaponProf.size();
 		String weapon;    //das Ergebnis was zurückgegeben wird
 
 		//rndWeaponProf = rndNumber.nextInt(lengthOfWeaponProf);
+		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf+1)-1); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
 
-		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
-
-		if (rndWeapon.contains("weapon")) { //hier wird gescheckt, ob es direkt eine Waffe ist oder eine Prof in einem Waffenbereich
-
-			ArrayList<String> armorList = dbms.getRowPref("weapon", rndWeapon);
-			weapon = armorList.get(1);
-		} else {
-			weapon = rndWeapon;
-		}
-		//String weapon = "NO WEAPON";
+		ArrayList<String> armorList = dbms.getRowPref("weapon", rndWeapon);
+		weapon = armorList.get(1);
 
 		return weapon;
 	}
 
 	/* TO DO @Lenard */
-	public static String randDeity(String alignment) {
+	public String randDeity(String alignment) {
 		String deity = "NO DEITY";
 
 		ArrayList<String> newDeity = new ArrayList<String>();
@@ -234,16 +228,15 @@ public class RandomGenerator {
 		return deity;
 	}
 
-	//UNGETESTET
 	/* @Luca */
-	public static String randLanguages() {
+	public   String randLanguages() {
 		ArrayList<String> rndLang = dbms.getRandomRow("language");
 
 		return rndLang.get(1);
 	}
 
 	/* TO DO @Lenard */
-	public static String randName(String gender, String race) {
+	public   String randName(String gender, String race) {
 		String name = "NO NAME";
 
 		String firstName = "NO FIRSTNAME";
@@ -267,9 +260,9 @@ public class RandomGenerator {
 		return name;
 	}
 
-	//UNGETESTET
+
 	/* @Luca */
-	public static int randAge(String race) {
+	public   int randAge(String race) {
 		ArrayList<String> raceList;
 		raceList = dbms.getRow("race", race);
 		int ageAdult = Integer.parseInt(raceList.get(4));
@@ -282,16 +275,14 @@ public class RandomGenerator {
 
 	//Schroedingers Funktion
 	/* @Luca */
-	public static List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> knownSkillList) {
+	public   List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> knownSkillList) {
 		Random rndSkill = new Random();
 
-		//alle bereits bekannten Skills werden entfernt und wenn dann keine möglichen mehr frei sind, wird die SkillList wieder zurückgegeben
 		if (possibleSkills.isEmpty()) {
 			return knownSkillList;
 		}
 		//es werden so lange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
 		for (int currentNumberOfNewSkills = 0; currentNumberOfNewSkills < numberSkill; currentNumberOfNewSkills++) {
-
 			int lengthListPossibleSkills = possibleSkills.size();
 			Integer skillIndex = rndSkill.nextInt(lengthListPossibleSkills);
 			knownSkillList.add(possibleSkills.get(skillIndex));
@@ -305,14 +296,14 @@ public class RandomGenerator {
 	}
 
 	/* TO DO @Luca */
-	public static String randPlotHook() {
+	public   String randPlotHook() {
 		String plotHook = "NO PLOT HOOK";
 
 		return plotHook;
 	}
 
 	/* TO DO @Lenard */
-	public static String randGender() {
+	public   String randGender() {
 
 		String gender;
 		Random rand = new Random();
@@ -326,9 +317,9 @@ public class RandomGenerator {
 		return gender;
 	}
 
-	public static String randAlignment() {
+	public   String randAlignment() {
 		Random randNumber = new Random();
-		int rndNum = randNumber.nextInt(10);
+		int rndNum = randNumber.nextInt(9);
 		ArrayList<String> Alignments = new ArrayList<>();
 		Alignments.add("CG");
 		Alignments.add("CN");
@@ -345,9 +336,9 @@ public class RandomGenerator {
 
 	/* TO DO @Luca */
 
-	public static List<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {
-		List<String> spells = new ArrayList<>();
-		List<String> cantrip = new ArrayList<>();
+	public ArrayList<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {
+		ArrayList<String> spells = new ArrayList<>();
+		ArrayList<String> cantrip = new ArrayList<>();
 		//PAIN
 		//CAN CONFIRM
 
@@ -364,14 +355,14 @@ public class RandomGenerator {
 		 * Ganz unten ist auch noch ein Kommentar von mir falls ihr euch wundert warum eurer Debug/Fehler Menü laggt, gar nicht mehr geht oder falsche/zu wenige anzeigen macht.
 		 *
 		 */
-		int spellCount = 0; 
+		int spellCount = 0;
 		int levelHalb = 0;
 		int spellUpCount = 0;
 		int cantripCount = 0;
 		int levelCantrip = 0;
 		// BARD
 		if (className == "Bard"){
-			
+
 			levelCantrip = 0;
 			if (level >= 4){
 				levelCantrip = 1;
@@ -529,113 +520,113 @@ public class RandomGenerator {
 				spells.addAll(dbms.getMultRowMultPref("spells", "Bard", "7th Level", 2));
 				spells.addAll(dbms.getMultRowMultPref("spells", "Bard", "8th Level", 2));
 				spells.addAll(dbms.getMultRowMultPref("spells", "Bard", "9th Level", 1));
-			}																			
+			}
 		}
 		// SORCERER
 		else if(className == "Sorcerer"){
-			
-				levelCantrip = 0;
-				if (level >= 4){
-					levelCantrip = 1;
-				}
-				else if ((level<= 20) && (level>= 10)){
-					levelCantrip = 2;
-				}
-				cantripCount = cantripNumber + levelCantrip;
-				cantrip.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "Cantrip", cantripCount));
-		
-				spellCount = spellLvl1 + (level - 1);
-				spellUpCount = 2;
-				if (level <= 2){
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-				}
-				else if ((level == 3) || (level == 4)){
-					spellCount = spellCount - spellUpCount;
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-				}
-				else if ((level == 5) || (level == 6)){
-					spellCount = spellCount - (spellUpCount * 2);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
-				}
-				else if ((level == 7) || (level == 8)){
-					spellCount = spellCount - (spellUpCount * 3);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
-				}
-				else if ((level == 9) || (level == 10)){
-					spellCount = spellCount - (spellUpCount * 3);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
-				}
-				else if ((level == 11) || (level == 12)){
-					spellCount = 4;
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
-				}
-				else if ((level == 13) || (level == 14)){
-					spellCount = 4;
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", 1));
-				}
-				else if ((level == 15) || (level == 16)){
-					spellCount = spellCount - (spellUpCount * 3);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", 1));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "8th Level", 1));
-				}
-				else if ((level >= 17) && (level <= 20)){
-					spellCount = spellCount - (spellUpCount * 3);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "8th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "9th Level", 1));
-				}
+
+			levelCantrip = 0;
+			if (level >= 4){
+				levelCantrip = 1;
+			}
+			else if ((level<= 20) && (level>= 10)){
+				levelCantrip = 2;
+			}
+			cantripCount = cantripNumber + levelCantrip;
+			cantrip.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "Cantrip", cantripCount));
+
+			spellCount = spellLvl1 + (level - 1);
+			spellUpCount = 2;
+			if (level <= 2){
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+			}
+			else if ((level == 3) || (level == 4)){
+				spellCount = spellCount - spellUpCount;
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+			}
+			else if ((level == 5) || (level == 6)){
+				spellCount = spellCount - (spellUpCount * 2);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+			}
+			else if ((level == 7) || (level == 8)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+			}
+			else if ((level == 9) || (level == 10)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+			}
+			else if ((level == 11) || (level == 12)){
+				spellCount = 4;
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+			}
+			else if ((level == 13) || (level == 14)){
+				spellCount = 4;
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", 1));
+			}
+			else if ((level == 15) || (level == 16)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", 1));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "8th Level", 1));
+			}
+			else if ((level >= 17) && (level <= 20)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "8th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "9th Level", 1));
+			}
 		}
-	
+
 
 		// WIZARD CLERIC DRUID
-	else if((className == "Wizard") || (className == "Cleric") || (className == "Druid")){
-		
-					if (level >= 4){
-						levelCantrip = 1;
-					}
-					else if ((level<= 20) && (level>= 10)){
-						levelCantrip = 2;
-					}
-		cantripCount = cantripNumber + levelCantrip;
-		cantrip.addAll(dbms.getMultRowMultPref("spells", className, "Cantrip", cantripCount));
+		else if((className == "Wizard") || (className == "Cleric") || (className == "Druid")){
 
-		spellUpCount = 2;
-		spellCount = spellMod + level;
+			if (level >= 4){
+				levelCantrip = 1;
+			}
+			else if ((level<= 20) && (level>= 10)){
+				levelCantrip = 2;
+			}
+			cantripCount = cantripNumber + levelCantrip;
+			cantrip.addAll(dbms.getMultRowMultPref("spells", className, "Cantrip", cantripCount));
+
+			spellUpCount = 2;
+			spellCount = spellMod + level;
 			if (level <= 2){
-			spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
 			}
 			else if ((level == 3) || (level == 4)){
 				spellCount = spellCount - spellUpCount;
@@ -717,182 +708,182 @@ public class RandomGenerator {
 				spells.addAll(dbms.getMultRowMultPref("spells", className, "8th Level", spellUpCount));
 				spells.addAll(dbms.getMultRowMultPref("spells", className, "9th Level", 1));
 			}
-	}
-		
+		}
+
 
 		// ARTIFICER
 		else if(className == "Artificer"){
-				levelCantrip = 0;
-					if (level >= 10){
-						levelCantrip = 1;
-					}
-					else if ((level<= 20) && (level>= 14)){
-						levelCantrip = 2;
-					}
+			levelCantrip = 0;
+			if (level >= 10){
+				levelCantrip = 1;
+			}
+			else if ((level<= 20) && (level>= 14)){
+				levelCantrip = 2;
+			}
 			cantripCount = cantripNumber + levelCantrip;
 			cantrip.addAll(dbms.getMultRowMultPref("spells", "Artificer", "Cantrip", cantripCount));
 
 			spellUpCount = 2;
 			levelHalb =(int) Math.floor(level/2);
-					if (levelHalb == 0){
-						levelHalb = 1;
-					}
+			if (levelHalb == 0){
+				levelHalb = 1;
+			}
 			spellCount = spellMod + levelHalb;
-				if (level <= 4){
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
-				}
-				else if ((level >= 5) && (level <= 8)){
-					spellCount = spellCount - (spellUpCount);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
-				}
-				else if ((level >= 9) && (level <= 12)){
-					spellCount = spellCount - (spellUpCount * 2);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
-				}
-				else if ((level >= 13) && (level <= 16)){
-					spellCount = spellCount - (spellUpCount * 3);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "4th Level", spellUpCount));
-				}
-				else if ((level >= 17) && (level <= 20)){
-					spellCount = spellCount - (spellUpCount * 4);
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "4th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "5th Level", spellUpCount));
-				}
+			if (level <= 4){
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+			}
+			else if ((level >= 5) && (level <= 8)){
+				spellCount = spellCount - (spellUpCount);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+			}
+			else if ((level >= 9) && (level <= 12)){
+				spellCount = spellCount - (spellUpCount * 2);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
+			}
+			else if ((level >= 13) && (level <= 16)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "4th Level", spellUpCount));
+			}
+			else if ((level >= 17) && (level <= 20)){
+				spellCount = spellCount - (spellUpCount * 4);
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "5th Level", spellUpCount));
+			}
 		}
-		
+
 
 		// PALADIN
 		else if(className == "Paladin"){
-				cantrip.add("NO CANTRIPS");
-			
+			cantrip.add("NO CANTRIPS");
+
 			spellUpCount = 2;
 			levelHalb =(int) Math.floor(level/2);
-					if (levelHalb == 0){
-						levelHalb = 1;
-					}
+			if (levelHalb == 0){
+				levelHalb = 1;
+			}
 			spellCount = spellMod + levelHalb;
-				if (level <= 4){
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
-				}
-				else if ((level >= 5) && (level <= 8)){
-					spellCount = spellCount - (spellUpCount);
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
-				}
-				else if ((level >= 9) && (level <= 12)){
-					spellCount = spellCount - (spellUpCount * 2);
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
-				}
-				else if ((level >= 13) && (level <= 16)){
-					spellCount = spellCount - (spellUpCount * 3);
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
-				}
-				else if ((level >= 17) && (level <= 20)){
-					spellCount = spellCount - (spellUpCount * 4);
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
-				}
+			if (level <= 4){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+			}
+			else if ((level >= 5) && (level <= 8)){
+				spellCount = spellCount - (spellUpCount);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+			}
+			else if ((level >= 9) && (level <= 12)){
+				spellCount = spellCount - (spellUpCount * 2);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+			}
+			else if ((level >= 13) && (level <= 16)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+			}
+			else if ((level >= 17) && (level <= 20)){
+				spellCount = spellCount - (spellUpCount * 4);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+			}
 		}
-		
+
 
 
 		// RANGER
 		else if(className == "Ranger"){
-				cantrip.add("NO CANTRIPS");
+			cantrip.add("NO CANTRIPS");
 
 			spellCount = 3;
-				if (level == 1){
-					spells.add("NO SPELLS");
-				}
-				else if (level == 2){
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", (spellCount - 1)));
-				}
-				else if ((level == 3) || (level == 4)){
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-				}
-				else if ((level == 5) || (level == 6)){
-					spellCount = spellCount - 1;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 1));
-				}
-				else if ((level == 7) || (level == 8)){
-					spellCount = spellCount - 2;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
-				}
-				else if ((level == 9) || (level == 10)){
-					spellCount = spellCount - 3;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 1));
-				}
-				else if ((level == 11) || (level == 12)){
-					spellCount = spellCount - 4;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
-				}
-				else if ((level == 13) || (level == 14)){
-					spellCount = spellCount - 5;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 1));
-				}
-				else if ((level == 15) || (level == 16)){
-					spellCount = spellCount - 6;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
-				}
-				else if ((level == 17) || (level == 18)){
-					spellCount = spellCount - 7;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", 1));
-				}
-				else if ((level == 19) || (level == 20)){
-					spellCount = spellCount - 8;
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
-					spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", 2));
-				}
+			if (level == 1){
+				spells.add("NO SPELLS");
+			}
+			else if (level == 2){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", (spellCount - 1)));
+			}
+			else if ((level == 3) || (level == 4)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+			}
+			else if ((level == 5) || (level == 6)){
+				spellCount = spellCount - 1;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 1));
+			}
+			else if ((level == 7) || (level == 8)){
+				spellCount = spellCount - 2;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+			}
+			else if ((level == 9) || (level == 10)){
+				spellCount = spellCount - 3;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 1));
+			}
+			else if ((level == 11) || (level == 12)){
+				spellCount = spellCount - 4;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+			}
+			else if ((level == 13) || (level == 14)){
+				spellCount = spellCount - 5;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 1));
+			}
+			else if ((level == 15) || (level == 16)){
+				spellCount = spellCount - 6;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
+			}
+			else if ((level == 17) || (level == 18)){
+				spellCount = spellCount - 7;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", 1));
+			}
+			else if ((level == 19) || (level == 20)){
+				spellCount = spellCount - 8;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", 2));
+			}
 		}
-		
+
 
 		//WARLOCK
 		else if(className ==  "Warlock"){
-				levelCantrip = 0;
-					if (level >= 4){
-						levelCantrip = 1;
-					}
-					else if ((level<= 20) && (level>= 10)){
-						levelCantrip = 2;
-					}
-		cantripCount = cantripNumber + levelCantrip;
-		cantrip.addAll(dbms.getMultRowMultPref("spells", className, "Cantrip", cantripCount));
+			levelCantrip = 0;
+			if (level >= 4){
+				levelCantrip = 1;
+			}
+			else if ((level<= 20) && (level>= 10)){
+				levelCantrip = 2;
+			}
+			cantripCount = cantripNumber + levelCantrip;
+			cantrip.addAll(dbms.getMultRowMultPref("spells", className, "Cantrip", cantripCount));
 
 			spellUpCount = 2;
 			if ((level >= 1) && (level <= 8)){
@@ -961,19 +952,19 @@ public class RandomGenerator {
 				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount + 1)));
 				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
 			}
-	}
-	else{
-		cantrip.add("NO CANTRIP");
-		spells.add("NO SPELLS");
-	}
+		}
+		else{
+			cantrip.add("NO CANTRIP");
+			spells.add("NO SPELLS");
+		}
 		return spells;
 	}
 }
-	//@autor Lucas
-	//sie hat mehrmals irgendwo vergessen if's zu schließen, und ich hab keine Lust zu suchen wo, deswegen hier ein paar extra klammern,
-	//damit mein eclipse mir die anderen fehler anzeigt :')
-	//
-	//edit: nvm, mein compiler hat die Anzahl an Fehlern gesehen und nach den ersten 115 Zeilen von 500+ aufgehört zu zählen und sie anzuzeigen :'(
+//@autor Lucas
+//sie hat mehrmals irgendwo vergessen if's zu schließen, und ich hab keine Lust zu suchen wo, deswegen hier ein paar extra klammern,
+//damit mein eclipse mir die anderen fehler anzeigt :')
+//
+//edit: nvm, mein compiler hat die Anzahl an Fehlern gesehen und nach den ersten 115 Zeilen von 500+ aufgehört zu zählen und sie anzuzeigen :'(
 	
 
 
