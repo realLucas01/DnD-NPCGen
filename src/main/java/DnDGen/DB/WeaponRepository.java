@@ -19,11 +19,11 @@ public interface WeaponRepository extends CrudRepository<WeaponModel, Integer>{
 	
 	long count();
 	ArrayList<WeaponModel> findByWeaponId(Integer id);
-	ArrayList<WeaponModel> findByWeaponName(String name);
+	WeaponModel findByWeaponName(String name);
 	ArrayList<WeaponModel> findByWeaponProperty(String property);
 	ArrayList<WeaponModel> findByWeaponDamageType(String damageType);
 	ArrayList<WeaponModel> findByWeaponDamageDice(String damageDice);
 	ArrayList<WeaponModel> findByWeaponKind(String kind);
-	@Query("SELECT p FROM WeaponModel p WHERE p.weaponName = ?1")
-	Page<ArmorModel> getWeaponPref(String weaponName,Pageable pageable2);
+	@Query("SELECT p FROM WeaponModel p WHERE p.weaponKind = ?1")
+	Page<WeaponModel> getWeaponPref(String weaponKind,Pageable pageable);
 }

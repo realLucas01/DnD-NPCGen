@@ -144,6 +144,9 @@ public class DBMS implements ApplicationContextAware{
 	/* @author Lucas
 	 *
 	 * Gibt eine spezifische Zeile einer ausgewählten DB aus.
+	 * Achtung: da diese Funktion nur eine Zeile erwartet muss der
+	 * searchstring unique sein, damit auch nur ein Ergebniss gefunden wird.
+	 * Wenn der searchstring nicht unique ist bitte getRowPref() nutzen.
 	 * 
 	 * @param dbname: der Name der DB von der Daten gewünscht sind, als 
 	 * 					kleingeschriebener String.
@@ -199,6 +202,26 @@ public class DBMS implements ApplicationContextAware{
 				CD.add(1, Entryfeature.getFeatureName());
 				CD.add(2, Entryfeature.getFeatureDescription());
 				CD.add(3, Entryfeature.getFeatureKindOf());
+				break;
+			case "armor":
+			    ArmorModel Entryarmor = armorRepository.findByArmorName(searchstring);
+			    CD.add(0, Entryarmor.getArmorId().toString());
+			    CD.add(1, Entryarmor.getArmorName());
+			    CD.add(2, Entryarmor.getArmorKind());
+			    CD.add(3, Entryarmor.getArmorAc());
+			    CD.add(4, Entryarmor.getArmorMax());
+			    CD.add(5, Entryarmor.getArmorBonus());
+			    CD.add(6, Entryarmor.getArmorStrength());
+			    CD.add(7, Entryarmor.getArmorStealth());
+				break;
+			case "weapon":
+			    WeaponModel Entryweapon = weaponRepository.findByWeaponName(searchstring);
+			    CD.add(0, Entryweapon.getWeaponId().toString());
+			    CD.add(1, Entryweapon.getWeaponName());
+			    CD.add(2, Entryweapon.getWeaponProperty());
+			    CD.add(3, Entryweapon.getWeaponDamageType());
+			    CD.add(4, Entryweapon.getWeaponDamageDice());
+			    CD.add(5, Entryweapon.getWeaponKind());
 				break;
 			default:
 				CD = null;
@@ -257,7 +280,7 @@ public class DBMS implements ApplicationContextAware{
 			idx = (int)(Math.random() * qty);
 		    questionPage = jobRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
-		    	JobModel randjob = (JobModel) questionPage.getContent().get(0);
+		    	JobModel randjob =  (JobModel) questionPage.getContent().get(0);
 		    	randRow.add(0, randjob.getJobId().toString());
 		    	randRow.add(1, randjob.getJobName());
 		    	randRow.add(2, randjob.getJobSkills());
@@ -310,7 +333,7 @@ public class DBMS implements ApplicationContextAware{
 	    
 		switch(dbname) {
 		case "armor":
-			qty = armorRepository.findByArmorName(pref).size();
+			qty = armorRepository.findByArmorKind(pref).size();
 			idx = (int)(Math.random() * qty);
 		    questionPage2 = armorRepository.getArmorPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
@@ -322,11 +345,11 @@ public class DBMS implements ApplicationContextAware{
 		    	randRowPref.add(4, randarmorpref.getArmorMax());
 		    	randRowPref.add(5, randarmorpref.getArmorBonus());
 		    	randRowPref.add(6, randarmorpref.getArmorStrength());
-		    	randRowPref.add(7, randarmorpref.getArmorStealth().toString());
+		    	randRowPref.add(7, randarmorpref.getArmorStealth());
 		    }
 			break;
 		case "weapon":
-			qty = weaponRepository.findByWeaponName(pref).size();
+			qty = weaponRepository.findByWeaponKind(pref).size();
 			idx = (int)(Math.random() * qty);
 		    questionPage2 = weaponRepository.getWeaponPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
@@ -439,6 +462,7 @@ public class DBMS implements ApplicationContextAware{
 		    	rowMultPref.add(10, spellmultpref.getSpellAvailability());
 		    }
 		default:
+			rowMultPref = null;
 		}
 		return rowMultPref;
 	}
