@@ -1,7 +1,5 @@
 package DnDGen.TSWP1;
 
-import org.hibernate.mapping.Any;
-import org.hibernate.mapping.Array;
 
 import java.util.*;
 
@@ -12,23 +10,24 @@ import java.util.regex.Pattern;
 
 public class RandomNPC {
 	public RandomGenerator randGen;
-
-    public DBMS DBMS;
+    public dbms dbms;
 
     public String createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender){
         ArrayList<String> generatingNPC;
         ArrayList<String> skillList = null;
         ArrayList<String> weaponList = null;
         ArrayList<String> possibleSkillList;
-        ArrayList<String> languages = null;
+        ArrayList<String> languages;
         String armorList, raceSkillList;
         ArrayList<String> weaponProfList;
         ArrayList<String> armorProfList;
         ArrayList<String> armorBoni;
         ArrayList<String> currentArmor;
+        ArrayList<Integer> abilityScores = null;
+        ArrayList<Integer> abilityModifier;
         Random rndNumb = new Random();
         String race, job, genClass, gender, name, description, alignment, deity, languagesRace, languagesJob, kindOfArmor;
-        int level, numberSkill, age, count,weaponCount, armorClass = 0;
+        int level, numberSkill, age, count,weaponCount,healthPoints, armorClass = 0;
         Pattern number = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE); //zum Überprüfen, ob im String eine Zahl steckt
         Matcher matcherNumber;
 
@@ -68,35 +67,48 @@ public class RandomNPC {
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
         }
+        //muss dann oben richtig gemacht werden
+        abilityScores.addAll(randGen.randAbilityScore());
 
         //distribute AbilityScore
             //Lenlen arbeitet daran
+        abilityScores.addAll(distributeAbilityScore(abilityScores,genClass));
+
+        //calc AbilityModifier
+        abilityModifier=determinAbilityModifier(abilityScores) ;
 
         //calc HP
-            //wer will?
+        healthPoints = randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
 
         armorProfList = randGen.figureOutProfList("armor", genClass, race);
         //randomArmor
         armorList = randGen.randArmor(armorProfList); // LUCA FIX
 
         //Berechnung AC
-        currentArmor= DBMS.getRow("armor",armorList);
+        currentArmor= dbms.getRow("armor",armorList);
         armorClass = Integer.parseInt(currentArmor.get(3));
 
-        /*
-        checken ob Armor "normale" ist oder natürliche, bzw. ClassArmor
-         */
         kindOfArmor = currentArmor.get(2);
         if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
             armorBoni = randGen.bigStringToDividedString(currentArmor.get(5));
             for(String s: armorBoni){
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 switch(s){
+                    case "Str":
+                        armorClass = armorClass + abilityModifier.get(0);
                     case "Dex":
-
+                        armorClass = armorClass + abilityModifier.get(1);
+                    case "Con":
+                        armorClass = armorClass + abilityModifier.get(2);
+                    case "Int":
+                        armorClass = armorClass + abilityModifier.get(3);
+                    case "Wis":
+                        armorClass = armorClass + abilityModifier.get(4);
+                    case "Cha":
+                        armorClass = armorClass + abilityModifier.get(5);
                 }
             }
-            if(armorClass> Integer.parseInt(currentArmor.get(4))){//überprüfen ob AC im toleranten Bereich liegt
+            if((armorClass> Integer.parseInt(currentArmor.get(4)))&&(!kindOfArmor.equals("Shield"))){//überprüfen ob AC im toleranten Bereich liegt
                 armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
             }
         }
@@ -114,10 +126,13 @@ public class RandomNPC {
         for(int i=0; i<weaponCount;i++){
             weaponList.add(randGen.randWeapon(weaponProfList));
         }
+        Set<String> removeDuplicateWeapons = new HashSet<>(weaponList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
+        weaponList.clear();
+        weaponList.addAll(removeDuplicateWeapons);
 
         //random Skills
         //Race Skills
-        raceSkillList= DBMS.getRow("race", race).get(6);
+        raceSkillList= dbms.getRow("race", race).get(6);
         //Matcher matcherNumber = number.matcher(raceSkillList);
         //containsNumber = matcherNumber.find();
         switch (raceSkillList){
@@ -133,11 +148,11 @@ public class RandomNPC {
         }
 
         //Job Skills
-        skillList.addAll(randGen.bigStringToDividedString(DBMS.getRow("job", job).get(2))); //Skills durch Job
+        skillList.addAll(randGen.bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
 
         //ClassSkills
-        possibleSkillList = randGen.bigStringToDividedString(DBMS.getRow("class", genClass).get(6)); // Skills durch class
-        numberSkill = Integer.parseInt(DBMS.getRow("class", genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
+        possibleSkillList = randGen.bigStringToDividedString(dbms.getRow("class", genClass).get(6)); // Skills durch class
+        numberSkill = Integer.parseInt(dbms.getRow("class", genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
         if(!possibleSkillList.contains(0)){     // Fall Commoner?
             // nichts machen und weiter gehen
         } else if (possibleSkillList.contains("Any")) { // fall barde
@@ -189,8 +204,8 @@ public class RandomNPC {
         deity = randGen.randDeity(alignment);
 
         //random Languages
-        languagesRace = DBMS.getRow("race",race).get(10);   // Sprachen der Rasse
-        languagesJob = DBMS.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
+        languagesRace = dbms.getRow("race",race).get(10);   // Sprachen der Rasse
+        languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
         languages = randGen.bigStringToDividedString(languagesRace); //aufteilung des Strings
 
         count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
@@ -216,7 +231,7 @@ public class RandomNPC {
     	
     	rawAbilityScores = rolledAbilityScore;
     	
-    	arrayForClass = DBMS.getRowWithPref("class", charClass);
+    	arrayForClass = dbms.getRowWithPref("class", charClass);
     	
     	dividedAbilityScores = RandomGenerator.bigStringToDividedString(arrayForClass.get(8));
     	
@@ -269,11 +284,13 @@ public class RandomNPC {
     	} else {
     		
     		Collections.shuffle(rawAbilityScores);
-    		return rawAbilityScores;
+            System.out.println("parsed ability Scores: " + parsedAbilityScores);
+
+            return rawAbilityScores;
     	}
     	
     	//System.out.println("parsed ability Scores: " + parsedAbilityScores);
-    	
+
         //return null;
     }
 
@@ -289,6 +306,18 @@ public class RandomNPC {
 
     }
 */
+    public static ArrayList<Integer> determinAbilityModifier(ArrayList<Integer> abilityScore){
+        ArrayList<Integer> abilityModifier = new ArrayList<>();
+        float calcMod;
+
+        for (Integer i: abilityScore){
+
+            calcMod = (float) (i-10)/ 2 - 0.2f;
+            abilityModifier.add(Math.round(calcMod));
+        }
+        System.out.println(abilityModifier);
+        return abilityModifier;
+    }
 
 
 
