@@ -245,7 +245,6 @@ public class DBMS implements ApplicationContextAware{
 			qty = languageRepository.count();
 			idx = (int)(Math.random() * qty);
 		    questionPage = languageRepository.findAll(PageRequest.of(idx, 1));
-		    System.out.println(questionPage.getSize());
 		    if (questionPage.hasContent()) {
 		    	LanguageModel randlanuguage = (LanguageModel) questionPage.getContent().get(0);
 		    	randRow.add(0, randlanuguage.getLanguageId().toString());
@@ -426,11 +425,8 @@ public class DBMS implements ApplicationContextAware{
 			qty = spellRepository.findByMultPrefsize(pref1, pref2).size();
 			idx = (int)(Math.random() * qty);
 		    questionPage = spellRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
-		    System.out.println(qty);
-		    System.out.println(questionPage.getSize());
 		    if (questionPage.hasContent()) {
 		    	SpellModel spellmultpref = (SpellModel) questionPage.getContent().get(0);
-		    	System.out.println(spellmultpref.toString());
 		    	rowMultPref.add(0, spellmultpref.getSpellId().toString());
 		    	rowMultPref.add(1, spellmultpref.getSpellName());
 		    	rowMultPref.add(2, spellmultpref.getSpellLevel());
