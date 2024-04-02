@@ -13,7 +13,6 @@ public class RandomGenerator {
 	public static ArrayList<String> bigStringToDividedString(String bigString) {
 		ArrayList<String> dividedString = new ArrayList<>(); //rückgabe, des aufgeteilten Strings als eine Liste
 		String[] partsOfTheBigString = bigString.split(","); //Teilung des großen Strings an den Stellen wo ein Komma ist
-		//Integer numberOfPartStrings = partsOfTheBigString.length; // Anzahl der Strings die voneinander getrennt wurden
 
 		for (String s : partsOfTheBigString) { //jeder Teilstring wird der Liste hinzugefügt
 			if (dividedString.contains(s)) {
@@ -23,15 +22,6 @@ public class RandomGenerator {
 			}
 		}
 		return dividedString;
-	/*}for (int currentPart=0; currentPart < numberOfPartStrings; currentPart++){ //jeder Teilstring wird der Liste hinzugefügt
-		if (dividedString.contains(partsOfTheBigString[currentPart])){
-
-		}else {
-			dividedString.add(partsOfTheBigString[currentPart]);
-		}
-	}
-
-	 */
 	}
 	public static int diceThrower(Integer diceCount, Integer diceNumber) {
 
@@ -63,6 +53,7 @@ public class RandomGenerator {
 
 				value.clear();
 			}
+			return finishedSetForAbilityScores;
 	}
 
 	//UNGETESTET
@@ -183,7 +174,7 @@ public class RandomGenerator {
 
 		String rndArmor = armorProf.get(rndNumber.nextInt(lengthOfArmorProfList));
 
-		if(rndArmor.contains("Armor")){
+		if(rndArmor.contains("armor")){
 			ArrayList<String> armorList=  DBMS.getRowWithPref("armor", rndArmor);
 			armor = armorList.get(1);
 		}else{
@@ -224,7 +215,7 @@ public class RandomGenerator {
 		
 		newDeity = DBMS.getRowWithPref("deity", alignment);
 		
-		while (alignment != newDeity.get(2)) {
+		while (alignment != newDeity.get(2)) { //Fragen: was genau macht die while schleife ??
 			
 			newDeity = DBMS.getRowWithPref("deity", alignment);
 		}
@@ -325,6 +316,22 @@ public class RandomGenerator {
 				gender = "male";
 			}
 		return gender;
+	}
+	public static String randAlignment(){
+		Random randNumber = new Random();
+		int rndNum = randNumber.nextInt(10);
+		ArrayList<String> Alignments = new ArrayList<>();
+		Alignments.add("CG");
+		Alignments.add("CN");
+		Alignments.add("CE");
+		Alignments.add("NE");
+		Alignments.add("LN");
+		Alignments.add("LG");
+		Alignments.add("LN");
+		Alignments.add("NG");
+		Alignments.add("N");
+
+		return Alignments.get(rndNum);
 	}
 	
 	/* TO DO @Luca */
