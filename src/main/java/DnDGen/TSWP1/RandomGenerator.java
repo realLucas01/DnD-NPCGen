@@ -215,11 +215,6 @@ public class RandomGenerator {
 		
 		newDeity = DBMS.getRowWithPref("deity", alignment);
 		
-		while (alignment != newDeity.get(2)) { //Fragen: was genau macht die while schleife ??
-			
-			newDeity = DBMS.getRowWithPref("deity", alignment);
-		}
-		
 		deity = newDeity.get(1);
 		
 		return deity;
