@@ -344,7 +344,7 @@ public class RandomGenerator {
 	}
 
 	/* TO DO @Luca */
-/*
+
 	public static List<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {
 		List<String> spells = new ArrayList<>();
 		List<String> cantrip = new ArrayList<>();
@@ -364,19 +364,23 @@ public class RandomGenerator {
 		 * Ganz unten ist auch noch ein Kommentar von mir falls ihr euch wundert warum eurer Debug/Fehler Menü laggt, gar nicht mehr geht oder falsche/zu wenige anzeigen macht.
 		 *
 		 */
-/*
+		int spellCount = 0; 
+		int levelHalb = 0;
+		int spellUpCount = 0;
+		int cantripCount = 0;
+		int levelCantrip = 0;
 		// BARD
 		if (className == "Bard"){
 			
-		int levelCantrip = 0;
-		if (level >= 4){
-			levelCantrip = 1;
-		}
-		else if ((level<= 20) && (level>= 10)){
-			levelCantrip = 2;
-		}
-		int cantripCount = cantripNumber + levelCantrip;
-		cantrip.addAll(dbms.getMultRowMultPref("spells", "Bard", "Cantrip", cantripCount));
+			levelCantrip = 0;
+			if (level >= 4){
+				levelCantrip = 1;
+			}
+			else if ((level<= 20) && (level>= 10)){
+				levelCantrip = 2;
+			}
+			cantripCount = cantripNumber + levelCantrip;
+			cantrip.addAll(dbms.getMultRowMultPref("spells", "Bard", "Cantrip", cantripCount));
 
 
 			if (level == 1){
@@ -528,469 +532,448 @@ public class RandomGenerator {
 			}																			
 		}
 		// SORCERER
-		else if{
-			if (className == "Sorcerer"){
+		else if(className == "Sorcerer"){
 			
-				int levelCantrip = 0;
+				levelCantrip = 0;
 				if (level >= 4){
 					levelCantrip = 1;
-					if ((level<= 20) && (level>= 10)){
-						levelCantrip = 2;
-					}
 				}
-				int cantripCount = cantripNumber + levelCantrip;
-				cantrip.add(getMultRowMultPref(spells, className, "Cantrip", cantripCount));
+				else if ((level<= 20) && (level>= 10)){
+					levelCantrip = 2;
+				}
+				cantripCount = cantripNumber + levelCantrip;
+				cantrip.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "Cantrip", cantripCount));
 		
-				int spellCount = spellLvl1 + (level - 1);
-				int spellUpCount = 2;
+				spellCount = spellLvl1 + (level - 1);
+				spellUpCount = 2;
 				if (level <= 2){
-					spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-					if ((level == 3) || (level == 4)){
-						spellCount = spellCount - spellUpCount;
-						spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-						spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-							if ((level == 5) || (level == 6)){
-								spellCount = spellCount - (spellUpCount * 2);
-								spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-								spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-								spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-								if ((level == 7) || (level == 8)){
-									spellCount = spellCount - (spellUpCount * 3);
-									spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-									spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-									if ((level == 9) || (level == 10)){
-										spellCount = spellCount - (spellUpCount * 3);
-										spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-										spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-										spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-										spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-										spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-										if ((level == 11) || (level == 12)){
-											spellCount = 4;
-											spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-											spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "6th Level", spellUpCount));
-											if ((level == 13) || (level == 14)){
-												spellCount = 4;
-												spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-												spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "6th Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "7th Level", 1));
-												if ((level == 15) || (level == 16)){
-													spellCount = spellCount - (spellUpCount * 3);
-													spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-													spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-													spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-													spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-													spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-													spells.add(getMultRowMultPref(spells, className, "6th Level", spellUpCount));
-													spells.add(getMultRowMultPref(spells, className, "7th Level", 1));
-													spells.add(getMultRowMultPref(spells, className, "8th Level", 1));
-													if ((level >= 17) && (level <= 20)){
-														spellCount = spellCount - (spellUpCount * 3);
-														spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-														spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-														spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-														spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-														spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-														spells.add(getMultRowMultPref(spells, className, "6th Level", spellUpCount));
-														spells.add(getMultRowMultPref(spells, className, "7th Level", spellUpCount));
-														spells.add(getMultRowMultPref(spells, className, "8th Level", spellUpCount));
-														spells.add(getMultRowMultPref(spells, className, "9th Level", 1));
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
 				}
-			}
+				else if ((level == 3) || (level == 4)){
+					spellCount = spellCount - spellUpCount;
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+				}
+				else if ((level == 5) || (level == 6)){
+					spellCount = spellCount - (spellUpCount * 2);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+				}
+				else if ((level == 7) || (level == 8)){
+					spellCount = spellCount - (spellUpCount * 3);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+				}
+				else if ((level == 9) || (level == 10)){
+					spellCount = spellCount - (spellUpCount * 3);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+				}
+				else if ((level == 11) || (level == 12)){
+					spellCount = 4;
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+				}
+				else if ((level == 13) || (level == 14)){
+					spellCount = 4;
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", 1));
+				}
+				else if ((level == 15) || (level == 16)){
+					spellCount = spellCount - (spellUpCount * 3);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", 1));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "8th Level", 1));
+				}
+				else if ((level >= 17) && (level <= 20)){
+					spellCount = spellCount - (spellUpCount * 3);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "4th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "5th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "6th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "7th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "8th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Sorcerer", "9th Level", 1));
+				}
 		}
+	
 
 		// WIZARD CLERIC DRUID
-		else if {
-			if ((className == "Wizard") || (className == "Cleric") || (className == "Druid")){
-				int levelCantrip = 0;
+	else if((className == "Wizard") || (className == "Cleric") || (className == "Druid")){
+		
 					if (level >= 4){
 						levelCantrip = 1;
-					if ((level<= 20) && (level>= 10)){
+					}
+					else if ((level<= 20) && (level>= 10)){
 						levelCantrip = 2;
 					}
-					}
-		int cantripCount = cantripNumber + levelCantrip;
-		cantrip.add(getMultRowMultPref(spells, className, "Cantrip", cantripCount));
+		cantripCount = cantripNumber + levelCantrip;
+		cantrip.addAll(dbms.getMultRowMultPref("spells", className, "Cantrip", cantripCount));
 
-		int spellUpCount = 2;
-		int spellCount = spellMod + level;
-		if (level <= 2){
-			spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-			if ((level = 3) || (level = 4)){
+		spellUpCount = 2;
+		spellCount = spellMod + level;
+			if (level <= 2){
+			spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+			}
+			else if ((level == 3) || (level == 4)){
 				spellCount = spellCount - spellUpCount;
-				spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-				spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-				if ((level = 5) || (level = 6)){
-					spellCount = spellCount - (spellUpCount * 2);
-					spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-					spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount)));
-					spells.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount)));
-					if ((level = 7) || (level = 8)){
-						spellCount = spellCount - (spellUpCount * 3);
-						spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-						spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount)));
-						spells.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount)));
-						spells.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount)));
-						if ((level = 9) || (level = 10)){
-							spellCount = spellCount - (spellUpCount * 4);
-							spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-							spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount)));
-							spells.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount)));
-							spells.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount)));
-							spells.add(getMultRowMultPref(spells, className, "5th Level", (spellUpCount)));
-							if ((level = 11) || (level = 12)){
-								spellCount = spellCount - (spellUpCount * 5);
-								spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-								spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount)));
-								spells.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount)));
-								spells.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount)));
-								spells.add(getMultRowMultPref(spells, className, "5th Level", (spellUpCount)));
-								spells.add(getMultRowMultPref(spells, className, "6th Level", (spellUpCount)));
-								if ((level = 13) || (level = 14)){
-									spellCount = spellCount - (spellUpCount * 6);
-									spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-									spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount)));
-									spells.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount)));
-									spells.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount)));
-									spells.add(getMultRowMultPref(spells, className, "5th Level", (spellUpCount)));
-									spells.add(getMultRowMultPref(spells, className, "6th Level", (spellUpCount)));
-									spells.add(getMultRowMultPref(spells, className, "7th Level", (spellUpCount)));
-									if ((level = 15) || (level = 16)){
-										spellCount = spellCount - (spellUpCount * 7);
-										spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-										spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount)));
-										spells.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount)));
-										spells.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount)));
-										spells.add(getMultRowMultPref(spells, className, "5th Level", (spellUpCount)));
-										spells.add(getMultRowMultPref(spells, className, "6th Level", (spellUpCount)));
-										spells.add(getMultRowMultPref(spells, className, "7th Level", (spellUpCount)));
-										spells.add(getMultRowMultPref(spells, className, "8th Level", (spellUpCount)));
-										if ((level = 17) || (level = 18)){
-											spellCount = spellCount - (spellUpCount * 8);
-											spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-											spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount + 1)));
-											spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "6th Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "7th Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "8th Level", spellUpCount));
-											spells.add(getMultRowMultPref(spells, className, "9th Level", 1));
-											if ((level = 19) || (level = 20)){
-												spellCount = spellCount - (spellUpCount * 9);
-												spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-												spells.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount + 1)));
-												spells.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount + 1)));
-												spells.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount + 1)));
-												spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "6th Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "7th Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "8th Level", spellUpCount));
-												spells.add(getMultRowMultPref(spells, className, "9th Level", 1));
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
 			}
-		}
+			else if ((level == 5) || (level == 6)){
+				spellCount = spellCount - (spellUpCount * 2);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount)));
 			}
+			else if ((level == 7) || (level == 8)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount)));
+			}
+			else if ((level == 9) || (level == 10)){
+				spellCount = spellCount - (spellUpCount * 4);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", (spellUpCount)));
+			}
+			else if ((level == 11) || (level == 12)){
+				spellCount = spellCount - (spellUpCount * 5);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "6th Level", (spellUpCount)));
+			}
+			else if ((level == 13) || (level == 14)){
+				spellCount = spellCount - (spellUpCount * 6);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "6th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "7th Level", (spellUpCount)));
+			}
+			else if ((level == 15) || (level == 16)){
+				spellCount = spellCount - (spellUpCount * 7);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "6th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "7th Level", (spellUpCount)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "8th Level", (spellUpCount)));
+			}
+			else if ((level == 17) || (level == 18)){
+				spellCount = spellCount - (spellUpCount * 8);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "6th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "7th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "8th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "9th Level", 1));
+			}
+			else if ((level == 19) || (level == 20)){
+				spellCount = spellCount - (spellUpCount * 9);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "6th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "7th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "8th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "9th Level", 1));
+			}
+	}
 		
 
 		// ARTIFICER
-		else{
-			if (className == "Artificer"){
-				int levelCantrip = 0;
+		else if(className == "Artificer"){
+				levelCantrip = 0;
 					if (level >= 10){
 						levelCantrip = 1;
-					if ((level<= 20) && (level>= 14)){
+					}
+					else if ((level<= 20) && (level>= 14)){
 						levelCantrip = 2;
 					}
-					}
-			int cantripCount = cantripNumber + levelCantrip;
-			cantrip.add(getMultRowMultPref(spells, "Artificer", "Cantrip", cantripCount));
+			cantripCount = cantripNumber + levelCantrip;
+			cantrip.addAll(dbms.getMultRowMultPref("spells", "Artificer", "Cantrip", cantripCount));
 
-			int spellUpCount = 2;
-			int levelHalb = floor((level/2));
+			spellUpCount = 2;
+			levelHalb =(int) Math.floor(level/2);
 					if (levelHalb == 0){
 						levelHalb = 1;
 					}
-			int spellCount = spellMod + levelHalb;
+			spellCount = spellMod + levelHalb;
 				if (level <= 4){
-					spells.add(getMultRowMultPref(spells, "Artificer", "1et Level", spellCount));
-					if ((level >= 5) && (level <= 8)){
-						spellCount = spellCount - (spellUpCount);
-						spells.add(getMultRowMultPref(spells, "Artificer", "1et Level", spellCount));
-						spells.add(getMultRowMultPref(spells, "Artificer", "2nd Level", spellUpCount));
-						if ((level >= 9) && (level <= 12)){
-							spellCount = spellCount - (spellUpCount * 2);
-							spells.add(getMultRowMultPref(spells, "Artificer", "1et Level", spellCount));
-							spells.add(getMultRowMultPref(spells, "Artificer", "2nd Level", spellUpCount));
-							spells.add(getMultRowMultPref(spells, "Artificer", "3rd Level", spellUpCount));
-							if ((level >= 13) && (level <= 16)){
-								spellCount = spellCount - (spellUpCount * 3);
-								spells.add(getMultRowMultPref(spells, "Artificer", "1et Level", spellCount));
-								spells.add(getMultRowMultPref(spells, "Artificer", "2nd Level", spellUpCount));
-								spells.add(getMultRowMultPref(spells, "Artificer", "3rd Level", spellUpCount));
-								spells.add(getMultRowMultPref(spells, "Artificer", "4th Level", spellUpCount));
-								if ((level >= 17) && (level <= 20)){
-									spellCount = spellCount - (spellUpCount * 4);
-									spells.add(getMultRowMultPref(spells, "Artificer", "1et Level", spellCount));
-									spells.add(getMultRowMultPref(spells, "Artificer", "2nd Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, "Artificer", "3rd Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, "Artificer", "4th Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, "Artificer", "5th Level", spellUpCount));
-								}
-							}
-						}
-					}
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+				}
+				else if ((level >= 5) && (level <= 8)){
+					spellCount = spellCount - (spellUpCount);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+				}
+				else if ((level >= 9) && (level <= 12)){
+					spellCount = spellCount - (spellUpCount * 2);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
+				}
+				else if ((level >= 13) && (level <= 16)){
+					spellCount = spellCount - (spellUpCount * 3);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "4th Level", spellUpCount));
+				}
+				else if ((level >= 17) && (level <= 20)){
+					spellCount = spellCount - (spellUpCount * 4);
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "4th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", "Artificer", "5th Level", spellUpCount));
 				}
 		}
+		
 
 		// PALADIN
-		else{
-			if (className == "Paladin"){
+		else if(className == "Paladin"){
 				cantrip.add("NO CANTRIPS");
-
-			int spellUpCount = 2;
-			int levelHalb = floor((level/2));
+			
+			spellUpCount = 2;
+			levelHalb =(int) Math.floor(level/2);
 					if (levelHalb == 0){
 						levelHalb = 1;
 					}
-			int spellCount = spellMod + levelHalb;
+			spellCount = spellMod + levelHalb;
 				if (level <= 4){
-					spells.add(getMultRowMultPref(spells, className, "1et Level", spellCount));
-					if ((level >= 5) && (level <= 8)){
-						spellCount = spellCount - (spellUpCount);
-						spells.add(getMultRowMultPref(spells, className, "1et Level", spellCount));
-						spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-						if ((level >= 9) && (level <= 12)){
-							spellCount = spellCount - (spellUpCount * 2);
-							spells.add(getMultRowMultPref(spells, className, "1et Level", spellCount));
-							spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-							spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-							if ((level >= 13) && (level <= 16)){
-								spellCount = spellCount - (spellUpCount * 3);
-								spells.add(getMultRowMultPref(spells, className, "1et Level", spellCount));
-								spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-								spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-								spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-								if ((level >= 17) && (level <= 20)){
-									spellCount = spellCount - (spellUpCount * 4);
-									spells.add(getMultRowMultPref(spells, className, "1et Level", spellCount));
-									spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-									spells.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-								}
-							}
-						}
-					}
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
 				}
-			}
+				else if ((level >= 5) && (level <= 8)){
+					spellCount = spellCount - (spellUpCount);
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				}
+				else if ((level >= 9) && (level <= 12)){
+					spellCount = spellCount - (spellUpCount * 2);
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				}
+				else if ((level >= 13) && (level <= 16)){
+					spellCount = spellCount - (spellUpCount * 3);
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+				}
+				else if ((level >= 17) && (level <= 20)){
+					spellCount = spellCount - (spellUpCount * 4);
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1et Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+				}
+		}
 		
 
 
 		// RANGER
-		else{
-			if (className == "Ranger"){
+		else if(className == "Ranger"){
 				cantrip.add("NO CANTRIPS");
 
-			int spellCount = 3;
+			spellCount = 3;
 				if (level == 1){
 					spells.add("NO SPELLS");
-					if (level == 2){
-						spells.add(getMultRowMultPref(spells, className, "1st Level", (spellCount - 1)));
-						if ((level == 3) || (level == 4)){
-							spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-							if ((level == 5) || (level == 6)){
-								spellCount = spellCount - 1;
-								spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-								spells.add(getMultRowMultPref(spells, className, "2nd Level", 1));
-								if ((level == 7) || (level == 8)){
-									spellCount = spellCount - 2;
-									spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-									spells.add(getMultRowMultPref(spells, className, "2nd Level", 2));
-									if ((level == 9) || (level == 10)){
-										spellCount = spellCount - 3;
-										spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-										spells.add(getMultRowMultPref(spells, className, "2nd Level", 2));
-										spells.add(getMultRowMultPref(spells, className, "3rd Level", 1));
-										if ((level == 11) || (level == 12)){
-											spellCount = spellCount - 4;
-											spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-											spells.add(getMultRowMultPref(spells, className, "2nd Level", 2));
-											spells.add(getMultRowMultPref(spells, className, "3rd Level", 2));
-											if ((level == 13) || (level == 14)){
-												spellCount = spellCount - 5;
-												spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-												spells.add(getMultRowMultPref(spells, className, "2nd Level", 2));
-												spells.add(getMultRowMultPref(spells, className, "3rd Level", 2));
-												spells.add(getMultRowMultPref(spells, className, "4th Level", 1));
-												if ((level == 15) || (level == 16)){
-													spellCount = spellCount - 6;
-													spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-													spells.add(getMultRowMultPref(spells, className, "2nd Level", 2));
-													spells.add(getMultRowMultPref(spells, className, "3rd Level", 2));
-													spells.add(getMultRowMultPref(spells, className, "4th Level", 2));
-													if ((level == 17) || (level == 18)){
-														spellCount = spellCount - 7;
-														spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-														spells.add(getMultRowMultPref(spells, className, "2nd Level", 2));
-														spells.add(getMultRowMultPref(spells, className, "3rd Level", 2));
-														spells.add(getMultRowMultPref(spells, className, "4th Level", 2));
-														spells.add(getMultRowMultPref(spells, className, "5th Level", 1));
-														if ((level == 19) || (level == 20)){
-															spellCount = spellCount - 8;
-															spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-															spells.add(getMultRowMultPref(spells, className, "2nd Level", 2));
-															spells.add(getMultRowMultPref(spells, className, "3rd Level", 2));
-															spells.add(getMultRowMultPref(spells, className, "4th Level", 2));
-															spells.add(getMultRowMultPref(spells, className, "5th Level", 2));
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
 				}
-			}
+				else if (level == 2){
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", (spellCount - 1)));
+				}
+				else if ((level == 3) || (level == 4)){
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				}
+				else if ((level == 5) || (level == 6)){
+					spellCount = spellCount - 1;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 1));
+				}
+				else if ((level == 7) || (level == 8)){
+					spellCount = spellCount - 2;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+				}
+				else if ((level == 9) || (level == 10)){
+					spellCount = spellCount - 3;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 1));
+				}
+				else if ((level == 11) || (level == 12)){
+					spellCount = spellCount - 4;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+				}
+				else if ((level == 13) || (level == 14)){
+					spellCount = spellCount - 5;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 1));
+				}
+				else if ((level == 15) || (level == 16)){
+					spellCount = spellCount - 6;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
+				}
+				else if ((level == 17) || (level == 18)){
+					spellCount = spellCount - 7;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", 1));
+				}
+				else if ((level == 19) || (level == 20)){
+					spellCount = spellCount - 8;
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", 2));
+					spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", 2));
+				}
+		}
 		
 
 		//WARLOCK
-		else{
-			if (className ==  "Warlock"){
-				int levelCantrip = 0;
+		else if(className ==  "Warlock"){
+				levelCantrip = 0;
 					if (level >= 4){
 						levelCantrip = 1;
-					if ((level<= 20) && (level>= 10)){
+					}
+					else if ((level<= 20) && (level>= 10)){
 						levelCantrip = 2;
 					}
-					}
-		int cantripCount = cantripNumber + levelCantrip;
-		cantrip.add(getMultRowMultPref(spells, className, "Cantrip", cantripCount));
+		cantripCount = cantripNumber + levelCantrip;
+		cantrip.addAll(dbms.getMultRowMultPref("spells", className, "Cantrip", cantripCount));
 
-			int spellUpCount = 2;
-			int spellCount;
+			spellUpCount = 2;
 			if ((level >= 1) && (level <= 8)){
 				spellCount = level + 1;
-				if ((level == 1) || (level == 2)){
-					spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-					if ((level == 3) || (level == 4)){
-						spellCount = spellCount - spellUpCount;
-						spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-						spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-						if ((level == 5) || (level == 6)){
-							spellCount = spellCount - (spellUpCount * 2);
-							spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-							spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-							spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-							if ((level == 7) || (level == 8)){
-								spellCount = spellCount - (spellUpCount * 3);
-								spells.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-								spells.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-								spells.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-								spells.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-							}
-						}
-					}
-				}
 			}
-			else{
-				spellCount = 4;
-				if ((level == 9) || (level == 10)){
-					spell.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-					spell.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-					spell.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-					spell.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount - 1)));
-					spell.add(getMultRowMultPref(spells, className, "5th Level", (spellUpCount - 1)));
-					if ((level == 11) || (level == 12)){
-						spell.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-						spell.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-						spell.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-						spell.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-						spell.add(getMultRowMultPref(spells, className, "5th Level", (spellUpCount - 1)));
-						if ((level == 13) || (level == 14)){
-							spell.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-							spell.add(getMultRowMultPref(spells, className, "2nd Level", spellUpCount));
-							spell.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-							spell.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-							spell.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-							if ((level == 15) || (level == 16)){
-								spell.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-								spell.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount + 1)));
-								spell.add(getMultRowMultPref(spells, className, "3rd Level", spellUpCount));
-								spell.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-								spell.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-								if ((level == 17) || (level == 18)){
-									spell.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-									spell.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount + 1)));
-									spell.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount + 1)));
-									spell.add(getMultRowMultPref(spells, className, "4th Level", spellUpCount));
-									spell.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-									if ((level == 19) || (level == 20)){
-										spell.add(getMultRowMultPref(spells, className, "1st Level", spellCount));
-										spell.add(getMultRowMultPref(spells, className, "2nd Level", (spellUpCount + 1)));
-										spell.add(getMultRowMultPref(spells, className, "3rd Level", (spellUpCount + 1)));
-										spell.add(getMultRowMultPref(spells, className, "4th Level", (spellUpCount + 1)));
-										spell.add(getMultRowMultPref(spells, className, "5th Level", spellUpCount));
-									}
-								}
-							}
-						}
-					}
-				}
+			else if ((level == 1) || (level == 2)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
 			}
-
+			else if ((level == 3) || (level == 4)){
+				spellCount = spellCount - spellUpCount;
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
 			}
-
-		
-
-
-		else{
-
-		}
-
+			else if ((level == 5) || (level == 6)){
+				spellCount = spellCount - (spellUpCount * 2);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+			}
+			else if ((level == 7) || (level == 8)){
+				spellCount = spellCount - (spellUpCount * 3);
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+			}
+			else if ((level == 9) || (level == 10)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", 4));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount - 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", (spellUpCount - 1)));
+			}
+			else if ((level == 11) || (level == 12)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", 4));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", (spellUpCount - 1)));
+			}
+			else if ((level == 13) || (level == 14)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", 4));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+			}
+			else if ((level == 15) || (level == 16)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", 4));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+			}
+			else if ((level == 17) || (level == 18)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", spellUpCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+			}
+			else if ((level == 19) || (level == 20)){
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "1st Level", spellCount));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "2nd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "3rd Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "4th Level", (spellUpCount + 1)));
+				spells.addAll(dbms.getMultRowMultPref("spells", className, "5th Level", spellUpCount));
+			}
+	}
+	else{
+		cantrip.add("NO CANTRIP");
 		spells.add("NO SPELLS");
-		
+	}
 		return spells;
 	}
-}	
+}
 	//@autor Lucas
 	//sie hat mehrmals irgendwo vergessen if's zu schließen, und ich hab keine Lust zu suchen wo, deswegen hier ein paar extra klammern,
 	//damit mein eclipse mir die anderen fehler anzeigt :')
 	//
 	//edit: nvm, mein compiler hat die Anzahl an Fehlern gesehen und nach den ersten 115 Zeilen von 500+ aufgehört zu zählen und sie anzuzeigen :'(
-		}
-		}
-		}
-	}
-}*/
-	}
+	
 
 
