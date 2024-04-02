@@ -1,6 +1,8 @@
 package DnDGen.TSWP1;
 
 import org.hibernate.mapping.Any;
+import org.hibernate.mapping.Array;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,14 +17,17 @@ public class RandomNPC {
         ArrayList<String> skillList = null;
         ArrayList<String> weaponList = null;
         ArrayList<String> possibleSkillList;
+        ArrayList<String> languages = null;
         String armorList, raceSkillList;
         ArrayList<String> weaponProfList;
         ArrayList<String> armorProfList;
-        String race, job, genClass, gender, name, description, alignment, deity;
-        int level, numberSkill, age;
-        Pattern number = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE); //zum überprüfen ob im String eine Zahl steckt
-        boolean containsNumber;
-
+        ArrayList<String> armorBoni;
+        ArrayList<String> currentArmor;
+        Random rndNumb = new Random();
+        String race, job, genClass, gender, name, description, alignment, deity, languagesRace, languagesJob, kindOfArmor;
+        int level, numberSkill, age, count,weaponCount, armorClass = 0;
+        Pattern number = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE); //zum Überprüfen, ob im String eine Zahl steckt
+        Matcher matcherNumber;
 
         //random Race
         if (inputRace == null){
@@ -69,12 +74,43 @@ public class RandomNPC {
 
         armorProfList = randGen.figureOutProfList("armor", genClass, race);
         //randomArmor
-            // Luca ist noch ein EdgeCase eingefallen, deswegen noch leer:  Shield
         armorList = randGen.randArmor(armorProfList); // LUCA FIX
+
+        //Berechnung AC
+        currentArmor= DBMS.getRow("armor",armorList);
+        armorClass = Integer.parseInt(currentArmor.get(3));
+
+        /*
+        checken ob Armor "normale" ist oder natürliche, bzw. ClassArmor
+         */
+        kindOfArmor = currentArmor.get(2);
+        if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
+            armorBoni = randGen.bigStringToDividedString(currentArmor.get(5));
+            for(String s: armorBoni){
+                //für jeden AbilityScore Boni, diesen hinzufügen
+                switch(s){
+                    case "Dex":
+
+                }
+            }
+            if(armorClass> Integer.parseInt(currentArmor.get(4))){//überprüfen ob AC im toleranten Bereich liegt
+                armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
+            }
+        }
+        if(armorProfList.contains("shield")){
+            int shieldPercent= rndNumb.nextInt(2);
+            if(shieldPercent == 1){
+                armorList = armorList + " + " + "shield";
+                armorClass = armorClass +2;
+            }
+        }
 
         weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
         //randomWeapon
-        weaponList.add(randGen.randWeapon(weaponProfList));
+        weaponCount = rndNumb.nextInt(4);
+        for(int i=0; i<weaponCount;i++){
+            weaponList.add(randGen.randWeapon(weaponProfList));
+        }
 
         //random Skills
         //Race Skills
@@ -150,7 +186,19 @@ public class RandomNPC {
         deity = randGen.randDeity(alignment);
 
         //random Languages
+        languagesRace = DBMS.getRow("race",race).get(10);   // Sprachen der Rasse
+        languagesJob = DBMS.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
+        languages = randGen.bigStringToDividedString(languagesRace); //aufteilung des Strings
 
+        count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
+        languages.removeLast(); //Nummer wird entfernt aus der ArrayList
+        for ( int i=0; i<count;i++){
+            languages.add(randGen.randLanguages()); //for schleife
+        }
+
+        Set<String> removeDuplicatedLanguages = new HashSet<>(languages); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
+        languages.clear();
+        languages.addAll(removeDuplicatedLanguages);
 
         return "Hi";
     }
