@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootApplication
 public class DBMS implements ApplicationContextAware{
+	@SuppressWarnings("unused")
 	private static ConfigurableApplicationContext ctx;
     private static ApplicationContext atx;
 	
@@ -386,15 +387,13 @@ public class DBMS implements ApplicationContextAware{
 	 * 					werden in der ArrayList hintereinnader gehangen.
 	 */
 	public ArrayList<String> getMultRowPref(String dbname, String pref, Integer numberofrow){
-		ArrayList<String> rand1 = new ArrayList<String>();
-		ArrayList<String> rand2 = new ArrayList<String>();
-		ArrayList<String> randresult = new ArrayList<String>();
-		boolean unterschied;
+		ArrayList<String> rand = new ArrayList<String>();
+		ArrayList<String> multRowPref = new ArrayList<String>();
 		
 		switch(dbname) {
 		default:
 		}
-		return randresult;
+		return multRowPref;
 	}
 	
 	/* @author Lucas

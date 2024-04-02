@@ -2,10 +2,23 @@ package DnDGen.TSWP1;
 
 import java.util.*;
 
+import org.springframework.context.ApplicationContext;
+
+import DnDGen.DB.DBMS;
+
 
 public class RandomGenerator {
 
-	public static dbms dbms;
+	/* @author Lucas
+	 * 
+	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
+	 * neu-konstruktion von DBMS wäre sonst leer.
+	 * Ich musste es etwas anpassen, weil ihr aus irgendeinem Grund nur Static nutzt,
+	 * ich hoffe/denke das es auch so funktionieren sollte, übernehme aber keine Verantwortung dafür.
+	 */
+	static ApplicationContext appCtx = DBMS.getApplicationContext();
+    static DBMS dbms = appCtx.getBean(DBMS.class);
+    
 	public static void main(String []args) {
 		
 		System.out.println("Hier ist die Main");
@@ -64,7 +77,7 @@ public class RandomGenerator {
 	//UNGETESTET
 	/* @Luca */
 	public static String randCharClass() {
-		ArrayList<String> rndClass = dbms.getRandRow("class");
+		ArrayList<String> rndClass = dbms.getRandomRow("class");
 
 		return rndClass.get(1);
 	}
@@ -74,7 +87,7 @@ public class RandomGenerator {
 		String race = "NO RACE";
 
 		ArrayList<String> newRace = new ArrayList<String>();
-		newRace = dbms.getRandRow("race");
+		newRace = dbms.getRandomRow("race");
 		race = newRace.get(1);
 
 		return race;
@@ -85,7 +98,7 @@ public class RandomGenerator {
 		String job = "NO JOB";
 
 		ArrayList<String> newJob = new ArrayList<String>();
-		newJob = dbms.getRandRow("job");
+		newJob = dbms.getRandomRow("job");
 
 		job = newJob.get(1);
 
@@ -178,7 +191,7 @@ public class RandomGenerator {
 		int lengthOfArmorProfList = armorProf.size();
 		armorProf.remove("Shield");
 		String rndArmor = armorProf.get(rndNumber.nextInt(lengthOfArmorProfList));
-		ArrayList<String> armorList = dbms.getRowWithPref("armor", rndArmor);
+		ArrayList<String> armorList = dbms.getRowPref("armor", rndArmor);
 		armor = armorList.get(1);
 
 		return armor;
@@ -198,7 +211,7 @@ public class RandomGenerator {
 
 		if (rndWeapon.contains("weapon")) { //hier wird gescheckt, ob es direkt eine Waffe ist oder eine Prof in einem Waffenbereich
 
-			ArrayList<String> armorList = dbms.getRowWithPref("weapon", rndWeapon);
+			ArrayList<String> armorList = dbms.getRowPref("weapon", rndWeapon);
 			weapon = armorList.get(1);
 		} else {
 			weapon = rndWeapon;
@@ -214,7 +227,7 @@ public class RandomGenerator {
 
 		ArrayList<String> newDeity = new ArrayList<String>();
 
-		newDeity = dbms.getRowWithPref("deity", alignment);
+		newDeity = dbms.getRowPref("deity", alignment);
 
 		deity = newDeity.get(1);
 
@@ -224,7 +237,7 @@ public class RandomGenerator {
 	//UNGETESTET
 	/* @Luca */
 	public static String randLanguages() {
-		ArrayList<String> rndLang = dbms.getRandRow("language");
+		ArrayList<String> rndLang = dbms.getRandomRow("language");
 
 		return rndLang.get(1);
 	}
@@ -237,16 +250,16 @@ public class RandomGenerator {
 		String secondName = "NO SECONDNAME";
 
 		ArrayList<String> newName = new ArrayList<String>();
-		newName = dbms.getRowWithPref("name", race);
+		newName = dbms.getRowPref("name", race);
 
 		while (gender != newName.get(4)) {
 
-			newName = dbms.getRowWithPref("name", race);
+			newName = dbms.getRowPref("name", race);
 			firstName = newName.get(1);
 
 		}
 
-		newName = dbms.getRowWithPref("name", race);
+		newName = dbms.getRowPref("name", race);
 		secondName = newName.get(2);
 
 		name = firstName + secondName;

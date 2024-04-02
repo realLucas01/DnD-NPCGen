@@ -6,11 +6,22 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.context.ApplicationContext;
+
+import DnDGen.DB.DBMS;
+
 
 
 public class RandomNPC {
 	public RandomGenerator randGen;
-    public dbms dbms;
+	
+	/* @author Lucas
+	 * 
+	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
+	 * neu-konstruktion von DBMS wäre sonst leer.
+	 */
+	ApplicationContext appCtx = DBMS.getApplicationContext();
+    DBMS dbms = appCtx.getBean(DBMS.class);
 
     public String createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender){
         ArrayList<String> generatingNPC;
@@ -231,7 +242,7 @@ public class RandomNPC {
     	
     	rawAbilityScores = rolledAbilityScore;
     	
-    	arrayForClass = dbms.getRowWithPref("class", charClass);
+    	arrayForClass = dbms.getRowPref("class", charClass);
     	
     	dividedAbilityScores = RandomGenerator.bigStringToDividedString(arrayForClass.get(8));
     	
