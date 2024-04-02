@@ -4,12 +4,15 @@ import org.hibernate.mapping.Any;
 import org.hibernate.mapping.Array;
 
 import java.util.*;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RandomNPC {
 
-    public RandomGenerator randGen;
+
+public class RandomNPC {
+	public RandomGenerator randGen;
+
     public DBMS DBMS;
 
     public String createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender){
@@ -202,8 +205,76 @@ public class RandomNPC {
 
         return "Hi";
     }
+
     public ArrayList<Integer> distributeAbilityScore (ArrayList<Integer> rolledAbilityScore, String charClass) {
-        return null;
+    	
+    	ArrayList<Integer> rawAbilityScores = new ArrayList<Integer>();
+    	ArrayList<String> arrayForClass = new ArrayList<String>();
+    	ArrayList<String> dividedAbilityScores = new ArrayList<String>();
+    	ArrayList<String> finishedAbilityScores = new ArrayList<String>();
+    	ArrayList<Integer> parsedAbilityScores = new ArrayList<Integer>();
+    	
+    	rawAbilityScores = rolledAbilityScore;
+    	
+    	arrayForClass = DBMS.getRowWithPref("class", charClass);
+    	
+    	dividedAbilityScores = RandomGenerator.bigStringToDividedString(arrayForClass.get(8));
+    	
+    	finishedAbilityScores.add("Str");
+    	finishedAbilityScores.add("Dex");
+    	finishedAbilityScores.add("Con");
+    	finishedAbilityScores.add("Int");
+    	finishedAbilityScores.add("Wis");
+    	finishedAbilityScores.add("Cha");
+    	
+    	
+    	if(charClass != "Commoner") {
+    	
+    	Integer i = 0;
+    	Integer j = 0;
+    	while(i <= 5 && j <= 5) {
+        	
+    		String aScore = dividedAbilityScores.get(i);
+    		Integer value = rawAbilityScores.get(i);
+    		
+    		String aScoreFinished = finishedAbilityScores.get(j);
+    		
+    		//System.out.println("aScoreFinished (j): " + aScoreFinished);
+    		//System.out.println("aScore (i): " + aScore);
+    		//System.out.println("Value: " + value);
+    		
+    		//System.out.println("Ability scores array: " + finishedAbilityScores.get(j));
+    		//System.out.println("------------------");
+    		if(aScoreFinished == aScore) {
+    			
+    			finishedAbilityScores.set(j, value.toString());
+    			j++;
+    			i = 0;
+    			
+    		} else {
+    			
+    			i++;
+    			
+    		}
+    	//System.out.println("Finished ability scores: " + finishedAbilityScores);	
+    	}
+    	
+    	for(Integer k = 0; k < 6; k++) {
+    		
+    		Integer parsedInt = Integer.parseInt(finishedAbilityScores.get(k));
+    		parsedAbilityScores.add(parsedInt);
+    		
+    	}
+    	return parsedAbilityScores;
+    	} else {
+    		
+    		Collections.shuffle(rawAbilityScores);
+    		return rawAbilityScores;
+    	}
+    	
+    	//System.out.println("parsed ability Scores: " + parsedAbilityScores);
+    	
+        //return null;
     }
 
     public ArrayList<String> chooseSpell(String charClass, String race, Integer level){ //für edit
