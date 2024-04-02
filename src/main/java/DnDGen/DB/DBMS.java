@@ -288,9 +288,9 @@ public class DBMS implements ApplicationContextAware{
 		    }
 			break;
 		case "race":
-			qty = jobRepository.count();
+			qty = raceRepository.count();
 			idx = (int)(Math.random() * qty);
-		    questionPage = jobRepository.findAll(PageRequest.of(idx, 1));
+		    questionPage = raceRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	RaceModel randrace = (RaceModel) questionPage.getContent().get(0);
 		    randRow.add(0, randrace.getRaceId().toString());
