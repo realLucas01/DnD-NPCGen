@@ -8,12 +8,12 @@
  * darauf das die für die Funktion essentiellen Grundvoraussetzungen wie Daten-
  * sowie auch Datenbankintegrität erhalten bleiben.
  * 
- * 
+ * Als Info: Ich teste alle meine Funktionen bevor sie auf Main gehen und
+ * übernehme keine Haftung für falsche Methodeneingaben.
  *
  */
 
 package DnDGen.DB;
-
 
 import java.util.ArrayList;
 
@@ -138,6 +138,7 @@ public class DBMS implements ApplicationContextAware{
 		}
 		return onlycol;
 	}
+	
 	
 	/* @author Lucas
 	 *
@@ -381,8 +382,9 @@ public class DBMS implements ApplicationContextAware{
 	 * 					kleingeschriebener String.
 	 * @param pref: String nach dem die DB vor der Randomauswahl sortiert werden soll.
 	 *
-	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
-	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
+	 * @return ArrayList gefüllt mit den Attributen der Zeilen, jedes Attribut 
+	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
+	 * 					werden in der ArrayList hintereinnader gehangen.
 	 */
 	public ArrayList<String> getMultRowPref(String dbname, String pref, Integer numberofrow){
 		ArrayList<String> rand1 = new ArrayList<String>();
@@ -398,9 +400,8 @@ public class DBMS implements ApplicationContextAware{
 	
 	/* @author Lucas
 	 *
-	 * (◉ ᴖ ◉)
-	 * Die Funkiton ist auch traurig da sie von Luca angefordert wurde und
-	 * keinen Nutzen hat.
+	 * (• ᴗ •)
+	 * Die Funkiton ist nun glücklich, da sie einen nutzen bekommen hat. :D
 	 *
 	 * Gibt eine zufällige Zeile einer ausgewählten DB aus die vorher nach zwei
 	 * Präferenzen sortiert wurde.
@@ -409,21 +410,84 @@ public class DBMS implements ApplicationContextAware{
 	 * 					kleingeschriebener String.
 	 * @param pref1: String nach dem die DB vor der Randomauswahl sortiert werden soll.
 	 * 
-	 * @param pref1: String nach dem die DB vor der Randomauswahl sortiert werden soll.
+	 * @param pref2: String nach dem die DB vor der Randomauswahl sortiert werden soll.
 	 * 
 	 * @return ArrayList gefüllt mit den Attributen der Zeile, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0
 	 */
 	public ArrayList<String> getRowMultPref(String dbname, String pref1,String pref2){
 	    int qty;
-	    Page<?> questionPage2;
+	    Page<?> questionPage;
 	    int idx;
 	    ArrayList<String> rowMultPref = new ArrayList<String>();
 	    
 		switch(dbname) {
+		case "spells":
+			qty = spellRepository.findByMultPrefsize(pref1, pref2).size();
+			idx = (int)(Math.random() * qty);
+		    questionPage = spellRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
+		    System.out.println(qty);
+		    System.out.println(questionPage.getSize());
+		    if (questionPage.hasContent()) {
+		    	SpellModel spellmultpref = (SpellModel) questionPage.getContent().get(0);
+		    	System.out.println(spellmultpref.toString());
+		    	rowMultPref.add(0, spellmultpref.getSpellId().toString());
+		    	rowMultPref.add(1, spellmultpref.getSpellName());
+		    	rowMultPref.add(2, spellmultpref.getSpellLevel());
+		    	rowMultPref.add(3, spellmultpref.getSpellSchool());
+		    	rowMultPref.add(4, spellmultpref.getSpellCastingTime());
+		    	rowMultPref.add(5, spellmultpref.getSpellRange());
+		    	rowMultPref.add(6, spellmultpref.getSpellComponents());
+		    	rowMultPref.add(7, spellmultpref.getSpellDuration());
+		    	rowMultPref.add(8, spellmultpref.getSpellDescription());
+		    	rowMultPref.add(9, spellmultpref.getSpellLevelUpScale());
+		    	rowMultPref.add(10, spellmultpref.getSpellAvailability());
+		    }
 		default:
 		}
 		return rowMultPref;
+	}
+	
+	/* @author Lucas
+	 *
+	 * Gibt eine gewünschte Anzahl an zufälligen Zeilen einer ausgewählten DB aus die vorher nach zwei
+	 * Präferenzen sortiert wurde.
+	 * 
+	 * @param dbname: der Name der DB von der Daten gewünscht sind, als 
+	 * 					kleingeschriebener String.
+	 * @param pref1: String nach dem die DB vor der Randomauswahl sortiert werden soll.
+	 * 
+	 * @param pref2: String nach dem die DB vor der Randomauswahl sortiert werden soll.
+	 * 
+	 * @param rownumber: Anzahl der Zeilen die Ausgegeben werden sollen.
+	 * 
+	 * @return ArrayList gefüllt mit den Attributen der Zeilen, jedes Attribut 
+	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
+	 * 					werden in der ArrayList hintereinnader gehangen.
+	 */
+	public ArrayList<String> getMultRowMultPref(String dbname, String pref,String pref2, Integer rownumber){
+		ArrayList<String> rand = new ArrayList<String>();
+		ArrayList<String> multRowMultPref = new ArrayList<String>();
+		Integer i = 2;
+		
+		switch(dbname) {
+		case "spells":
+			multRowMultPref.addAll(getRowMultPref(dbname, pref, pref2));
+			while (i <= rownumber) {
+				rand.addAll(getRowMultPref(dbname, pref, pref2));
+				if (multRowMultPref.containsAll(rand)) {
+					rand.clear();
+				} else {
+					multRowMultPref.addAll(rand);
+					rand.clear();
+					i++;
+				}
+			}
+			break;
+		default:
+			multRowMultPref=null;
+		}
+		return multRowMultPref;
 	}
 	
 	/* @author Lucas

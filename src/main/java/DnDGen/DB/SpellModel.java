@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class SpellModel {
 	private String spellRange;
 	private String spellComponents;
 	private String spellDuration;
+	@Column(columnDefinition="TEXT")
 	private String spellDescription;
 	private String spellLevelUpScale;
 	private String spellAvailability;

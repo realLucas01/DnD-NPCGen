@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class FeatureModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer featureId;
 	private String featureName;
+	@Column(columnDefinition="TEXT")
 	private String featureDescription;
 	private String featureKindOf;
 	
