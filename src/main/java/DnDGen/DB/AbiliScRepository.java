@@ -25,5 +25,7 @@ public interface AbiliScRepository extends CrudRepository<AbiliScModel, Integer>
 	ArrayList<AbiliScModel> findByAbiliScGenerationMethod(String generationMethod);
 	@Query("SELECT s.abiliScGenerationMethod FROM AbiliScModel s")
 	ArrayList<String> getallAbiliScCol();
+	@Query("SELECT p FROM AbiliScModel p WHERE p.abiliScGenerationMethod = ?1")
+	Page<AbiliScModel> getAbiliScPref(String abiliScGenerationMethod,Pageable pageable2);
 
 }

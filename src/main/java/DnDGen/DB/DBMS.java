@@ -393,6 +393,18 @@ public class DBMS implements ApplicationContextAware{
 		    	randRowPref.add(4, randnamepref.getNameGender());
 		    }
 			break;
+		case "abilisc":
+			qty = abiliScRepository.findByAbiliScGenerationMethod(pref).size();
+			idx = (int)(Math.random() * qty);
+		    questionPage2 = abiliScRepository.getAbiliScPref(pref,PageRequest.of(idx,1));
+		    if (questionPage2.hasContent()) {
+		    	AbiliScModel randabilipref = (AbiliScModel) questionPage2.getContent().get(0);
+		    	randRowPref.add(0, randabilipref.getAbiliScId().toString());
+		    	randRowPref.add(1, randabilipref.getAbiliScName());
+		    	randRowPref.add(2, randabilipref.getAbiliScKind());
+		    	randRowPref.add(3, randabilipref.getAbiliScGenerationMethod());
+		    }
+			break;
 		default:
 		
 		}
