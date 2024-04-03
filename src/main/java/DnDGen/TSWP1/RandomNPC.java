@@ -338,7 +338,7 @@ public class RandomNPC {
             calcMod = (float) (i-10)/ 2 - 0.2f;
             abilityModifier.add(Math.round(calcMod));
         }
-         System.out.printlnln(abilityModifier);
+         System.out.println(abilityModifier);
         return abilityModifier;
     }
 
