@@ -130,12 +130,16 @@ public class DBMS implements ApplicationContextAware{
 		switch(dbname) {
 		case "race":
 			onlycol = raceRepository.getallRaceCol();
+			break;
 		case "class":
 			onlycol = classRepository.getallClassCol();
+			break;
 		case "job":
 			onlycol = jobRepository.getallJobCol();
+			break;
 		default:
 			onlycol = null;
+			break;
 		}
 		return onlycol;
 	}

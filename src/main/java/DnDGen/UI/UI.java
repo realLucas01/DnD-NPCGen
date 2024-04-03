@@ -42,6 +42,12 @@ public class UI extends Application {
 
     //Stage -> Ist ein Fenster
     //Scene -> Ist der Inhalt des Fensters
+    /* @author Marie
+     *
+     * Funktion die als erste ausgeführt wird. In ihr werden alle anderen Methoden aufgerufen.
+     *
+     * @param primaryStage: das Fenster das verwendet wird.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
     	window = primaryStage;
@@ -78,7 +84,7 @@ public class UI extends Application {
 
         final ComboBox cbRace = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbRace, 2, 1);
-        cbRace.getItems().addAll("Option 1", "Option 2", "Option 2");
+        cbRace.getItems().addAll(dbms.onlyColumn("race"));
         cbRace.getSelectionModel().selectFirst();
 
 
@@ -88,7 +94,7 @@ public class UI extends Application {
 
         final ComboBox cbClass = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbClass, 2, 2);
-        cbClass.getItems().addAll("Option 1", "Option 2", "Option 2");
+        cbClass.getItems().addAll(dbms.onlyColumn("class"));
         cbClass.getSelectionModel().selectFirst();
 
 
@@ -98,7 +104,7 @@ public class UI extends Application {
 
         final ComboBox cbJob = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbJob, 2, 3);
-        cbJob.getItems().addAll("Option 1", "Option 2", "Option 2");
+        cbJob.getItems().addAll(dbms.onlyColumn("job"));
         cbJob.getSelectionModel().selectFirst();
 
 
@@ -108,7 +114,7 @@ public class UI extends Application {
 
         final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbLevel, 2, 4);
-        cbLevel.getItems().addAll("Option 1", "Option 2", "Option 2");
+        for(int i = 1; i < 8; i++) {cbLevel.getItems().add(i);}
         cbLevel.getSelectionModel().selectFirst();
 
 
@@ -217,7 +223,12 @@ public class UI extends Application {
         Button buttonGenerate = new Button("Generieren");
         GridPane.setConstraints(buttonGenerate, 1, 6);
         buttonGenerate.setOnAction(e -> {
-           //Parameter für generieren  (cbRace.getValue(),cbClass.getValue(),cbJob.getValue(),cbLevel.getValue())
+           //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
+          /* System.out.println(zufall(cbRace));
+           System.out.println(zufall(cbClass));
+           System.out.println(zufall(cbJob));
+           System.out.println(zufall(cbLevel));
+            */
 
         npcStack.setVisible(true);
 
@@ -241,8 +252,7 @@ public class UI extends Application {
         //Layout der Seite
 
         layoutGenerateGrid.getChildren().addAll(labelRace, labelClass, labelJob, labelLevel, cbRace, cbClass,
-                                                cbJob, cbLevel, buttonGenerate
-        );
+                                                cbJob, cbLevel, buttonGenerate);
         VBox layoutGenerateVBox = new VBox(20);
         HBox gridNpc = new HBox();
         gridNpc.getChildren().addAll(layoutGenerateGrid, npcStack);
@@ -362,5 +372,22 @@ public class UI extends Application {
         //window.setScene(npcPage);
         window.setScene(generatePage);
         window.show();
+    }
+
+
+    /* @author Marie
+     *
+     * Überprüft eine ComboBox, ob das Item "zufall" ausgewählt ist,
+     * wenn, dann wird null zurückgegeben.
+     *
+     * @param cb: die ComboBox die geprüft wird.
+     * @return Beim Item "zufall" kommt null zurück, sonst das Item.
+     */
+    public String zufall(ComboBox cb) {
+        if(cb.getValue() == "zufall") {
+            return null;
+        } else {
+            return cb.getValue().toString();
+        }
     }
 }
