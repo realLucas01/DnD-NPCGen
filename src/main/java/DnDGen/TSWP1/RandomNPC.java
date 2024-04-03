@@ -75,15 +75,63 @@ public class RandomNPC {
         }
          System.out.println("Class:" + genClass);
 
+
         //random AbilityScore
-       /* switch ((inputAbilityScore)){
+       /*switch ((inputAbilityScore)){
             case null:
                 //AbilityScore 3d6 verwenden
-            case "3d6", "4d6", "5d6":
+                abilityScores = randGen.randAbilityScore();
+                break;
+            case "4d6":
                 //Ability Score berechnen mit vorgegebenen Würfel
+                ArrayList<Integer> scoreFour = new ArrayList<>();
+                ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
+
+                for (int i = 0; i < 6; i++) {
+                    scoreFour.add(randGen.diceThrower(1, 6));
+                    scoreFour.add(randGen.diceThrower(1, 6));
+                    scoreFour.add(randGen.diceThrower(1, 6));
+                    scoreFour.add(randGen.diceThrower(1, 6));
+                    scoreFour.add(randGen.diceThrower(1, 6));
+                    Collections.sort(scoreFour, Collections.reverseOrder());
+
+                    int abilityScore = scoreFour.get(0) + scoreFour.get(1) + scoreFour.get(2);
+
+                    finishedSetForAbilityScores.add(abilityScore);
+
+                    scoreFour.clear();
+                }
+                Collections.sort(finishedSetForAbilityScores, Collections.reverseOrder());
+                abilityScores = finishedSetForAbilityScores;
+                break;
+           case "5d6":
+               randGen.diceThrower(5, 6);
+               ArrayList<Integer> scoreFive = new ArrayList<>();
+               ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
+
+               for (int i = 0; i < 6; i++) {
+                   scoreFive.add(randGen.diceThrower(1, 6));
+                   scoreFive.add(randGen.diceThrower(1, 6));
+                   scoreFive.add(randGen.diceThrower(1, 6));
+                   scoreFive.add(randGen.diceThrower(1, 6));
+                   scoreFive.add(randGen.diceThrower(1, 6));
+                   scoreFive.add(randGen.diceThrower(1, 6));
+                   Collections.sort(scoreFive, Collections.reverseOrder());
+
+                   int abilityScore = scoreFive.get(0) + scoreFive.get(1) + scoreFive.get(2);
+
+                   finishedSetForAbilityScores.add(abilityScore);
+
+                   scoreFive.clear();
+               }
+               Collections.sort(finishedSetForAbilityScores, Collections.reverseOrder());
+               break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
+                //dbms.getRowPref();
         }*/
+
+
         //muss dann oben richtig gemacht werden
         abilityScores.addAll(randGen.randAbilityScore());
          System.out.println("AbilityScore:" + abilityScores);
