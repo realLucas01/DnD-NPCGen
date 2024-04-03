@@ -3,6 +3,7 @@ package DnDGen.UI;
 
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
+import DnDGen.TSWP1.RandomNPC;
 
 
 //import java.awt.Button;
@@ -22,6 +23,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
+import javax.lang.model.element.Name;
+
 public class UI extends Application {
     Stage window;
     Scene generatePage, npcPage, historyPage, editPage;
@@ -34,6 +37,7 @@ public class UI extends Application {
 	 */
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
+
     
     public static void main(String[] args) {
         launch(args);
@@ -52,6 +56,7 @@ public class UI extends Application {
     public void start(Stage primaryStage) throws Exception {
     	window = primaryStage;
         window.setTitle("DnD NPC Generator");
+        RandomNPC rNPC = new RandomNPC();
 
         GridPane layoutGenerateGrid = new GridPane();
         layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -224,11 +229,13 @@ public class UI extends Application {
         GridPane.setConstraints(buttonGenerate, 1, 6);
         buttonGenerate.setOnAction(e -> {
            //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
-          /* System.out.println(zufall(cbRace));
+           System.out.println(zufall(cbRace));
            System.out.println(zufall(cbClass));
            System.out.println(zufall(cbJob));
            System.out.println(zufall(cbLevel));
-            */
+
+
+          nameL.setText("Name: " + rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob),Integer.parseInt(zufall(cbLevel)),"null","female"));
 
         npcStack.setVisible(true);
 
