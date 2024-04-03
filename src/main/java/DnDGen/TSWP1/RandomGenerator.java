@@ -334,7 +334,7 @@ public class RandomGenerator {
 		return Alignments.get(rndNum);
 	}
 
-	/* TO DO @Luca */
+	/* TO DO @Kristina */
 
 	public ArrayList<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {
 		ArrayList<String> spells = new ArrayList<>();
@@ -361,7 +361,7 @@ public class RandomGenerator {
 		int cantripCount = 0;
 		int levelCantrip = 0;
 		// BARD
-		if (className == "Bard"){
+		if (className.equals("Bard")){
 
 			levelCantrip = 0;
 			if (level >= 4){
@@ -523,7 +523,7 @@ public class RandomGenerator {
 			}
 		}
 		// SORCERER
-		else if(className == "Sorcerer"){
+		else if(className.equals("Sorcerer")){
 
 			levelCantrip = 0;
 			if (level >= 4){
@@ -612,7 +612,7 @@ public class RandomGenerator {
 
 
 		// WIZARD CLERIC DRUID
-		else if((className == "Wizard") || (className == "Cleric") || (className == "Druid")){
+		else if((className.equals("Wizard")) || (className.equals("Cleric")) || (className.equals("Druid"))){
 
 			if (level >= 4){
 				levelCantrip = 1;
@@ -712,7 +712,7 @@ public class RandomGenerator {
 
 
 		// ARTIFICER
-		else if(className == "Artificer"){
+		else if(className.equals("Artificer")){
 			levelCantrip = 0;
 			if (level >= 10){
 				levelCantrip = 1;
@@ -762,7 +762,7 @@ public class RandomGenerator {
 
 
 		// PALADIN
-		else if(className == "Paladin"){
+		else if(className.equals("Paladin")){
 			cantrip.add("NO CANTRIPS");
 
 			spellUpCount = 2;
@@ -805,7 +805,7 @@ public class RandomGenerator {
 
 
 		// RANGER
-		else if(className == "Ranger"){
+		else if(className.equals("Ranger")){
 			cantrip.add("NO CANTRIPS");
 
 			spellCount = 3;
@@ -874,7 +874,7 @@ public class RandomGenerator {
 
 
 		//WARLOCK
-		else if(className ==  "Warlock"){
+		else if(className.equals("Warlock")){
 			levelCantrip = 0;
 			if (level >= 4){
 				levelCantrip = 1;
