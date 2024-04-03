@@ -81,11 +81,11 @@ INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_
 INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (4,'Hide','Medium Armor',12,14,'Dex',NULL,NULL);
 INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (5,'Chain Shirt','Medium Armor',13,15,'Dex',NULL,NULL);
 
-INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc) VALUES (1,'Random3d6Methode','Dice','3d6');
-INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc) VALUES (2,'Random4d6Methode','Dice','4d6');
-INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc) VALUES (3,'TerribleArray','Array','8,8,8,8,7,7');
-INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc) VALUES (4,'Standard Array','Array','15,14,13,12,10,8');
-INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc) VALUES (5,'MediumArray','Array','14,12,12,10,10,8');
+INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (1,'Random3d6Methode','Dice','3d6');
+INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (2,'Random4d6Methode','Dice','4d6');
+INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (3,'TerribleArray','Array','8,8,8,8,7,7');
+INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (4,'Standard Array','Array','15,14,13,12,10,8');
+INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (5,'MediumArray','Array','14,12,12,10,10,8');
 
 INSERT INTO spell_model(Spell_Id,Spell_Name,spell_Level,spell_School,spell_Casting_Time,spell_Range,spell_Components,spell_Duration,spell_Description,spell_Level_Up_Scale,spell_Availability) VALUES (1,'Acid Splash','Cantrip','Conjuration','1 action','60 feet','V, S','Instantaneous','You hurl a bubble of acid. Choose one creature you can see within range, or choose two creatures you can see within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage.','This spell''s damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).','Artificer, Sorcerer, Wizard, Water Genasi');
 INSERT INTO spell_model(Spell_Id,Spell_Name,spell_Level,spell_School,spell_Casting_Time,spell_Range,spell_Components,spell_Duration,spell_Description,spell_Level_Up_Scale,spell_Availability) VALUES (2,'Blade Ward','Cantrip','Abjuration','1 action','Self','V, S','1 round','You extend your hand and trace a sigil of warding in the air. Until the end of your next turn, you have resistance against bludgeoning, piercing, and slashing damage dealt by weapon attacks.',NULL,'Bard, Sorcerer, Warlock, Wizard, Earth Genasi');

@@ -20,15 +20,15 @@ public class AbiliScModel {
 	private Integer abiliScId;
 	private String abiliScName;
 	private String abiliScKind;
-	private String abiliSc;
+	private String abiliScGenerationMethod;
 	
 	public AbiliScModel() {
 		
 	}
-	public AbiliScModel(String abiliScName, String abiliScKind, String abiliSc) {
+	public AbiliScModel(String abiliScName, String abiliScKind, String abiliScGenerationMethod) {
 		this.abiliScName = abiliScName;
 		this.abiliScKind = abiliScKind;
-		this.abiliSc = abiliSc;
+		this.abiliScGenerationMethod = abiliScGenerationMethod;
 	}
 	public Integer getAbiliScId() {
 		return abiliScId;
@@ -48,10 +48,10 @@ public class AbiliScModel {
 	public void setAbiliScKind(String abiliScKind) {
 		this.abiliScKind = abiliScKind;
 	}
-	public String getAbiliSc() {
-		return abiliSc;
+	public String getAbiliScGenerationMethod() {
+		return abiliScGenerationMethod;
 	}
-	public void setAbiliSc(String abiliSc) {
-		this.abiliSc = abiliSc;
+	public void setAbiliScGenerationMethod(String abiliScGenerationMethod) {
+		this.abiliScGenerationMethod = abiliScGenerationMethod;
 	}
 }

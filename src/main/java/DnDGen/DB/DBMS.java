@@ -137,6 +137,9 @@ public class DBMS implements ApplicationContextAware{
 		case "job":
 			onlycol = jobRepository.getallJobCol();
 			break;
+		case "abilisc":
+			onlycol = abiliScRepository.getallAbiliScCol();
+			break;
 		default:
 			onlycol = null;
 			break;
