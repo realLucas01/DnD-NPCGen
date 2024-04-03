@@ -203,11 +203,11 @@ public class RandomGenerator {
 	public   String randWeapon(ArrayList<String> weaponProf) {
 		Random rndNumber = new Random();    // für zufallszahlen
 		//int rndWeaponProf  = 0;
-		int lengthOfWeaponProf = weaponProf.size();
+		int lengthOfWeaponProf = weaponProf.size()-1;
 		String weapon;    //das Ergebnis was zurückgegeben wird
 
 		//rndWeaponProf = rndNumber.nextInt(lengthOfWeaponProf);
-		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf+1)-1); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
+		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
 
 		ArrayList<String> armorList = dbms.getRowPref("weapon", rndWeapon);
 		weapon = armorList.get(1);

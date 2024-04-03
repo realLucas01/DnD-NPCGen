@@ -50,26 +50,30 @@ public class RandomNPC {
         } else {
             race= inputRace;
         }
+         System.out.println("Race:" + race);
         //random Level
         if(inputLevel == null){
             level = randGen.randLevel();
         }else {
             level = inputLevel;
         }
+         System.out.println("Level:" + level);
         //random Job
         if(inputJob == null){
             job = randGen.randJob();
         }else {
             job = inputJob;
         }
+         System.out.println("Job:" + job);
         //random Class
         if((inputClass == null) && (level != 0)){
             genClass = randGen.randCharClass();
         } else if (level == 0) {
-            genClass = "Commoner";    // WUHU Edge Case -> Class == commoner
+            genClass = "Commoner:";    // WUHU Edge Case -> Class == commoner
         } else {
             genClass = inputClass;
         }
+         System.out.println("Class:" + genClass);
 
         //random AbilityScore
        /* switch ((inputAbilityScore)){
@@ -82,20 +86,28 @@ public class RandomNPC {
         }*/
         //muss dann oben richtig gemacht werden
         abilityScores.addAll(randGen.randAbilityScore());
+         System.out.println("AbilityScore:" + abilityScores);
 
         //distribute AbilityScore
             //Lenlen arbeitet daran
         abilityScores.addAll(distributeAbilityScore(abilityScores,genClass));
+        System.out.println("AbilityScoreSorted:" + abilityScores);
+
 
         //calc AbilityModifier
         abilityModifier=determinAbilityModifier(abilityScores) ;
+        System.out.println("AbilityModifier:" + abilityModifier);
+
 
         //calc HP
         healthPoints = randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
+        System.out.println("HP:" + healthPoints);
 
         armorProfList = randGen.figureOutProfList("armor", genClass, race);
         //randomArmor
         armorList = randGen.randArmor(armorProfList); // LUCA FIX
+        System.out.println("Armor:" + armorList);
+
 
         //Berechnung AC
         currentArmor= dbms.getRow("armor",armorList);
@@ -109,16 +121,22 @@ public class RandomNPC {
                 switch(s){
                     case "Str":
                         armorClass = armorClass + abilityModifier.get(0);
+                        break;
                     case "Dex":
                         armorClass = armorClass + abilityModifier.get(1);
+                        break;
                     case "Con":
                         armorClass = armorClass + abilityModifier.get(2);
+                        break;
                     case "Int":
                         armorClass = armorClass + abilityModifier.get(3);
+                        break;
                     case "Wis":
                         armorClass = armorClass + abilityModifier.get(4);
+                        break;
                     case "Cha":
                         armorClass = armorClass + abilityModifier.get(5);
+                        break;
                 }
             }
             if((armorClass> Integer.parseInt(currentArmor.get(4)))&&(!kindOfArmor.equals("Shield"))){//überprüfen ob AC im toleranten Bereich liegt
@@ -132,6 +150,8 @@ public class RandomNPC {
                 armorClass = armorClass +2;
             }
         }
+        System.out.println("AC:" + armorClass);
+
 
         weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
         //randomWeapon
@@ -142,6 +162,8 @@ public class RandomNPC {
         Set<String> removeDuplicateWeapons = new HashSet<>(weaponList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
         weaponList.clear();
         weaponList.addAll(removeDuplicateWeapons);
+        System.out.println("Weapon:" + weaponList);
+
 
         //random Skills
         //Race Skills
@@ -156,9 +178,12 @@ public class RandomNPC {
                 raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":"), raceSkillList.length());
 
                 skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
+                break;
             default:
                 skillList.addAll(bigStringToDividedString(raceSkillList));
+                break;
         }
+
 
         //Job Skills
         skillList.addAll(bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
@@ -194,15 +219,21 @@ public class RandomNPC {
         skillList.clear();
         skillList.addAll(removeDuplicate);
 
+        System.out.println("SkillList:" + skillList);
+
         //random Gender
         if (inputGender== null){
             gender = randGen.randGender();
         } else{
             gender = inputGender;
         }
+        System.out.println("Gender:" + gender);
+
 
         //random Age
         age = randGen.randAge(race);
+        System.out.println("Age:" + age);
+
 
         //RandomName
         name = randGen.randName(gender,race);
@@ -221,8 +252,8 @@ public class RandomNPC {
         languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
         languages = bigStringToDividedString(languagesRace); //aufteilung des Strings
 
-        count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
-        languages.removeLast(); //Nummer wird entfernt aus der ArrayList
+        count = Integer.parseInt(languages.get(languages.size()-1)) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
+        languages.remove(languages.size()-1); //Nummer wird entfernt aus der ArrayList
         for ( int i=0; i<count;i++){
             languages.add(randGen.randLanguages()); //for schleife
         }
@@ -280,7 +311,7 @@ public class RandomNPC {
     	} else {
     		
     		Collections.shuffle(rawAbilityScores);
-            System.out.println("parsed ability Scores: " + parsedAbilityScores);
+             System.out.println("parsed ability Scores: " + parsedAbilityScores);
 
             return rawAbilityScores;
     	}
@@ -307,7 +338,7 @@ public class RandomNPC {
             calcMod = (float) (i-10)/ 2 - 0.2f;
             abilityModifier.add(Math.round(calcMod));
         }
-        System.out.println(abilityModifier);
+         System.out.printlnln(abilityModifier);
         return abilityModifier;
     }
 
