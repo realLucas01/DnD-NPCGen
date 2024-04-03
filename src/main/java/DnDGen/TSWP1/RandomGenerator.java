@@ -241,11 +241,13 @@ public class RandomGenerator {
 
 		String firstName = "NO FIRSTNAME";
 		String secondName = "NO SECONDNAME";
-
+		
 		ArrayList<String> newName = new ArrayList<String>();
 		newName = dbms.getRowPref("name", race);
-
-		while (gender != newName.get(4)) {
+		
+		firstName = newName.get(1);
+		
+		while (!(gender.equals(newName.get(4)))) {
 
 			newName = dbms.getRowPref("name", race);
 			firstName = newName.get(1);
@@ -255,7 +257,7 @@ public class RandomGenerator {
 		newName = dbms.getRowPref("name", race);
 		secondName = newName.get(2);
 
-		name = firstName + secondName;
+		name = firstName + " " + secondName;
 
 		return name;
 	}
