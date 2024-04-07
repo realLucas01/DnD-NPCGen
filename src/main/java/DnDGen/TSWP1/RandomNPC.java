@@ -1,6 +1,7 @@
 package DnDGen.TSWP1;
 
 
+import java.sql.Array;
 import java.util.*;
 
 import java.util.regex.Matcher;
@@ -24,7 +25,16 @@ public class RandomNPC {
 	ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
 
-    public String createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender){
+    /*
+    * Diese Funktion dient dazu einen NPC Stat Block zufällig generieren zu lassen.
+    * Die Eingabe Werte sind:
+    * Race, Class, Job, Level, AbilityScore, Gender
+    *
+    * Zurück erhält man eine ArrayList, diese ist wie folgt aufgebaut:
+    * (race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
+     */
+
+    public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender){
         RandomGenerator randGen = new RandomGenerator();
         ArrayList<String> generatingNPC;
         ArrayList<String> skillList = new ArrayList<>();
@@ -38,6 +48,7 @@ public class RandomNPC {
         ArrayList<String> currentArmor;
         ArrayList<Integer> abilityScores = new ArrayList<>();
         ArrayList<Integer> abilityModifier;
+        ArrayList generatedNPCFinished = new ArrayList<>();
         Random rndNumb = new Random();
         String race, job, genClass, gender, name, description, alignment, deity, languagesRace, languagesJob, kindOfArmor;
         int level, numberSkill, age, count,weaponCount,healthPoints, armorClass = 0;
@@ -50,21 +61,21 @@ public class RandomNPC {
         } else {
             race= inputRace;
         }
-         System.out.println("Race:" + race);
+        generatedNPCFinished.add(0, race);
         //random Level
         if(inputLevel == null){
             level = randGen.randLevel();
         }else {
             level = inputLevel;
         }
-         System.out.println("Level:" + level);
+        generatedNPCFinished.add(generatedNPCFinished.size(), level);
         //random Job
         if(inputJob == null){
             job = randGen.randJob();
         }else {
             job = inputJob;
         }
-         System.out.println("Job:" + job);
+        generatedNPCFinished.add(generatedNPCFinished.size(), job);
         //random Class
         if((inputClass == null) && (level != 0)){
             genClass = randGen.randCharClass();
@@ -73,7 +84,8 @@ public class RandomNPC {
         } else {
             genClass = inputClass;
         }
-         System.out.println("Class:" + genClass);
+        generatedNPCFinished.add(generatedNPCFinished.size(), genClass);
+
 
 
         //random AbilityScore
@@ -133,29 +145,30 @@ public class RandomNPC {
 
 
         //muss dann oben richtig gemacht werden
-        abilityScores.addAll(randGen.randAbilityScore());
-         System.out.println("AbilityScore:" + abilityScores);
+        abilityScores = randGen.randAbilityScore();
 
         //distribute AbilityScore
             //Lenlen arbeitet daran
-        abilityScores.addAll(distributeAbilityScore(abilityScores,genClass));
-        System.out.println("AbilityScoreSorted:" + abilityScores);
+        abilityScores = distributeAbilityScore(abilityScores,genClass);
+        generatedNPCFinished.add(generatedNPCFinished.size(), abilityScores);
+
 
 
         //calc AbilityModifier
         abilityModifier=determinAbilityModifier(abilityScores) ;
-        System.out.println("AbilityModifier:" + abilityModifier);
+        generatedNPCFinished.add(generatedNPCFinished.size(), abilityModifier);
+
 
 
         //calc HP
         healthPoints = randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
-        System.out.println("HP:" + healthPoints);
+        generatedNPCFinished.add(generatedNPCFinished.size(), healthPoints);
+
 
         armorProfList = randGen.figureOutProfList("armor", genClass, race);
         //randomArmor
         armorList = randGen.randArmor(armorProfList); // LUCA FIX
-        System.out.println("Armor:" + armorList);
-
+        generatedNPCFinished.add(generatedNPCFinished.size(), armorList);
 
         //Berechnung AC
         currentArmor= dbms.getRow("armor",armorList);
@@ -187,9 +200,12 @@ public class RandomNPC {
                         break;
                 }
             }
-            if((armorClass> Integer.parseInt(currentArmor.get(4)))&&(!kindOfArmor.equals("Shield"))){//überprüfen ob AC im toleranten Bereich liegt
-                armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
-            }
+
+        }else {
+            armorClass = Integer.parseInt(currentArmor.get(3)) + abilityModifier.get(1);
+        }
+        if((armorClass> Integer.parseInt(currentArmor.get(4)))&&(!kindOfArmor.equals("Shield"))){//überprüfen ob AC im toleranten Bereich liegt
+            armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
         }
         if(armorProfList.contains("shield")){
             int shieldPercent= rndNumb.nextInt(2);
@@ -198,8 +214,7 @@ public class RandomNPC {
                 armorClass = armorClass +2;
             }
         }
-        System.out.println("AC:" + armorClass);
-
+        generatedNPCFinished.add(generatedNPCFinished.size(), armorClass);
 
         weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
         //randomWeapon
@@ -210,7 +225,8 @@ public class RandomNPC {
         Set<String> removeDuplicateWeapons = new HashSet<>(weaponList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
         weaponList.clear();
         weaponList.addAll(removeDuplicateWeapons);
-        System.out.println("Weapon:" + weaponList);
+        generatedNPCFinished.add(generatedNPCFinished.size(), weaponList);
+
 
 
         //random Skills
@@ -267,7 +283,8 @@ public class RandomNPC {
         skillList.clear();
         skillList.addAll(removeDuplicate);
 
-        System.out.println("SkillList:" + skillList);
+        generatedNPCFinished.add(generatedNPCFinished.size(), skillList);
+
 
         //random Gender
         if (inputGender== null){
@@ -275,32 +292,48 @@ public class RandomNPC {
         } else{
             gender = inputGender;
         }
-        System.out.println("Gender:" + gender);
+        generatedNPCFinished.add(generatedNPCFinished.size(), gender);
+
 
 
         //random Age
         age = randGen.randAge(race);
-        System.out.println("Age:" + age);
+        generatedNPCFinished.add(generatedNPCFinished.size(), age);
 
 
+/*
         //RandomName
         name = randGen.randName(gender,race);
+         n("Name:" + name);
+        generatedNPCFinished.add(generatedNPCFinished.size(), race);
+
+ */
+
 
         //random Description
         description = randGen.randDescription(race);
+        generatedNPCFinished.add(generatedNPCFinished.size(), description);
+
+
 
         //random Alignment
         alignment = randGen.randAlignment();
+        generatedNPCFinished.add(generatedNPCFinished.size(), alignment);
 
+
+/*
         //random Deity
         deity = randGen.randDeity(alignment);
+         n("Deity:" + deity);
+        generatedNPCFinished.add(generatedNPCFinished.size(), deity);
+*/
 
         //random Languages
         languagesRace = dbms.getRow("race",race).get(10);   // Sprachen der Rasse
         languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
         languages = bigStringToDividedString(languagesRace); //aufteilung des Strings
 
-        count = Integer.parseInt(languages.get(languages.size()-1)) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
+        count = Integer.parseInt(languages.get(languages.size()-1)) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen    //ein fehler ist aufgetreten bei Draconic
         languages.remove(languages.size()-1); //Nummer wird entfernt aus der ArrayList
         for ( int i=0; i<count;i++){
             languages.add(randGen.randLanguages()); //for schleife
@@ -309,8 +342,9 @@ public class RandomNPC {
         Set<String> removeDuplicatedLanguages = new HashSet<>(languages); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
         languages.clear();
         languages.addAll(removeDuplicatedLanguages);
+        generatedNPCFinished.add(generatedNPCFinished.size(), languages);
 
-        return "Hi";
+        return generatedNPCFinished;
     }
 
     public ArrayList<Integer> distributeAbilityScore (ArrayList<Integer> rolledAbilityScore, String charClass) {
@@ -359,7 +393,6 @@ public class RandomNPC {
     	} else {
     		
     		Collections.shuffle(rawAbilityScores);
-             System.out.println("parsed ability Scores: " + parsedAbilityScores);
 
             return rawAbilityScores;
     	}
@@ -386,7 +419,6 @@ public class RandomNPC {
             calcMod = (float) (i-10)/ 2 - 0.2f;
             abilityModifier.add(Math.round(calcMod));
         }
-         System.out.println(abilityModifier);
         return abilityModifier;
     }
 
