@@ -1,6 +1,7 @@
 package DnDGen.UI;
 
 
+import com.sun.javafx.scene.control.InputField;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 import DnDGen.TSWP1.RandomNPC;
@@ -24,6 +25,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import javax.lang.model.element.Name;
+import java.util.ArrayList;
 
 public class UI extends Application {
     Stage window;
@@ -83,52 +85,63 @@ public class UI extends Application {
 
 
         //Seite generatePage
+        //Name
+        TextField nameField = new TextField();
+        nameField.setAccessibleHelp("Name");
+        GridPane.setConstraints(nameField,1,1,2,1);
+
         //Rasse
         Label labelRace = new Label("Rasse:");
-        GridPane.setConstraints(labelRace, 1, 1);
+        GridPane.setConstraints(labelRace, 1, 2);
 
         final ComboBox cbRace = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbRace, 2, 1);
+        GridPane.setConstraints(cbRace, 2, 2);
         cbRace.getItems().addAll(dbms.onlyColumn("race"));
         cbRace.getSelectionModel().selectFirst();
 
 
         //Klasse
         Label labelClass = new Label("Klasse:");
-        GridPane.setConstraints(labelClass, 1, 2);
+        GridPane.setConstraints(labelClass, 1, 3);
 
         final ComboBox cbClass = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbClass, 2, 2);
+        GridPane.setConstraints(cbClass, 2, 3);
         cbClass.getItems().addAll(dbms.onlyColumn("class"));
         cbClass.getSelectionModel().selectFirst();
 
 
         //Job
         Label labelJob = new Label("Beruf:");
-        GridPane.setConstraints(labelJob, 1, 3);
+        GridPane.setConstraints(labelJob, 1, 4);
 
         final ComboBox cbJob = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbJob, 2, 3);
+        GridPane.setConstraints(cbJob, 2, 4);
         cbJob.getItems().addAll(dbms.onlyColumn("job"));
         cbJob.getSelectionModel().selectFirst();
 
 
         //Level
         Label labelLevel = new Label("Level:");
-        GridPane.setConstraints(labelLevel, 1, 4);
+        GridPane.setConstraints(labelLevel, 1, 5);
 
         final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbLevel, 2, 4);
+        GridPane.setConstraints(cbLevel, 2, 5);
         for(int i = 1; i < 8; i++) {cbLevel.getItems().add(i);}
         cbLevel.getSelectionModel().selectFirst();
+
+        //AbilityScore
+        Label labelAbSc = new Label("Ability Score:");
+        GridPane.setConstraints(labelAbSc, 1, 6);
+
+        final ComboBox cbAbSc = new ComboBox(FXCollections.observableArrayList("zufall"));
+        GridPane.setConstraints(cbAbSc, 2, 6);
+        cbAbSc.getItems().addAll(dbms.onlyColumn("abilisc"));
+        cbAbSc.getSelectionModel().selectFirst();
+
 
 
 
         //Als Textfeld
-
-
-
-
 
         //Als Tabelle/einzelne Bausteine
         VBox npcStack = new VBox();
@@ -141,24 +154,35 @@ public class UI extends Application {
         nameClassGrid.setHgap(5);
 
         Label nameL      = new Label("Name: ");
+        Label levelL     = new Label("Level: ");
         Label classL     = new Label("Klasse: ");
+        Label jobL       = new Label("Job: ");
         Label raceL      = new Label("Rasse: ");
         Label alignmentL = new Label("Alignment: ");
+        Label ageL       = new Label("Alter: ");
+        Label sexL       = new Label("Geschlecht: ");
+        Label deityL     = new Label("Gottheit: ");
 
-        GridPane.setConstraints(nameL,0,0,2,1);
+        GridPane.setConstraints(nameL,0,0);
+        GridPane.setConstraints(levelL,1,0);
         GridPane.setConstraints(classL,0,1,2,1);
         GridPane.setConstraints(raceL,0,2);
-        GridPane.setConstraints(alignmentL,1,2);
+        GridPane.setConstraints(jobL,1,2);
+        GridPane.setConstraints(deityL,0,3);
+        GridPane.setConstraints(alignmentL,1,3);
+        GridPane.setConstraints(ageL,0,4);
+        GridPane.setConstraints(sexL,1,4);
 
-        nameClassGrid.getChildren().addAll(nameL, classL, raceL, alignmentL);
+        nameClassGrid.getChildren().addAll(nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL);
 
         //Armor class, Hit points, Speed
         VBox armorHitSpeedPane = new VBox();
         Label armorClassL = new Label("Rüstungsklasse: ");
-        Label hitPointsL = new Label("Trefferpunkte: ");
-        Label speedL = new Label("Geschwindigkeit: ");
+        Label hitPointsL  = new Label("Trefferpunkte: ");
+        Label speedL      = new Label("Geschwindigkeit: ");
+        Label languagesL   = new Label("Sprachen: ");
 
-        armorHitSpeedPane.getChildren().addAll(armorClassL,hitPointsL,speedL);
+        armorHitSpeedPane.getChildren().addAll(armorClassL,hitPointsL,speedL, languagesL);
         armorHitSpeedPane.setPadding(new Insets(10, 10, 10, 10));
 
         //Stats
@@ -221,7 +245,11 @@ public class UI extends Application {
 
         npcStack.getChildren().addAll(nameClassGrid,line1,armorHitSpeedPane,line2,statsBox,line3,skillSensesBox,line4,spellActionBox);
         npcStack.setVisible(false);
+
         //layoutGenerateGrid.getChildren().add(npcStack);
+
+
+
 
 
         //Button
@@ -229,13 +257,91 @@ public class UI extends Application {
         GridPane.setConstraints(buttonGenerate, 1, 6);
         buttonGenerate.setOnAction(e -> {
            //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
+            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,"male");
+            //  0      1     2     3        4                                               5                                       6    7     8      9       10       11      12   13    14            15         16       17
+            //(race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
+            //-------------------------                                                                                           ---         --            --------  ------  ---  ----               ------------------------------
+
+            /*
+
+            System.out.println(npc);
+            System.out.println("Rasse: " + npc.get(0));
+            System.out.println("Level: " + String.valueOf(npc.get(1)));
+            System.out.println("Job: " + npc.get(2));
+            System.out.println("Klasse: " + npc.get(3));
+           // System.out.println("AbilityScore: " + npc.get(4));
+           // System.out.println("AbilityModifier: " + npc.get(5));
+            System.out.println("HP: " + String.valueOf(npc.get(6)));
+            System.out.println("Armor: " + npc.get(7));
+            System.out.println("AC: " + String.valueOf(npc.get(8)));
+           // System.out.println("Weapons(): " + npc.get(9));
+           // System.out.println("Skills: " + npc.get(10));
+            System.out.println("Sex: " + npc.get(11));
+            System.out.println("Alter: " + String.valueOf(npc.get(12)));
+            //System.out.println("Name: " + npc.get(14));
+            System.out.println("Beschreibung: " + npc.get(13));
+            System.out.println("Alignment: " + npc.get(14));
+            //System.out.println("Gottheit: " + npc.get(16));
+            //System.out.println("Sprache: " + npc.get(17));
+
+
+            */
+
+
+
+//            nameL.setText("Name: " + npc.get(13));
+            classL.setText("Klasse: " + npc.get(3));
+            raceL.setText("Rasse: " + npc.get(0));
+            levelL.setText("Level: " + String.valueOf(npc.get(1)));
+            jobL.setText("Beruf: " + npc.get(2));
+            alignmentL.setText("Alignment: " + npc.get(14));
+            ageL.setText("Alter: " + String.valueOf(npc.get(12)));
+            sexL.setText("Geschlecht: " + npc.get(11));
+           // deityL.setText("Gottheit: " + npc.get(16));
+
+            armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
+            hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
+            speedL.setText("Geschwindigkeit: ");
+           // languagesL.setText("Sprachen: " + npc.get(17));
+
+
+          //  ArrayList<Integer> abilityList = npc.get(4);
+
+            /*
+            strL.setText("Str\n" + npc.get(4));
+            dexL.setText("Dex\n" + npc.get(4));
+            conL.setText("Con\n" + npc.get(4));
+            intL.setText("Int\n" + npc.get(4));
+            wisL.setText("Wis\n" + npc.get(4));
+            chaL.setText("Cha\n" + npc.get(4));
+
+             */
+
+           // Text skills = new Text(npc.get(10));
+            //skillTF.getChildren().add(skills);
+
+            /*
+            Text senses = new Text(npc.get(10));
+            senseTF.getChildren().add(senses);
+
+            Text spells = new Text(npc.get(10));
+            spellTF.getChildren().add(spells);
+
+            Text action = new Text(npc.get(10));
+            actionTF.getChildren().add(action);
+            */
+
+
+/*
+
            System.out.println(zufall(cbRace));
            System.out.println(zufall(cbClass));
            System.out.println(zufall(cbJob));
-           System.out.println(zufall(cbLevel));
-
-
-          nameL.setText("Name: " + rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob),Integer.parseInt(zufall(cbLevel)),"null","female"));
+           System.out.println(zufallLevel(cbLevel));
+           
+ */
+           
+          // nameL.setText("Name: " + rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,"male"));
 
         npcStack.setVisible(true);
 
@@ -258,8 +364,8 @@ public class UI extends Application {
 
         //Layout der Seite
 
-        layoutGenerateGrid.getChildren().addAll(labelRace, labelClass, labelJob, labelLevel, cbRace, cbClass,
-                                                cbJob, cbLevel, buttonGenerate);
+        layoutGenerateGrid.getChildren().addAll(nameField, labelRace, labelClass, labelJob, labelLevel, cbRace, cbClass,
+                                                cbJob, cbLevel, cbAbSc,buttonGenerate);
         VBox layoutGenerateVBox = new VBox(20);
         HBox gridNpc = new HBox();
         gridNpc.getChildren().addAll(layoutGenerateGrid, npcStack);
@@ -397,4 +503,13 @@ public class UI extends Application {
             return cb.getValue().toString();
         }
     }
+
+    public Integer zufallLevel(ComboBox cb) {
+        if(cb.getValue() == "zufall") {
+            return null;
+        } else {
+            return Integer.parseInt(cb.getValue().toString());
+        }
+    }
+
 }
