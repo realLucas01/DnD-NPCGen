@@ -167,8 +167,9 @@ public class RandomNPC {
 
         armorProfList = randGen.figureOutProfList("armor", genClass, race);
         //randomArmor
-        armorList = randGen.randArmor(armorProfList); // LUCA FIX
-        generatedNPCFinished.add(generatedNPCFinished.size(), armorList);
+        Boolean isThereASchield =armorProfList.contains("Shield");
+
+        armorList = randGen.randArmor(armorProfList); // LUCA FIX   // Sollte gefixt sein
 
         //Berechnung AC
         currentArmor= dbms.getRow("armor",armorList);
@@ -207,13 +208,14 @@ public class RandomNPC {
         if((armorClass> Integer.parseInt(currentArmor.get(4)))&&(!kindOfArmor.equals("Shield"))){//überprüfen ob AC im toleranten Bereich liegt
             armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
         }
-        if(armorProfList.contains("shield")){
+        if(isThereASchield){
             int shieldPercent= rndNumb.nextInt(2);
             if(shieldPercent == 1){
-                armorList = armorList + " + " + "shield";
+                armorList = armorList + " + " + "Shield";
                 armorClass = armorClass +2;
             }
         }
+        generatedNPCFinished.add(generatedNPCFinished.size(), armorList);
         generatedNPCFinished.add(generatedNPCFinished.size(), armorClass);
 
         weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
@@ -344,6 +346,7 @@ public class RandomNPC {
         languages.addAll(removeDuplicatedLanguages);
         generatedNPCFinished.add(generatedNPCFinished.size(), languages);
 
+        System.out.println(generatedNPCFinished);
         return generatedNPCFinished;
     }
 

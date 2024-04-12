@@ -79,11 +79,11 @@ INSERT INTO weapon_model(Weapon_ID,Weapon_Name,weapon_Property,weapon_Damage_Typ
 INSERT INTO weapon_model(Weapon_ID,Weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,Weapon_Kind) VALUES (4,'Handaxe','Light, thrown(20/60)','slashing','1d6','Simple Weapon');
 INSERT INTO weapon_model(Weapon_ID,Weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,Weapon_Kind) VALUES (5,'Javelin','Thrown(30/120)','piercing','1d6','Simple Weapon');
 
-INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (1,'Padded','Light Armor',11,NULL,'Dex',NULL,'Disadvantage');
-INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (2,'Leather','Light Armor',11,NULL,'Dex',NULL,NULL);
-INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (3,'Studded Leather','Light Armor',12,NULL,'Dex',NULL,NULL);
-INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (4,'Hide','Medium Armor',12,14,'Dex',NULL,NULL);
-INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (5,'Chain Shirt','Medium Armor',13,15,'Dex',NULL,NULL);
+INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (1,'Padded','Light Armor',11,100,'Dex',NULL,'Disadvantage');
+INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (2,'Leather','Light Armor',11,100,'Dex',NULL,NULL);
+INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (3,'Studded Leather','Light Armor',12,100,'Dex',NULL,NULL);
+INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (4,'Hide','Medium Armor',12,14,'Dex',100,NULL);
+INSERT INTO armor_model(Armor_Id,Armor_Name,armor_kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (5,'Chain Shirt','Medium Armor',13,15,'Dex',100,NULL);
 
 INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (1,'Random3d6Methode','Dice','3d6');
 INSERT INTO Abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (2,'Random4d6Methode','Dice','4d6');
