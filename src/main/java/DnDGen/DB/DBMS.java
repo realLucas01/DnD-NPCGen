@@ -230,6 +230,12 @@ public class DBMS implements ApplicationContextAware{
 			    CD.add(4, Entryweapon.getWeaponDamageDice());
 			    CD.add(5, Entryweapon.getWeaponKind());
 				break;
+			case "level":
+			    LevelModel Entrylevel = levelRepository.findByLevelNumber(Integer.parseInt(searchstring));
+			    CD.add(0, Entrylevel.getLevelId().toString());
+			    CD.add(1, Entrylevel.getLevelNumber().toString());
+			    CD.add(2, Entrylevel.getLevelProfBonus().toString());
+				break;
 			default:
 				CD = null;
 			}

@@ -19,6 +19,7 @@ public interface LevelRepository extends CrudRepository<LevelModel, Integer>{
 	
 	long count();
 	ArrayList<LevelModel> findByLevelId(Integer id);
-	ArrayList<LevelModel> findByLevelNumber(Integer number);
+	LevelModel findByLevelNumber(Integer number);
 	ArrayList<LevelModel> findByLevelProfBonus(Integer profBonus);
+	
 }

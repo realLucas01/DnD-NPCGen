@@ -20,4 +20,11 @@ public interface DescriptionRepository extends CrudRepository<DescriptionModel, 
 	
 	long count();
 	ArrayList<DescriptionModel> findByDescriptionId(Integer id);
+	ArrayList<DescriptionModel> findByDescriptionEyes(String eyes);
+	ArrayList<DescriptionModel> findBydescriptionHairColor(String hairColor);
+	ArrayList<DescriptionModel> findBydescriptionHairStyle(String hairStyle);
+	ArrayList<DescriptionModel> findBydescriptionSkin(String skin);
+	ArrayList<DescriptionModel> findBydescriptionTrait(String trait);
+	ArrayList<DescriptionModel> findBydescriptionMannerism(String mannerism);
+	ArrayList<DescriptionModel> findBydescriptionBond(String bond);
 }
