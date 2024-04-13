@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.springframework.context.ApplicationContext;
 
 import DnDGen.DB.DBMS;
+import org.thymeleaf.util.NumberUtils;
 
 import static DnDGen.TSWP1.RandomGenerator.bigStringToDividedString;
 
@@ -51,7 +52,7 @@ public class RandomNPC {
         ArrayList generatedNPCFinished = new ArrayList<>();
         Random rndNumb = new Random();
         String race, job, genClass, gender, name, description, alignment, deity, languagesRace, languagesJob, kindOfArmor;
-        int level, numberSkill, age, count,weaponCount,healthPoints, armorClass = 0;
+        int level, numberSkill = 0, age, count,weaponCount,healthPoints, armorClass = 0;
         Pattern number = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE); //zum Überprüfen, ob im String eine Zahl steckt
         Matcher matcherNumber;
 
@@ -234,22 +235,15 @@ public class RandomNPC {
         //random Skills
         //Race Skills
         raceSkillList= dbms.getRow("race", race).get(6);
-        //Matcher matcherNumber = number.matcher(raceSkillList);
-        //containsNumber = matcherNumber.find();
-        switch (raceSkillList){
-            case null:
-                break;
-            case ":":  // wenn Nummer innerhalb sich befinden
-                numberSkill = Integer.parseInt(raceSkillList.substring(0,0)); //
-                raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":"), raceSkillList.length());
+       if((raceSkillList != null)&&(!raceSkillList.contains("Any"))){
+           numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
+           raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":")+1, raceSkillList.length()-1);
 
-                skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
-                break;
-            default:
-                skillList.addAll(bigStringToDividedString(raceSkillList));
-                break;
-        }
-
+       } else if ((raceSkillList !=null) && raceSkillList.contains("Any")) {
+           numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
+           raceSkillList= "Acrobatics, Animal Handling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, Sleight of Hand, Stealth, Survival";
+       }
+       skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
 
         //Job Skills
         skillList.addAll(bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
@@ -257,36 +251,35 @@ public class RandomNPC {
         //ClassSkills
         possibleSkillList = bigStringToDividedString(dbms.getRow("class", genClass).get(6)); // Skills durch class
         numberSkill = Integer.parseInt(dbms.getRow("class", genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
-        if(!possibleSkillList.contains(0)){     // Fall Commoner?
-            // nichts machen und weiter gehen
-        } else if (possibleSkillList.contains("Any")) { // fall barde
-            possibleSkillList.add("Acrobatics");
-            possibleSkillList.add("Animal Handling");
-            possibleSkillList.add("Arcana");
-            possibleSkillList.add("Athletics");
-            possibleSkillList.add("Deception");
-            possibleSkillList.add("History");
-            possibleSkillList.add("Insight");
-            possibleSkillList.add("Intimidation");
-            possibleSkillList.add("Investigation");
-            possibleSkillList.add("Medicine");
-            possibleSkillList.add("Nature");
-            possibleSkillList.add("Perception");
-            possibleSkillList.add("Performance");
-            possibleSkillList.add("Persuasion");
-            possibleSkillList.add("Religion");
-            possibleSkillList.add("Sleight of Hand");
-            possibleSkillList.add("Stealth");
-            possibleSkillList.add("Survival" );    //alle skills hinzufügen
+        if(!genClass.equals("Commoner")) {     // Fall Commoner?
+            if (possibleSkillList.contains("Any")) { // fall barde
+                possibleSkillList.add("Acrobatics");
+                possibleSkillList.add("Animal Handling");
+                possibleSkillList.add("Arcana");
+                possibleSkillList.add("Athletics");
+                possibleSkillList.add("Deception");
+                possibleSkillList.add("History");
+                possibleSkillList.add("Insight");
+                possibleSkillList.add("Intimidation");
+                possibleSkillList.add("Investigation");
+                possibleSkillList.add("Medicine");
+                possibleSkillList.add("Nature");
+                possibleSkillList.add("Perception");
+                possibleSkillList.add("Performance");
+                possibleSkillList.add("Persuasion");
+                possibleSkillList.add("Religion");
+                possibleSkillList.add("Sleight of Hand");
+                possibleSkillList.add("Stealth");
+                possibleSkillList.add("Survival");    //alle skills hinzufügen
+            }
+            skillList = (ArrayList<String>) randGen.randSkillProf(possibleSkillList,numberSkill, skillList);
+            Set<String> removeDuplicate = new HashSet<>(skillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
+            skillList.clear();
+            skillList.addAll(removeDuplicate);
+            generatedNPCFinished.add(generatedNPCFinished.size(), addAbilityScoreToSkillList(abilityModifier, skillList));
+        }else {
+            generatedNPCFinished.add(generatedNPCFinished.size(), "None");
         }
-
-        skillList = (ArrayList<String>) randGen.randSkillProf(possibleSkillList,numberSkill, skillList);
-        Set<String> removeDuplicate = new HashSet<>(skillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-        skillList.clear();
-        skillList.addAll(removeDuplicate);
-
-        generatedNPCFinished.add(generatedNPCFinished.size(), skillList);
-
 
         //random Gender
         if (inputGender== null){
@@ -424,7 +417,36 @@ public class RandomNPC {
         }
         return abilityModifier;
     }
-
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+    public ArrayList<String> addAbilityScoreToSkillList(ArrayList<Integer> abilityModifier, ArrayList<String> skillList ){
+        ArrayList<String> skillListWithNumbers = null;
+        String dbAbilityScore = null;
+        for (String s : skillList){
+            dbAbilityScore = dbms.getRow("skills", s).getFirst();
+            switch(dbAbilityScore){
+                case "Str":
+                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.getFirst()));
+                case "Dex":
+                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(1)));
+                case"Con":
+                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(2)));
+                case "Int":
+                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(3)));
+                case "Wis":
+                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(4)));
+                case"Cha":
+                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(5)));
+            }
+        }
+        return skillListWithNumbers;
+    }
 
 
 

@@ -31,9 +31,7 @@ public class RandomGenerator {
 		String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
 
 		for (String s : partsOfTheBigString) { //jeder Teilstring wird der Liste hinzugefügt
-			if (dividedString.contains(s)) {
-
-			} else {
+			if (!dividedString.contains(s)) {
 				dividedString.add(s);
 			}
 		}
