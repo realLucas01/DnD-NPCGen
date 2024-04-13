@@ -1,7 +1,6 @@
 package DnDGen.TSWP1;
 
 
-import java.sql.Array;
 import java.util.*;
 
 import java.util.regex.Matcher;
@@ -10,7 +9,6 @@ import java.util.regex.Pattern;
 import org.springframework.context.ApplicationContext;
 
 import DnDGen.DB.DBMS;
-import org.thymeleaf.util.NumberUtils;
 
 import static DnDGen.TSWP1.RandomGenerator.bigStringToDividedString;
 
@@ -37,42 +35,39 @@ public class RandomNPC {
 
     public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender){
         RandomGenerator randGen = new RandomGenerator();
-        ArrayList<String> generatingNPC;
         ArrayList<String> skillList = new ArrayList<>();
         ArrayList<String> weaponList = new ArrayList<>();
         ArrayList<String> possibleSkillList;
         ArrayList<String> languages;
         String armorList, raceSkillList;
         ArrayList<String> weaponProfList;
-        ArrayList<String> armorProfList;
+        ArrayList<String> armorProfList = new ArrayList<>();
         ArrayList<String> armorBoni;
         ArrayList<String> savingThrowList = null;
         ArrayList<String> savingThrows = null;
-        ArrayList<String> movementSpeed =null;
+        ArrayList<String> movementSpeed = null;
         ArrayList<String> currentArmor;
-        ArrayList<Integer> abilityScores = new ArrayList<>();
+        ArrayList<Integer> abilityScores;
         ArrayList<Integer> abilityModifier;
-        ArrayList generatedNPCFinished = new ArrayList<>();
+        ArrayList<String> generatedNPCFinished = new ArrayList<>();
         Random rndNumb = new Random();
         String race, job, genClass, gender, name, description, alignment, deity, languagesRace, languagesJob, kindOfArmor;
-        int level, numberSkill = 0, age, profBonus =0, count,weaponCount,healthPoints, armorClass = 0;
-        Pattern number = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE); //zum Überprüfen, ob im String eine Zahl steckt
-        Matcher matcherNumber;
+        int level, numberSkill = 0, age, profBonus , count,weaponCount,healthPoints, armorClass;
 
         //random Race
         if (inputRace == null){
            race =  randGen.randRace();
         } else {
-            race= inputRace;
+            race = inputRace;
         }
-        generatedNPCFinished.add(0, race);
+        generatedNPCFinished.addFirst(race);
         //random Level
         if(inputLevel == null){
             level = randGen.randLevel();
         }else {
             level = inputLevel;
         }
-        generatedNPCFinished.add(generatedNPCFinished.size(), level);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(level));
         //random Job
         if(inputJob == null){
             job = randGen.randJob();
@@ -84,7 +79,7 @@ public class RandomNPC {
         if((inputClass == null) && (level != 0)){
             genClass = randGen.randCharClass();
         } else if (level == 0) {
-            genClass = "Commoner:";    // WUHU Edge Case -> Class == commoner
+            genClass = "Commoner";    // WUHU Edge Case -> Class == commoner
         } else {
             genClass = inputClass;
         }
@@ -153,35 +148,40 @@ public class RandomNPC {
 
         //distribute AbilityScore
             //Lenlen arbeitet daran
-        abilityScores = distributeAbilityScore(abilityScores,genClass);
-        generatedNPCFinished.add(generatedNPCFinished.size(), abilityScores);
+        System.out.println(genClass);
+        System.out.println(abilityScores);
+
+       // abilityScores = distributeAbilityScore(abilityScores,genClass);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
 
 
 
         //calc AbilityModifier
         abilityModifier=determinAbilityModifier(abilityScores) ;
-        generatedNPCFinished.add(generatedNPCFinished.size(), abilityModifier);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityModifier));
 
 
 
         //calc HP
         healthPoints = randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
-        generatedNPCFinished.add(generatedNPCFinished.size(), healthPoints);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(healthPoints));
 
 
         armorProfList = randGen.figureOutProfList("armor", genClass, race);
         //randomArmor
-        Boolean isThereASchield =armorProfList.contains("Shield");
+
+
+        boolean isThereASchield =armorProfList.contains("Shield");
 
         armorList = randGen.randArmor(armorProfList); // LUCA FIX   // Sollte gefixt sein
 
         //Berechnung AC
         currentArmor= dbms.getRow("armor",armorList);
         armorClass = Integer.parseInt(currentArmor.get(3));
+        armorBoni = bigStringToDividedString(currentArmor.get(5));
 
         kindOfArmor = currentArmor.get(2);
         if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
-            armorBoni = bigStringToDividedString(currentArmor.get(5));
             for(String s: armorBoni){
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 armorClass = switch (s) {
@@ -194,7 +194,7 @@ public class RandomNPC {
                     default -> armorClass;
                 };
             }
-        }else {
+        }else if((armorBoni.size()==1)&&(armorBoni.contains("Dex"))) {
             armorClass = Integer.parseInt(currentArmor.get(3)) + abilityModifier.get(1);
         }
         if((armorClass> Integer.parseInt(currentArmor.get(4)))){//überprüfen ob AC im toleranten Bereich liegt
@@ -208,7 +208,7 @@ public class RandomNPC {
             }
         }
         generatedNPCFinished.add(generatedNPCFinished.size(), armorList);
-        generatedNPCFinished.add(generatedNPCFinished.size(), armorClass);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(armorClass));
 
         weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
         //randomWeapon
@@ -219,7 +219,7 @@ public class RandomNPC {
         Set<String> removeDuplicateWeapons = new HashSet<>(weaponList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
         weaponList.clear();
         weaponList.addAll(removeDuplicateWeapons);
-        generatedNPCFinished.add(generatedNPCFinished.size(), weaponList);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(weaponList));
 
         //creature Speed
         movementSpeed.addAll(bigStringToDividedString(dbms.getRow("race",race).get(9)));
@@ -234,7 +234,7 @@ public class RandomNPC {
                     movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + "ft" + "burrowing Speed");
             }
         }
-        generatedNPCFinished.add(generatedNPCFinished.size(), movementSpeedList);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(movementSpeedList));
 
         //Prof Bonus
         profBonus = Integer.parseInt(dbms.getRow("level",String.valueOf(level)).get(2));
@@ -258,7 +258,7 @@ public class RandomNPC {
                     savingThrows.add(String.valueOf(abilityModifier.get(5)+profBonus));
                 default:
                     savingThrows.add("none");
-            };
+            }
         }
 
 
@@ -306,7 +306,7 @@ public class RandomNPC {
             Set<String> removeDuplicate = new HashSet<>(skillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
             skillList.clear();
             skillList.addAll(removeDuplicate);
-            generatedNPCFinished.add(generatedNPCFinished.size(), addAbilityScoreToSkillList(abilityModifier, skillList));
+            generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(addAbilityScoreToSkillList(abilityModifier, skillList)));
         }else {
             generatedNPCFinished.add(generatedNPCFinished.size(), "None");
         }
@@ -323,7 +323,7 @@ public class RandomNPC {
 
         //random Age
         age = randGen.randAge(race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), age);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(age));
 
 
 /*
@@ -358,8 +358,8 @@ public class RandomNPC {
         languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
         languages = bigStringToDividedString(languagesRace); //aufteilung des Strings
 
-        count = Integer.parseInt(languages.get(languages.size()-1)) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen    //ein fehler ist aufgetreten bei Draconic
-        languages.remove(languages.size()-1); //Nummer wird entfernt aus der ArrayList
+        count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
+        languages.removeLast(); //Nummer wird entfernt aus der ArrayList
         for ( int i=0; i<count;i++){
             languages.add(randGen.randLanguages()); //for schleife
         }
@@ -367,7 +367,7 @@ public class RandomNPC {
         Set<String> removeDuplicatedLanguages = new HashSet<>(languages); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
         languages.clear();
         languages.addAll(removeDuplicatedLanguages);
-        generatedNPCFinished.add(generatedNPCFinished.size(), languages);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
 
         System.out.println(generatedNPCFinished);
         return generatedNPCFinished;
@@ -375,11 +375,11 @@ public class RandomNPC {
 
     public ArrayList<Integer> distributeAbilityScore (ArrayList<Integer> rolledAbilityScore, String charClass) {
     	
-    	ArrayList<Integer> rawAbilityScores = new ArrayList<Integer>();
-    	ArrayList<String> arrayForClass = new ArrayList<String>();
-    	ArrayList<String> dividedAbilityScores = new ArrayList<String>();
-    	ArrayList<String> finishedAbilityScores = new ArrayList<String>();
-    	ArrayList<Integer> parsedAbilityScores = new ArrayList<Integer>();
+    	ArrayList<Integer> rawAbilityScores ;
+    	ArrayList<String> arrayForClass;
+    	ArrayList<String> dividedAbilityScores ;
+    	ArrayList<String> finishedAbilityScores = new ArrayList<>();
+    	ArrayList<Integer> parsedAbilityScores = new ArrayList<>();
     	
     	rawAbilityScores = rolledAbilityScore;
     	
@@ -395,9 +395,9 @@ public class RandomNPC {
     	finishedAbilityScores.add("Cha");
     	
     	
-    	if(charClass != "Commoner") {
-    	Integer i = 0;
-    	Integer j = 0;
+    	if(!Objects.equals(charClass, "Commoner")) {
+    	int i = 0;
+    	int j = 0;
     	while(i <= 5 && j <= 5) {
     		String aScore = dividedAbilityScores.get(i);
     		Integer value = rawAbilityScores.get(i);
@@ -411,7 +411,7 @@ public class RandomNPC {
     			i++;
     		}
     	}
-    	for(Integer k = 0; k < 6; k++) {
+    	for(int k = 0; k < 6; k++) {
     		Integer parsedInt = Integer.parseInt(finishedAbilityScores.get(k));
     		parsedAbilityScores.add(parsedInt);
     	}
@@ -447,32 +447,25 @@ public class RandomNPC {
         }
         return abilityModifier;
     }
-    public static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
+
     public ArrayList<String> addAbilityScoreToSkillList(ArrayList<Integer> abilityModifier, ArrayList<String> skillList ){
         ArrayList<String> skillListWithNumbers = null;
-        String dbAbilityScore = null;
+        String dbAbilityScore ;
         for (String s : skillList){
             dbAbilityScore = dbms.getRow("skills", s).getFirst();
             switch(dbAbilityScore){
                 case "Str":
-                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.getFirst()));
+                    skillListWithNumbers.add(s + abilityModifier.getFirst());
                 case "Dex":
-                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(1)));
+                    skillListWithNumbers.add(s + abilityModifier.get(1));
                 case"Con":
-                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(2)));
+                    skillListWithNumbers.add(s + abilityModifier.get(2));
                 case "Int":
-                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(3)));
+                    skillListWithNumbers.add(s + abilityModifier.get(3));
                 case "Wis":
-                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(4)));
+                    skillListWithNumbers.add(s + abilityModifier.get(4));
                 case"Cha":
-                    skillListWithNumbers.add(s + String.valueOf(abilityModifier.get(5)));
+                    skillListWithNumbers.add(s + abilityModifier.get(5));
             }
         }
         return skillListWithNumbers;

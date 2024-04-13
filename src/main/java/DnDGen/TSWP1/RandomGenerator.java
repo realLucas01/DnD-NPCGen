@@ -143,26 +143,22 @@ public class RandomGenerator {
 
 				databaseReturn = dbms.getRow("race", race);
 				featureList = bigStringToDividedString(databaseReturn.get(3));    //Datensätze werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
-				if (featureList !=null){
 					for (String feature : featureList) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
 						databaseReturn = dbms.getRow("features", feature);
 						kindOfFeature = databaseReturn.get(3);
 
 						if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
-							kindOfFeature.replace("armor:", "");
+							kindOfFeature.replace("armor:", " ");
 							profList.addAll(bigStringToDividedString(kindOfFeature));
 							break;
 						}
 					}
-				}
 				break;
 			case "weapon":    //siehe "armor" nur jetzt mit den waffen
 				databaseReturn = dbms.getRow("class", charClass);
 				profList = bigStringToDividedString(databaseReturn.get(3));
-
 				databaseReturn = dbms.getRow("race", race);
 				featureList = bigStringToDividedString(databaseReturn.get(3));
-				if(featureList != null) {
 					for (String feature : featureList) {
 						databaseReturn = dbms.getRow("features", feature);
 						kindOfFeature = databaseReturn.get(3);
@@ -173,7 +169,6 @@ public class RandomGenerator {
 							break;
 						}
 						//jederzeit erweiterbar mit weiteren cases
-					}
 				}
 				break;
 		}
