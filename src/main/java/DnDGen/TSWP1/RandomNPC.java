@@ -46,13 +46,16 @@ public class RandomNPC {
         ArrayList<String> weaponProfList;
         ArrayList<String> armorProfList;
         ArrayList<String> armorBoni;
+        ArrayList<String> savingThrowList = null;
+        ArrayList<String> savingThrows = null;
+        ArrayList<String> movementSpeed =null;
         ArrayList<String> currentArmor;
         ArrayList<Integer> abilityScores = new ArrayList<>();
         ArrayList<Integer> abilityModifier;
         ArrayList generatedNPCFinished = new ArrayList<>();
         Random rndNumb = new Random();
         String race, job, genClass, gender, name, description, alignment, deity, languagesRace, languagesJob, kindOfArmor;
-        int level, numberSkill = 0, age, count,weaponCount,healthPoints, armorClass = 0;
+        int level, numberSkill = 0, age, profBonus =0, count,weaponCount,healthPoints, armorClass = 0;
         Pattern number = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE); //zum Überprüfen, ob im String eine Zahl steckt
         Matcher matcherNumber;
 
@@ -181,32 +184,20 @@ public class RandomNPC {
             armorBoni = bigStringToDividedString(currentArmor.get(5));
             for(String s: armorBoni){
                 //für jeden AbilityScore Boni, diesen hinzufügen
-                switch(s){
-                    case "Str":
-                        armorClass = armorClass + abilityModifier.get(0);
-                        break;
-                    case "Dex":
-                        armorClass = armorClass + abilityModifier.get(1);
-                        break;
-                    case "Con":
-                        armorClass = armorClass + abilityModifier.get(2);
-                        break;
-                    case "Int":
-                        armorClass = armorClass + abilityModifier.get(3);
-                        break;
-                    case "Wis":
-                        armorClass = armorClass + abilityModifier.get(4);
-                        break;
-                    case "Cha":
-                        armorClass = armorClass + abilityModifier.get(5);
-                        break;
-                }
+                armorClass = switch (s) {
+                    case "Str" -> armorClass + abilityModifier.get(0);
+                    case "Dex" -> armorClass + abilityModifier.get(1);
+                    case "Con" -> armorClass + abilityModifier.get(2);
+                    case "Int" -> armorClass + abilityModifier.get(3);
+                    case "Wis" -> armorClass + abilityModifier.get(4);
+                    case "Cha" -> armorClass + abilityModifier.get(5);
+                    default -> armorClass;
+                };
             }
-
         }else {
             armorClass = Integer.parseInt(currentArmor.get(3)) + abilityModifier.get(1);
         }
-        if((armorClass> Integer.parseInt(currentArmor.get(4)))&&(!kindOfArmor.equals("Shield"))){//überprüfen ob AC im toleranten Bereich liegt
+        if((armorClass> Integer.parseInt(currentArmor.get(4)))){//überprüfen ob AC im toleranten Bereich liegt
             armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
         }
         if(isThereASchield){
@@ -230,6 +221,45 @@ public class RandomNPC {
         weaponList.addAll(removeDuplicateWeapons);
         generatedNPCFinished.add(generatedNPCFinished.size(), weaponList);
 
+        //creature Speed
+        movementSpeed.addAll(bigStringToDividedString(dbms.getRow("race",race).get(9)));
+        ArrayList<String> movementSpeedList= null;
+        for (String s : movementSpeed){
+            switch (movementSpeed.getLast()){
+                case"w":
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + "ft" + "walking Speed");
+                case"f":
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + "ft" + "flying Speed");
+                case"b":
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + "ft" + "burrowing Speed");
+            }
+        }
+        generatedNPCFinished.add(generatedNPCFinished.size(), movementSpeedList);
+
+        //Prof Bonus
+        profBonus = Integer.parseInt(dbms.getRow("level",String.valueOf(level)).get(2));
+
+        //Saving Throws
+        savingThrowList.addAll(bigStringToDividedString(dbms.getRow("class",genClass).get(5)));
+        for(String s: savingThrowList){
+            //für jeden AbilityScore Boni, diesen hinzufügen
+            switch (s) {
+                case "Str" :
+                    savingThrows.add(String.valueOf(abilityModifier.get(0)+profBonus));
+                case "Dex" :
+                    savingThrows.add(String.valueOf(abilityModifier.get(1)+profBonus));
+                case "Con":
+                    savingThrows.add(String.valueOf(abilityModifier.get(2)+profBonus));
+                case "Int" :
+                    savingThrows.add(String.valueOf(abilityModifier.get(3)+profBonus));
+                case "Wis" :
+                    savingThrows.add(String.valueOf(abilityModifier.get(4)+profBonus));
+                case "Cha" :
+                    savingThrows.add(String.valueOf(abilityModifier.get(5)+profBonus));
+                default:
+                    savingThrows.add("none");
+            };
+        }
 
 
         //random Skills
