@@ -320,6 +320,22 @@ public class DBMS implements ApplicationContextAware{
 		    randRow.add(11, randrace.getRaceCreatureType());
 		    }
 			break;
+		case "description":
+			qty = descriptionRepository.count();
+			idx = (int)(Math.random() * qty);
+		    questionPage = descriptionRepository.findAll(PageRequest.of(idx, 1));
+		    if (questionPage.hasContent()) {
+		    	DescriptionModel randesc = (DescriptionModel) questionPage.getContent().get(0);
+		    randRow.add(0, randesc.getDescriptionId().toString());
+		    randRow.add(1, randesc.getDescriptionEyes());
+		    randRow.add(2, randesc.getDescriptionHairColor());
+		    randRow.add(3, randesc.getDescriptionHairStyle());
+		    randRow.add(4, randesc.getDescriptionSkin());
+		    randRow.add(5, randesc.getDescriptionTrait());
+		    randRow.add(6, randesc.getDescriptionMannerism());
+		    randRow.add(7, randesc.getDescriptionBond());
+		    }
+			break;
 		default:
 			randRow = null;
 		}

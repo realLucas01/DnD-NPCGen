@@ -27,4 +27,5 @@ public interface DescriptionRepository extends CrudRepository<DescriptionModel, 
 	ArrayList<DescriptionModel> findBydescriptionTrait(String trait);
 	ArrayList<DescriptionModel> findBydescriptionMannerism(String mannerism);
 	ArrayList<DescriptionModel> findBydescriptionBond(String bond);
+	Page<RaceModel> findAll(Pageable pageable);
 }
