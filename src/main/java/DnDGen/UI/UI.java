@@ -2,6 +2,7 @@ package DnDGen.UI;
 
 
 import com.sun.javafx.scene.control.InputField;
+import javafx.collections.ObservableList;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 import DnDGen.TSWP1.RandomNPC;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 
 import javax.lang.model.element.Name;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class UI extends Application {
     Stage window;
@@ -79,6 +81,17 @@ public class UI extends Application {
         MenuItem menuItem1 = new MenuItem("Item 1");
         MenuItem menuItem2 = new MenuItem("Item 2");
 
+        menuItem1.setOnAction(e -> {
+            e.consume();
+            layoutGenerateGrid.setVisible(false);
+        });
+
+        menuItem2.setOnAction(e -> {
+            e.consume();
+            layoutGenerateGrid.setVisible(true);
+        });
+
+
         menu.getItems().add(menuItem1);
         menu.getItems().add(menuItem2);
 
@@ -88,7 +101,7 @@ public class UI extends Application {
         //Seite generatePage
         //Name
         TextField nameField = new TextField();
-        nameField.setAccessibleHelp("Name");
+        nameField.setPromptText("Name");
         GridPane.setConstraints(nameField,1,1,2,1);
 
         //Rasse
@@ -97,7 +110,9 @@ public class UI extends Application {
 
         final ComboBox cbRace = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbRace, 2, 2);
-        cbRace.getItems().addAll(dbms.onlyColumn("race"));
+        ArrayList<String> list = dbms.onlyColumn("race");
+        Collections.sort(list);
+        cbRace.getItems().addAll(list);
         cbRace.getSelectionModel().selectFirst();
 
 
@@ -107,7 +122,10 @@ public class UI extends Application {
 
         final ComboBox cbClass = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbClass, 2, 3);
-        cbClass.getItems().addAll(dbms.onlyColumn("class"));
+        list.clear();
+        list = dbms.onlyColumn("class");
+        Collections.sort(list);
+        cbClass.getItems().addAll(list);
         cbClass.getSelectionModel().selectFirst();
 
 
@@ -117,7 +135,10 @@ public class UI extends Application {
 
         final ComboBox cbJob = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbJob, 2, 4);
-        cbJob.getItems().addAll(dbms.onlyColumn("job"));
+        list.clear();
+        list = dbms.onlyColumn("job");
+        Collections.sort(list);
+        cbJob.getItems().addAll(list);
         cbJob.getSelectionModel().selectFirst();
 
 
@@ -127,7 +148,7 @@ public class UI extends Application {
 
         final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbLevel, 2, 5);
-        for(int i = 1; i < 8; i++) {cbLevel.getItems().add(i);}
+        for(int i = 1; i < 20; i++) {cbLevel.getItems().add(i);}
         cbLevel.getSelectionModel().selectFirst();
 
         //AbilityScore
@@ -255,7 +276,7 @@ public class UI extends Application {
 
         //Button
         Button buttonGenerate = new Button("Generieren");
-        GridPane.setConstraints(buttonGenerate, 1, 6);
+        GridPane.setConstraints(buttonGenerate, 1, 7);
         buttonGenerate.setOnAction(e -> {
            //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
             ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,"male");
@@ -365,7 +386,7 @@ public class UI extends Application {
 
         //Layout der Seite
 
-        layoutGenerateGrid.getChildren().addAll(nameField, labelRace, labelClass, labelJob, labelLevel, cbRace, cbClass,
+        layoutGenerateGrid.getChildren().addAll(nameField, labelRace, labelClass, labelJob, labelLevel, labelAbSc, cbRace, cbClass,
                                                 cbJob, cbLevel, cbAbSc,buttonGenerate);
         VBox layoutGenerateVBox = new VBox(20);
         HBox gridNpc = new HBox();
