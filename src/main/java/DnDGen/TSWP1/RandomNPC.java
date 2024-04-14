@@ -96,7 +96,7 @@ public class RandomNPC {
             case "4d6":
                 //Ability Score berechnen mit vorgegebenen Würfel
                 ArrayList<Integer> scoreFour = new ArrayList<>();
-                ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
+                ArrayList<Integer> finishedSetForAbilityScores4 = new ArrayList<>();
 
                 for (int i = 0; i < 6; i++) {
                     scoreFour.add(randGen.diceThrower(1, 6));
@@ -108,17 +108,17 @@ public class RandomNPC {
 
                     int abilityScore = scoreFour.get(0) + scoreFour.get(1) + scoreFour.get(2);
 
-                    finishedSetForAbilityScores.add(abilityScore);
+                    finishedSetForAbilityScores4.add(abilityScore);
 
                     scoreFour.clear();
                 }
-                Collections.sort(finishedSetForAbilityScores, Collections.reverseOrder());
-                abilityScores = finishedSetForAbilityScores;
+                Collections.sort(finishedSetForAbilityScores4, Collections.reverseOrder());
+                abilityScores = finishedSetForAbilityScores4;
                 break;
            case "5d6":
                randGen.diceThrower(5, 6);
                ArrayList<Integer> scoreFive = new ArrayList<>();
-               ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
+               ArrayList<Integer> finishedSetForAbilityScores5 = new ArrayList<>();
 
                for (int i = 0; i < 6; i++) {
                    scoreFive.add(randGen.diceThrower(1, 6));
@@ -131,11 +131,11 @@ public class RandomNPC {
 
                    int abilityScore = scoreFive.get(0) + scoreFive.get(1) + scoreFive.get(2);
 
-                   finishedSetForAbilityScores.add(abilityScore);
+                   finishedSetForAbilityScores5.add(abilityScore);
 
                    scoreFive.clear();
                }
-               Collections.sort(finishedSetForAbilityScores, Collections.reverseOrder());
+               Collections.sort(finishedSetForAbilityScores5, Collections.reverseOrder());
                break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
