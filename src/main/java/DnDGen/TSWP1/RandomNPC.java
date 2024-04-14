@@ -88,7 +88,7 @@ public class RandomNPC {
 
 
         //random AbilityScore
-       /*switch ((inputAbilityScore)){
+       switch ((inputAbilityScore)){
             case null:
                 //AbilityScore 3d6 verwenden
                 abilityScores = randGen.randAbilityScore();
@@ -139,8 +139,14 @@ public class RandomNPC {
                break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
+                ArrayList<String> abilityScoreNew = new ArrayList<String>();
+                abilityScoreNew = bigStringToDividedString(inputAbilityScore);
+                ArrayList<Integer> abilityScoreNewInteger = new ArrayList<Integer>();
+                    for(String abilistr : abilityScoreNew){
+                    abilityScoreNewInteger.add(Integer.parseInt(abilistr));
+                    }
                 //dbms.getRowPref();
-        }*/
+        }
 
 
         //muss dann oben richtig gemacht werden
