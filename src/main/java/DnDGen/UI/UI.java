@@ -58,7 +58,6 @@ public class UI extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-    	System.out.println(dbms.getRandomRow("description"));
     	window = primaryStage;
         window.setTitle("DnD NPC Generator");
         RandomNPC rNPC = new RandomNPC();

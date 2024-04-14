@@ -236,6 +236,12 @@ public class DBMS implements ApplicationContextAware{
 			    CD.add(1, Entrylevel.getLevelNumber().toString());
 			    CD.add(2, Entrylevel.getLevelProfBonus().toString());
 				break;
+			case "skills":
+				SkillModel Entryskill = skillRepository.findBySkillName(searchstring);
+				CD.add(0, Entryskill.getSkillId().toString());
+				CD.add(1, Entryskill.getSkillName());
+				CD.add(2, Entryskill.getSkillAbilityScore());
+				break;
 			default:
 				CD = null;
 			}

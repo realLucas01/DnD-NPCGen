@@ -19,7 +19,7 @@ public interface SkillRepository extends CrudRepository<SkillModel, Integer>{
 	
 	long count();
 	ArrayList<SkillModel> findBySkillId(Integer id);
-	ArrayList<SkillModel> findBySkillName(String name);
+	SkillModel findBySkillName(String name);
 	ArrayList<SkillModel> findBySkillAbilityScore(String abilityScore);
 
 }
