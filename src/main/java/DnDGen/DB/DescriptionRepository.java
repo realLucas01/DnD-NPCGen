@@ -32,5 +32,5 @@ public interface DescriptionRepository extends CrudRepository<DescriptionModel, 
 	ArrayList<DescriptionModel> findBydescriptionClothing(String clothing);
 	ArrayList<DescriptionModel> findBydescriptionAttitute(String attitute);
 	ArrayList<DescriptionModel> findBydescriptionPlothook(String plothook);
-	Page<RaceModel> findAll(Pageable pageable);
+	Page<DescriptionModel> findAll(Pageable pageable);
 }

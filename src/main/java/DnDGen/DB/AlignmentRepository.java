@@ -21,4 +21,6 @@ public interface AlignmentRepository extends CrudRepository<AlignmentModel, Inte
 	ArrayList<AlignmentModel> findByAlignmentId(Integer id);
 	ArrayList<AlignmentModel> findByAlignmentName(String name);
 	ArrayList<AlignmentModel> findByAlignmentShorted(String shorted);
+	Page<AlignmentModel> findAll(Pageable pageable);
+
 }

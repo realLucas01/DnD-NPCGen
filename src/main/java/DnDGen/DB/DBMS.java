@@ -348,6 +348,17 @@ public class DBMS implements ApplicationContextAware{
 		    randRow.add(13, randesc.getDescriptionPlothook());
 		    }
 			break;
+		case "alignment":
+			qty = alignmentRepository.count();
+			idx = (int)(Math.random() * qty);
+		    questionPage = alignmentRepository.findAll(PageRequest.of(idx, 1));
+		    if (questionPage.hasContent()) {
+		    	AlignmentModel randalig = (AlignmentModel) questionPage.getContent().get(0);
+		    randRow.add(0, randalig.getAlignmentId().toString());
+		    randRow.add(1, randalig.getAlignmentName());
+		    randRow.add(2, randalig.getAlignmentShorted());
+		    }
+			break;
 		default:
 			randRow = null;
 		}
