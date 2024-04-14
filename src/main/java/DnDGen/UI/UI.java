@@ -278,7 +278,7 @@ public class UI extends Application {
         GridPane.setConstraints(buttonGenerate, 1, 7);
         buttonGenerate.setOnAction(e -> {
            //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
-            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,"male");
+            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,null);
             //  0      1     2     3        4                                               5                                       6    7     8      9       10       11      12   13    14            15         16       17
             //(race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
             //-------------------------                                                                                           ---         --            --------  ------  ---  ----               ------------------------------

@@ -142,33 +142,45 @@ public class RandomGenerator {
 				profList = bigStringToDividedString(dbms.getRow("class", charClass).get(4));
 
 				databaseReturn = dbms.getRow("race", race);
-				featureList = bigStringToDividedString(databaseReturn.get(3));    //Datensätze werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
+				if(databaseReturn.get(3)!=null) {
+					featureList = bigStringToDividedString(databaseReturn.get(3));    //Datensätze werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
 					for (String feature : featureList) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
-						databaseReturn = dbms.getRow("features", feature);
-						kindOfFeature = databaseReturn.get(3);
+						if (feature != null) {
+							databaseReturn = dbms.getRow("features", feature);
+							kindOfFeature = databaseReturn.get(3);
 
-						if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
-							kindOfFeature.replace("armor:", " ");
-							profList.addAll(bigStringToDividedString(kindOfFeature));
-							break;
+							if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
+								kindOfFeature.replace("armor:", " ");
+								profList.addAll(bigStringToDividedString(kindOfFeature));
+								break;
+							}
 						}
 					}
+				}
 				break;
 			case "weapon":    //siehe "armor" nur jetzt mit den waffen
 				databaseReturn = dbms.getRow("class", charClass);
+				if(databaseReturn.get(3)!= null){
 				profList = bigStringToDividedString(databaseReturn.get(3));
 				databaseReturn = dbms.getRow("race", race);
-				featureList = bigStringToDividedString(databaseReturn.get(3));
-					for (String feature : featureList) {
-						databaseReturn = dbms.getRow("features", feature);
-						kindOfFeature = databaseReturn.get(3);
+				if(databaseReturn.get(3)!=null) {
 
-						if (kindOfFeature.contains("weapon:")) {
-							kindOfFeature.replace("weapon:", " ");
-							profList.addAll(bigStringToDividedString(kindOfFeature));
-							break;
+					featureList = bigStringToDividedString(databaseReturn.get(3));
+					for (String feature : featureList) {
+						if (feature != null) {
+							databaseReturn = dbms.getRow("features", feature);
+							kindOfFeature = databaseReturn.get(3);
+
+							if (kindOfFeature.contains("weapon:")) {
+								kindOfFeature.replace("weapon:", " ");
+								profList.addAll(bigStringToDividedString(kindOfFeature));
+								break;
+							}
+
+							//jederzeit erweiterbar mit weiteren cases
 						}
-						//jederzeit erweiterbar mit weiteren cases
+					}
+				}
 				}
 				break;
 		}
@@ -186,9 +198,12 @@ public class RandomGenerator {
 		armorProf.remove("Shield");
 		int lengthOfArmorProfList = armorProf.size();
 		String rndArmor = armorProf.get(rndNumber.nextInt(lengthOfArmorProfList));
-		ArrayList<String> armorList = dbms.getRowPref("armor", rndArmor);
-		armor = armorList.get(1);
-
+		if((rndArmor.equals("Light Armor"))||(rndArmor.equals("Medium Armor"))||(rndArmor.equals("Heavy Armor"))){
+			ArrayList<String> armorList = dbms.getRowPref("armor", rndArmor);
+			armor = armorList.get(1);
+		}else{	//Sonderfälle Rüstung
+			armor = rndArmor;
+		}
 		return armor;
 	}
 
@@ -196,22 +211,26 @@ public class RandomGenerator {
 	public   String randWeapon(ArrayList<String> weaponProf) {
 		Random rndNumber = new Random();    // für zufallszahlen
 		//int rndWeaponProf  = 0;
-		int lengthOfWeaponProf = weaponProf.size()-1;
+		int lengthOfWeaponProf = weaponProf.size();
 		String weapon;    //das Ergebnis was zurückgegeben wird
-
+		if(weaponProf.isEmpty()){
+			return "no Weapon";
+		}
 		//rndWeaponProf = rndNumber.nextInt(lengthOfWeaponProf);
 		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
-
-		ArrayList<String> armorList = dbms.getRowPref("weapon", rndWeapon);
-		weapon = armorList.get(1);
-
+		if((rndWeapon.equals("Simple Weapon")||(rndWeapon.equals("Martial Weapon")))) {
+			ArrayList<String> armorList = dbms.getRowPref("weapon", rndWeapon);
+			weapon = armorList.get(1);
+		}else {
+			weapon = rndWeapon;
+		}
 		return weapon;
 	}
 
 	/* TO DO @Lenard */
 	public String randDeity(String alignment) {
-		String deity = "NO DEITY";
-		
+		String deity;
+
 		ArrayList<String> newDeity = new ArrayList<String>();
 		
 		newDeity = dbms.getRowPref("deity", alignment);
@@ -315,16 +334,18 @@ public class RandomGenerator {
 		Random randNumber = new Random();
 		int rndNum = randNumber.nextInt(9);
 		ArrayList<String> Alignments = new ArrayList<>();
-		Alignments.add("CG");
-		Alignments.add("CN");
-		Alignments.add("CE");
-		Alignments.add("NE");
-		Alignments.add("LN");
-		Alignments.add("LG");
-		Alignments.add("LN");
-		Alignments.add("NG");
-		Alignments.add("N");
+		Alignments.add("Chaotic Good");
+		Alignments.add("Chaotic Neutral");
+		Alignments.add("Chaotic Evil");
+		Alignments.add("Neutral Evil");
+		Alignments.add("Lawful Neutral");
+		Alignments.add("Lawful Good");
+		Alignments.add("Lawful Neutral");
+		Alignments.add("Neutral Good");
+		Alignments.add("Neutral");
 
+
+		//Alignments = dbms.getRandomRow("alignment");
 		return Alignments.get(rndNum);
 	}
 
