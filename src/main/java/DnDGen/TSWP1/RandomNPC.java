@@ -47,11 +47,12 @@ public class RandomNPC {
         ArrayList<String> savingThrows = null;
         ArrayList<String> movementSpeed = null;
         ArrayList<String> currentArmor;
-        ArrayList<Integer> abilityScores;
+        ArrayList<String> description;
+        ArrayList<Integer> abilityScores = new ArrayList<>();
         ArrayList<Integer> abilityModifier;
         ArrayList<String> generatedNPCFinished = new ArrayList<>();
         Random rndNumb = new Random();
-        String race, job, genClass, gender, name, description, alignment, deity, languagesRace, languagesJob, kindOfArmor;
+        String race, job, genClass, gender, name, alignment, deity, languagesRace, languagesJob, kindOfArmor;
         int level, numberSkill = 0, age, profBonus , count,weaponCount,healthPoints, armorClass;
 
         //random Race
@@ -154,24 +155,17 @@ public class RandomNPC {
 
         //distribute AbilityScore
             //Lenlen arbeitet daran
-        System.out.println(genClass);
-        System.out.println(abilityScores);
 
        // abilityScores = distributeAbilityScore(abilityScores,genClass);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
-
-
 
         //calc AbilityModifier
         abilityModifier=determinAbilityModifier(abilityScores) ;
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityModifier));
 
-
-
         //calc HP
         healthPoints = randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(healthPoints));
-
 
         armorProfList = randGen.figureOutProfList("armor", genClass, race);
         //randomArmor
@@ -340,11 +334,9 @@ public class RandomNPC {
 
  */
 
-
         //random Description
-        description = randGen.randDescription(race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), description);
-
+        description = randGen.randDescription();
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(description));
 
 
         //random Alignment
@@ -400,10 +392,10 @@ public class RandomNPC {
     	finishedAbilityScores.add("Wis");
     	finishedAbilityScores.add("Cha");
     	
-    	
-    	if(!Objects.equals(charClass, "Commoner")) {
-    	int i = 0;
-    	int j = 0;
+    	if(!(charClass.equals("Commoner"))) {
+    	Integer i = 0;
+    	Integer j = 0;
+
     	while(i <= 5 && j <= 5) {
     		String aScore = dividedAbilityScores.get(i);
     		Integer value = rawAbilityScores.get(i);

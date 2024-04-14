@@ -110,19 +110,19 @@ public class RandomGenerator {
 	}
 
 	/* TO DO @Lenard */
-	public String randDescription(String race) {
-		String description = "NO DESCRIPTION";
-
-		return description;
-	}
-
-	/* TO DO @Luca */
-	public List<String> randTBF() {
-		List<String> tbf = new ArrayList<>();
-
-		tbf.add("NO TBF");
-
-		return tbf;
+	public ArrayList<String> randDescription() {
+		
+		ArrayList<String> desc = new ArrayList<String>();
+		ArrayList<String> dbData = new ArrayList<String>();
+		
+		int i = 1;
+		while(i < 13) {
+			dbData = dbms.getRandomRow("description");
+			desc.add(dbData.get(i));
+			dbData.clear();
+			i++;
+		}
+		return desc;
 	}
 
 	//UNGETESTET
@@ -211,11 +211,10 @@ public class RandomGenerator {
 	/* TO DO @Lenard */
 	public String randDeity(String alignment) {
 		String deity = "NO DEITY";
-
+		
 		ArrayList<String> newDeity = new ArrayList<String>();
-
+		
 		newDeity = dbms.getRowPref("deity", alignment);
-
 		deity = newDeity.get(1);
 
 		return deity;
@@ -234,7 +233,7 @@ public class RandomGenerator {
 
 		String firstName = "NO FIRSTNAME";
 		String secondName = "NO SECONDNAME";
-		
+
 		ArrayList<String> newName = new ArrayList<String>();
 		newName = dbms.getRowPref("name", race);
 		
