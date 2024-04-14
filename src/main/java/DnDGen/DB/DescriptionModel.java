@@ -7,6 +7,7 @@
 
 package DnDGen.DB;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,12 +25,21 @@ public class DescriptionModel {
 	private String descriptionTrait;
 	private String descriptionMannerism;
 	private String descriptionBond;
+	private String descriptionFlaw;
+	private String descriptionIdeal;
+	private String descriptionVoice;
+	private String descriptionClothing;
+	private String descriptionAttitute;
+	@Column(columnDefinition="TEXT")
+	private String descriptionPlothook;
 	
 	public DescriptionModel() {
 		
 	}
 	public DescriptionModel(String descriptionEyes, String descriptionHairColor, String descriptionHairStyle,
-			String descriptionSkin, String descriptionTrait, String descriptionMannerism, String descriptionBond) {
+			String descriptionSkin, String descriptionTrait, String descriptionMannerism, String descriptionBond,
+			String descriptionFlaw, String descriptionIdeal, String descriptionVoice, String descriptionClothing,
+			String descriptionAttitute, String descriptionPlothook) {
 		super();
 		this.descriptionEyes = descriptionEyes;
 		this.descriptionHairColor = descriptionHairColor;
@@ -38,6 +48,12 @@ public class DescriptionModel {
 		this.descriptionTrait = descriptionTrait;
 		this.descriptionMannerism = descriptionMannerism;
 		this.descriptionBond = descriptionBond;
+		this.descriptionFlaw = descriptionFlaw;
+		this.descriptionIdeal = descriptionIdeal;
+		this.descriptionVoice = descriptionVoice;
+		this.descriptionClothing = descriptionClothing;
+		this.descriptionAttitute = descriptionAttitute;
+		this.descriptionPlothook = descriptionPlothook;
 	}
 	public Integer getDescriptionId() {
 		return descriptionId;
@@ -87,11 +103,50 @@ public class DescriptionModel {
 	public void setDescriptionBond(String descriptionBond) {
 		this.descriptionBond = descriptionBond;
 	}
+	public String getDescriptionFlaw() {
+		return descriptionFlaw;
+	}
+	public void setDescriptionFlaw(String descriptionFlaw) {
+		this.descriptionFlaw = descriptionFlaw;
+	}
+	public String getDescriptionIdeal() {
+		return descriptionIdeal;
+	}
+	public void setDescriptionIdeal(String descriptionIdeal) {
+		this.descriptionIdeal = descriptionIdeal;
+	}
+	public String getDescriptionVoice() {
+		return descriptionVoice;
+	}
+	public void setDescriptionVoice(String descriptionVoice) {
+		this.descriptionVoice = descriptionVoice;
+	}
+	public String getDescriptionClothing() {
+		return descriptionClothing;
+	}
+	public void setDescriptionClothing(String descriptionClothing) {
+		this.descriptionClothing = descriptionClothing;
+	}
+	public String getDescriptionAttitute() {
+		return descriptionAttitute;
+	}
+	public void setDescriptionAttitute(String descriptionAttitute) {
+		this.descriptionAttitute = descriptionAttitute;
+	}
+	public String getDescriptionPlothook() {
+		return descriptionPlothook;
+	}
+	public void setDescriptionPlothook(String descriptionPlothook) {
+		this.descriptionPlothook = descriptionPlothook;
+	}
 	@Override
 	public String toString() {
 		return "DescriptionModel [descriptionId=" + descriptionId + ", descriptionEyes=" + descriptionEyes
 				+ ", descriptionHairColor=" + descriptionHairColor + ", descriptionHairStyle=" + descriptionHairStyle
 				+ ", descriptionSkin=" + descriptionSkin + ", descriptionTrait=" + descriptionTrait
-				+ ", descriptionMannerism=" + descriptionMannerism + ", descriptionBond=" + descriptionBond + "]";
+				+ ", descriptionMannerism=" + descriptionMannerism + ", descriptionBond=" + descriptionBond
+				+ ", descriptionFlaw=" + descriptionFlaw + ", descriptionIdeal=" + descriptionIdeal
+				+ ", descriptionVoice=" + descriptionVoice + ", descriptionClothing=" + descriptionClothing
+				+ ", descriptionAttitute=" + descriptionAttitute + ", descriptionPothook=" + descriptionPlothook + "]";
 	}
 }

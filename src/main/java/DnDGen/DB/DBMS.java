@@ -334,6 +334,12 @@ public class DBMS implements ApplicationContextAware{
 		    randRow.add(5, randesc.getDescriptionTrait());
 		    randRow.add(6, randesc.getDescriptionMannerism());
 		    randRow.add(7, randesc.getDescriptionBond());
+		    randRow.add(8, randesc.getDescriptionFlaw());
+		    randRow.add(9, randesc.getDescriptionIdeal());
+		    randRow.add(10, randesc.getDescriptionVoice());
+		    randRow.add(11, randesc.getDescriptionClothing());
+		    randRow.add(12, randesc.getDescriptionAttitute());
+		    randRow.add(13, randesc.getDescriptionPlothook());
 		    }
 			break;
 		default:

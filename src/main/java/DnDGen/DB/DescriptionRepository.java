@@ -21,11 +21,16 @@ public interface DescriptionRepository extends CrudRepository<DescriptionModel, 
 	long count();
 	ArrayList<DescriptionModel> findByDescriptionId(Integer id);
 	ArrayList<DescriptionModel> findByDescriptionEyes(String eyes);
-	ArrayList<DescriptionModel> findBydescriptionHairColor(String hairColor);
-	ArrayList<DescriptionModel> findBydescriptionHairStyle(String hairStyle);
-	ArrayList<DescriptionModel> findBydescriptionSkin(String skin);
-	ArrayList<DescriptionModel> findBydescriptionTrait(String trait);
-	ArrayList<DescriptionModel> findBydescriptionMannerism(String mannerism);
-	ArrayList<DescriptionModel> findBydescriptionBond(String bond);
+	ArrayList<DescriptionModel> findByDescriptionHairColor(String hairColor);
+	ArrayList<DescriptionModel> findByDescriptionHairStyle(String hairStyle);
+	ArrayList<DescriptionModel> findByDescriptionSkin(String skin);
+	ArrayList<DescriptionModel> findByDescriptionTrait(String trait);
+	ArrayList<DescriptionModel> findByDescriptionMannerism(String mannerism);
+	ArrayList<DescriptionModel> findByDescriptionFlaw(String flaw);
+	ArrayList<DescriptionModel> findBydescriptionIdeal(String ideal);
+	ArrayList<DescriptionModel> findBydescriptionVoice(String voice);
+	ArrayList<DescriptionModel> findBydescriptionClothing(String clothing);
+	ArrayList<DescriptionModel> findBydescriptionAttitute(String attitute);
+	ArrayList<DescriptionModel> findBydescriptionPlothook(String plothook);
 	Page<RaceModel> findAll(Pageable pageable);
 }
