@@ -58,6 +58,9 @@ public class RandomNPC {
         }else {
             level = inputLevel;
         }
+        if(Objects.equals(inputClass, "Commoner")){
+            level = 0;
+        }
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(level));
         //random Job
         if(inputJob == null){
@@ -204,19 +207,22 @@ public class RandomNPC {
 
         //creature Speed
         movementSpeed=(bigStringToDividedString(dbms.getRow("race",race).get(9)));
-        ArrayList<String> movementSpeedList= null;
+        ArrayList<String> movementSpeedList= new ArrayList<>();
         for (String s : movementSpeed){
-            switch (movementSpeed.getLast()){
+            switch (s.substring(s.length()-1)){
+
                 case"w":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + "ft" + "walking Speed");
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + " ft" + " walking Speed");
+                    break;
                 case"f":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + "ft" + "flying Speed");
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + " ft" + " flying Speed");
+                    break;
                 case"b":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + "ft" + "burrowing Speed");
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + " ft" + " burrowing Speed");
+                    break;
             }
         }
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(movementSpeedList));
-
        // generatedNPCFinished.add(generatedNPCFinished.size(), movementSpeedList);
 
         //Prof Bonus
