@@ -1,8 +1,6 @@
 package DnDGen.UI;
 
 
-import com.sun.javafx.scene.control.InputField;
-import javafx.collections.ObservableList;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 import DnDGen.TSWP1.RandomNPC;
@@ -18,16 +16,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import javax.lang.model.element.Name;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class UI extends Application {
     Stage window;
@@ -171,8 +169,8 @@ public class UI extends Application {
         //Name, Klasse, Rasse, Alignment
         GridPane nameClassGrid = new GridPane();
         nameClassGrid.setPadding(new Insets(5, 10, 10, 10));
-        nameClassGrid.setVgap(2);
-        nameClassGrid.setHgap(5);
+        nameClassGrid.setVgap(4);
+        nameClassGrid.setHgap(25);
 
         Label nameL      = new Label("Name: ");
         Label levelL     = new Label("Level: ");
@@ -198,6 +196,7 @@ public class UI extends Application {
 
         //Armor class, Hit points, Speed
         VBox armorHitSpeedPane = new VBox();
+        armorHitSpeedPane.setSpacing(4);
         Label armorClassL = new Label("Rüstungsklasse: ");
         Label hitPointsL  = new Label("Trefferpunkte: ");
         Label speedL      = new Label("Geschwindigkeit: ");
@@ -219,6 +218,24 @@ public class UI extends Application {
         Label chaL = new Label("Cha\n");
 
         statsBox.getChildren().addAll(strL, dexL,conL,intL,wisL,chaL);
+
+        //Inventar (Waffen & Rüstung)
+        GridPane inventoryGrid = new GridPane();
+        inventoryGrid.setPadding(new Insets(5, 10, 10, 10));
+        inventoryGrid.setVgap(1);
+        inventoryGrid.setHgap(25);
+
+        Label armorTextL      = new Label("Rüstung: ");
+        Label weaponTextL     = new Label("Waffen: ");
+        Label armorL      = new Label("Rüstung: ");
+        Label weaponL     = new Label("Waffen: ");
+
+        GridPane.setConstraints(armorTextL,0,0);
+        GridPane.setConstraints(weaponTextL,1,0);
+        GridPane.setConstraints(armorL,0,1);
+        GridPane.setConstraints(weaponL,1,1);
+
+        inventoryGrid.getChildren().addAll(armorL, weaponL, armorTextL, weaponTextL);
 
         //Skill, Senses
         VBox skillSensesBox = new VBox();
@@ -259,14 +276,17 @@ public class UI extends Application {
         spellActionBox.setPadding(new Insets(10, 10, 10, 10));
 
 
-        Line line1 = new Line(0.0f,0.0f,200.0f,0.0f);
-        Line line2 = new Line(0.0f,0.0f,200.0f,0.0f);
-        Line line3 = new Line(0.0f,0.0f,200.0f,0.0f);
-        Line line4 = new Line(0.0f,0.0f,200.0f,0.0f);
+        Line line1 = new Line(0.0f,0.0f,300.0f,0.0f);
+        Line line2 = new Line(0.0f,0.0f,300.0f,0.0f);
+        Line line3 = new Line(0.0f,0.0f,300.0f,0.0f);
+        Line line4 = new Line(0.0f,0.0f,300.0f,0.0f);
+        Line line5 = new Line(0.0f,0.0f,300.0f,0.0f);
 
-        npcStack.getChildren().addAll(nameClassGrid,line1,armorHitSpeedPane,line2,statsBox,line3,skillSensesBox,line4,spellActionBox);
+        npcStack.getChildren().addAll(nameClassGrid,line1,armorHitSpeedPane,line2,statsBox,line3, inventoryGrid, line5,skillSensesBox,line4,spellActionBox);
         npcStack.setVisible(false);
 
+        VBox descriptionStack = new VBox();
+        descriptionStack.setVisible(false);
         //layoutGenerateGrid.getChildren().add(npcStack);
 
 
@@ -276,6 +296,9 @@ public class UI extends Application {
         //Button
         Button buttonGenerate = new Button("Generieren");
         GridPane.setConstraints(buttonGenerate, 1, 7);
+
+        buttonGenerate.setStyle("-fx-font: bold italic 20pt \"Arial\"; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
+
         buttonGenerate.setOnAction(e -> {
            //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
             ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,null);
@@ -283,64 +306,95 @@ public class UI extends Application {
             //(race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
             //-------------------------                                                                                           ---         --            --------  ------  ---  ----               ------------------------------
 
-            /*
 
+            /*
             System.out.println(npc);
             System.out.println("Rasse: " + npc.get(0));
             System.out.println("Level: " + String.valueOf(npc.get(1)));
             System.out.println("Job: " + npc.get(2));
             System.out.println("Klasse: " + npc.get(3));
-           // System.out.println("AbilityScore: " + npc.get(4));
-           // System.out.println("AbilityModifier: " + npc.get(5));
+            System.out.println("AbilityScore: " + npc.get(4));
+            System.out.println("AbilityModifier: " + npc.get(5));
             System.out.println("HP: " + String.valueOf(npc.get(6)));
             System.out.println("Armor: " + npc.get(7));
             System.out.println("AC: " + String.valueOf(npc.get(8)));
-           // System.out.println("Weapons(): " + npc.get(9));
-           // System.out.println("Skills: " + npc.get(10));
-            System.out.println("Sex: " + npc.get(11));
-            System.out.println("Alter: " + String.valueOf(npc.get(12)));
-            //System.out.println("Name: " + npc.get(14));
-            System.out.println("Beschreibung: " + npc.get(13));
-            System.out.println("Alignment: " + npc.get(14));
-            //System.out.println("Gottheit: " + npc.get(16));
-            //System.out.println("Sprache: " + npc.get(17));
+            System.out.println("Weapons(): " + npc.get(9));
+            System.out.println("Skills: " + npc.get(10));
+            System.out.println("Sex: " + npc.get(12));
+            System.out.println("Alter: " + String.valueOf(npc.get(13)));
+            System.out.println("Name: " + npc.get(11));
+            System.out.println("Beschreibung: " + npc.get(14));
+            System.out.println("Alignment: " + npc.get(15));
+            System.out.println("Gottheit: " + npc.get(16));
+            System.out.println("Sprache: " + npc.get(17));
 
+            String languages = "";
+            List lang = stringToList(npc.get(17));
+            for(int i = 0; i < lang.size(); i++) {
+                languages = languages.concat(lang.get(i) + "\n");
+            }
+            System.out.println("Sprachen Schleife: " + languages);
 
             */
 
 
 
-//            nameL.setText("Name: " + npc.get(13));
+
+
+            String stringNpc = "";
+            List listNpc = new ArrayList<>();
+
+//          nameL.setText("Name: " + npc.get(13));
             classL.setText("Klasse: " + npc.get(3));
             raceL.setText("Rasse: " + npc.get(0));
             levelL.setText("Level: " + String.valueOf(npc.get(1)));
             jobL.setText("Beruf: " + npc.get(2));
-            alignmentL.setText("Alignment: " + npc.get(14));
-            ageL.setText("Alter: " + String.valueOf(npc.get(12)));
-            sexL.setText("Geschlecht: " + npc.get(11));
-           // deityL.setText("Gottheit: " + npc.get(16));
+            alignmentL.setText("Alignment: " + npc.get(15));
+            ageL.setText("Alter: " + String.valueOf(npc.get(13)));
+            sexL.setText("Geschlecht: " + npc.get(12));
+            deityL.setText("Gottheit: " + npc.get(16));
 
             armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
             hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
             speedL.setText("Geschwindigkeit: ");
-           // languagesL.setText("Sprachen: " + npc.get(17));
 
 
-          //  ArrayList<Integer> abilityList = npc.get(4);
+            //Sprachen
+            stringNpc = "";
+            listNpc.clear();
+            listNpc = stringToList(npc.get(17));
+            for(int i = 0; i < listNpc.size(); i++) {
+                stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+            }
+            languagesL.setText("Sprachen:\n" + stringNpc);
 
+
+            //Ability
+            strL.setText(" Str\n" + abilityString(0,npc));
+            dexL.setText(" Dex\n" + abilityString(1,npc));
+            conL.setText(" Con\n" + abilityString(2,npc));
+            intL.setText(" Int\n" + abilityString(3,npc));
+            wisL.setText(" Wis\n" + abilityString(4,npc));
+            chaL.setText(" Cha\n" + abilityString(5,npc));
+
+
+            //Inventar
+            stringNpc = "";
+            listNpc.clear();
+            listNpc = stringToList(npc.get(9));
+            for(int i = 0; i < listNpc.size(); i++) {
+                stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+            }
+            weaponL.setText(stringNpc);
+
+            armorL.setText("    - " + npc.get(7));
+
+
+            //Spell
             /*
-            strL.setText("Str\n" + npc.get(4));
-            dexL.setText("Dex\n" + npc.get(4));
-            conL.setText("Con\n" + npc.get(4));
-            intL.setText("Int\n" + npc.get(4));
-            wisL.setText("Wis\n" + npc.get(4));
-            chaL.setText("Cha\n" + npc.get(4));
-
-             */
-
-           // Text skills = new Text(npc.get(10));
-            //skillTF.getChildren().add(skills);
-
+            Text skills = new Text(npc.get(10));
+            skillTF.getChildren().add(skills);
+*/
             /*
             Text senses = new Text(npc.get(10));
             senseTF.getChildren().add(senses);
@@ -351,6 +405,20 @@ public class UI extends Application {
             Text action = new Text(npc.get(10));
             actionTF.getChildren().add(action);
             */
+
+
+            //Beschreibung
+            //descriptionStack.getChildren().removeAll();
+
+            descriptionStack.getChildren().clear();
+            listNpc = stringToList(npc.get(14));
+            Label titel = new Label("Beschreibung: ");
+            for(int i = 0; i < listNpc.size(); i++) {
+                Label label = new Label(listNpc.get(i).toString());
+                label.setWrapText(true);
+                descriptionStack.getChildren().add(label);
+            }
+
 
 
 /*
@@ -365,7 +433,7 @@ public class UI extends Application {
           // nameL.setText("Name: " + rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,"male"));
 
         npcStack.setVisible(true);
-
+        descriptionStack.setVisible(true);
 
 
 
@@ -389,10 +457,12 @@ public class UI extends Application {
                                                 cbJob, cbLevel, cbAbSc,buttonGenerate);
         VBox layoutGenerateVBox = new VBox(20);
         HBox gridNpc = new HBox();
-        gridNpc.getChildren().addAll(layoutGenerateGrid, npcStack);
+
+        gridNpc.getChildren().addAll(layoutGenerateGrid, npcStack, descriptionStack);
         layoutGenerateVBox.getChildren().addAll(menuBar,gridNpc);
 
         generatePage = new Scene(layoutGenerateVBox, 800, 600);
+
 
 
 
@@ -504,8 +574,16 @@ public class UI extends Application {
 
         //Es startet auf der generieren Seite
         //window.setScene(npcPage);
+        generatePage.getStylesheets().add("/styles.css");
         window.setScene(generatePage);
         window.show();
+
+        window.widthProperty().addListener((obs, oldVal, newVal) -> {
+            layoutGenerateGrid.setPrefWidth(generatePage.getWidth()/4);
+            npcStack.setPrefWidth(generatePage.getWidth()/2);
+            descriptionStack.setPrefWidth(generatePage.getWidth()/4);
+
+        });
     }
 
 
@@ -533,4 +611,49 @@ public class UI extends Application {
         }
     }
 
+    /* @author Marie
+     *
+     * Teilt einen String der die Form eines Array hat in einzelne Elemente und gibt sie als Liste zurück
+     *
+     * @param string: ein String der als Liste geschrieben werden soll.
+     * @return Eine Liste mit dem Inhalt von dem string eingabe.
+     */
+    public List stringToList(String string) {
+        List list = new ArrayList<>();
+        if(string.contains("[")) {
+            string = string.substring(1,string.length()-1);
+        }
+        string = string.trim();
+
+        if(string.isEmpty()) {return list;}
+
+        string = string.concat(",");
+
+        while(string.contains(",")) {
+            list.add(string.substring(0,string.indexOf(",")).trim());
+            string = string.substring(string.indexOf(",")+1);
+        }
+
+        return list;
+    }
+
+    /* @author Marie
+     *
+     * gibt den AbilityScore mit Modifier zurück. Für die Ability.
+     *
+     * @param index: der index gibt an welche Ability es ist. (Str, Dex, Con, Int, Wis, Cha)
+     * @param npc: ein Array welches die gesamten Daten des NPC enthält
+     * @return ein String bestehen aus dem AbilityScore + oder - und dem Modifier
+     */
+    public String abilityString(int index, ArrayList<String> npc) {
+        String string = "";
+        List listNpc = stringToList(npc.get(4));
+        List listAbilityModifier = stringToList(npc.get(5));
+
+        if(listAbilityModifier.get(index).toString().length() > 1) {
+            string = listNpc.get(index) + listAbilityModifier.get(index).toString();
+        } else {string = listNpc.get(index) + "+" + listAbilityModifier.get(index);}
+
+        return string;
+    }
 }
