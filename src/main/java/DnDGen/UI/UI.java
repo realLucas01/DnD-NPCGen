@@ -302,8 +302,8 @@ public class UI extends Application {
         buttonGenerate.setOnAction(e -> {
            //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
             ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,null);
-            //  0      1     2     3        4                                               5                                       6    7     8      9       10       11      12   13    14            15         16       17
-            //(race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
+            //  0      1     2     3        4                                               5                                       6    7     8      9        10          11     12      13        14    15    16          17       18       19
+            //(race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(),savingThrows, Speed, Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
             //-------------------------                                                                                           ---         --            --------  ------  ---  ----               ------------------------------
 
 
@@ -319,21 +319,23 @@ public class UI extends Application {
             System.out.println("Armor: " + npc.get(7));
             System.out.println("AC: " + String.valueOf(npc.get(8)));
             System.out.println("Weapons(): " + npc.get(9));
-            System.out.println("Skills: " + npc.get(10));
-            System.out.println("Sex: " + npc.get(12));
-            System.out.println("Alter: " + String.valueOf(npc.get(13)));
-            System.out.println("Name: " + npc.get(11));
-            System.out.println("Beschreibung: " + npc.get(14));
-            System.out.println("Alignment: " + npc.get(15));
-            System.out.println("Gottheit: " + npc.get(16));
-            System.out.println("Sprache: " + npc.get(17));
-
+            System.out.println("Speed: " + npc.get(10));
+            System.out.println("Saving Throws: " + npc.get(11));
+            System.out.println("Skills: " + npc.get(12));
+            System.out.println("Sex: " + npc.get(13));
+            System.out.println("Alter: " + String.valueOf(npc.get(14)));
+            System.out.println("Name: " + npc.get(15));
+            System.out.println("Beschreibung: " + npc.get(16));
+            System.out.println("Alignment: " + npc.get(17));
+            System.out.println("Gottheit: " + npc.get(18));
+            System.out.println("Sprache: " + npc.get(19));
+/*
             String languages = "";
             List lang = stringToList(npc.get(17));
             for(int i = 0; i < lang.size(); i++) {
                 languages = languages.concat(lang.get(i) + "\n");
             }
-            System.out.println("Sprachen Schleife: " + languages);
+            System.out.println("Sprachen Schleife: " + npc.get(18));
 
             */
 
@@ -344,25 +346,25 @@ public class UI extends Application {
             String stringNpc = "";
             List listNpc = new ArrayList<>();
 
-//          nameL.setText("Name: " + npc.get(13));
+            nameL.setText("Name: " + npc.get(15));
             classL.setText("Klasse: " + npc.get(3));
             raceL.setText("Rasse: " + npc.get(0));
             levelL.setText("Level: " + String.valueOf(npc.get(1)));
             jobL.setText("Beruf: " + npc.get(2));
-            alignmentL.setText("Alignment: " + npc.get(15));
-            ageL.setText("Alter: " + String.valueOf(npc.get(13)));
-            sexL.setText("Geschlecht: " + npc.get(12));
-            deityL.setText("Gottheit: " + npc.get(16));
+            alignmentL.setText("Alignment: " + npc.get(17));
+            ageL.setText("Alter: " + String.valueOf(npc.get(14)));
+            sexL.setText("Geschlecht: " + npc.get(13));
+            deityL.setText("Gottheit: " + npc.get(18));
 
             armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
             hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
-            speedL.setText("Geschwindigkeit: ");
+            speedL.setText("Geschwindigkeit: " + String.valueOf(npc.get(10)));
 
 
             //Sprachen
             stringNpc = "";
             listNpc.clear();
-            listNpc = stringToList(npc.get(17));
+            listNpc = stringToList(npc.get(19));
             for(int i = 0; i < listNpc.size(); i++) {
                 stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
             }
@@ -411,7 +413,7 @@ public class UI extends Application {
             //descriptionStack.getChildren().removeAll();
 
             descriptionStack.getChildren().clear();
-            listNpc = stringToList(npc.get(14));
+            listNpc = stringToList(npc.get(16));
             Label titel = new Label("Beschreibung: ");
             for(int i = 0; i < listNpc.size(); i++) {
                 Label label = new Label(listNpc.get(i).toString());

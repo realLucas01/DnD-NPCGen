@@ -11,7 +11,9 @@ public class RandomNPC {
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
 	 * neu-konstruktion von DBMS wäre sonst leer.
 	 */
-	ApplicationContext appCtx = DBMS.getApplicationContext();
+    Random rndNumb =  new Random();
+    RandomGenerator randGen = new RandomGenerator();
+    ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
 
     /*
@@ -23,54 +25,50 @@ public class RandomNPC {
     * (race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
      */
 
-    public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender){
-        RandomGenerator randGen = new RandomGenerator();
+    public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
         ArrayList<String> skillList = new ArrayList<>();
         ArrayList<String> weaponList = new ArrayList<>();
         ArrayList<String> possibleSkillList;
         ArrayList<String> languages;
-        String armorList, raceSkillList;
+        String raceSkillList;
         ArrayList<String> weaponProfList;
-        ArrayList<String> armorProfList;
-        ArrayList<String> armorBoni;
         ArrayList<String> savingThrowList;
         ArrayList<String> savingThrows = new ArrayList<>();
         ArrayList<String> movementSpeed;
-        ArrayList<String> currentArmor;
         ArrayList<String> description;
         ArrayList<Integer> abilityScores = null;
         ArrayList<Integer> abilityModifier;
         ArrayList<String> generatedNPCFinished = new ArrayList<>();
         Random rndNumb = new Random();
         String race, job, genClass, gender, name, alignment, deity, languagesRace, languagesJob, kindOfArmor;
-        int level, numberSkill, age, profBonus , count,weaponCount,healthPoints, armorClass;
-
+        int level, numberSkill, age, profBonus, count, weaponCount, healthPoints, armorClass;
+String inputName = null;
         //random Race
-        if (inputRace == null){
-           race =  randGen.randRace();
+        if (inputRace == null) {
+            race = randGen.randRace();
         } else {
             race = inputRace;
         }
         generatedNPCFinished.addFirst(race);
         //random Level
-        if(inputLevel == null){
+        if (inputLevel == null) {
             level = randGen.randLevel();
-        }else {
+        } else {
             level = inputLevel;
         }
-        if(Objects.equals(inputClass, "Commoner")){
+        if (Objects.equals(inputClass, "Commoner")) {
             level = 0;
         }
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(level));
         //random Job
-        if(inputJob == null){
+        if (inputJob == null) {
             job = randGen.randJob();
-        }else {
+        } else {
             job = inputJob;
         }
         generatedNPCFinished.add(generatedNPCFinished.size(), job);
         //random Class
-        if((inputClass == null) && (level != 0)){
+        if ((inputClass == null) && (level != 0)) {
             genClass = randGen.randCharClass();
         } else if (level == 0) {
             genClass = "Commoner";    // WUHU Edge Case -> Class == commoner
@@ -80,7 +78,7 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), genClass);
 
         //random AbilityScore
-       switch ((inputAbilityScore)){
+        switch ((inputAbilityScore)) {
             case null:
                 //AbilityScore 3d6 verwenden
                 abilityScores = randGen.randAbilityScore();
@@ -104,227 +102,78 @@ public class RandomNPC {
                 Collections.sort(finishedSetForAbilityScores4, Collections.reverseOrder());
                 abilityScores = finishedSetForAbilityScores4;
                 break;
-           case "5d6":
-               randGen.diceThrower(5, 6);
-               ArrayList<Integer> scoreFive = new ArrayList<>();
-               ArrayList<Integer> finishedSetForAbilityScores5 = new ArrayList<>();
+            case "5d6":
+                randGen.diceThrower(5, 6);
+                ArrayList<Integer> scoreFive = new ArrayList<>();
+                ArrayList<Integer> finishedSetForAbilityScores5 = new ArrayList<>();
 
-               for (int i = 0; i < 6; i++) {
-                   scoreFive.add(randGen.diceThrower(1, 6));
-                   scoreFive.add(randGen.diceThrower(1, 6));
-                   scoreFive.add(randGen.diceThrower(1, 6));
-                   scoreFive.add(randGen.diceThrower(1, 6));
-                   scoreFive.add(randGen.diceThrower(1, 6));
-                   scoreFive.add(randGen.diceThrower(1, 6));
-                   Collections.sort(scoreFive, Collections.reverseOrder());
+                for (int i = 0; i < 6; i++) {
+                    scoreFive.add(randGen.diceThrower(1, 6));
+                    scoreFive.add(randGen.diceThrower(1, 6));
+                    scoreFive.add(randGen.diceThrower(1, 6));
+                    scoreFive.add(randGen.diceThrower(1, 6));
+                    scoreFive.add(randGen.diceThrower(1, 6));
+                    scoreFive.add(randGen.diceThrower(1, 6));
+                    Collections.sort(scoreFive, Collections.reverseOrder());
 
-                   int abilityScore = scoreFive.get(0) + scoreFive.get(1) + scoreFive.get(2);
+                    int abilityScore = scoreFive.get(0) + scoreFive.get(1) + scoreFive.get(2);
 
-                   finishedSetForAbilityScores5.add(abilityScore);
+                    finishedSetForAbilityScores5.add(abilityScore);
 
-                   scoreFive.clear();
-               }
-               Collections.sort(finishedSetForAbilityScores5, Collections.reverseOrder());
-               break;
+                    scoreFive.clear();
+                }
+                Collections.sort(finishedSetForAbilityScores5, Collections.reverseOrder());
+                break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
                 ArrayList<String> abilityScoreNew = new ArrayList<String>();
                 abilityScoreNew = bigStringToDividedString(inputAbilityScore);
                 ArrayList<Integer> abilityScoreNewInteger = new ArrayList<Integer>();
-                    for(String abilistr : abilityScoreNew){
+                for (String abilistr : abilityScoreNew) {
                     abilityScoreNewInteger.add(Integer.parseInt(abilistr));
-                    }
+                }
                 //dbms.getRowPref();
         }
 
         //distribute AbilityScore
-        abilityScores = distributeAbilityScore(abilityScores,genClass);
+        abilityScores = distributeAbilityScore(abilityScores, genClass);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
 
         //calc AbilityModifier
-        abilityModifier=determinAbilityModifier(abilityScores) ;
+        abilityModifier = determinAbilityModifier(abilityScores);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityModifier));
 
         //calc HP
-        healthPoints = randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
+        healthPoints = calculateHP(genClass, level, abilityModifier);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(healthPoints));
 
-        armorProfList = randGen.figureOutProfList("armor", genClass, race);
-        //randomArmor
+        ArrayList<String> armorList = determineArmorAndAC(genClass, race, abilityModifier);
+        generatedNPCFinished.add(generatedNPCFinished.size(), armorList.get(0));//armor
+        generatedNPCFinished.add(generatedNPCFinished.size(), armorList.get(1));//AC
 
-        boolean isThereASchield =armorProfList.contains("Shield");
+        weaponList = determineWeapons(genClass, race);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(weaponList));//waffenliste
 
-        armorList = randGen.randArmor(armorProfList); // LUCA FIX   // Sollte gefixt sein
-
-        //Berechnung AC
-        if(armorList != null){
-            armorList = "None";
-        }
-        currentArmor= dbms.getRow("armor",armorList);
-        armorClass = Integer.parseInt(currentArmor.get(3));
-        armorBoni = bigStringToDividedString(currentArmor.get(5));
-
-        kindOfArmor = currentArmor.get(2);
-        if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
-            for(String s: armorBoni){
-                //für jeden AbilityScore Boni, diesen hinzufügen
-                armorClass = switch (s) {
-                    case "Str" -> armorClass + abilityModifier.get(0);
-                    case "Dex" -> armorClass + abilityModifier.get(1);
-                    case "Con" -> armorClass + abilityModifier.get(2);
-                    case "Int" -> armorClass + abilityModifier.get(3);
-                    case "Wis" -> armorClass + abilityModifier.get(4);
-                    case "Cha" -> armorClass + abilityModifier.get(5);
-                    default -> armorClass;
-                };
-            }
-        }else if((armorBoni.size()==1)&&(armorBoni.contains("Dex"))) {
-            armorClass = Integer.parseInt(currentArmor.get(3)) + abilityModifier.get(1);
-        }
-        if((armorClass> Integer.parseInt(currentArmor.get(4)))){//überprüfen ob AC im toleranten Bereich liegt
-            armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
-        }
-        if(isThereASchield){
-            int shieldPercent= rndNumb.nextInt(2);
-            if(shieldPercent == 1){
-                armorList = armorList + " + " + "Shield";
-                armorClass = armorClass +2;
-            }
-        }
-        generatedNPCFinished.add(generatedNPCFinished.size(), armorList);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(armorClass));
-
-        weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
-        //randomWeapon
-        weaponCount = rndNumb.nextInt(4);
-        for(int i=0; i<weaponCount;i++){
-            weaponList.add(randGen.randWeapon(weaponProfList));
-        }
-        Set<String> removeDuplicateWeapons = new HashSet<>(weaponList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-        weaponList.clear();
-        weaponList.addAll(removeDuplicateWeapons);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(weaponList));
-
-        //creature Speed
-        movementSpeed=(bigStringToDividedString(dbms.getRow("race",race).get(9)));
-        ArrayList<String> movementSpeedList= new ArrayList<>();
-        for (String s : movementSpeed){
-            switch (s.substring(s.length()-1)){
-
-                case"w":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + " ft" + " walking Speed");
-                    break;
-                case"f":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + " ft" + " flying Speed");
-                    break;
-                case"b":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0,2) + " ft" + " burrowing Speed");
-                    break;
-            }
-        }
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(movementSpeedList));
-       // generatedNPCFinished.add(generatedNPCFinished.size(), movementSpeedList);
+        ArrayList<String> movementSpeedList = determineMovementSpeed(race);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(movementSpeedList));//movement speed
 
         //Prof Bonus
-        profBonus = Integer.parseInt(dbms.getRow("level",String.valueOf(level)).get(2));
+        profBonus = determineProfBonus(level);
 
+        savingThrows = determineSavingThrows(genClass, abilityModifier, profBonus);// saving throws
         //Saving Throws
-        if(!genClass.equals("Commoner")) {
-            savingThrowList = (bigStringToDividedString(dbms.getRow("class", genClass).get(5)));
-            for (String s : savingThrowList) {
-                //für jeden AbilityScore Boni, diesen hinzufügen
-                switch (s) {
-                    case "Str":
-                        savingThrows.add("Str" + (abilityModifier.get(0) + profBonus));
-                        break;
-                    case "Dex":
-                        savingThrows.add("Dex" + (abilityModifier.get(1) + profBonus));
-                        break;
-                    case "Con":
-                        savingThrows.add("Con" + (abilityModifier.get(2) + profBonus));
-                        break;
-                    case "Int":
-                        savingThrows.add("Int" + (abilityModifier.get(3) + profBonus));
-                        break;
-                    case "Wis":
-                        savingThrows.add("Wis" + (abilityModifier.get(4) + profBonus));
-                        break;
-                    case "Cha":
-                        savingThrows.add("Cha" + (abilityModifier.get(5) + profBonus));
-                        break;
-                    default:
-                        savingThrows.add("none");
-                        break;
-                }
-            }
-            savingThrows.remove("none");
-            generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
-        }else{
-            savingThrows.add("none");
-            generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
-        }
 
-
-
-
-        //random Skills
-        //Race Skills
-        raceSkillList= dbms.getRow("race", race).get(6);
-       if((raceSkillList != null)&&(!raceSkillList.contains("Any"))&&(raceSkillList.contains(":"))){ // nicht null, nicht Any, aber enthält":"
-           numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
-           raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":")+1, raceSkillList.length()-1);
-           skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
-
-       } else if ((raceSkillList !=null) && raceSkillList.contains("Any")) { //nicht null, enthält Any
-           numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
-           raceSkillList= "Acrobatics, Animal Handling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, Sleight of Hand, Stealth, Survival";
-           skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
-
-       } else {
-           skillList.add(raceSkillList);
-       }
-
-        //Job Skills
-        skillList.addAll(bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
-
-        //ClassSkills
-
-        if(!genClass.equals("Commoner")) {     // Fall Commoner?
-            possibleSkillList = bigStringToDividedString(dbms.getRow("class", genClass).get(6)); // Skills durch class
-            numberSkill = Integer.parseInt(dbms.getRow("class", genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
-            if (possibleSkillList.contains("Any")) { // fall barde
-                possibleSkillList.add("Acrobatics");
-                possibleSkillList.add("Animal Handling");
-                possibleSkillList.add("Arcana");
-                possibleSkillList.add("Athletics");
-                possibleSkillList.add("Deception");
-                possibleSkillList.add("History");
-                possibleSkillList.add("Insight");
-                possibleSkillList.add("Intimidation");
-                possibleSkillList.add("Investigation");
-                possibleSkillList.add("Medicine");
-                possibleSkillList.add("Nature");
-                possibleSkillList.add("Perception");
-                possibleSkillList.add("Performance");
-                possibleSkillList.add("Persuasion");
-                possibleSkillList.add("Religion");
-                possibleSkillList.add("Sleight of Hand");
-                possibleSkillList.add("Stealth");
-                possibleSkillList.add("Survival");    //alle skills hinzufügen
-            }
-            skillList = (ArrayList<String>) randGen.randSkillProf(possibleSkillList,numberSkill, skillList);
-            Set<String> removeDuplicate = new HashSet<>(skillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-            skillList.clear();
-            skillList.addAll(removeDuplicate);
-            //generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(addAbilityScoreToSkillList(abilityModifier, skillList)));
-        }else {
-            generatedNPCFinished.add(generatedNPCFinished.size(), "None");
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
+        if (!genClass.equals("Commoner")) {     // Fall Commoner?
+            generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(addAbilityScoreToSkillList(abilityModifier,determineSkillList(race, job, genClass), profBonus)));
+        } else {
+            generatedNPCFinished.add(generatedNPCFinished.size(), "none");
         }
 
         //random Gender
-        if (inputGender== null){
+        if (inputGender == null) {
             gender = randGen.randGender();
-        } else{
+        } else {
             gender = inputGender;
         }
         generatedNPCFinished.add(generatedNPCFinished.size(), gender);
@@ -332,11 +181,23 @@ public class RandomNPC {
         //random Age
         age = randGen.randAge(race);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(age));
-/*
+
         //RandomName
-        name = randGen.randName(gender,race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), race);
-*/
+        /*
+        if (inputName == null) {
+            String raceName;
+            if (race.contains("Half")) {
+                raceName = race.replace("Half-", "");
+            } else {
+                raceName = race;
+            }
+            name = randGen.randName(gender, raceName);
+        }else{
+            name = inputName;
+        }*/
+        name = "Olaf";
+        generatedNPCFinished.add(generatedNPCFinished.size(), name);
+
         //random Description
         description = randGen.randDescription();
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(description));
@@ -350,7 +211,7 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), deity);
 
         //random Languages
-        languagesRace = dbms.getRow("race",race).get(10);   // Sprachen der Rasse
+        languagesRace = dbms.getRow("race", race).get(10);   // Sprachen der Rasse
         languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
 
         languages = bigStringToDividedString(languagesRace); //aufteilung des Strings
@@ -358,7 +219,7 @@ public class RandomNPC {
         count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
 
         languages.removeLast(); //Nummer wird entfernt aus der ArrayList
-        for ( int i=0; i<count;i++){
+        for (int i = 0; i < count; i++) {
             languages.add(randGen.randLanguages()); //for schleife
         }
 
@@ -366,7 +227,6 @@ public class RandomNPC {
         languages.clear();
         languages.addAll(removeDuplicatedLanguages);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
-
         return generatedNPCFinished;
     }
 
@@ -444,30 +304,234 @@ public class RandomNPC {
         return abilityModifier;
     }
 
-    public ArrayList<String> addAbilityScoreToSkillList(ArrayList<Integer> abilityModifier, ArrayList<String> skillList ){
-        ArrayList<String> skillListWithNumbers = null;
+    public ArrayList<String> addAbilityScoreToSkillList(ArrayList<Integer> abilityModifier, ArrayList<String> skillList, int profBonus ){
+        ArrayList<String> skillListWithNumbers = new ArrayList<>();
         String dbAbilityScore ;
         for (String s : skillList){
-            if(s != null) {
-                dbAbilityScore = dbms.getRow("skills", s).getFirst();
+            if((s != null) && (!s.equals("Any"))) {
+                s= s.replaceAll("\\s+","");
+                dbAbilityScore = dbms.getRow("skills", s).get(2);
+                switch (s){
+                    case "SleightofHand":
+                        s= "Sleight of Hand";
+                        break;
+                    case "AnimalHandling":
+                        s="Animal Handling";
+                        break;
+                }
+
                 switch (dbAbilityScore) {
                     case "Str":
-                        skillListWithNumbers.add(s + abilityModifier.get(0));
+                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(0) + profBonus));
+                        break;
                     case "Dex":
-                        skillListWithNumbers.add(s + abilityModifier.get(1));
+                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(1)+ profBonus));
+                        break;
                     case "Con":
-                        skillListWithNumbers.add(s + abilityModifier.get(2));
+                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(2)+ profBonus));
+                        break;
                     case "Int":
-                        skillListWithNumbers.add(s + abilityModifier.get(3));
+                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(3)+ profBonus));
+                        break;
                     case "Wis":
-                        skillListWithNumbers.add(s + abilityModifier.get(4));
+                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(4)+ profBonus));
+                        break;
                     case "Cha":
-                        skillListWithNumbers.add(s + abilityModifier.get(5));
+                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(5)+ profBonus));
+                        break;
                 }
             }
         }
         return skillListWithNumbers;
     }
+    /*
+    Diese Funktion wurde ausgelagert. Sie möchte, um glücklich zu sein, die klasse, rasse und die ability Modifier.
+    Am Ende wird zurückgegeben eine ArrayList<> mit (Die ausgewählte Rüstung, die Armor Class vollständig berechnet)
+     */
+    public ArrayList<String> determineArmorAndAC(String genClass, String race, ArrayList<Integer> abilityModifier){
+        ArrayList<String> armorProfList = randGen.figureOutProfList("armor", genClass, race);
+        ArrayList<String> armorBoni;
+        ArrayList<String> currentArmor;
+        String kindOfArmor;
+        int armorClass;
+        boolean isThereAShield =armorProfList.contains("Shield");
+
+        String armorList = randGen.randArmor(armorProfList); // LUCA FIX   // Sollte gefixt sein
+
+        //Berechnung AC
+        if(armorList == null){
+            armorList = "None";
+        }
+        currentArmor= dbms.getRow("armor",armorList);
+        armorClass = Integer.parseInt(currentArmor.get(3));
+        armorBoni = bigStringToDividedString(currentArmor.get(5));
+
+        kindOfArmor = currentArmor.get(2);
+        if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
+            for(String s: armorBoni){
+                //für jeden AbilityScore Boni, diesen hinzufügen
+                armorClass = switch (s) {
+                    case "Str" -> armorClass + abilityModifier.get(0);
+                    case "Dex" -> armorClass + abilityModifier.get(1);
+                    case "Con" -> armorClass + abilityModifier.get(2);
+                    case "Int" -> armorClass + abilityModifier.get(3);
+                    case "Wis" -> armorClass + abilityModifier.get(4);
+                    case "Cha" -> armorClass + abilityModifier.get(5);
+                    default -> armorClass;
+                };
+            }
+        }else if((armorBoni.size()==1)&&(armorBoni.contains("Dex"))) {
+            armorClass = Integer.parseInt(currentArmor.get(3)) + abilityModifier.get(1);
+        }
+        if((armorClass> Integer.parseInt(currentArmor.get(4)))){//überprüfen ob AC im toleranten Bereich liegt
+            armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
+        }
+        if(isThereAShield){
+            int shieldPercent= rndNumb.nextInt(2);
+            if(shieldPercent == 1){
+                armorList = armorList + " + " + "Shield";
+                armorClass = armorClass +2;
+            }
+        }
+        ArrayList<String> armorAndArmorClass = new ArrayList<>();
+        armorAndArmorClass.add(armorList);
+        armorAndArmorClass.add(String.valueOf(armorClass));
+        return armorAndArmorClass;
+    }
+    public ArrayList<String> determineWeapons(String genClass, String race){
+        ArrayList<String> weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
+        ArrayList<String> weaponList = new ArrayList<>();
+        //randomWeapon
+         int weaponCount = rndNumb.nextInt(4);
+        for(int i=0; i<weaponCount;i++){
+            weaponList.add(randGen.randWeapon(weaponProfList));
+        }
+        Set<String> removeDuplicateWeapons = new HashSet<>(weaponList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
+        weaponList.clear();
+        weaponList.addAll(removeDuplicateWeapons);
+        return weaponList;
+    }
+    public ArrayList<String> determineMovementSpeed(String race) {
+        //creature Speed
+        ArrayList<String> movementSpeed = (bigStringToDividedString(dbms.getRow("race", race).get(9)));
+        ArrayList<String> movementSpeedList = new ArrayList<>();
+        for (String s : movementSpeed) {
+            switch (s.substring(s.length() - 1)) {
+
+                case "w":
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " walking Speed");
+                    break;
+                case "f":
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " flying Speed");
+                    break;
+                case "b":
+                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " burrowing Speed");
+                    break;
+            }
+
+        }
+        return movementSpeedList;
+    }
+    public int determineProfBonus(int level) {
+       return Integer.parseInt(dbms.getRow("level", String.valueOf(level)).get(2));
+    }
+    public ArrayList<String> determineSavingThrows(String genClass, ArrayList<Integer> abilityModifier, int profBonus){
+        ArrayList<String> savingThrows = new ArrayList<>();
+        if(!genClass.equals("Commoner")) {
+            ArrayList<String> savingThrowList = (bigStringToDividedString(dbms.getRow("class", genClass).get(5)));
+            for (String s : savingThrowList) {
+                //für jeden AbilityScore Boni, diesen hinzufügen
+                switch (s) {
+                    case "Str":
+                        savingThrows.add("Str " + "+" +(abilityModifier.getFirst() + profBonus));
+                        break;
+                    case "Dex":
+                        savingThrows.add("Dex " + "+" +(abilityModifier.get(1) + profBonus));
+                        break;
+                    case "Con":
+                        savingThrows.add("Con " + "+" +(abilityModifier.get(2) + profBonus));
+                        break;
+                    case "Int":
+                        savingThrows.add("Int " + "+" +(abilityModifier.get(3) + profBonus));
+                        break;
+                    case "Wis":
+                        savingThrows.add("Wis " + "+" +(abilityModifier.get(4) + profBonus));
+                        break;
+                    case "Cha":
+                        savingThrows.add("Cha" + "+" +(abilityModifier.get(5) + profBonus));
+                        break;
+                    default:
+                        savingThrows.add("none");
+                        break;
+                }
+            }
+            savingThrows.remove("none");
+        }else{
+            savingThrows.add("none");
+        }
+
+        return savingThrows;
+    }
+    public int calculateHP(String genClass, int level, ArrayList<Integer> abilityModifier ){
+        if (level == 0){
+            level = 1;
+        }
+        return randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
+
+    }
+    public ArrayList<String> determineSkillList (String race, String job, String genClass){
+        //Race Skills
+        int numberSkill;
+        ArrayList<String> skillList =new ArrayList<>();
+        String raceSkillList = dbms.getRow("race", race).get(6);
+        if((raceSkillList != null)&&(!raceSkillList.contains("Any"))&&(raceSkillList.contains(":"))){ // nicht null, nicht Any, aber enthält":"
+            numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
+            raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":")+1, raceSkillList.length()-1);
+            skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
+
+        } else if ((raceSkillList !=null) && raceSkillList.contains("Any")) { //nicht null, enthält Any
+            raceSkillList=raceSkillList.replace("Any","");
+            numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
+            raceSkillList= "Acrobatics, Animal Handling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, Sleight of Hand, Stealth, Survival ";
+            skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
+
+        } else {
+            skillList.add(raceSkillList);
+        }
+        //Job Skills
+        skillList.addAll(bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
+
+        //ClassSkills
+        ArrayList<String> possibleSkillList = bigStringToDividedString(dbms.getRow("class", genClass).get(6)); // Skills durch class
+        numberSkill = Integer.parseInt(dbms.getRow("class", genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
+            if (possibleSkillList.contains("Any")) { // fall barde
+                possibleSkillList.add("Acrobatics");
+                possibleSkillList.add("Animal Handling");
+                possibleSkillList.add("Arcana");
+                possibleSkillList.add("Athletics");
+                possibleSkillList.add("Deception");
+                possibleSkillList.add("History");
+                possibleSkillList.add("Insight");
+                possibleSkillList.add("Intimidation");
+                possibleSkillList.add("Investigation");
+                possibleSkillList.add("Medicine");
+                possibleSkillList.add("Nature");
+                possibleSkillList.add("Perception");
+                possibleSkillList.add("Performance");
+                possibleSkillList.add("Persuasion");
+                possibleSkillList.add("Religion");
+                possibleSkillList.add("Sleight of Hand");
+                possibleSkillList.add("Stealth");
+                possibleSkillList.add("Survival");    //alle skills hinzufügen
+            }
+            skillList = (ArrayList<String>) randGen.randSkillProf(possibleSkillList,numberSkill, skillList);
+            Set<String> removeDuplicate = new HashSet<>(skillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
+            skillList.clear();
+            skillList.addAll(removeDuplicate);
+        return skillList;
+    }
+
+
 
 
 
