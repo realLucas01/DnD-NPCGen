@@ -177,7 +177,7 @@ String inputName = null;
 
         //RandomName
         name = randGen.randName(gender,race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), race);
+        generatedNPCFinished.add(generatedNPCFinished.size(), name);
 
 
         //random Alignment
@@ -200,8 +200,6 @@ String inputName = null;
             genClass= dbms.getRandomRow("draconic ancestry").get(1) + " - " + genClass;
             generatedNPCFinished.set(3, genClass);
         }
-        System.out.println("features" + determineFeatures(race,genClass,level, "action"));
-        System.out.println("npc" + generatedNPCFinished);
         return generatedNPCFinished;
     }
 
@@ -379,7 +377,7 @@ String inputName = null;
         ArrayList<String> weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
         ArrayList<String> weaponList = new ArrayList<>();
         //randomWeapon
-         int weaponCount = rndNumb.nextInt(4)+2;
+        int weaponCount = rndNumb.nextInt(4)+2;
         for(int i=0; i<weaponCount;i++){
             weaponList.add(randGen.randWeapon(weaponProfList));
         }
@@ -469,7 +467,7 @@ String inputName = null;
         } else if ((raceSkillList !=null) && raceSkillList.contains("Any")) { //nicht null, enthält Any
             raceSkillList=raceSkillList.replace("Any","");
             numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
-            raceSkillList= "Acrobatics, Animal Handling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, Sleight of Hand, Stealth, Survival ";
+            raceSkillList= "Acrobatics, Animal Handling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, Sleight of Hand, Stealth, Survival";
             skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
 
         } else {

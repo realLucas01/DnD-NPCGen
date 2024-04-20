@@ -212,8 +212,6 @@ public class RandomGenerator {
 
 		switch (neededProfList) {    // Entscheidung welche ProfListe man benötigt
 			case "armor":
-				/*databaseReturn = dbms.getRow("class", charClass);
-				profList = bigStringToDividedString(databaseReturn.get(4));*/
 				profList = bigStringToDividedString(dbms.getRow("class", charClass).get(4));
 
 				databaseReturn = dbms.getRow("race", race);
@@ -225,7 +223,7 @@ public class RandomGenerator {
 							kindOfFeature = databaseReturn.get(3);
 
 							if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
-								kindOfFeature.replace("armor:", " ");
+								kindOfFeature= kindOfFeature.replace("armor: ", "");
 								profList.addAll(bigStringToDividedString(kindOfFeature));
 								break;
 							}
@@ -247,7 +245,7 @@ public class RandomGenerator {
 							kindOfFeature = databaseReturn.get(3);
 
 							if (kindOfFeature.contains("weapon:")) {
-								kindOfFeature.replace("weapon:", " ");
+								kindOfFeature =kindOfFeature.replace("weapon:", " ");
 								profList.addAll(bigStringToDividedString(kindOfFeature));
 								break;
 							}
