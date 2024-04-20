@@ -19,7 +19,8 @@ public interface DracAncesRepository extends CrudRepository<DracAncesModel, Inte
 	
 	long count();
 	ArrayList<DracAncesModel> findByDraconicId(Integer id);
-	ArrayList<DracAncesModel> findByDraconicDragon(String dragon);
+	DracAncesModel findByDraconicDragon(String dragon);
 	ArrayList<DracAncesModel> findByDraconicDamageType(String damageType);
 	ArrayList<DracAncesModel> findByDraconicBreathWeapon(String breathWeapon);
+	Page<DracAncesModel> findAll(Pageable pageable);
 }

@@ -242,6 +242,13 @@ public class DBMS implements ApplicationContextAware{
 				CD.add(1, Entryskill.getSkillName());
 				CD.add(2, Entryskill.getSkillAbilityScore());
 				break;
+			case "dracances":
+				DracAncesModel Entrydracances = dracAncesRepository.findByDraconicDragon(searchstring);
+				CD.add(0, Entrydracances.getDraconicId().toString());
+				CD.add(1, Entrydracances.getDraconicDragon());
+				CD.add(2, Entrydracances.getDraconicDamageType());
+				CD.add(3, Entrydracances.getDraconicBreathWeapon());
+				break;
 			default:
 				CD = null;
 			}
@@ -357,6 +364,18 @@ public class DBMS implements ApplicationContextAware{
 		    randRow.add(0, randalig.getAlignmentId().toString());
 		    randRow.add(1, randalig.getAlignmentName());
 		    randRow.add(2, randalig.getAlignmentShorted());
+		    }
+			break;
+		case "dracances":
+			qty = dracAncesRepository.count();
+			idx = (int)(Math.random() * qty);
+		    questionPage = dracAncesRepository.findAll(PageRequest.of(idx, 1));
+		    if (questionPage.hasContent()) {
+		    	DracAncesModel randdracances = (DracAncesModel) questionPage.getContent().get(0);
+			randRow.add(0, randdracances.getDraconicId().toString());
+			randRow.add(1, randdracances.getDraconicDragon());
+			randRow.add(2, randdracances.getDraconicDamageType());
+			randRow.add(3, randdracances.getDraconicBreathWeapon());
 		    }
 			break;
 		default:
