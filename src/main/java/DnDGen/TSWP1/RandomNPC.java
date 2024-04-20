@@ -26,22 +26,15 @@ public class RandomNPC {
      */
 
     public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
-        ArrayList<String> skillList = new ArrayList<>();
         ArrayList<String> weaponList = new ArrayList<>();
-        ArrayList<String> possibleSkillList;
         ArrayList<String> languages;
-        String raceSkillList;
-        ArrayList<String> weaponProfList;
-        ArrayList<String> savingThrowList;
         ArrayList<String> savingThrows = new ArrayList<>();
-        ArrayList<String> movementSpeed;
         ArrayList<String> description;
         ArrayList<Integer> abilityScores = null;
         ArrayList<Integer> abilityModifier;
         ArrayList<String> generatedNPCFinished = new ArrayList<>();
-        Random rndNumb = new Random();
-        String race, job, genClass, gender, name, alignment, deity, languagesRace, languagesJob, kindOfArmor;
-        int level, numberSkill, age, profBonus, count, weaponCount, healthPoints, armorClass;
+        String race, job, genClass, gender, name, alignment, deity;
+        int level, age, profBonus, healthPoints;
 String inputName = null;
         //random Race
         if (inputRace == null) {
@@ -183,7 +176,6 @@ String inputName = null;
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(age));
 
         //RandomName
-
         name = randGen.randName(gender,race);
         generatedNPCFinished.add(generatedNPCFinished.size(), race);
 
@@ -201,22 +193,15 @@ String inputName = null;
         generatedNPCFinished.add(generatedNPCFinished.size(), deity);
 
         //random Languages
-        languagesRace = dbms.getRow("race", race).get(10);   // Sprachen der Rasse
-        languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
-
-        languages = bigStringToDividedString(languagesRace); //aufteilung des Strings
-
-        count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
-
-        languages.removeLast(); //Nummer wird entfernt aus der ArrayList
-        for (int i = 0; i < count; i++) {
-            languages.add(randGen.randLanguages()); //for schleife
-        }
-
-        Set<String> removeDuplicatedLanguages = new HashSet<>(languages); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-        languages.clear();
-        languages.addAll(removeDuplicatedLanguages);
+        languages = determineLanguages(race,job);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
+
+        if(genClass.equals("Dragonborn")){
+            genClass= dbms.getRandomRow("draconic ancestry").get(1) + " - " + genClass;
+            generatedNPCFinished.set(3, genClass);
+        }
+        System.out.println("features" + determineFeatures(race,genClass,level, "action"));
+        System.out.println("npc" + generatedNPCFinished);
         return generatedNPCFinished;
     }
 
@@ -308,6 +293,8 @@ String inputName = null;
                     case "AnimalHandling":
                         s="Animal Handling";
                         break;
+                    default:
+                        break;
                 }
 
                 switch (dbAbilityScore) {
@@ -392,7 +379,7 @@ String inputName = null;
         ArrayList<String> weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
         ArrayList<String> weaponList = new ArrayList<>();
         //randomWeapon
-         int weaponCount = rndNumb.nextInt(4);
+         int weaponCount = rndNumb.nextInt(4)+2;
         for(int i=0; i<weaponCount;i++){
             weaponList.add(randGen.randWeapon(weaponProfList));
         }
@@ -519,6 +506,52 @@ String inputName = null;
             skillList.clear();
             skillList.addAll(removeDuplicate);
         return skillList;
+    }
+    public ArrayList<String> determineLanguages(String race, String job){
+        String languagesRace = dbms.getRow("race", race).get(10);   // Sprachen der Rasse
+        String languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
+        ArrayList<String> languages = bigStringToDividedString(languagesRace); //aufteilung des Strings
+
+        int count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
+
+        languages.removeLast(); //Nummer wird entfernt aus der ArrayList
+        for (int i = 0; i < count; i++) {
+            languages.add(randGen.randLanguages()); //for schleife
+        }
+
+        Set<String> removeDuplicatedLanguages = new HashSet<>(languages); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
+        languages.clear();
+        languages.addAll(removeDuplicatedLanguages);
+        return languages;
+    }
+    public ArrayList<String> determineFeatures(String race, String genClass, int level, String searchedFeature){
+        ArrayList<String> features = new ArrayList<>();
+        ArrayList<String> finalFeatures = new ArrayList<>();
+        String searchTermDB = null;
+
+        if(!(dbms.getRow("race", race).get(3) == null)){
+            features.addAll(bigStringToDividedString(dbms.getRow("race", race).get(3)));
+        }
+        switch (searchedFeature) {
+            case "action":
+                searchTermDB = "natural attack";
+                break;
+            case "bonus text":
+                searchTermDB = searchedFeature;
+                break;
+            case "bonus action":
+                searchTermDB = "bonus action";
+                break;
+            default:
+                break;
+        }
+        for(String s: features) {
+            if (dbms.getRow("features", s).get(3).equals(searchTermDB)){
+                finalFeatures.add(dbms.getRow("features", s).get(1) + ": " + dbms.getRow("features",s).get(2));
+            }
+
+        }
+        return finalFeatures;
     }
 
 

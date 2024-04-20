@@ -351,7 +351,7 @@ public class UI extends Application {
             raceL.setText("Rasse: " + npc.get(0));
             levelL.setText("Level: " + String.valueOf(npc.get(1)));
             jobL.setText("Beruf: " + npc.get(2));
-            alignmentL.setText("Alignment: " + npc.get(17));
+            alignmentL.setText("Alignment: " + npc.get(16));
             ageL.setText("Alter: " + String.valueOf(npc.get(14)));
             sexL.setText("Geschlecht: " + npc.get(13));
             deityL.setText("Gottheit: " + npc.get(18));
@@ -413,7 +413,7 @@ public class UI extends Application {
             //descriptionStack.getChildren().removeAll();
 
             descriptionStack.getChildren().clear();
-            listNpc = stringToList(npc.get(16));
+            listNpc = stringToList(npc.get(17));
             Label titel = new Label("Beschreibung: ");
             for(int i = 0; i < listNpc.size(); i++) {
                 Label label = new Label(listNpc.get(i).toString());
