@@ -1,6 +1,7 @@
 package DnDGen.TSWP1;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.context.ApplicationContext;
 
@@ -38,6 +39,24 @@ public class RandomGenerator {
 		return dividedString;
 	}
 
+	public static ArrayList<Double> divideDoubles(String bigNumber) {
+		ArrayList<String> dividedString = new ArrayList<>();
+		ArrayList<Double> parsedToDouble = new ArrayList<Double>();
+		String[] partsOfTheBigString = bigNumber.split("-");
+
+		for (String s : partsOfTheBigString) {
+			if (!dividedString.contains(s)) {
+				dividedString.add(s);
+			}
+		}
+		System.out.println(dividedString);
+		for(int k = 0; k < 2; k++) {
+			Double parsedInt = Double.parseDouble(dividedString.get(k));
+			parsedToDouble.add(parsedInt);
+		}
+		return parsedToDouble;
+	}
+	
 	public   int diceThrower(Integer diceCount, Integer diceNumber) {
 
 		int addedRolls = 0;
@@ -72,7 +91,27 @@ public class RandomGenerator {
 		Collections.sort(finishedSetForAbilityScores, Collections.reverseOrder());
 		return finishedSetForAbilityScores;
 	}
-
+	
+	public double randHeight(String race) {
+		ArrayList<String> rawHeight = new ArrayList<String>();
+		ArrayList<Double> minMaxArray = new ArrayList<Double>();
+		String height;
+		double min, max = 0.0;
+		
+		rawHeight = dbms.getRow("race", race);
+		height = rawHeight.get(7);
+		
+		minMaxArray = divideDoubles(height);
+		min = minMaxArray.get(0);
+		max = minMaxArray.get(1);
+		
+		Double randomNum = ThreadLocalRandom.current().nextDouble(min, max);
+		double roundOff = Math.round(randomNum * 10.0) / 10.0; 
+		
+		return roundOff;
+		
+	}
+	
 	/* @Luca */
 	public   String randCharClass() {
 		ArrayList<String> rndClass = dbms.getRandomRow("class");
@@ -108,12 +147,40 @@ public class RandomGenerator {
 		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
 		return rndLevel.nextInt(21);
 	}
-
+	
+	public String randSize(String race) {
+		String size;
+		ArrayList<String> sizeArray = new ArrayList<String>();
+		ArrayList<String> newSize = new ArrayList<String>();
+		
+		sizeArray = dbms.getRow("race", race);
+		size = sizeArray.get(8);
+		newSize = bigStringToDividedString(size);
+		
+		if(newSize.size() == 1) {
+			Random rand = new Random();
+			int value = rand.nextInt(2);
+			size = sizeArray.get(value);		
+		
+		} else {
+			size = sizeArray.get(8);
+		}
+		
+		return size;
+	}
+	
 	/* TO DO @Lenard */
-	public ArrayList<String> randDescription() {
+	public ArrayList<String> randDescription(String race, String alignment) {
 		
 		ArrayList<String> desc = new ArrayList<String>();
 		ArrayList<String> dbData = new ArrayList<String>();
+		
+		String job = randJob();
+		String gender = randGender();
+		Integer age = randAge(race);
+		String deity = randDeity(alignment);
+		String size = randSize(race);
+		Double height = randHeight(race);
 		
 		int i = 1;
 		while(i < 13) {
@@ -122,6 +189,15 @@ public class RandomGenerator {
 			dbData.clear();
 			i++;
 		}
+		
+		desc.add(job);
+		desc.add(gender);
+		desc.add(age.toString());
+		desc.add(deity);
+		desc.add(size);
+		desc.add(height.toString());
+		
+		//Eyes, HairColor, HairStyle, Skin, Trait, Mannerism, DOnd, Flaw, Ideal, Voice, CLothing, Attitude, Plothook, Job, Gender, age, deity, size, height
 		return desc;
 	}
 
@@ -306,13 +382,6 @@ public class RandomGenerator {
 		knownSkillList.addAll(removeDuplicate);
 
 		return knownSkillList;
-	}
-
-	/* TO DO @Luca */
-	public   String randPlotHook() {
-		String plotHook = "NO PLOT HOOK";
-
-		return plotHook;
 	}
 
 	/* TO DO @Lenard */

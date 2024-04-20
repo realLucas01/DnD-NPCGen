@@ -183,28 +183,18 @@ String inputName = null;
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(age));
 
         //RandomName
-        /*
-        if (inputName == null) {
-            String raceName;
-            if (race.contains("Half")) {
-                raceName = race.replace("Half-", "");
-            } else {
-                raceName = race;
-            }
-            name = randGen.randName(gender, raceName);
-        }else{
-            name = inputName;
-        }*/
-        name = "Olaf";
-        generatedNPCFinished.add(generatedNPCFinished.size(), name);
 
-        //random Description
-        description = randGen.randDescription();
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(description));
+        name = randGen.randName(gender,race);
+        generatedNPCFinished.add(generatedNPCFinished.size(), race);
+
 
         //random Alignment
         alignment = randGen.randAlignment();
         generatedNPCFinished.add(generatedNPCFinished.size(), alignment);
+        
+      //random Description
+        description = randGen.randDescription(race, alignment);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(description));
 
         //random Deity
         deity = randGen.randDeity(alignment);
