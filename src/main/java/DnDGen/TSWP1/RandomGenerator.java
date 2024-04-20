@@ -156,15 +156,14 @@ public class RandomGenerator {
 		size = sizeArray.get(8);
 		newSize = bigStringToDividedString(size);
 		
-		if(newSize.size() == 1) {
+		if(newSize.size() == 2) {
 			Random rand = new Random();
 			int value = rand.nextInt(2);
-			size = sizeArray.get(value);		
-		
+			size = newSize.get(value);		
 		} else {
 			size = sizeArray.get(8);
 		}
-		
+
 		return size;
 	}
 	
@@ -325,20 +324,30 @@ public class RandomGenerator {
 
 		String firstName = "NO FIRSTNAME";
 		String secondName = "NO SECONDNAME";
-
+		ArrayList<String> splitRaceArray = new ArrayList<String>();
+		String[] newRace = race.split(" ");
+		
+		for (String s : newRace) {
+			if (!splitRaceArray.contains(s)) {
+				splitRaceArray.add(s);
+			}
+		}
+		
+		String newRaceString = splitRaceArray.getLast();
+		
 		ArrayList<String> newName = new ArrayList<String>();
-		newName = dbms.getRowPref("name", race);
+		newName = dbms.getRowPref("name", newRaceString);
 		
 		firstName = newName.get(1);
 		
 		while (!(gender.equals(newName.get(4)))) {
 
-			newName = dbms.getRowPref("name", race);
+			newName = dbms.getRowPref("name", newRaceString);
 			firstName = newName.get(1);
 
 		}
 
-		newName = dbms.getRowPref("name", race);
+		newName = dbms.getRowPref("name", newRaceString);
 		secondName = newName.get(2);
 
 		name = firstName + " " + secondName;
