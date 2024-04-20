@@ -49,7 +49,6 @@ public class RandomGenerator {
 				dividedString.add(s);
 			}
 		}
-		System.out.println(dividedString);
 		for(int k = 0; k < 2; k++) {
 			Double parsedInt = Double.parseDouble(dividedString.get(k));
 			parsedToDouble.add(parsedInt);
