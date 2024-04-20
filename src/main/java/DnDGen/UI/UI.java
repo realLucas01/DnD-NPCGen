@@ -1,6 +1,8 @@
 package DnDGen.UI;
 
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 import DnDGen.TSWP1.RandomNPC;
@@ -25,7 +27,6 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class UI extends Application {
     Stage window;
@@ -97,28 +98,37 @@ public class UI extends Application {
 
         //Seite generatePage
         //Name
+        Label labelName = new Label("Name:");
+        GridPane.setConstraints(labelName, 0, 0);
         TextField nameField = new TextField();
         nameField.setPromptText("Name");
-        GridPane.setConstraints(nameField,1,1,2,1);
-
+        GridPane.setConstraints(nameField,1,0,2,1);
+/*
+          0 1 2
+        0 - --- Name   00 1021
+        1 - --- Rasse  01 1121
+        2 - --- Klasse 02 1221
+        3 - --- Job    03 1321
+        */
         //Rasse
         Label labelRace = new Label("Rasse:");
-        GridPane.setConstraints(labelRace, 1, 2);
+        GridPane.setConstraints(labelRace, 0, 1);
 
         final ComboBox cbRace = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbRace, 2, 2);
+        GridPane.setConstraints(cbRace, 1, 1,2,1);
         ArrayList<String> list = dbms.onlyColumn("race");
         Collections.sort(list);
         cbRace.getItems().addAll(list);
         cbRace.getSelectionModel().selectFirst();
 
 
+
         //Klasse
         Label labelClass = new Label("Klasse:");
-        GridPane.setConstraints(labelClass, 1, 3);
+        GridPane.setConstraints(labelClass, 0, 2);
 
         final ComboBox cbClass = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbClass, 2, 3);
+        GridPane.setConstraints(cbClass, 1, 2,2,1);
         list.clear();
         list = dbms.onlyColumn("class");
         Collections.sort(list);
@@ -128,10 +138,10 @@ public class UI extends Application {
 
         //Job
         Label labelJob = new Label("Beruf:");
-        GridPane.setConstraints(labelJob, 1, 4);
+        GridPane.setConstraints(labelJob, 0, 3);
 
         final ComboBox cbJob = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbJob, 2, 4);
+        GridPane.setConstraints(cbJob, 1, 3,2,1);
         list.clear();
         list = dbms.onlyColumn("job");
         Collections.sort(list);
@@ -141,21 +151,47 @@ public class UI extends Application {
 
         //Level
         Label labelLevel = new Label("Level:");
-        GridPane.setConstraints(labelLevel, 1, 5);
+        GridPane.setConstraints(labelLevel, 0, 4);
 
         final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbLevel, 2, 5);
+        GridPane.setConstraints(cbLevel, 1, 4,2,1);
         for(int i = 1; i < 20; i++) {cbLevel.getItems().add(i);}
         cbLevel.getSelectionModel().selectFirst();
 
         //AbilityScore
         Label labelAbSc = new Label("Ability Score:");
-        GridPane.setConstraints(labelAbSc, 1, 6);
+        GridPane.setConstraints(labelAbSc, 0, 5);
 
         final ComboBox cbAbSc = new ComboBox(FXCollections.observableArrayList("zufall"));
-        GridPane.setConstraints(cbAbSc, 2, 6);
+        GridPane.setConstraints(cbAbSc, 1, 5,2,1);
         cbAbSc.getItems().addAll(dbms.onlyColumn("abilisc"));
         cbAbSc.getSelectionModel().selectFirst();
+
+        //Geschlecht
+        final ToggleGroup groupSex = new ToggleGroup();
+        Image img = new Image("ui-image/male.png");
+        RadioButton rbMale = new RadioButton("Männlich");
+        rbMale.setUserData("male");
+        rbMale.setToggleGroup(groupSex);
+        GridPane.setConstraints(rbMale, 1, 7);
+        rbMale.setGraphic(new ImageView(img));
+
+        img = new Image("ui-image/female.png");
+        RadioButton rbFemale = new RadioButton("Weiblich");
+        rbFemale.setUserData("female");
+        rbFemale.setToggleGroup(groupSex);
+        GridPane.setConstraints(rbFemale, 2, 7);
+        rbFemale.setGraphic(new ImageView(img));
+
+        img = new Image("ui-image/male-and-female.png");
+        RadioButton rbRandom = new RadioButton("Zufall");
+        rbRandom.setUserData("zufall");
+        rbRandom.setToggleGroup(groupSex);
+        GridPane.setConstraints(rbRandom, 0, 7);
+        rbRandom.setGraphic(new ImageView(img));
+        rbRandom.setSelected(true);
+
+
 
 
 
@@ -276,7 +312,7 @@ public class UI extends Application {
         spellActionBox.setPadding(new Insets(10, 10, 10, 10));
 
 
-        Line line1 = new Line(0.0f,0.0f,300.0f,0.0f);
+        Line line1 = new Line(0.0f,0.0f,400.0f,0.0f);
         Line line2 = new Line(0.0f,0.0f,300.0f,0.0f);
         Line line3 = new Line(0.0f,0.0f,300.0f,0.0f);
         Line line4 = new Line(0.0f,0.0f,300.0f,0.0f);
@@ -290,107 +326,76 @@ public class UI extends Application {
         //layoutGenerateGrid.getChildren().add(npcStack);
 
 
-
-
-
         //Button
         Button buttonGenerate = new Button("Generieren");
-        GridPane.setConstraints(buttonGenerate, 1, 7);
+        GridPane.setConstraints(buttonGenerate, 1, 8);
 
         buttonGenerate.setStyle("-fx-font: bold italic 20pt \"Arial\"; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
 
-        buttonGenerate.setOnAction(e -> {
-           //Parameter für generieren  (zufall(cbRace),zufall(cbClass),zufall(cbJob),zufall(cbLevel))
-            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,null);
-            //  0      1     2     3        4                                               5                                       6    7     8      9        10          11     12      13        14    15    16          17       18       19
-            //(race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(),savingThrows, Speed, Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
-            //-------------------------                                                                                           ---         --            --------  ------  ---  ----               ------------------------------
 
 
-            /*
-            System.out.println(npc);
-            System.out.println("Rasse: " + npc.get(0));
-            System.out.println("Level: " + String.valueOf(npc.get(1)));
-            System.out.println("Job: " + npc.get(2));
-            System.out.println("Klasse: " + npc.get(3));
-            System.out.println("AbilityScore: " + npc.get(4));
-            System.out.println("AbilityModifier: " + npc.get(5));
-            System.out.println("HP: " + String.valueOf(npc.get(6)));
-            System.out.println("Armor: " + npc.get(7));
-            System.out.println("AC: " + String.valueOf(npc.get(8)));
-            System.out.println("Weapons(): " + npc.get(9));
-            System.out.println("Speed: " + npc.get(10));
-            System.out.println("Saving Throws: " + npc.get(11));
-            System.out.println("Skills: " + npc.get(12));
-            System.out.println("Sex: " + npc.get(13));
-            System.out.println("Alter: " + String.valueOf(npc.get(14)));
-            System.out.println("Name: " + npc.get(15));
-            System.out.println("Beschreibung: " + npc.get(16));
-            System.out.println("Alignment: " + npc.get(17));
-            System.out.println("Gottheit: " + npc.get(18));
-            System.out.println("Sprache: " + npc.get(19));
-/*
-            String languages = "";
-            List lang = stringToList(npc.get(17));
-            for(int i = 0; i < lang.size(); i++) {
-                languages = languages.concat(lang.get(i) + "\n");
-            }
-            System.out.println("Sprachen Schleife: " + npc.get(18));
+//   Button Klick
+      buttonGenerate.setOnAction(e -> {
+          ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,getSex(groupSex.getSelectedToggle().getUserData().toString()));
+          name = nameField.getText();
 
-            */
+          //Liste mit Positionen vom NPC
+          /*
+          System.out.println(npc);
+          for(int i = 0; i < npc.size(); i++) {
+              System.out.println(i + " - " + npc.get(i));
+          }
+          
+           */
 
+          String stringNpc = "";
+          List listNpc = new ArrayList<>();
 
+          nameL.setText("Name: " + npc.get(15));
+          classL.setText("Klasse: " + npc.get(3));
+          raceL.setText("Rasse: " + npc.get(0));
+          levelL.setText("Level: " + String.valueOf(npc.get(1)));
+          jobL.setText("Beruf: " + npc.get(2));
+          alignmentL.setText("Alignment: " + npc.get(16));
+          ageL.setText("Alter: " + String.valueOf(npc.get(14)));
+          sexL.setText("Geschlecht: " + npc.get(13));
+          deityL.setText("Gottheit: " + npc.get(18));
 
+          armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
+          hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
+          for(int i = 0; i < stringToList(npc.get(10)).size(); i++) {
+              speedL.setText(speedL.getText().concat(stringToList(npc.get(10)).get(i) + " "));
+          }
+        //  speedL.setText("Geschwindigkeit: " + stringToList(npc.get(10)).get(0));
 
+          //Sprachen
+          stringNpc = "";
+          listNpc.clear();
+          listNpc = stringToList(npc.get(19));
+          for(int i = 0; i < listNpc.size(); i++) {
+              stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+          }
+          languagesL.setText("Sprachen:\n" + stringNpc);
 
-            String stringNpc = "";
-            List listNpc = new ArrayList<>();
+          //Ability
+          strL.setText(" Str\n" + abilityString(0,npc));
+          dexL.setText(" Dex\n" + abilityString(1,npc));
+          conL.setText(" Con\n" + abilityString(2,npc));
+          intL.setText(" Int\n" + abilityString(3,npc));
+          wisL.setText(" Wis\n" + abilityString(4,npc));
+          chaL.setText(" Cha\n" + abilityString(5,npc));
 
-            nameL.setText("Name: " + npc.get(15));
-            classL.setText("Klasse: " + npc.get(3));
-            raceL.setText("Rasse: " + npc.get(0));
-            levelL.setText("Level: " + String.valueOf(npc.get(1)));
-            jobL.setText("Beruf: " + npc.get(2));
-            alignmentL.setText("Alignment: " + npc.get(16));
-            ageL.setText("Alter: " + String.valueOf(npc.get(14)));
-            sexL.setText("Geschlecht: " + npc.get(13));
-            deityL.setText("Gottheit: " + npc.get(18));
-
-            armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
-            hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
-            speedL.setText("Geschwindigkeit: " + String.valueOf(npc.get(10)));
-
-
-            //Sprachen
-            stringNpc = "";
-            listNpc.clear();
-            listNpc = stringToList(npc.get(19));
-            for(int i = 0; i < listNpc.size(); i++) {
-                stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
-            }
-            languagesL.setText("Sprachen:\n" + stringNpc);
-
-
-            //Ability
-            strL.setText(" Str\n" + abilityString(0,npc));
-            dexL.setText(" Dex\n" + abilityString(1,npc));
-            conL.setText(" Con\n" + abilityString(2,npc));
-            intL.setText(" Int\n" + abilityString(3,npc));
-            wisL.setText(" Wis\n" + abilityString(4,npc));
-            chaL.setText(" Cha\n" + abilityString(5,npc));
-
-
-            //Inventar
-            stringNpc = "";
-            listNpc.clear();
-            listNpc = stringToList(npc.get(9));
-            for(int i = 0; i < listNpc.size(); i++) {
-                stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
-            }
-            weaponL.setText(stringNpc);
-
-            armorL.setText("    - " + npc.get(7));
-
+          //Inventar
+          stringNpc = "";
+          listNpc.clear();
+          listNpc = stringToList(npc.get(9));
+          for(int i = 0; i < listNpc.size(); i++) {
+              stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+          }
+          weaponL.setText(stringNpc);
+          weaponL.setWrapText(true);
+          armorL.setText("    - " + npc.get(7));
+          armorL.setWrapText(true);
 
             //Spell
             /*
@@ -408,55 +413,56 @@ public class UI extends Application {
             actionTF.getChildren().add(action);
             */
 
-
             //Beschreibung
-            //descriptionStack.getChildren().removeAll();
 
-            descriptionStack.getChildren().clear();
+          descriptionStack.getChildren().clear();
+            /*array ->
+            TextFlow descriptionText = new TextFlow();
+            String description = "
+
+
+
+           */
+
+
             listNpc = stringToList(npc.get(17));
-            Label titel = new Label("Beschreibung: ");
-            for(int i = 0; i < listNpc.size(); i++) {
-                Label label = new Label(listNpc.get(i).toString());
-                label.setWrapText(true);
-                descriptionStack.getChildren().add(label);
+            String sex = npc.get(13);
+
+            TextFlow descriptionText = new TextFlow();
+            String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
+                    name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
+                    firstLetterBig(getPossessivePronoun(sex)) + " wears " + getPronoun(sex) + " hair as " + listNpc.get(2) +
+                    ". They have the color " + listNpc.get(3) + ". " + firstLetterBig(getPossessivePronoun(sex)) +
+                    " is " + listNpc.get(4) + " and " + firstLetterSmall(listNpc.get(5).toString() + ". ");
+            for(int i = 6; i < listNpc.size()-4; i++) {
+                description = description.concat(" " + listNpc.get(i).toString());
             }
 
+            description = description.concat(" " + firstLetterBig(getPossessivePronoun(sex)) + " is driven by " +
+                    listNpc.get(listNpc.size()-4) + ". " + firstLetterBig(getPronoun(sex)) + " voice is " +
+                    listNpc.get(listNpc.size()-3) + " " + name + " is wearing a " + listNpc.get(listNpc.size()-2) +
+                    " and " + getPossessivePronoun(sex) + " is " + listNpc.get(listNpc.size()-1));
 
+            Text text = new Text(description);
+            text.wrappingWidthProperty().bind(descriptionStack.widthProperty());
+            descriptionText.getChildren().add(text);
 
-/*
-
-           System.out.println(zufall(cbRace));
-           System.out.println(zufall(cbClass));
-           System.out.println(zufall(cbJob));
-           System.out.println(zufallLevel(cbLevel));
-           
- */
-           
-          // nameL.setText("Name: " + rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,"male"));
-
-        npcStack.setVisible(true);
-        descriptionStack.setVisible(true);
+            descriptionStack.getChildren().add(descriptionText);
 
 
 
+
+
+            npcStack.setVisible(true);
+            descriptionStack.setVisible(true);
         });
-
-
-
-
-
-
-
-
-
-
 
 
 
         //Layout der Seite
 
         layoutGenerateGrid.getChildren().addAll(nameField, labelRace, labelClass, labelJob, labelLevel, labelAbSc, cbRace, cbClass,
-                                                cbJob, cbLevel, cbAbSc,buttonGenerate);
+                                                cbJob, cbLevel, cbAbSc,buttonGenerate, rbMale, rbFemale, rbRandom, labelName);
         VBox layoutGenerateVBox = new VBox(20);
         HBox gridNpc = new HBox();
 
@@ -468,124 +474,20 @@ public class UI extends Application {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    // ---Stuff zum nachsehen -> wird noch reduziert und gelöscht---
-    /*
-        //Seite 1 - Labels
-        Label label1 = new Label("Das ist die erste Seite");
-        GridPane.setConstraints(label1, 0, 0);
-
-        Label label1Name = new Label("Name:");
-        GridPane.setConstraints(label1Name, 0, 1);
-        Label label1Klasse = new Label("Klasse:");
-        GridPane.setConstraints(label1Klasse, 0, 2);
-        Label label1Rasse = new Label("Ethnie:");
-        GridPane.setConstraints(label1Rasse, 0, 3);
-
-
-        //Seite 1 - Text Input
-        TextField nameInput = new TextField("Max Muster");
-        GridPane.setConstraints(nameInput, 1, 1);
-
-        TextField klasseInput = new TextField();
-        klasseInput.setPromptText("Paladin");
-        GridPane.setConstraints(klasseInput, 1, 2);
-
-        TextField rasseInput = new TextField();
-        GridPane.setConstraints(rasseInput, 1, 3);
-
-
-        //Seite 2 - Labels
-        Label label2Name = new Label();
-        Label label2Klasse = new Label();
-        Label label2Rasse = new Label();
-
-
-        //Man kann den Fenstertitel auf unterschiedliche weise festlegen
-        Button button1 = new Button("Button Title");
-        button1.setText("Zu Seite 2");
-        GridPane.setConstraints(button1, 1, 4);
-
-        //Anonyme inner Class
-        button1.setOnAction(e -> {
-            label2Name.setText("Name: " + nameInput.getText());
-            label2Klasse.setText("Klasse: " + klasseInput.getText());
-            label2Rasse.setText("Ethnie: " + rasseInput.getText());
-
-
-            name = nameInput.getText();
-            klasse = klasseInput.getText();
-            rasse = rasseInput.getText();
-            window.setScene(page2);
-        });
-
-        //Kurzform einer Anonymen inner Class
-        Button button2 = new Button("Zu Seite 1");
-        button2.setOnAction(e -> window.setScene(page1));
-
-
-        //ComboBox
-        ObservableList<String> options =
-                FXCollections.observableArrayList(
-                        "Option 1",
-                        "Option 2",
-                        "Option 3"
-                );
-        final ComboBox comboBox = new ComboBox(options);
-
-        comboBox.getItems().addAll(
-                "Option 4",
-                "Option 5",
-                "Option 6"
-        );
-
-
-        //Layout 1 - Kinder sind in Vertikalen Spalten
-        VBox layout1 = new VBox(20);
-        //layout1.getChildren().addAll(label1,button1);
-        //page1 = new Scene(layout1,200,200);
-        layout1.getChildren().addAll(label2Name, label2Klasse, label2Rasse, button2, comboBox);
-        page2 = new Scene(layout1, 300, 400);
-
-
-        //Layout 2 - Kinder sind auf Stapel/Stack
-        StackPane layout2 = new StackPane();
-        //layout2.getChildren().add(button2);
-        //page2 = new Scene(layout2,600,300);
-
-
-        //Layout 3 - Kinder sind in Tabelle/Grid
-        GridPane layout3 = new GridPane();
-        layout3.setPadding(new Insets(10, 10, 10, 10));
-        layout3.setVgap(7);
-        layout3.setHgap(10);
-        layout3.getChildren().addAll(label1, label1Klasse, label1Name, label1Rasse, nameInput, klasseInput, rasseInput, button1);
-        page1 = new Scene(layout3, 300, 400);
-    */
-
         //Es startet auf der generieren Seite
         //window.setScene(npcPage);
         generatePage.getStylesheets().add("/styles.css");
         window.setScene(generatePage);
         window.show();
 
+        /*
         window.widthProperty().addListener((obs, oldVal, newVal) -> {
             layoutGenerateGrid.setPrefWidth(generatePage.getWidth()/4);
             npcStack.setPrefWidth(generatePage.getWidth()/2);
             descriptionStack.setPrefWidth(generatePage.getWidth()/4);
 
         });
+        */
     }
 
 
@@ -657,5 +559,40 @@ public class UI extends Application {
         } else {string = listNpc.get(index) + "+" + listAbilityModifier.get(index);}
 
         return string;
+    }
+
+    public String getSex(String sex) {
+        if(sex.equals("zufall")) {
+            return null;
+        }
+        return sex;
+    }
+
+    public String getPronoun(String sex) {
+        if(sex.equals("male")) {
+            return "his";
+        } else {
+            return "her";
+        }
+    }
+
+    public String getPossessivePronoun(String sex) {
+        if(sex.equals("male")) {
+            return "he";
+        } else {
+            return "she";
+        }
+    }
+
+    public String firstLetterBig(String word) {
+        String big = word.substring(0,1).toUpperCase();
+        big = big.concat(word.substring(1));
+        return big;
+    }
+
+    public String firstLetterSmall(String word) {
+        String small = word.substring(0,1).toLowerCase();
+        small = small.concat(word.substring(1));
+        return small;
     }
 }
