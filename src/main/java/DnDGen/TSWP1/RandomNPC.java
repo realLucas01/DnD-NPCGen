@@ -74,7 +74,7 @@ String inputName = null;
         switch ((inputAbilityScore)) {
             case null:
                 //AbilityScore 3d6 verwenden
-                abilityScores = randGen.randAbilityScore();
+                abilityScores = randGen.randAbilityScore(3);
                 break;
             case "4d6":
                 //Ability Score berechnen mit vorgegebenen Würfel

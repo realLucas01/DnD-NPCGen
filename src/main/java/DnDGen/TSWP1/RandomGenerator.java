@@ -69,22 +69,29 @@ public class RandomGenerator {
 		return addedRolls;
 	}
 
-	public   ArrayList<Integer> randAbilityScore() {
-
-		ArrayList<Integer> value = new ArrayList<>();
-		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
-
+	public ArrayList<Integer> randAbilityScore(Integer amountOfThrows) {
+		ArrayList<Integer> value = new ArrayList<Integer>();
+		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<Integer>();
+		
 		for (int i = 0; i < 6; i++) {
-			value.add(diceThrower(1, 6));
-			value.add(diceThrower(1, 6));
-			value.add(diceThrower(1, 6));
-			value.add(diceThrower(1, 6));
+			int j = 0;
+			while(j <= amountOfThrows + 1) {
+				value.add(diceThrower(1, 6));
+				j++;
+			}
+			
 			Collections.sort(value, Collections.reverseOrder());
-
-			int number = value.get(0) + value.get(1) + value.get(2);
+			value.removeLast();
+			
+			int k = 0;
+			int number = 0;
+			while(k <= amountOfThrows - 1) {
+				number = number + value.get(k);
+				k++;
+			}
 
 			finishedSetForAbilityScores.add(number);
-
+			
 			value.clear();
 		}
 		Collections.sort(finishedSetForAbilityScores, Collections.reverseOrder());
