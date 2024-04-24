@@ -28,6 +28,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.EntityManager;
+
 @SpringBootApplication
 public class DBMS implements ApplicationContextAware{
 	@SuppressWarnings("unused")
@@ -40,6 +42,8 @@ public class DBMS implements ApplicationContextAware{
 	 */
 	@Autowired
 	AbiliScRepository abiliScRepository;
+	@Autowired
+	ActionRepository actionRepository;
 	@Autowired
 	AlignmentRepository alignmentRepository;
 	@Autowired
@@ -519,7 +523,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRowMultPref(String dbname, String pref1,String pref2){
+	public ArrayList<String> getRowMultPref(String dbname, String pref1, String pref2){
 	    int qty;
 	    Page<?> questionPage;
 	    int idx;
@@ -567,7 +571,7 @@ public class DBMS implements ApplicationContextAware{
 	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
 	 * 					werden in der ArrayList hintereinnader gehangen.
 	 */
-	public ArrayList<String> getMultRowMultPref(String dbname, String pref,String pref2, Integer rownumber){
+	public ArrayList<String> getMultRowMultPref(String dbname, String pref, String pref2, Integer rownumber){
 		ArrayList<String> rand = new ArrayList<String>();
 		ArrayList<String> multRowMultPref = new ArrayList<String>();
 		Integer i = 2;
@@ -584,6 +588,14 @@ public class DBMS implements ApplicationContextAware{
 					rand.clear();
 					i++;
 				}
+			}
+			break;
+		case "Bard":
+			for (ActionModel actions : actionRepository.findByAllActionsWithPref(dbname, Integer.parseInt(pref), pref2)) {
+				rand.add(actions.getActionName());
+				rand.add(actions.getActionDescription());
+				multRowMultPref.addAll(rand);
+				rand.clear();
 			}
 			break;
 		default:

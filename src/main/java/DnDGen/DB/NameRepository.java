@@ -27,4 +27,6 @@ public interface NameRepository extends CrudRepository<NameModel, Integer>{
 	Page<NameModel> findAll(Pageable pageable);
 	@Query("SELECT p FROM NameModel p WHERE p.nameRace = ?1")
 	Page<NameModel> getNamePref(String nameRace,Pageable pageable2);
+	//@Query("SELECT k FROM NameModel k WHERE k.nameRace SOME %?1%")
+	//ArrayList<NameModel> getNamePrefLikeSize(String nameRace);
 }

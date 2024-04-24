@@ -1,5 +1,6 @@
 package DnDGen.TSWP1;
 
+import java.security.SecureRandom;
 import java.util.*;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
@@ -11,10 +12,11 @@ public class RandomNPC {
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
 	 * neu-konstruktion von DBMS wäre sonst leer.
 	 */
-    Random rndNumb =  new Random();
-    RandomGenerator randGen = new RandomGenerator();
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
+    
+    Random rndNumb =  new SecureRandom();
+    RandomGenerator randGen = new RandomGenerator();
 
     /*
     * Diese Funktion dient dazu einen NPC Stat Block zufällig generieren zu lassen.
