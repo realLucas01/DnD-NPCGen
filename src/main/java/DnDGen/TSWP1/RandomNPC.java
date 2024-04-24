@@ -130,6 +130,7 @@ String inputName = null;
 
         //distribute AbilityScore
         abilityScores = distributeAbilityScore(abilityScores, genClass);
+        abilityScores = addRaceModifierToAbilityScore(race,abilityScores);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
 
         //calc AbilityModifier
@@ -392,7 +393,6 @@ String inputName = null;
         ArrayList<String> movementSpeedList = new ArrayList<>();
         for (String s : movementSpeed) {
             switch (s.substring(s.length() - 1)) {
-
                 case "w":
                     movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " walking Speed");
                     break;
@@ -403,7 +403,6 @@ String inputName = null;
                     movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " burrowing Speed");
                     break;
             }
-
         }
         return movementSpeedList;
     }
@@ -551,9 +550,36 @@ String inputName = null;
         }
         return finalFeatures;
     }
+    public ArrayList<Integer> addRaceModifierToAbilityScore(String race, ArrayList<Integer> abilityScore){
+        ArrayList<String> raceAbilityModifier = bigStringToDividedString(dbms.getRow("race", race).get(2));
+        ArrayList<Integer> raceAbilityScore = new ArrayList<>();
+        int raceModNumber;
 
+        for (String s: raceAbilityModifier) {
+            raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
+            s = s.substring(0,3);
+            switch (s){
+                case "Str":
+                    abilityScore.set(0, abilityScore.get(0) + raceModNumber);
+                    break;
+                case "Dex":
+                    abilityScore.set(1,abilityScore.get(1) + raceModNumber);
+                    break;
+                case "Con":
+                    abilityScore.set(2,abilityScore.get(2) + raceModNumber);
+                    break;
+                case "Int":
+                    abilityScore.set(3,abilityScore.get(3) + raceModNumber);
+                    break;
+                case "Wis":
+                    abilityScore.set(4,abilityScore.get(4) + raceModNumber);
+                    break;
+                case "Cha":
+                    abilityScore.set(5,abilityScore.get(5) + raceModNumber);
+                    break;
 
-
-
-
+            }
+        }
+        return abilityScore;
+    }
 }
