@@ -430,7 +430,7 @@ INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Typ
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (8,'Quarterstaff','Versatile','Bludgeoning','1d6/1d8','Simple Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (9,'Sickle','Light','Slashing','1d4','Simple Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (10,'Spear','Thrown, Versatile','Piercing','1d6/1d8','Simple Weapon');
-INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (11,'Crossbow, Light','Ammunition, Loading, Two-Handed','Piercing','1d8','Simple Weapon');
+INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (11,'Light Crossbow','Ammunition, Loading, Two-Handed','Piercing','1d8','Simple Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (12,'Dart','Finesse, Thrown','Piercing','1d4','Simple Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (13,'Shortbow','Ammunition, Two-Handed','Piercing','1d6','Simple Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (14,'Sling','Ammunition','Bludgeoning','1d4','Simple Weapon');
@@ -452,10 +452,10 @@ INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Typ
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (30,'War Pick','--','Piercing','1d8','Martial Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (31,'Warhammer','Versatile','Bludgeoning','1d8/1d10','Martial Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (32,'Whip','Finesse, Reach','Slashing','1d4','Martial Weapon');
-INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (33,'Blowgun','Ammunition, Loading','Piercing','1','Simple Weapon');
-INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (34,'Crossbow, Hand','Ammunition, Light, Loading','Piercing','1d6','Simple Weapon');
-INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (35,'Crossbow, Heavy','Ammunition, Heavy, Loading','Piercing','1d10','Simple Weapon');
-INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (36,'Longbow','Ammunition, Heavy, Two-Handed','Piercing','1d8','Simple Weapon');
+INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (33,'Blowgun','Ammunition, Loading','Piercing','1','Martial Weapon');
+INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (34,'Hand Crossbow','Ammunition, Light, Loading','Piercing','1d6','Martial Weapon');
+INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (35,'Heavy Crossbow','Ammunition, Heavy, Loading','Piercing','1d10','Martial Weapon');
+INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (36,'Longbow','Ammunition, Heavy, Two-Handed','Piercing','1d8','Martial Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (37,'Net','Special','--','--','Simple Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (38,'Pistol','ranged','--','--','Firearm');
 
