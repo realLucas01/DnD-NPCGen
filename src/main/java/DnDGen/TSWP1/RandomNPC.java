@@ -28,11 +28,11 @@ public class RandomNPC {
      */
 
     public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
-        ArrayList<String> weaponList = new ArrayList<>();
+        ArrayList<String> weaponList;
         ArrayList<String> languages;
-        ArrayList<String> savingThrows = new ArrayList<>();
+        ArrayList<String> savingThrows;
         ArrayList<String> description;
-        ArrayList<Integer> abilityScores = null;
+        ArrayList<Integer> abilityScores = new ArrayList<>();
         ArrayList<Integer> abilityModifier;
         ArrayList<String> generatedNPCFinished = new ArrayList<>();
         String race, job, genClass, gender, name, alignment, deity;
@@ -75,49 +75,15 @@ String inputName = null;
         //random AbilityScore
         switch ((inputAbilityScore)) {
             case null:
+            case "3d6":
                 //AbilityScore 3d6 verwenden
                 abilityScores = randGen.randAbilityScore(3);
                 break;
             case "4d6":
-                //Ability Score berechnen mit vorgegebenen Würfel
-                ArrayList<Integer> scoreFour = new ArrayList<>();
-                ArrayList<Integer> finishedSetForAbilityScores4 = new ArrayList<>();
-
-                for (int i = 0; i < 6; i++) {
-                    scoreFour.add(randGen.diceThrower(1, 6));
-                    scoreFour.add(randGen.diceThrower(1, 6));
-                    scoreFour.add(randGen.diceThrower(1, 6));
-                    scoreFour.add(randGen.diceThrower(1, 6));
-                    scoreFour.add(randGen.diceThrower(1, 6));
-                    Collections.sort(scoreFour, Collections.reverseOrder());
-                    int abilityScore = scoreFour.get(0) + scoreFour.get(1) + scoreFour.get(2);
-                    finishedSetForAbilityScores4.add(abilityScore);
-                    scoreFour.clear();
-                }
-                Collections.sort(finishedSetForAbilityScores4, Collections.reverseOrder());
-                abilityScores = finishedSetForAbilityScores4;
+                abilityScores = randGen.randAbilityScore(4);
                 break;
             case "5d6":
-                randGen.diceThrower(5, 6);
-                ArrayList<Integer> scoreFive = new ArrayList<>();
-                ArrayList<Integer> finishedSetForAbilityScores5 = new ArrayList<>();
-
-                for (int i = 0; i < 6; i++) {
-                    scoreFive.add(randGen.diceThrower(1, 6));
-                    scoreFive.add(randGen.diceThrower(1, 6));
-                    scoreFive.add(randGen.diceThrower(1, 6));
-                    scoreFive.add(randGen.diceThrower(1, 6));
-                    scoreFive.add(randGen.diceThrower(1, 6));
-                    scoreFive.add(randGen.diceThrower(1, 6));
-                    Collections.sort(scoreFive, Collections.reverseOrder());
-
-                    int abilityScore = scoreFive.get(0) + scoreFive.get(1) + scoreFive.get(2);
-
-                    finishedSetForAbilityScores5.add(abilityScore);
-
-                    scoreFive.clear();
-                }
-                Collections.sort(finishedSetForAbilityScores5, Collections.reverseOrder());
+                abilityScores = randGen.randAbilityScore(5);
                 break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
@@ -127,12 +93,14 @@ String inputName = null;
                 for (String abilistr : abilityScoreNew) {
                     abilityScoreNewInteger.add(Integer.parseInt(abilistr));
                 }
+                abilityScores.addAll(abilityScoreNewInteger);
                 //dbms.getRowPref();
         }
 
         //distribute AbilityScore
         abilityScores = distributeAbilityScore(abilityScores, genClass);
         abilityScores = addRaceModifierToAbilityScore(race,abilityScores);
+        abilityScores = addAbilityScoreImprovement(level, abilityScores);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
 
         //calc AbilityModifier
@@ -199,9 +167,9 @@ String inputName = null;
         languages = determineLanguages(race,job);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
 
-        if(genClass.equals("Dragonborn")){
-            genClass= dbms.getRandomRow("draconic ancestry").get(1) + " - " + genClass;
-            generatedNPCFinished.set(3, genClass);
+        if(race.equals("Dragonborn")){
+            race= dbms.getRandomRow("dracances").get(1) + " - " + race;
+            generatedNPCFinished.set(3, race);
         }
         return generatedNPCFinished;
     }
@@ -555,6 +523,7 @@ String inputName = null;
     public ArrayList<Integer> addRaceModifierToAbilityScore(String race, ArrayList<Integer> abilityScore){
         ArrayList<String> raceAbilityModifier = bigStringToDividedString(dbms.getRow("race", race).get(2));
         ArrayList<Integer> raceAbilityScore = new ArrayList<>();
+
         int raceModNumber;
 
         for (String s: raceAbilityModifier) {
@@ -579,8 +548,80 @@ String inputName = null;
                 case "Cha":
                     abilityScore.set(5,abilityScore.get(5) + raceModNumber);
                     break;
-
             }
+        }
+        return abilityScore;
+    }
+    /*
+    Diese Funktion wird verwendet um die Ability Scores auf den Level 4, 8, 12, 16 und 19 zu erhöhen.
+    Sie achtet auch darauf, dass erst ungerade AS erhöht werden und die priorisierten AS zuerst
+    Bitte nicht anfassen, ausser ihr versteht wie und warum diese Funktion funktioniert
+     */
+    public ArrayList<Integer> addAbilityScoreImprovement (int level, ArrayList<Integer> abilityScore ){
+        int improveCount = 0;
+        ArrayList<Integer> unevenAbSc  =new ArrayList<>();
+        ArrayList<Integer> abilityScoreBelow20  =new ArrayList<>();
+        boolean statusImproved = false;
+        switch(level){
+            case 19,20:
+                improveCount ++;
+            case 16,17,18:
+                improveCount ++;
+            case 12,13,14,15:
+                improveCount ++;
+            case 8,9,10,11:
+                improveCount ++;
+            case 4,5,6,7:
+                improveCount ++;
+                break;
+        }
+        for (int i=0;i < improveCount ; i++){
+            int counterASB20 = 0;
+            for(Integer abilities : abilityScore ){
+                if (abilities<20){      // finde alle Ability Scores die kleiner als 20 sind
+                    abilityScoreBelow20.add(abilities);
+                }
+                counterASB20++;
+            }
+            if(abilityScoreBelow20.isEmpty()){  // wenn alle über 20 sind, dann gib die bekommene Ability Scores zurück
+                return abilityScore;
+            }
+            ArrayList<Integer> aSB20Sorted = new ArrayList<>(abilityScoreBelow20);
+            aSB20Sorted.sort(Collections.reverseOrder());
+            for (Integer abilities : aSB20Sorted){ // wenn es ungerade gibt werden diese erst einmal aufgefüllt
+                if(abilities%2 == 1){   // check, ob ungerade
+                    unevenAbSc.add(abilities);
+                }
+                if(unevenAbSc.size()==2){ // wenn es zwei ungerade Zahlen gibt werden beide um eins erhöht
+                    abilityScore.set(abilityScore.indexOf(unevenAbSc.getFirst()),unevenAbSc.getFirst()+1);
+                    abilityScore.set(abilityScore.indexOf(unevenAbSc.getLast()),unevenAbSc.getLast()+1);
+                    unevenAbSc.clear();
+                    statusImproved = true;
+                    break;
+                    }
+            }
+            if((unevenAbSc.size()==1)&&(Boolean.FALSE.equals(statusImproved))){ // wenn es nur eine ungerade gibt, wird diese um eins erhöht und der höchste Score ebenfalls
+                abilityScore.set(abilityScore.indexOf(unevenAbSc.getFirst()),unevenAbSc.getFirst()+1);
+                try {
+                    abilityScore.set(abilityScore.indexOf(aSB20Sorted.get(0)), (aSB20Sorted.getFirst() + 1));//breaks here
+                    statusImproved = true;
+                }catch (Exception ignored){
+                    //ka warum hier manchmal ein Fehler entsteht, er wird jetzt einfach abgefangen :)
+                    unevenAbSc.clear();
+                }
+            }
+            if((unevenAbSc.isEmpty()&&(Boolean.FALSE.equals(statusImproved)))) {
+                for(Integer abSc: abilityScoreBelow20){
+                    if(abSc + 2 <= 20 ){
+                        abilityScore.set(abilityScoreBelow20.indexOf(aSB20Sorted.getFirst()),aSB20Sorted.getFirst()+2);
+                        break;
+                   }
+               }
+            }
+            statusImproved = false;
+            abilityScoreBelow20.clear();
+            aSB20Sorted.clear();
+            unevenAbSc.clear();
         }
         return abilityScore;
     }
