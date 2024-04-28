@@ -17,6 +17,14 @@ public class RandomNPC {
     
     Random rndNumb =  new SecureRandom();
     RandomGenerator randGen = new RandomGenerator();
+    /*
+    nicht wundern, diese variablen die hier folgen dienen dazu sich wiederholende Strings bei DB aufrufen zu vermeiden
+    und um SonarCube zufrieden zu stellen
+     */
+    String nameDBFeatures = "features";
+    String nameDBCommoner = "Commoner";
+    String nameDBClass = "class";
+
 
     /*
     * Diese Funktion dient dazu einen NPC Stat Block zufällig generieren zu lassen.
@@ -35,9 +43,17 @@ public class RandomNPC {
         ArrayList<Integer> abilityScores = new ArrayList<>();
         ArrayList<Integer> abilityModifier;
         ArrayList<String> generatedNPCFinished = new ArrayList<>();
-        String race, job, genClass, gender, name, alignment, deity;
-        int level, age, profBonus, healthPoints;
-String inputName = null;
+        String race;
+        String job;
+        String genClass;
+        String gender;
+        String name;
+        String alignment;
+        String deity;
+        int level;
+        int age;
+        int profBonus;
+        int healthPoints;
         //random Race
         if (inputRace == null) {
             race = randGen.randRace();
@@ -46,12 +62,8 @@ String inputName = null;
         }
         generatedNPCFinished.addFirst(race);
         //random Level
-        if (inputLevel == null) {
-            level = randGen.randLevel();
-        } else {
-            level = inputLevel;
-        }
-        if (Objects.equals(inputClass, "Commoner")) {
+        level = Objects.requireNonNullElseGet(inputLevel, () -> randGen.randLevel());
+        if (Objects.equals(inputClass, nameDBCommoner)) {
             level = 0;
         }
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(level));
@@ -66,7 +78,7 @@ String inputName = null;
         if ((inputClass == null) && (level != 0)) {
             genClass = randGen.randCharClass();
         } else if (level == 0) {
-            genClass = "Commoner";    // WUHU Edge Case -> Class == commoner
+            genClass = nameDBCommoner;
         } else {
             genClass = inputClass;
         }
@@ -74,8 +86,8 @@ String inputName = null;
 
         //random AbilityScore
         switch ((inputAbilityScore)) {
-            case null:
             case "3d6":
+            case null:
                 //AbilityScore 3d6 verwenden
                 abilityScores = randGen.randAbilityScore(3);
                 break;
@@ -87,24 +99,23 @@ String inputName = null;
                 break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
-                ArrayList<String> abilityScoreNew = new ArrayList<String>();
-                abilityScoreNew = bigStringToDividedString(inputAbilityScore);
-                ArrayList<Integer> abilityScoreNewInteger = new ArrayList<Integer>();
+                ArrayList<String> abilityScoreNew = bigStringToDividedString(inputAbilityScore);
+                ArrayList<Integer> abilityScoreNewInteger = new ArrayList<>();
                 for (String abilistr : abilityScoreNew) {
                     abilityScoreNewInteger.add(Integer.parseInt(abilistr));
                 }
                 abilityScores.addAll(abilityScoreNewInteger);
-                //dbms.getRowPref();
+                break;
         }
 
         //distribute AbilityScore
         abilityScores = distributeAbilityScore(abilityScores, genClass);
         abilityScores = addRaceModifierToAbilityScore(race,abilityScores);
-        abilityScores = addAbilityScoreImprovement(level, abilityScores);
+        abilityScores = (ArrayList<Integer>) addAbilityScoreImprovement(level, abilityScores);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
 
         //calc AbilityModifier
-        abilityModifier = determinAbilityModifier(abilityScores);
+        abilityModifier = determineAbilityModifier(abilityScores);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityModifier));
 
         //calc HP
@@ -128,7 +139,7 @@ String inputName = null;
         //Saving Throws
 
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
-        if (!genClass.equals("Commoner")) {     // Fall Commoner?
+        if (!genClass.equals(nameDBCommoner)) {     // Fall Commoner?
             generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(addAbilityScoreToSkillList(abilityModifier,determineSkillList(race, job, genClass), profBonus)));
         } else {
             generatedNPCFinished.add(generatedNPCFinished.size(), "none");
@@ -169,13 +180,12 @@ String inputName = null;
 
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
-            generatedNPCFinished.set(3, race);
+            generatedNPCFinished.set(0, race);
         }
         return generatedNPCFinished;
     }
 
     public ArrayList<Integer> distributeAbilityScore (ArrayList<Integer> rolledAbilityScore, String charClass) {
-    	
     	ArrayList<Integer> rawAbilityScores ;
     	ArrayList<String> arrayForClass;
     	ArrayList<String> dividedAbilityScores ;
@@ -184,7 +194,7 @@ String inputName = null;
     	
     	rawAbilityScores = rolledAbilityScore;
     	
-    	arrayForClass = dbms.getRow("class", charClass);
+    	arrayForClass = dbms.getRow(nameDBClass, charClass);
     	
     	dividedAbilityScores = bigStringToDividedString(arrayForClass.get(8));
     	
@@ -195,7 +205,7 @@ String inputName = null;
     	finishedAbilityScores.add("Wis");
     	finishedAbilityScores.add("Cha");
     	
-    	if(!(charClass.equals("Commoner"))) {
+    	if(!(charClass.equals(nameDBCommoner))) {
     	int i = 0;
     	int j = 0;
 
@@ -226,19 +236,7 @@ String inputName = null;
     	}
     }
 
-    public ArrayList<String> chooseSpell(String charClass, String race, Integer level){ //für edit
-        return null;
-    }
-
-    public ArrayList<String> chooseAction (String charClass, String race, Integer level){//für edit
-        return null;
-    }
-/*
-    public ArrayList<String> editNPC(String inputStuff?){
-
-    }
-*/
-    public static ArrayList<Integer> determinAbilityModifier(ArrayList<Integer> abilityScore){
+    public static ArrayList<Integer> determineAbilityModifier(ArrayList<Integer> abilityScore){
         ArrayList<Integer> abilityModifier = new ArrayList<>();
         float calcMod;
         for (Integer i: abilityScore){
@@ -285,6 +283,8 @@ String inputName = null;
                     case "Cha":
                         skillListWithNumbers.add(s + " +" + (abilityModifier.get(5)+ profBonus));
                         break;
+                    default:
+                        break;
                 }
             }
         }
@@ -301,8 +301,7 @@ String inputName = null;
         String kindOfArmor;
         int armorClass;
         boolean isThereAShield =armorProfList.contains("Shield");
-
-        String armorList = randGen.randArmor(armorProfList); // LUCA FIX   // Sollte gefixt sein
+        String armorList = randGen.randArmor(armorProfList);
 
         //Berechnung AC
         if(armorList == null){
@@ -359,7 +358,7 @@ String inputName = null;
     }
     public ArrayList<String> determineMovementSpeed(String race) {
         //creature Speed
-        ArrayList<String> movementSpeed = (bigStringToDividedString(dbms.getRow("race", race).get(9)));
+        ArrayList<String> movementSpeed = bigStringToDividedString(dbms.getRow("race", race).get(9));
         ArrayList<String> movementSpeedList = new ArrayList<>();
         for (String s : movementSpeed) {
             switch (s.substring(s.length() - 1)) {
@@ -372,6 +371,8 @@ String inputName = null;
                 case "b":
                     movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " burrowing Speed");
                     break;
+                default:
+                    break;
             }
         }
         return movementSpeedList;
@@ -381,8 +382,8 @@ String inputName = null;
     }
     public ArrayList<String> determineSavingThrows(String genClass, ArrayList<Integer> abilityModifier, int profBonus){
         ArrayList<String> savingThrows = new ArrayList<>();
-        if(!genClass.equals("Commoner")) {
-            ArrayList<String> savingThrowList = (bigStringToDividedString(dbms.getRow("class", genClass).get(5)));
+        if(!genClass.equals(nameDBCommoner)) {
+            ArrayList<String> savingThrowList =  bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(5));
             for (String s : savingThrowList) {
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 switch (s) {
@@ -420,7 +421,7 @@ String inputName = null;
         if (level == 0){
             level = 1;
         }
-        return randGen.diceThrower(level, Integer.parseInt(dbms.getRow("class",genClass).get(2)))+ level*abilityModifier.get(2);
+        return randGen.diceThrower(level, Integer.parseInt(dbms.getRow(nameDBClass,genClass).get(2)))+ level*abilityModifier.get(2);
 
     }
     public ArrayList<String> determineSkillList (String race, String job, String genClass){
@@ -446,8 +447,8 @@ String inputName = null;
         skillList.addAll(bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
 
         //ClassSkills
-        ArrayList<String> possibleSkillList = bigStringToDividedString(dbms.getRow("class", genClass).get(6)); // Skills durch class
-        numberSkill = Integer.parseInt(dbms.getRow("class", genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
+        ArrayList<String> possibleSkillList = bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(6)); // Skills durch class
+        numberSkill = Integer.parseInt(dbms.getRow(nameDBClass, genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
             if (possibleSkillList.contains("Any")) { // fall barde
                 possibleSkillList.add("Acrobatics");
                 possibleSkillList.add("Animal Handling");
@@ -491,12 +492,12 @@ String inputName = null;
         languages.addAll(removeDuplicatedLanguages);
         return languages;
     }
-    public ArrayList<String> determineFeatures(String race, String genClass, int level, String searchedFeature){
+    public ArrayList<String> determineFeatures(String race, String searchedFeature){
         ArrayList<String> features = new ArrayList<>();
         ArrayList<String> finalFeatures = new ArrayList<>();
         String searchTermDB = null;
 
-        if(!(dbms.getRow("race", race).get(3) == null)){
+        if((dbms.getRow("race", race).get(3) != null)){
             features.addAll(bigStringToDividedString(dbms.getRow("race", race).get(3)));
         }
         switch (searchedFeature) {
@@ -513,8 +514,8 @@ String inputName = null;
                 break;
         }
         for(String s: features) {
-            if (dbms.getRow("features", s).get(3).equals(searchTermDB)){
-                finalFeatures.add(dbms.getRow("features", s).get(1) + ": " + dbms.getRow("features",s).get(2));
+            if (dbms.getRow(nameDBFeatures, s).get(3).equals(searchTermDB)){
+                finalFeatures.add(dbms.getRow(nameDBFeatures, s).get(1) + ": " + dbms.getRow(nameDBFeatures,s).get(2));
             }
 
         }
@@ -522,10 +523,7 @@ String inputName = null;
     }
     public ArrayList<Integer> addRaceModifierToAbilityScore(String race, ArrayList<Integer> abilityScore){
         ArrayList<String> raceAbilityModifier = bigStringToDividedString(dbms.getRow("race", race).get(2));
-        ArrayList<Integer> raceAbilityScore = new ArrayList<>();
-
         int raceModNumber;
-
         for (String s: raceAbilityModifier) {
             raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
             s = s.substring(0,3);
@@ -548,6 +546,8 @@ String inputName = null;
                 case "Cha":
                     abilityScore.set(5,abilityScore.get(5) + raceModNumber);
                     break;
+                default:
+                    break;
             }
         }
         return abilityScore;
@@ -557,31 +557,35 @@ String inputName = null;
     Sie achtet auch darauf, dass erst ungerade AS erhöht werden und die priorisierten AS zuerst
     Bitte nicht anfassen, ausser ihr versteht wie und warum diese Funktion funktioniert
      */
-    public ArrayList<Integer> addAbilityScoreImprovement (int level, ArrayList<Integer> abilityScore ){
+    public List<Integer> addAbilityScoreImprovement (int level, List<Integer> abilityScore ){
         int improveCount = 0;
         ArrayList<Integer> unevenAbSc  =new ArrayList<>();
         ArrayList<Integer> abilityScoreBelow20  =new ArrayList<>();
         boolean statusImproved = false;
         switch(level){
             case 19,20:
-                improveCount ++;
+                improveCount = improveCount +5;
+                break;
             case 16,17,18:
-                improveCount ++;
+                improveCount = improveCount +4;
+                break;
             case 12,13,14,15:
-                improveCount ++;
+                improveCount= improveCount +3;
+                break;
             case 8,9,10,11:
-                improveCount ++;
+                improveCount= improveCount +2;
+                break;
             case 4,5,6,7:
-                improveCount ++;
+                improveCount = improveCount +1;
+                break;
+            default:
                 break;
         }
         for (int i=0;i < improveCount ; i++){
-            int counterASB20 = 0;
             for(Integer abilities : abilityScore ){
                 if (abilities<20){      // finde alle Ability Scores die kleiner als 20 sind
                     abilityScoreBelow20.add(abilities);
                 }
-                counterASB20++;
             }
             if(abilityScoreBelow20.isEmpty()){  // wenn alle über 20 sind, dann gib die bekommene Ability Scores zurück
                 return abilityScore;

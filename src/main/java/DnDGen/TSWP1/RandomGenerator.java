@@ -20,11 +20,9 @@ public class RandomGenerator {
 	ApplicationContext appCtx = DBMS.getApplicationContext();
 	DBMS dbms = appCtx.getBean(DBMS.class);
 
-	public static void main(String []args) {
+	Random rand = new Random();
 
-		System.out.println("Hier ist die Main");
-
-	}
+	String nameDBClass = "class";
 
 	//Aufteilung eines großen String in kleinere
 	public static ArrayList<String> bigStringToDividedString(String bigString) {
@@ -41,7 +39,7 @@ public class RandomGenerator {
 
 	public static ArrayList<Double> divideDoubles(String bigNumber) {
 		ArrayList<String> dividedString = new ArrayList<>();
-		ArrayList<Double> parsedToDouble = new ArrayList<Double>();
+		ArrayList<Double> parsedToDouble = new ArrayList<>();
 		String[] partsOfTheBigString = bigNumber.split("-");
 
 		for (String s : partsOfTheBigString) {
@@ -56,10 +54,9 @@ public class RandomGenerator {
 		return parsedToDouble;
 	}
 	
-	public   int diceThrower(Integer diceCount, Integer diceNumber) {
+	public int diceThrower(Integer diceCount, Integer diceNumber) {
 
 		int addedRolls = 0;
-		Random rand = new Random();
 
 		for (int i = 0; i < diceCount; i++) {
 			int value = rand.nextInt(diceNumber) + 1;
@@ -70,8 +67,8 @@ public class RandomGenerator {
 	}
 
 	public ArrayList<Integer> randAbilityScore(Integer amountOfThrows) {
-		ArrayList<Integer> value = new ArrayList<Integer>();
-		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<Integer>();
+		ArrayList<Integer> value = new ArrayList<>();
+		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
 		
 		for (int i = 0; i < 6; i++) {
 			int j = 0;
@@ -99,10 +96,11 @@ public class RandomGenerator {
 	}
 	
 	public double randHeight(String race) {
-		ArrayList<String> rawHeight = new ArrayList<String>();
-		ArrayList<Double> minMaxArray = new ArrayList<Double>();
+		ArrayList<String> rawHeight;
+		ArrayList<Double> minMaxArray;
 		String height;
-		double min, max = 0.0;
+		double min;
+		double max;
 		
 		rawHeight = dbms.getRow("race", race);
 		height = rawHeight.get(7);
@@ -111,24 +109,21 @@ public class RandomGenerator {
 		min = minMaxArray.get(0);
 		max = minMaxArray.get(1);
 		
-		Double randomNum = ThreadLocalRandom.current().nextDouble(min, max);
-		double roundOff = Math.round(randomNum * 10.0) / 10.0; 
-		
-		return roundOff;
-		
+		double randomNum = ThreadLocalRandom.current().nextDouble(min, max);
+
+        return Math.round(randomNum * 10.0) / 10.0;
 	}
 	
 	/* @Luca */
 	public   String randCharClass() {
-		ArrayList<String> rndClass = dbms.getRandomRow("class");
+		ArrayList<String> rndClass = dbms.getRandomRow(nameDBClass);
 
 		return rndClass.get(1);
 	}
 
 	/* TO DO @Lenard */
-	public   String randRace() {
-		String race = "NO RACE";
-
+	public String randRace() {
+		String race;
         ArrayList<String> newRace = dbms.getRandomRow("race");
 		race = newRace.get(1);
 
@@ -137,9 +132,9 @@ public class RandomGenerator {
 
 	/* TO DO @Lenard */
 	public   String randJob() {
-		String job = "NO JOB";
+		String job;
 
-		ArrayList<String> newJob = new ArrayList<String>();
+		ArrayList<String> newJob;
 		newJob = dbms.getRandomRow("job");
 
 		job = newJob.get(1);
@@ -149,22 +144,20 @@ public class RandomGenerator {
 
 	/* @Luca */
 	public int randLevel() {
-		Random rndLevel = new Random();
 		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
-		return rndLevel.nextInt(21);
+		return rand.nextInt(21);
 	}
 	
 	public String randSize(String race) {
 		String size;
-		ArrayList<String> sizeArray = new ArrayList<String>();
-		ArrayList<String> newSize = new ArrayList<String>();
+		ArrayList<String> sizeArray;
+		ArrayList<String> newSize;
 		
 		sizeArray = dbms.getRow("race", race);
 		size = sizeArray.get(8);
-		newSize = bigStringToDividedString(size);
+		newSize =  bigStringToDividedString(size);
 		
 		if(newSize.size() == 2) {
-			Random rand = new Random();
 			int value = rand.nextInt(2);
 			size = newSize.get(value);		
 		} else {
@@ -176,16 +169,15 @@ public class RandomGenerator {
 	
 	/* TO DO @Lenard */
 	public ArrayList<String> randDescription(String race, String alignment) {
-		
-		ArrayList<String> desc = new ArrayList<String>();
-		ArrayList<String> dbData = new ArrayList<String>();
+		ArrayList<String> desc = new ArrayList<>();
+		ArrayList<String> dbData;
 		
 		String job = randJob();
 		String gender = randGender();
-		Integer age = randAge(race);
+		int age = randAge(race);
 		String deity = randDeity(alignment);
 		String size = randSize(race);
-		Double height = randHeight(race);
+		double height = randHeight(race);
 		
 		int i = 1;
 		while(i < 13) {
@@ -197,10 +189,10 @@ public class RandomGenerator {
 		
 		desc.add(job);
 		desc.add(gender);
-		desc.add(age.toString());
+		desc.add(Integer.toString(age));
 		desc.add(deity);
 		desc.add(size);
-		desc.add(height.toString());
+		desc.add(Double.toString(height));
 		
 		//Eyes, HairColor, HairStyle, Skin, Trait, Mannerism, DOnd, Flaw, Ideal, Voice, CLothing, Attitude, Plothook, Job, Gender, age, deity, size, height
 		return desc;
@@ -209,16 +201,15 @@ public class RandomGenerator {
 	//UNGETESTET
 	// Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
 	/* @Luca */
-	public   ArrayList<String> figureOutProfList(String neededProfList, String charClass, String race) {
+	public ArrayList<String> figureOutProfList(String neededProfList, String charClass, String race) {
 		ArrayList<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
 		ArrayList<String> databaseReturn; // Liste die von der DB zurückkommt
 		ArrayList<String> featureList; // Rassen Features
-		//ArrayList<String> dividedString = new ArrayList<>(); // Liste in der die SubStrings einer Spalte aus der DB enthalten
 		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
 
 		switch (neededProfList) {    // Entscheidung welche ProfListe man benötigt
 			case "armor":
-				profList = bigStringToDividedString(dbms.getRow("class", charClass).get(4));
+				profList = bigStringToDividedString(dbms.getRow(nameDBClass, charClass).get(4));
 
 				databaseReturn = dbms.getRow("race", race);
 				if(databaseReturn.get(3)!=null) {
@@ -238,7 +229,7 @@ public class RandomGenerator {
 				}
 				break;
 			case "weapon":    //siehe "armor" nur jetzt mit den waffen
-				databaseReturn = dbms.getRow("class", charClass);
+				databaseReturn = dbms.getRow(nameDBClass, charClass);
 				if(databaseReturn.get(3)!= null){
 				profList = bigStringToDividedString(databaseReturn.get(3));
 				databaseReturn = dbms.getRow("race", race);
@@ -262,6 +253,7 @@ public class RandomGenerator {
 				}
 				}
 				break;
+			default:
 		}
 		Set<String> removeDuplicate = new HashSet<>(profList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
 		profList.clear();
@@ -273,10 +265,9 @@ public class RandomGenerator {
 	/* TO DO @Luca */
 	public   String randArmor(ArrayList<String> armorProf) {
 		String armor; //return value
-		Random rndNumber = new Random(); //Zufallszahlen
 		armorProf.remove("Shield");
 		int lengthOfArmorProfList = armorProf.size();
-		String rndArmor = armorProf.get(rndNumber.nextInt(lengthOfArmorProfList));
+		String rndArmor = armorProf.get(rand.nextInt(lengthOfArmorProfList));
 		if((rndArmor.equals("Light Armor"))||(rndArmor.equals("Medium Armor"))||(rndArmor.equals("Heavy Armor"))){
 			ArrayList<String> armorList = dbms.getRowPref("armor", rndArmor);
 			armor = armorList.get(1);
@@ -287,30 +278,28 @@ public class RandomGenerator {
 	}
 
 	/* @Luca */
-	public   String randWeapon(ArrayList<String> weaponProf) {
-		Random rndNumber = new Random();    // für zufallszahlen
-		//int rndWeaponProf  = 0;
+	public String randWeapon(ArrayList<String> weaponProf) {
 		int lengthOfWeaponProf = weaponProf.size();
 		String weapon;    //das Ergebnis was zurückgegeben wird
 		if(weaponProf.isEmpty()){
 			return "no Weapon";
 		}
-		//rndWeaponProf = rndNumber.nextInt(lengthOfWeaponProf);
-		String rndWeapon = weaponProf.get(rndNumber.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
+		String rndWeapon = weaponProf.get(rand.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
 		if((rndWeapon.equals("Simple Weapon")||(rndWeapon.equals("Martial Weapon")))) {
-			ArrayList<String> armorList = dbms.getRowPref("weapon", rndWeapon);
-			weapon = armorList.get(1);
+			ArrayList<String> weaponList = dbms.getRowPref("weapon", rndWeapon);
+			weapon = weaponList.get(1);
 		}else {
 			weapon = rndWeapon;
 		}
 		return weapon;
+
 	}
 
 	/* TO DO @Lenard */
 	public String randDeity(String alignment) {
 		String deity;
 
-		ArrayList<String> newDeity = new ArrayList<String>();
+		ArrayList<String> newDeity;
 		
 		newDeity = dbms.getRowPref("deity", alignment);
 		deity = newDeity.get(1);
@@ -326,12 +315,11 @@ public class RandomGenerator {
 	}
 
 	/* TO DO @Lenard */
-	public   String randName(String gender, String race) {
-		String name = "NO NAME";
-
-		String firstName = "NO FIRSTNAME";
-		String secondName = "NO SECONDNAME";
-		ArrayList<String> splitRaceArray = new ArrayList<String>();
+	public String randName(String gender, String race) {
+		String name;
+		String firstName;
+		String secondName;
+		ArrayList<String> splitRaceArray = new ArrayList<>();
 		String[] newRace = race.split(" ");
 		
 		for (String s : newRace) {
@@ -339,10 +327,8 @@ public class RandomGenerator {
 				splitRaceArray.add(s);
 			}
 		}
-		
 		String newRaceString = splitRaceArray.getLast();
-		
-		ArrayList<String> newName = new ArrayList<String>();
+		ArrayList<String> newName;
 		newName = dbms.getRowPref("name", newRaceString);
 		
 		firstName = newName.get(1);
@@ -364,29 +350,25 @@ public class RandomGenerator {
 
 
 	/* @Luca */
-	public   int randAge(String race) {
+	public int randAge(String race) {
 		ArrayList<String> raceList;
 		raceList = dbms.getRow("race", race);
 		int ageAdult = Integer.parseInt(raceList.get(4));
 		int ageMax = Integer.parseInt(raceList.get(5));
 
-		Random rndAge = new Random();
-
-		return rndAge.nextInt(ageMax) + ageAdult;
+		return rand.nextInt(ageMax) + ageAdult;
 	}
 
 	//Schroedingers Funktion
 	/* @Luca */
-	public   List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> knownSkillList) {
-		Random rndSkill = new Random();
-
+	public List<String> randSkillProf(ArrayList<String> possibleSkills, Integer numberSkill, ArrayList<String> knownSkillList) {
 		if (possibleSkills.isEmpty()) {
 			return knownSkillList;
 		}
 		//es werden so lange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
 		for (int currentNumberOfNewSkills = 0; currentNumberOfNewSkills < numberSkill; currentNumberOfNewSkills++) {
 			int lengthListPossibleSkills = possibleSkills.size();
-			Integer skillIndex = rndSkill.nextInt(lengthListPossibleSkills);
+			Integer skillIndex = rand.nextInt(lengthListPossibleSkills);
 			knownSkillList.add(possibleSkills.get(skillIndex));
 			possibleSkills.remove(skillIndex);
 		}
@@ -401,7 +383,6 @@ public class RandomGenerator {
 	public   String randGender() {
 
 		String gender;
-		Random rand = new Random();
 		int value = rand.nextInt(2);
 
 		if (value == 0) {
@@ -412,23 +393,20 @@ public class RandomGenerator {
 		return gender;
 	}
 
-	public   String randAlignment() {
-		Random randNumber = new Random();
-		int rndNum = randNumber.nextInt(9);
-		ArrayList<String> Alignments = new ArrayList<>();
-		Alignments.add("Chaotic Good");
-		Alignments.add("Chaotic Neutral");
-		Alignments.add("Chaotic Evil");
-		Alignments.add("Neutral Evil");
-		Alignments.add("Lawful Neutral");
-		Alignments.add("Lawful Good");
-		Alignments.add("Lawful Neutral");
-		Alignments.add("Neutral Good");
-		Alignments.add("Neutral");
+	public String randAlignment() {
+		int rndNum = rand.nextInt(9);
+		ArrayList<String> alignments = new ArrayList<>();
+		alignments.add("Chaotic Good");
+		alignments.add("Chaotic Neutral");
+		alignments.add("Chaotic Evil");
+		alignments.add("Neutral Evil");
+		alignments.add("Lawful Neutral");
+		alignments.add("Lawful Good");
+		alignments.add("Lawful Neutral");
+		alignments.add("Neutral Good");
+		alignments.add("Neutral");
 
-
-		//Alignments = dbms.getRandomRow("alignment");
-		return Alignments.get(rndNum);
+		return alignments.get(rndNum);
 	}
 
 	/* TO DO @Kristina */
