@@ -26,9 +26,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
-
-import jakarta.persistence.EntityManager;
 
 @SpringBootApplication
 public class DBMS implements ApplicationContextAware{
@@ -92,7 +91,7 @@ public class DBMS implements ApplicationContextAware{
 	 * Lage sind genau diese Version der Klasse DBMS aufzurufen um auch wirklich Daten zu erhalten.
 	 */
     @Override
-    public void setApplicationContext(ApplicationContext appContext) {
+    public void setApplicationContext(@NonNull ApplicationContext appContext) {
       atx = appContext;
     }
     public static ApplicationContext getApplicationContext() {
@@ -590,8 +589,8 @@ public class DBMS implements ApplicationContextAware{
 				}
 			}
 			break;
-		case "Bard":
-			for (ActionModel actions : actionRepository.findByAllActionsWithPref(dbname, Integer.parseInt(pref), pref2)) {
+		case "actions":
+			for (ActionModel actions : actionRepository.findByAllActionsWithPref(pref, rownumber, pref2)) {
 				rand.add(actions.getActionName());
 				rand.add(actions.getActionDescription());
 				multRowMultPref.addAll(rand);
