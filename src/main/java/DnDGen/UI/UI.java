@@ -2,6 +2,10 @@ package DnDGen.UI;
 
 
 import DnDGen.TSWP1.RandomGenerator;
+import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -165,7 +169,7 @@ public class UI extends Application {
 
         final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbLevel, 1, 4,2,1);
-        for(int i = 1; i < 20; i++) {cbLevel.getItems().add(i);}
+        for(int i = 1; i <= 20; i++) {cbLevel.getItems().add(i);}
         cbLevel.setMaxWidth(300);
         cbLevel.getSelectionModel().selectFirst();
 
@@ -223,10 +227,6 @@ public class UI extends Application {
         layoutGenerateGrid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
 
 
-
-
-
-
         //Als Textfeld
 
         //Als Tabelle/einzelne Bausteine
@@ -261,30 +261,55 @@ public class UI extends Application {
 
         nameClassGrid.getChildren().addAll(nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL);
 
-        //Armor class, Hit points, Speed
-        VBox armorHitSpeedPane = new VBox();
-        armorHitSpeedPane.setSpacing(4);
+        //Armor class, Hit points, Speed, Language, Feature
+        GridPane acHpSpLangGrid = new GridPane();
+        acHpSpLangGrid.setPadding(new Insets(5, 5, 5, 5));
+        acHpSpLangGrid.setVgap(4);
+        acHpSpLangGrid.setHgap(5);
         Label armorClassL = new Label("Rüstungsklasse: ");
+        GridPane.setConstraints(armorClassL,0,0);
         Label hitPointsL  = new Label("Trefferpunkte: ");
+        GridPane.setConstraints(hitPointsL,0,1);
         Label speedL      = new Label("Geschwindigkeit: ");
+        GridPane.setConstraints(speedL,0,2);
         Label languagesL   = new Label("Sprachen: ");
+        GridPane.setConstraints(languagesL,0,4);
+        acHpSpLangGrid.getChildren().addAll(armorClassL,hitPointsL,speedL,languagesL);
 
-        armorHitSpeedPane.getChildren().addAll(armorClassL,hitPointsL,speedL, languagesL);
-        armorHitSpeedPane.setPadding(new Insets(10, 10, 10, 10));
+        //Features
+        GridPane featuresGrid = new GridPane();
+        featuresGrid.setPadding(new Insets(5,5,5,5));
+        featuresGrid.setVgap(4);
+        featuresGrid.setHgap(5);
+        Label actionL = new Label("Aktionen: ");
+        GridPane.setConstraints(actionL,0,0);
+        Label bonusActionL = new Label("Bonus Aktion: ");
+        GridPane.setConstraints(bonusActionL,0,1);
+        Label bonusTextL = new Label("Bonus Text: ");
+        GridPane.setConstraints(bonusTextL,0,2);
+
+        ColumnConstraints featureGridColCon1 = new ColumnConstraints();
+        featureGridColCon1.setPercentWidth(30);
+        ColumnConstraints featureGridColCon2 = new ColumnConstraints();
+        featureGridColCon2.setPercentWidth(70);
+        featuresGrid.getColumnConstraints().addAll(featureGridColCon1, featureGridColCon2);
+
+        featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
+
 
         //Stats
-        HBox statsBox = new HBox();
-        statsBox.setPadding(new Insets(10,10,10,10));
-        statsBox.setSpacing(5);
+        GridPane statsGrid = new GridPane();
+        statsGrid.setPadding(new Insets(5, 5, 5, 5));
+        statsGrid.setVgap(4);
+        statsGrid.setHgap(5);
 
-        Label strL = new Label("Str\n");
-        Label dexL = new Label("Dex\n");
-        Label conL = new Label("Con\n");
-        Label intL = new Label("Int\n");
-        Label wisL = new Label("Wis\n");
-        Label chaL = new Label("Cha\n");
+        Label abilityScore = new Label("Ability Score: ");
+        GridPane.setConstraints(abilityScore,0,1);
+        Label savingThrows = new Label("Saving Throws: ");
+        GridPane.setConstraints(savingThrows, 0,2);
 
-        statsBox.getChildren().addAll(strL, dexL,conL,intL,wisL,chaL);
+        statsGrid.getChildren().addAll(abilityScore,savingThrows);
+
 
         //Inventar (Waffen & Rüstung)
         GridPane inventoryGrid = new GridPane();
@@ -347,7 +372,7 @@ public class UI extends Application {
         Line line4 = new Line(0.0f,0.0f,npcScrollPane.getWidth(),0.0f);
         Line line5 = new Line(0.0f,0.0f,300.0f,0.0f);
 
-        npcStack.getChildren().addAll(nameClassGrid,line1,armorHitSpeedPane,line2,statsBox,line3, inventoryGrid, line5,skillSensesBox,line4,spellActionBox);
+        npcStack.getChildren().addAll(nameClassGrid,line1,acHpSpLangGrid,line2,statsGrid,line3, inventoryGrid, line5,skillSensesBox,line4,featuresGrid);
         npcStack.setVisible(false);
 
         VBox descriptionStack = new VBox();
@@ -355,10 +380,7 @@ public class UI extends Application {
         descriptionStack.setMinWidth(300);
         descriptionStack.setMaxWidth(330);
 
-
         npcScrollPane.setVisible(false);
-
-
 
         //layoutGenerateGrid.getChildren().add(npcStack);
 
@@ -396,29 +418,97 @@ public class UI extends Application {
             sexL.setText("Geschlecht: " + npc.get(13));
             deityL.setText("Gottheit: " + npc.get(18));
 
-            armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
-            hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
-            for(int i = 0; i < stringToList(npc.get(10)).size(); i++) {
-                speedL.setText(speedL.getText().concat(stringToList(npc.get(10)).get(i) + " "));
+            //AmorClass, HitPoints, Speed, Languages
+            acHpSpLangGrid.getChildren().remove(4,acHpSpLangGrid.getChildren().size());
+
+            Label aCL = new Label(String.valueOf(npc.get(8)));
+            GridPane.setConstraints(aCL,1,0);
+            Label hPL = new Label(String.valueOf(npc.get(6)));
+            GridPane.setConstraints(hPL,1,1);
+            acHpSpLangGrid.getChildren().addAll(aCL,hPL);
+
+            //Geschwindigkeit
+            listNpc.clear();
+            listNpc = stringToList(npc.get(10));
+            for(int i = 0; i < listNpc.size(); i++) {
+                Label label = new Label(listNpc.get(i).toString());
+                GridPane.setConstraints(label,1,i+2);
+                acHpSpLangGrid.getChildren().add(label);
             }
-            //speedL.setText("Geschwindigkeit: " + stringToList(npc.get(10)).get(0));
 
             //Sprachen
-            stringNpc = "";
             listNpc.clear();
             listNpc = stringToList(npc.get(19));
             for(int i = 0; i < listNpc.size(); i++) {
-                stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+                Label label = new Label(listNpc.get(i).toString());
+                GridPane.setConstraints(label,1,i+4);
+                acHpSpLangGrid.getChildren().add(label);
             }
-            languagesL.setText("Sprachen:\n" + stringNpc);
+
+
+            //Features
+            featuresGrid.getChildren().remove(3,featuresGrid.getChildren().size());
+            ArrayList<String> featureList = rNPC.determineFeatures(npc.get(0),"action");
+            VBox actionBox = new VBox();
+            actionBox.setSpacing(5);
+            GridPane.setConstraints(actionBox,1,0);
+            for(int i = 0; i < featureList.size(); i++) {
+                Label label = new Label(featureList.get(i));
+                label.setWrapText(true);
+                actionBox.getChildren().add(label);
+            }
+
+            featureList.clear();
+            featureList = rNPC.determineFeatures(npc.get(0),"bonus action");
+            VBox bonusActionBox = new VBox();
+            bonusActionBox.setSpacing(5);
+            GridPane.setConstraints(bonusActionBox,1,1);
+            for(int i = 0; i < featureList.size(); i++) {
+                Label label = new Label(featureList.get(i));
+                label.setWrapText(true);
+                bonusActionBox.getChildren().add(label);
+            }
+
+            featureList.clear();
+            featureList = rNPC.determineFeatures(npc.get(0),"bonus text");
+            VBox bonusTextBox = new VBox();
+            bonusTextBox.setSpacing(5);
+            GridPane.setConstraints(bonusTextBox,1,2);
+            for(int i = 0; i < featureList.size(); i++) {
+                Label label = new Label(featureList.get(i));
+                label.setWrapText(true);
+                bonusTextBox.getChildren().add(label);
+            }
+            featuresGrid.getChildren().addAll(actionBox,bonusActionBox,bonusTextBox);
+
 
             //Ability
-            strL.setText(" Str\n" + abilityString(0,npc));
-            dexL.setText(" Dex\n" + abilityString(1,npc));
-            conL.setText(" Con\n" + abilityString(2,npc));
-            intL.setText(" Int\n" + abilityString(3,npc));
-            wisL.setText(" Wis\n" + abilityString(4,npc));
-            chaL.setText(" Cha\n" + abilityString(5,npc));
+            statsGrid.getChildren().remove(2,statsGrid.getChildren().size());
+            ArrayList<String> abilityString = new ArrayList<>(Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
+            for(int i = 1; i <= abilityString.size(); i++) {
+                Label label = new Label(abilityString.get(i-1));
+                GridPane.setConstraints(label,i,0);
+                statsGrid.getChildren().add(label);
+            }
+            for(int i = 1; i <= abilityString.size(); i++) {
+                Label label = new Label(abilityString(i-1,npc));
+                GridPane.setConstraints(label,i,1);
+                statsGrid.getChildren().add(label);
+            }
+            listNpc.clear();
+            listNpc = stringToList(npc.get(11));
+            for(int j = 0; j < listNpc.size(); j++) {
+                String ability = listNpc.get(j).toString().substring(0,3);
+                String score = listNpc.get(j).toString().substring(4);
+                for(int i = 1; i <= abilityString.size(); i++) {
+                    if(abilityString.get(i-1).equals(ability)) {
+                        Label label = new Label(score);
+                        GridPane.setConstraints(label,i,2);
+                        statsGrid.getChildren().add(label);
+                    }
+                }
+            }
+
 
             //Inventar
             stringNpc = "";
@@ -445,23 +535,6 @@ public class UI extends Application {
             }
 
 
-
-
-            //Spell
-            /*
-            Text skills = new Text(npc.get(10));
-            skillTF.getChildren().add(skills);
-            */
-            /*
-            Text senses = new Text(npc.get(10));
-            senseTF.getChildren().add(senses);
-
-            Text spells = new Text(npc.get(10));
-            spellTF.getChildren().add(spells);
-
-
-            */
-
             //Beschreibung
             descriptionStack.getChildren().clear();
 
@@ -478,10 +551,10 @@ public class UI extends Application {
 
             //Plothook nicht da Stelle nach attitute
             ArrayList<String> descriptionTitel = new ArrayList<>(Arrays.asList("Eyes: ","Hair color: ", "Hairstyle: ",
-                                                                "Skin: ", "Trait: ", "Mannerism: ", "don't: ", "Flaw: ",
-                                                                "Ideal: ", "Voice: ", "CLothing: ", "Attitude: ",
-                                                                "Job: ", "Gender: ", "age: ", "deity: ",
-                                                                "size: ", "height: "));
+                                                                "Skin: ", "Trait: ", "Mannerism: ", "Bond: ", "Flaw: ",
+                                                                "Ideal: ", "Voice: ", "Clothing: ", "Attitude: ",
+                                                                "Job: ", "Gender: ", "Age: ", "Deity: ",
+                                                                "Size: ", "Height: "));
             ArrayList<String> npcDescriptionArray = rGenerator.randDescription(npc.get(0),npc.get(16));
             for(int i = 0; i < npcDescriptionArray.size(); i++) {
                 TextFlow descriptionTextNew = new TextFlow();
@@ -506,8 +579,6 @@ public class UI extends Application {
             Text text = new Text(description);
             descriptionTextNew.getChildren().add(text);
             descriptionStack.getChildren().add(descriptionTextNew);
-
-
 
             //Beschreibung lang (altes Modell / meine Methode für StringToList)
             //listNpc = stringToList(npc.get(17));
@@ -559,7 +630,7 @@ public class UI extends Application {
         gridNpc.getChildren().addAll(layoutGenerateGrid, npcScrollPane, descriptionStack);
         layoutGenerateVBox.getChildren().addAll(menuBar,gridNpc);
 
-        generatePage = new Scene(layoutGenerateVBox, 900, 600);
+        generatePage = new Scene(layoutGenerateVBox, 1000, 600);
 
 
 
@@ -580,6 +651,7 @@ public class UI extends Application {
             descriptionStack.setMinWidth(generatePage.getWidth()/3);
             layoutGenerateGrid.setMinWidth(generatePage.getWidth()/3);
             npcScrollPane.setMinWidth(generatePage.getWidth()/3);
+            featuresGrid.setPrefWidth(npcScrollPane.getWidth()-20);
             line1.setEndX(npcScrollPane.getWidth()-20);
             line2.setEndX(npcScrollPane.getWidth()-20);
             line3.setEndX(npcScrollPane.getWidth()-20);
