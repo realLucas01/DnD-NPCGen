@@ -568,6 +568,7 @@ public class DBMS implements ApplicationContextAware{
 		    	rowMultPref.add(9, spellmultpref.getSpellLevelUpScale());
 		    	rowMultPref.add(10, spellmultpref.getSpellAvailability());
 		    }
+			break;
 		case "spellknown":
 			qty = spellKnownRepository.findByMultPrefsize(pref1, pref2).size();
 			idx = (int)(Math.random() * qty);
@@ -579,10 +580,12 @@ public class DBMS implements ApplicationContextAware{
 		    	rowMultPref.add(2, spellknownmultpref.getSpellKnownKind());
 		    	rowMultPref.add(3, spellknownmultpref.getSpellKnownStuff());
 		    }
+			break;
 		default:
 			//Aus irgendeinem Grund geht er wenn der case "spellkown" ausgeführt wird direkt dannach
 			//in den default case und setzt die ArrayList direkt wieder auf null, ka warum....
 			//rowMultPref = null;
+			break;
 		}
 		return rowMultPref;
 	}

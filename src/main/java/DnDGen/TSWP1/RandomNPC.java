@@ -34,6 +34,9 @@ public class RandomNPC {
     * Zurück erhält man eine ArrayList, diese ist wie folgt aufgebaut:
     * (race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
      */
+    public ArrayList<String> testSpells(){
+        return randGen.randSpellList(randGen.randCharClass(), randGen.randAbilityScore(3),randGen.randLevel() );
+    }
 
     public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
         ArrayList<String> weaponList;
@@ -177,11 +180,13 @@ public class RandomNPC {
         //random Languages
         languages = determineLanguages(race,job);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
-
+ /*
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
             generatedNPCFinished.set(0, race);
         }
+        */
+
         return generatedNPCFinished;
     }
 
@@ -193,8 +198,9 @@ public class RandomNPC {
     	ArrayList<Integer> parsedAbilityScores = new ArrayList<>();
     	
     	rawAbilityScores = rolledAbilityScore;
-    	
-    	arrayForClass = dbms.getRow(nameDBClass, charClass);
+
+
+        arrayForClass = dbms.getRow(nameDBClass, charClass);
     	
     	dividedAbilityScores = bigStringToDividedString(arrayForClass.get(8));
     	
@@ -210,7 +216,9 @@ public class RandomNPC {
     	int j = 0;
 
     	while(i <= 5 && j <= 5) {
-    		String aScore = dividedAbilityScores.get(i);
+
+
+            String aScore = dividedAbilityScores.get(i);
     		Integer value = rawAbilityScores.get(i);
     		String aScoreFinished = finishedAbilityScores.get(j);
 
@@ -249,6 +257,7 @@ public class RandomNPC {
     public ArrayList<String> addAbilityScoreToSkillList(ArrayList<Integer> abilityModifier, ArrayList<String> skillList, int profBonus ){
         ArrayList<String> skillListWithNumbers = new ArrayList<>();
         String dbAbilityScore ;
+        System.out.println("SkillList: " + skillList);
         for (String s : skillList){
             if((s != null) && (!s.equals("Any"))) {
                 s= s.replaceAll("\\s+","");
@@ -528,24 +537,24 @@ public class RandomNPC {
             raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
             s = s.substring(0,3);
             switch (s){
-                case "Str":
-                    abilityScore.set(0, abilityScore.get(0) + raceModNumber);
-                    break;
-                case "Dex":
-                    abilityScore.set(1,abilityScore.get(1) + raceModNumber);
-                    break;
-                case "Con":
-                    abilityScore.set(2,abilityScore.get(2) + raceModNumber);
-                    break;
-                case "Int":
-                    abilityScore.set(3,abilityScore.get(3) + raceModNumber);
-                    break;
-                case "Wis":
-                    abilityScore.set(4,abilityScore.get(4) + raceModNumber);
-                    break;
-                case "Cha":
-                    abilityScore.set(5,abilityScore.get(5) + raceModNumber);
-                    break;
+                    case "Str":
+                        abilityScore.set(0, abilityScore.get(0) + raceModNumber);
+                        break;
+                    case "Dex":
+                        abilityScore.set(1,abilityScore.get(1) + raceModNumber);
+                        break;
+                    case "Con":
+                        abilityScore.set(2,abilityScore.get(2) + raceModNumber);
+                        break;
+                    case "Int":
+                        abilityScore.set(3,abilityScore.get(3) + raceModNumber);
+                        break;
+                    case "Wis":
+                        abilityScore.set(4,abilityScore.get(4) + raceModNumber);
+                        break;
+                    case "Cha":
+                        abilityScore.set(5,abilityScore.get(5) + raceModNumber);
+                        break;
                 default:
                     break;
             }

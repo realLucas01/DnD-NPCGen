@@ -394,6 +394,7 @@ public class UI extends Application {
 
 //    Button Klick
         buttonGenerate.setOnAction(e -> {
+            System.out.println(rNPC.testSpells());
             ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
 
             //Liste mit Positionen vom NPC

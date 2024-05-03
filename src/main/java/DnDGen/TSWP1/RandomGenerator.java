@@ -1,5 +1,6 @@
 package DnDGen.TSWP1;
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,7 +21,7 @@ public class RandomGenerator {
 	ApplicationContext appCtx = DBMS.getApplicationContext();
 	DBMS dbms = appCtx.getBean(DBMS.class);
 
-	Random rand = new Random();
+	Random rand = new SecureRandom();
 
 	String nameDBClass = "class";
 
@@ -30,9 +31,9 @@ public class RandomGenerator {
 		String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
 
 		for (String s : partsOfTheBigString) { //jeder Teilstring wird der Liste hinzugefügt
-			if (!dividedString.contains(s)) {
+		//	if (!dividedString.contains(s)) {
 				dividedString.add(s);
-			}
+		//	}
 		}
 		return dividedString;
 	}
@@ -408,9 +409,164 @@ public class RandomGenerator {
 
 		return alignments.get(rndNum);
 	}
+	public ArrayList<String> randSpellList (String genClass, ArrayList<Integer> abilityModifier, int level ){
+		System.out.println("class: " + genClass);
+		String classSpellKnownCol = dbms.getRow("class", genClass).get(9);
+		ArrayList<String> spells = new ArrayList<>();
+		ArrayList<Integer> spellSlots = new ArrayList<>();
+		int classSpellKnownNumber = 0 ;
+		int cantripsNumber = 0 ;
+		int highestSpellSlot = 0;
+		boolean spezialCase = false;
+
+		if (classSpellKnownCol == null){
+			return new ArrayList<>();
+		}
+		/*
+		Liste :
+		Warlock,Sorcerer, ranger, Wizard : funktioniert ??
+		Paladin, Artificer: abgestürzt -> Endlosschleife?
+		level ?
+		Monk,Rogue,Fighter, ja
+
+		Abstürze:
+		Wizard Lvl 5
+		BloodHunter lvl20
+		bard lvl 10
+		cleric lvl 15
+		wizard lvl 10 - classSpellKnownNumber  = null
+		warlock lvl 19
+		 */
+		System.out.println("level: " + level);
+
+		switch (classSpellKnownCol){
+			case "NULL":
+				System.out.println("0");
+				return new ArrayList<>();
+            case "tabelle":
+				System.out.println("tabelle");
+				System.out.println("classSpellKnownNumber: " + dbms.getRowMultPref("spellknown",genClass,"Spell Known" ));
+				System.out.println("classSpellKnownNumber2: " + Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1)));
+				classSpellKnownNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1));
+				spellSlots = determineSpellSlots(genClass,level);
+				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow("spellslots", genClass).get(2)).get(level-1));
+				break;
+			case "spezial":
+				System.out.println("spezial");
+				System.out.println("classSpellKnownNumber: " + dbms.getRowMultPref("spellknown",genClass, "Spell Known"));
+				System.out.println("classSpellKnownNumber2: " + Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1)));
+
+				classSpellKnownNumber = Integer.parseInt((bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1)));
+				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Cantrips" ).getLast()).get(level-1));
+				highestSpellSlot = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Slot Level").getLast()).get(level-1));
+				spezialCase = true;
+				break;
+			default:
+				System.out.println("default");
+				System.out.println("classSpellKnownNumber: " + dbms.getRowMultPref("spellknown","Spell Known", genClass));
+				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow("spellslots", genClass).get(2)).get(level-1));
+				spellSlots = determineSpellSlots(genClass,level);
+				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level,abilityModifier);
+				break;
+		}
+			spells.add("Cantrips: " + dbms.getMultRowMultPref("spells", genClass, "Cantrip", cantripsNumber));
+		if ((!spezialCase)) {
+			int lastLevelSpellSlot = 1;
+			for (int index : spellSlots) {
+				if(index == 0){
+					highestSpellSlot = lastLevelSpellSlot;
+				} else {
+					lastLevelSpellSlot++;
+				}
+			}
+		}
+		for(int spellLevel=1; (spellLevel<highestSpellSlot) && (classSpellKnownNumber>0); spellLevel++ ){
+			int numberSpells  = rand.nextInt(classSpellKnownNumber)+1;
+			classSpellKnownNumber = classSpellKnownNumber - numberSpells;
+			switch (spellLevel){
+				case 1:
+					spells.add("1st Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 2:
+					spells.add("2nd Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 3:
+					spells.add("3rd Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 4:
+					spells.add("4th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 5:
+					spells.add("5th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 6:
+					spells.add("6th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 7:
+					spells.add("7th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 8:
+					spells.add("8th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				case 9:
+					spells.add("9th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					break;
+				default:
+					break;
+			}
+		}
+		return spells;
+	}
+	/*
+	gibt ein Integer Liste wieder, mit den Spell Slots für das Level
+	 */
+	public ArrayList<Integer>determineSpellSlots(String genClass, int level){
+		ArrayList<Integer> spellSlots = new ArrayList<>();
+		ArrayList<String> dbSpellSlot = dbms.getRow("spellslots", genClass);
+		System.out.println("determine SpellSlots: "+ dbms.getRow("spellslots", genClass));
+		for(int index=0; index<9; index ++){
+			spellSlots.add(Integer.parseInt(bigStringToDividedString(dbSpellSlot.get(3+index)).get(level-1)));
+		}
+		System.out.println("SpellSlots: "+ spellSlots);
+		return spellSlots;
+	}
+	public int determineNumberOfKnownSpell(String genClass, int level, ArrayList<Integer> abilityModifier) {
+		String colClassForSpell = dbms.getRow("class", genClass).get(9);
+		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
+		int spellModNumber = 0;
+		int knownSpells;
+		System.out.println("abilityModifierForSpells: "+ abilityModifierForSpells);
+		switch (abilityModifierForSpells) {
+			case "Str":
+				spellModNumber = abilityModifier.getFirst();
+				break;
+			case "Dex":
+				spellModNumber = abilityModifier.get(1);
+				break;
+			case "Con":
+				spellModNumber = abilityModifier.get(2);
+				break;
+			case "Int":
+				spellModNumber = abilityModifier.get(3);
+				break;
+			case "Wis":
+				spellModNumber = abilityModifier.get(4);
+				break;
+			case "Cha":
+				spellModNumber = abilityModifier.get(5);
+				break;
+			default:
+				break;
+		}
+		if (colClassForSpell.contains("1/2")){
+			knownSpells = (int) (spellModNumber +  level*0.5);
+		}else {
+			knownSpells = spellModNumber * level;
+		}
+		return knownSpells;
+	}
 
 	/* TO DO @Kristina */
-
 	public ArrayList<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {
 		ArrayList<String> spells = new ArrayList<>();
 		ArrayList<String> cantrip = new ArrayList<>();
