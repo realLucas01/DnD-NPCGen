@@ -27,9 +27,8 @@ public interface ClassRepository extends CrudRepository<ClassModel, Integer>{
 	ArrayList<ClassModel> findByClassSkills(String skills);
 	ArrayList<ClassModel> findByClassSkillNumber(Integer skillNumber);
 	ArrayList<ClassModel> findByClassAbilityScoreDistribution(String abilityScoreDistribution);
-	ArrayList<ClassModel> findByClassCantrips(String cantrips);
-	ArrayList<ClassModel> findByClassSpells(String spells);
-	ArrayList<ClassModel> findByClassSpellAbilityScore(String abilityScore);
+	ArrayList<ClassModel> findByClassSpellKnown(String spellKnown);
+	ArrayList<ClassModel> findByClassFeatures(String features);
 	@Query("SELECT s.className FROM ClassModel s")
 	ArrayList<String> getallClassCol();
 	Page<ClassModel> findAll(Pageable pageable);

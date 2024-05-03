@@ -15,7 +15,9 @@
 
 package DnDGen.DB;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -75,6 +77,12 @@ public class DBMS implements ApplicationContextAware{
 	SpellRepository spellRepository;
 	@Autowired
 	WeaponRepository weaponRepository; 
+	@Autowired
+	SpellKnownRepository spellKnownRepository; 
+	@Autowired
+	SpellSlotsRepository spellSlotsRepository; 
+	
+    Object r;
 	
 	/* @author Lucas
 	 * 
@@ -202,9 +210,8 @@ public class DBMS implements ApplicationContextAware{
 				CD.add(6, Entryclass.getClassSkills());
 				CD.add(7, Entryclass.getClassSkillNumber().toString());
 				CD.add(8, Entryclass.getClassAbilityScoreDistribution());
-				CD.add(9, Entryclass.getClassCantrips());
-				CD.add(10, Entryclass.getClassSpells());
-				CD.add(11, Entryclass.getClassSpellAbilityScore());
+				CD.add(9, Entryclass.getClassSpellKnown());
+				CD.add(10, Entryclass.getClassFeatures());
 				break;
 			case "features":
 				FeatureModel Entryfeature = featureRepository.findByFeatureName(searchstring);
@@ -252,6 +259,21 @@ public class DBMS implements ApplicationContextAware{
 				CD.add(2, Entrydracances.getDraconicDamageType());
 				CD.add(3, Entrydracances.getDraconicBreathWeapon());
 				break;
+			case "spellslots":
+				SpellSlotsModel Entryspellslots = spellSlotsRepository.findBySpellSlotsClass(searchstring);
+				CD.add(0, Entryspellslots.getSpellSlotsId().toString());
+				CD.add(1, Entryspellslots.getSpellSlotsClass());
+				CD.add(2, Entryspellslots.getSpellSlotsCantrips().toString());
+				CD.add(3, Entryspellslots.getSpellSlots1Level().toString());
+				CD.add(4, Entryspellslots.getSpellSlots2Level().toString());
+				CD.add(5, Entryspellslots.getSpellSlots3Level().toString());
+				CD.add(6, Entryspellslots.getSpellSlots4Level().toString());
+				CD.add(7, Entryspellslots.getSpellSlots5Level().toString());
+				CD.add(8, Entryspellslots.getSpellSlots6Level().toString());
+				CD.add(9, Entryspellslots.getSpellSlots7Level().toString());
+				CD.add(10, Entryspellslots.getSpellSlots8Level().toString());
+				CD.add(11, Entryspellslots.getSpellSlots9Level().toString());
+				break;
 			default:
 				CD = null;
 			}
@@ -289,9 +311,8 @@ public class DBMS implements ApplicationContextAware{
 		    	randRow.add(6, randclass.getClassSkills());
 		    	randRow.add(7, randclass.getClassSkillNumber().toString());
 		    	randRow.add(8, randclass.getClassAbilityScoreDistribution());
-		    	randRow.add(9, randclass.getClassCantrips());
-		    	randRow.add(10, randclass.getClassSpells());
-		    	randRow.add(11, randclass.getClassSpellAbilityScore());
+		    	randRow.add(9, randclass.getClassSpellKnown());
+		    	randRow.add(10, randclass.getClassFeatures());
 		    }
 			break;
 		case "language":
@@ -537,7 +558,7 @@ public class DBMS implements ApplicationContextAware{
 		    	SpellModel spellmultpref = (SpellModel) questionPage.getContent().get(0);
 		    	rowMultPref.add(0, spellmultpref.getSpellId().toString());
 		    	rowMultPref.add(1, spellmultpref.getSpellName());
-		    	rowMultPref.add(2, spellmultpref.getSpellLevel());
+		    	rowMultPref.add(2, spellmultpref.getSpellLevel().toString());
 		    	rowMultPref.add(3, spellmultpref.getSpellSchool());
 		    	rowMultPref.add(4, spellmultpref.getSpellCastingTime());
 		    	rowMultPref.add(5, spellmultpref.getSpellRange());
@@ -547,8 +568,21 @@ public class DBMS implements ApplicationContextAware{
 		    	rowMultPref.add(9, spellmultpref.getSpellLevelUpScale());
 		    	rowMultPref.add(10, spellmultpref.getSpellAvailability());
 		    }
+		case "spellknown":
+			qty = spellKnownRepository.findByMultPrefsize(pref1, pref2).size();
+			idx = (int)(Math.random() * qty);
+		    questionPage = spellKnownRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
+		    if (questionPage.hasContent()) {
+		    	SpellKnownModel spellknownmultpref = (SpellKnownModel) questionPage.getContent().get(0);
+		    	rowMultPref.add(0, spellknownmultpref.getSpellKnownId().toString());
+		    	rowMultPref.add(1, spellknownmultpref.getSpellKnownClass());
+		    	rowMultPref.add(2, spellknownmultpref.getSpellKnownKind());
+		    	rowMultPref.add(3, spellknownmultpref.getSpellKnownStuff());
+		    }
 		default:
-			rowMultPref = null;
+			//Aus irgendeinem Grund geht er wenn der case "spellkown" ausgeführt wird direkt dannach
+			//in den default case und setzt die ArrayList direkt wieder auf null, ka warum....
+			//rowMultPref = null;
 		}
 		return rowMultPref;
 	}

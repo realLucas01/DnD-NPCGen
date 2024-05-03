@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,17 +25,17 @@ public class ClassModel {
 	private String classSkills;
 	private Integer classSkillNumber;
 	private String classAbilityScoreDistribution;
-	private String classCantrips;
-	private String classSpells;
-	private String classSpellAbilityScore;
+	private String classSpellKnown;
+	@Column(columnDefinition="TEXT")
+	private String classFeatures;
 	
 	public ClassModel() {
 		
 	}
 	public ClassModel(String className, String classHitDice, String classProfWeapon, String classProfArmor,
 			String classSavingThrows, String classSkills, Integer classSkillNumber,
-			String classAbilityScoreDistribution, String classCantrips, String classSpells,
-			String classSpellAbilityScore) {
+			String classAbilityScoreDistribution, String classSpellKnown,
+			String classFeatures) {
 		this.className = className;
 		this.classHitDice = classHitDice;
 		this.classProfWeapon = classProfWeapon;
@@ -43,9 +44,8 @@ public class ClassModel {
 		this.classSkills = classSkills;
 		this.classSkillNumber = classSkillNumber;
 		this.classAbilityScoreDistribution = classAbilityScoreDistribution;
-		this.classCantrips = classCantrips;
-		this.classSpells = classSpells;
-		this.classSpellAbilityScore = classSpellAbilityScore;
+		this.classSpellKnown = classSpellKnown;
+		this.classFeatures = classFeatures;
 	}
 	public Integer getClassId() {
 		return classId;
@@ -101,31 +101,24 @@ public class ClassModel {
 	public void setClassAbilityScoreDistribution(String classAbilityScoreDistribution) {
 		this.classAbilityScoreDistribution = classAbilityScoreDistribution;
 	}
-	public String getClassCantrips() {
-		return classCantrips;
+	public String getClassSpellKnown() {
+		return classSpellKnown;
 	}
-	public void setClassCantrips(String classCantrips) {
-		this.classCantrips = classCantrips;
+	public void setClassSpellKnown(String classSpellKnown) {
+		this.classSpellKnown = classSpellKnown;
 	}
-	public String getClassSpells() {
-		return classSpells;
+	public String getClassFeatures() {
+		return classFeatures;
 	}
-	public void setClassSpells(String classSpells) {
-		this.classSpells = classSpells;
-	}
-	public String getClassSpellAbilityScore() {
-		return classSpellAbilityScore;
-	}
-	public void setClassSpellAbilityScore(String classSpellAbilityScore) {
-		this.classSpellAbilityScore = classSpellAbilityScore;
+	public void setClassFeatures(String classFeatures) {
+		this.classFeatures = classFeatures;
 	}
 	@Override
 	public String toString() {
 		return "ClassModel [classId=" + classId + ", className=" + className + ", classHitDice=" + classHitDice
 				+ ", classProfWeapon=" + classProfWeapon + ", classProfArmor=" + classProfArmor + ", classSavingThrows="
 				+ classSavingThrows + ", classSkills=" + classSkills + ", classSkillNumber=" + classSkillNumber
-				+ ", classAbilityScoreDistribution=" + classAbilityScoreDistribution + ", classCantrips="
-				+ classCantrips + ", classSpells=" + classSpells + ", classSpellAbilityScore=" + classSpellAbilityScore
-				+ "]";
+				+ ", classAbilityScoreDistribution=" + classAbilityScoreDistribution + ", classSpellKnown="
+				+ classSpellKnown + ", classFeatures=" + classFeatures + "]";
 	}
 }

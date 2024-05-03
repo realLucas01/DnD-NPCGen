@@ -26,6 +26,7 @@ public class SpellModel {
 	private String spellDuration;
 	@Column(columnDefinition="TEXT")
 	private String spellDescription;
+	@Column(columnDefinition="TEXT")
 	private String spellLevelUpScale;
 	private String spellAvailability;
 	
