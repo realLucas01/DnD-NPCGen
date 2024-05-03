@@ -1,11 +1,14 @@
 package DnDGen.UI;
 
 
+import DnDGen.TSWP1.RandomGenerator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 import DnDGen.TSWP1.RandomNPC;
+import DnDGen.TSWP1.RandomGenerator;
 
 
 //import java.awt.Button;
@@ -25,13 +28,14 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class UI extends Application {
     Stage window;
-    Scene generatePage, npcPage, historyPage, editPage;
-    String name, klasse, rasse;
+    Scene generatePage;
+    String name;
     
 	/* @author Lucas
 	 * 
@@ -60,11 +64,13 @@ public class UI extends Application {
     	window = primaryStage;
         window.setTitle("DnD NPC Generator");
         RandomNPC rNPC = new RandomNPC();
+        RandomGenerator rGenerator = new RandomGenerator();
 
         GridPane layoutGenerateGrid = new GridPane();
         layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
         layoutGenerateGrid.setVgap(7);
         layoutGenerateGrid.setHgap(10);
+        layoutGenerateGrid.setMinWidth(300);
 
 
         //Menü
@@ -103,6 +109,7 @@ public class UI extends Application {
         TextField nameField = new TextField();
         nameField.setPromptText("Name");
         GridPane.setConstraints(nameField,1,0,2,1);
+
 /*
           0 1 2
         0 - --- Name   00 1021
@@ -119,6 +126,7 @@ public class UI extends Application {
         ArrayList<String> list = dbms.onlyColumn("race");
         Collections.sort(list);
         cbRace.getItems().addAll(list);
+        cbRace.setMaxWidth(300);
         cbRace.getSelectionModel().selectFirst();
 
 
@@ -133,6 +141,7 @@ public class UI extends Application {
         list = dbms.onlyColumn("class");
         Collections.sort(list);
         cbClass.getItems().addAll(list);
+        cbClass.setMaxWidth(300);
         cbClass.getSelectionModel().selectFirst();
 
 
@@ -146,6 +155,7 @@ public class UI extends Application {
         list = dbms.onlyColumn("job");
         Collections.sort(list);
         cbJob.getItems().addAll(list);
+        cbJob.setMaxWidth(300);
         cbJob.getSelectionModel().selectFirst();
 
 
@@ -156,6 +166,7 @@ public class UI extends Application {
         final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbLevel, 1, 4,2,1);
         for(int i = 1; i < 20; i++) {cbLevel.getItems().add(i);}
+        cbLevel.setMaxWidth(300);
         cbLevel.getSelectionModel().selectFirst();
 
         //AbilityScore
@@ -165,31 +176,51 @@ public class UI extends Application {
         final ComboBox cbAbSc = new ComboBox(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbAbSc, 1, 5,2,1);
         cbAbSc.getItems().addAll(dbms.onlyColumn("abilisc"));
+        cbAbSc.setMaxWidth(300);
         cbAbSc.getSelectionModel().selectFirst();
 
         //Geschlecht
         final ToggleGroup groupSex = new ToggleGroup();
-        Image img = new Image("ui-image/male.png");
+        Image img = new Image("ui-image/male-and-female.png");
+        RadioButton rbRandom = new RadioButton("Zufall");
+        rbRandom.setUserData("zufall");
+        rbRandom.setToggleGroup(groupSex);
+        GridPane.setConstraints(rbRandom, 0, 7,3,1);
+        ImageView imgVMaleFemale = new ImageView(img);
+        imgVMaleFemale.setFitWidth(32);
+        imgVMaleFemale.setFitHeight(32);
+        rbRandom.setGraphic(imgVMaleFemale);
+        rbRandom.setSelected(true);
+
+        img = new Image("ui-image/male.png");
         RadioButton rbMale = new RadioButton("Männlich");
         rbMale.setUserData("male");
         rbMale.setToggleGroup(groupSex);
-        GridPane.setConstraints(rbMale, 1, 7);
-        rbMale.setGraphic(new ImageView(img));
+        GridPane.setConstraints(rbMale, 0, 8,3,1);
+        ImageView imgVMale = new ImageView(img);
+        imgVMale.setFitWidth(32);
+        imgVMale.setFitHeight(32);
+        rbMale.setGraphic(imgVMale);
 
         img = new Image("ui-image/female.png");
         RadioButton rbFemale = new RadioButton("Weiblich");
         rbFemale.setUserData("female");
         rbFemale.setToggleGroup(groupSex);
-        GridPane.setConstraints(rbFemale, 2, 7);
-        rbFemale.setGraphic(new ImageView(img));
+        GridPane.setConstraints(rbFemale, 0, 9,3,1);
+        ImageView imgVFemale = new ImageView(img);
+        imgVFemale.setFitWidth(32);
+        imgVFemale.setFitHeight(32);
+        rbFemale.setGraphic(imgVFemale);
 
-        img = new Image("ui-image/male-and-female.png");
-        RadioButton rbRandom = new RadioButton("Zufall");
-        rbRandom.setUserData("zufall");
-        rbRandom.setToggleGroup(groupSex);
-        GridPane.setConstraints(rbRandom, 0, 7);
-        rbRandom.setGraphic(new ImageView(img));
-        rbRandom.setSelected(true);
+
+        //Spaltenbreite der Tabelle definieren
+        ColumnConstraints col1Constraints = new ColumnConstraints();
+        col1Constraints.setPercentWidth(33);
+        ColumnConstraints col2Constraints = new ColumnConstraints();
+        col2Constraints.setPercentWidth(33);
+        ColumnConstraints col3Constraints = new ColumnConstraints();
+        col3Constraints.setPercentWidth(33);
+        layoutGenerateGrid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
 
 
 
@@ -274,13 +305,11 @@ public class UI extends Application {
         inventoryGrid.getChildren().addAll(armorL, weaponL, armorTextL, weaponTextL);
 
         //Skill, Senses
-        VBox skillSensesBox = new VBox();
+        HBox skillSensesBox = new HBox();
         TextFlow skillTF = new TextFlow();
-        Text text1=new Text("Skill1: ");
+        Text text1=new Text("Skills:\n");
         text1.setStyle("-fx-font-weight: bold");
-        Text text2=new Text("Some Text");
-        text2.setStyle("-fx-font-weight: normal");
-        skillTF.getChildren().addAll(text1, text2);
+        skillTF.getChildren().addAll(text1);
 
         TextFlow senseTF = new TextFlow();
         Text text3=new Text("Sense1: ");
@@ -297,25 +326,25 @@ public class UI extends Application {
         TextFlow spellTF = new TextFlow();
         text1 = new Text("Zauber: ");
         text1.setStyle("-fx-font-weight: bold");
-        text2 = new Text("Some Text");
-        text2.setStyle("-fx-font-weight: normal");
-        spellTF.getChildren().addAll(text1, text2);
-
-        TextFlow actionTF = new TextFlow();
-        text3 = new Text("Aktionen: ");
-        text3.setStyle("-fx-font-weight: bold");
         text4 = new Text("Some Text");
         text4.setStyle("-fx-font-weight: normal");
-        actionTF.getChildren().addAll(text3, text4);
+        spellTF.getChildren().addAll(text1, text4);
+
+        TextFlow actionTF = new TextFlow();
+        text3 = new Text("Aktionen:\n");
+        text3.setStyle("-fx-font-weight: bold");
+        actionTF.getChildren().addAll(text3);
 
         spellActionBox.getChildren().addAll(spellTF,actionTF);
         spellActionBox.setPadding(new Insets(10, 10, 10, 10));
 
+        ScrollPane npcScrollPane = new ScrollPane(npcStack);
+        npcScrollPane.setMinWidth(350);
 
-        Line line1 = new Line(0.0f,0.0f,400.0f,0.0f);
-        Line line2 = new Line(0.0f,0.0f,300.0f,0.0f);
-        Line line3 = new Line(0.0f,0.0f,300.0f,0.0f);
-        Line line4 = new Line(0.0f,0.0f,300.0f,0.0f);
+        Line line1 = new Line(0.0f,0.0f,npcScrollPane.getWidth(),0.0f);
+        Line line2 = new Line(0.0f,0.0f,npcScrollPane.getWidth(),0.0f);
+        Line line3 = new Line(0.0f,0.0f,npcScrollPane.getWidth(),0.0f);
+        Line line4 = new Line(0.0f,0.0f,npcScrollPane.getWidth(),0.0f);
         Line line5 = new Line(0.0f,0.0f,300.0f,0.0f);
 
         npcStack.getChildren().addAll(nameClassGrid,line1,armorHitSpeedPane,line2,statsBox,line3, inventoryGrid, line5,skillSensesBox,line4,spellActionBox);
@@ -323,85 +352,106 @@ public class UI extends Application {
 
         VBox descriptionStack = new VBox();
         descriptionStack.setVisible(false);
-        //layoutGenerateGrid.getChildren().add(npcStack);
+        descriptionStack.setMinWidth(300);
+        descriptionStack.setMaxWidth(330);
 
+
+        npcScrollPane.setVisible(false);
+
+
+
+        //layoutGenerateGrid.getChildren().add(npcStack);
 
         //Button
         Button buttonGenerate = new Button("Generieren");
-        GridPane.setConstraints(buttonGenerate, 1, 8);
+        GridPane.setConstraints(buttonGenerate, 0, 13,2,3);
 
         buttonGenerate.setStyle("-fx-font: bold italic 20pt \"Arial\"; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
 
 
 
-//   Button Klick
-      buttonGenerate.setOnAction(e -> {
-          ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),null,getSex(groupSex.getSelectedToggle().getUserData().toString()));
-          name = nameField.getText();
+//    Button Klick
+        buttonGenerate.setOnAction(e -> {
+            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
 
-          //Liste mit Positionen vom NPC
-          /*
-          System.out.println(npc);
-          for(int i = 0; i < npc.size(); i++) {
-              System.out.println(i + " - " + npc.get(i));
-          }
-          
-           */
+            //Liste mit Positionen vom NPC
+            /*
+            System.out.println(npc);
+            for(int i = 0; i < npc.size(); i++) {
+                System.out.println(i + " - " + npc.get(i));
+            }
+            */
 
-          String stringNpc = "";
-          List listNpc = new ArrayList<>();
+            String stringNpc = "";
+            List listNpc = new ArrayList<>();
 
-          nameL.setText("Name: " + npc.get(15));
-          classL.setText("Klasse: " + npc.get(3));
-          raceL.setText("Rasse: " + npc.get(0));
-          levelL.setText("Level: " + String.valueOf(npc.get(1)));
-          jobL.setText("Beruf: " + npc.get(2));
-          alignmentL.setText("Alignment: " + npc.get(16));
-          ageL.setText("Alter: " + String.valueOf(npc.get(14)));
-          sexL.setText("Geschlecht: " + npc.get(13));
-          deityL.setText("Gottheit: " + npc.get(18));
+            nameL.setText("Name: " + npc.get(15));
+            name = npc.get(15);
+            classL.setText("Klasse: " + npc.get(3));
+            raceL.setText("Rasse: " + npc.get(0));
+            levelL.setText("Level: " + String.valueOf(npc.get(1)));
+            jobL.setText("Beruf: " + npc.get(2));
+            alignmentL.setText("Alignment: " + npc.get(16));
+            ageL.setText("Alter: " + String.valueOf(npc.get(14)));
+            sexL.setText("Geschlecht: " + npc.get(13));
+            deityL.setText("Gottheit: " + npc.get(18));
 
-          armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
-          hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
-          for(int i = 0; i < stringToList(npc.get(10)).size(); i++) {
-              speedL.setText(speedL.getText().concat(stringToList(npc.get(10)).get(i) + " "));
-          }
-        //  speedL.setText("Geschwindigkeit: " + stringToList(npc.get(10)).get(0));
+            armorClassL.setText("Rüstungsklasse: " + String.valueOf(npc.get(8)));
+            hitPointsL.setText("Trefferpunkte: " + String.valueOf(npc.get(6)));
+            for(int i = 0; i < stringToList(npc.get(10)).size(); i++) {
+                speedL.setText(speedL.getText().concat(stringToList(npc.get(10)).get(i) + " "));
+            }
+            //speedL.setText("Geschwindigkeit: " + stringToList(npc.get(10)).get(0));
 
-          //Sprachen
-          stringNpc = "";
-          listNpc.clear();
-          listNpc = stringToList(npc.get(19));
-          for(int i = 0; i < listNpc.size(); i++) {
-              stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
-          }
-          languagesL.setText("Sprachen:\n" + stringNpc);
+            //Sprachen
+            stringNpc = "";
+            listNpc.clear();
+            listNpc = stringToList(npc.get(19));
+            for(int i = 0; i < listNpc.size(); i++) {
+                stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+            }
+            languagesL.setText("Sprachen:\n" + stringNpc);
 
-          //Ability
-          strL.setText(" Str\n" + abilityString(0,npc));
-          dexL.setText(" Dex\n" + abilityString(1,npc));
-          conL.setText(" Con\n" + abilityString(2,npc));
-          intL.setText(" Int\n" + abilityString(3,npc));
-          wisL.setText(" Wis\n" + abilityString(4,npc));
-          chaL.setText(" Cha\n" + abilityString(5,npc));
+            //Ability
+            strL.setText(" Str\n" + abilityString(0,npc));
+            dexL.setText(" Dex\n" + abilityString(1,npc));
+            conL.setText(" Con\n" + abilityString(2,npc));
+            intL.setText(" Int\n" + abilityString(3,npc));
+            wisL.setText(" Wis\n" + abilityString(4,npc));
+            chaL.setText(" Cha\n" + abilityString(5,npc));
 
-          //Inventar
-          stringNpc = "";
-          listNpc.clear();
-          listNpc = stringToList(npc.get(9));
-          for(int i = 0; i < listNpc.size(); i++) {
-              stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
-          }
-          weaponL.setText(stringNpc);
-          weaponL.setWrapText(true);
-          armorL.setText("    - " + npc.get(7));
-          armorL.setWrapText(true);
+            //Inventar
+            stringNpc = "";
+            listNpc.clear();
+            listNpc = stringToList(npc.get(9));
+            for(int i = 0; i < listNpc.size(); i++) {
+                stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+            }
+            weaponL.setText(stringNpc);
+            weaponL.setWrapText(true);
+            armorL.setText("    - " + npc.get(7));
+            armorL.setWrapText(true);
+
+
+            //Skills
+            for(int i = 1; i < skillTF.getChildren().size(); i++) {
+                skillTF.getChildren().remove(i);
+            }
+            listNpc.clear();
+            listNpc = stringToList(npc.get(12));
+            for(int i = 0; i < listNpc.size(); i++) {
+                Text action = new Text("    - " + listNpc.get(i).toString() + "\n");
+                skillTF.getChildren().add(action);
+            }
+
+
+
 
             //Spell
             /*
             Text skills = new Text(npc.get(10));
             skillTF.getChildren().add(skills);
-*/
+            */
             /*
             Text senses = new Text(npc.get(10));
             senseTF.getChildren().add(senses);
@@ -409,27 +459,62 @@ public class UI extends Application {
             Text spells = new Text(npc.get(10));
             spellTF.getChildren().add(spells);
 
-            Text action = new Text(npc.get(10));
-            actionTF.getChildren().add(action);
+
             */
 
             //Beschreibung
+            descriptionStack.getChildren().clear();
 
-          descriptionStack.getChildren().clear();
-            /*array ->
-            TextFlow descriptionText = new TextFlow();
-            String description = "
+            //Beschreibung kurz (direkten zugriff auf Methode von NPC)
+            GridPane descriptionGrid = new GridPane();
+
+            //Spaltenbreite der Tabelle definieren
+            ColumnConstraints descriptionCol1Constraint = new ColumnConstraints();
+            descriptionCol1Constraint.setPercentWidth(25);
+            descriptionCol1Constraint.setMinWidth(65);
+            ColumnConstraints descriptionCol2Constraint = new ColumnConstraints();
+            descriptionCol2Constraint.setPercentWidth(75);
+            descriptionGrid.getColumnConstraints().addAll(descriptionCol1Constraint,descriptionCol2Constraint);
+
+            //Plothook nicht da Stelle nach attitute
+            ArrayList<String> descriptionTitel = new ArrayList<>(Arrays.asList("Eyes: ","Hair color: ", "Hairstyle: ",
+                                                                "Skin: ", "Trait: ", "Mannerism: ", "don't: ", "Flaw: ",
+                                                                "Ideal: ", "Voice: ", "CLothing: ", "Attitude: ",
+                                                                "Job: ", "Gender: ", "age: ", "deity: ",
+                                                                "size: ", "height: "));
+            ArrayList<String> npcDescriptionArray = rGenerator.randDescription(npc.get(0),npc.get(16));
+            for(int i = 0; i < npcDescriptionArray.size(); i++) {
+                TextFlow descriptionTextNew = new TextFlow();
+                String description = descriptionTitel.get(i);
+                Text text = new Text(description);
+                descriptionTextNew.getChildren().add(text);
+                GridPane.setConstraints(descriptionTextNew,0,i);
+                descriptionGrid.getChildren().add(descriptionTextNew);
+
+                descriptionTextNew = new TextFlow();
+                description = npcDescriptionArray.get(i);
+                text = new Text(description);
+                descriptionTextNew.getChildren().add(text);
+                GridPane.setConstraints(descriptionTextNew,1,i);
+                descriptionGrid.getChildren().add(descriptionTextNew);
+            }
+            descriptionStack.getChildren().add(descriptionGrid);
+
+
+            TextFlow descriptionTextNew = new TextFlow();
+            String description = "\n\n";
+            Text text = new Text(description);
+            descriptionTextNew.getChildren().add(text);
+            descriptionStack.getChildren().add(descriptionTextNew);
 
 
 
-           */
-
-
-            listNpc = stringToList(npc.get(17));
+            //Beschreibung lang (altes Modell / meine Methode für StringToList)
+            //listNpc = stringToList(npc.get(17));
+            listNpc = npcDescriptionArray;
             String sex = npc.get(13);
-
             TextFlow descriptionText = new TextFlow();
-            String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
+                description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
                     name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
                     firstLetterBig(getPossessivePronoun(sex)) + " wears " + getPronoun(sex) + " hair as " + listNpc.get(2) +
                     ". They have the color " + listNpc.get(3) + ". " + firstLetterBig(getPossessivePronoun(sex)) +
@@ -443,18 +528,23 @@ public class UI extends Application {
                     listNpc.get(listNpc.size()-3) + " " + name + " is wearing a " + listNpc.get(listNpc.size()-2) +
                     " and " + getPossessivePronoun(sex) + " is " + listNpc.get(listNpc.size()-1));
 
-            Text text = new Text(description);
+            text = new Text(description);
             text.wrappingWidthProperty().bind(descriptionStack.widthProperty());
             descriptionText.getChildren().add(text);
 
             descriptionStack.getChildren().add(descriptionText);
 
+            //Trennlinien auf breite anpassen
+            line1.setEndX(npcScrollPane.getWidth()-20);
+            line2.setEndX(npcScrollPane.getWidth()-20);
+            line3.setEndX(npcScrollPane.getWidth()-20);
+            line4.setEndX(npcScrollPane.getWidth()-20);
+            line5.setEndX(npcScrollPane.getWidth()-20);
 
-
-
-
+            //Den Generireten Inhalt sichtbar machen
             npcStack.setVisible(true);
             descriptionStack.setVisible(true);
+            npcScrollPane.setVisible(true);
         });
 
 
@@ -466,10 +556,10 @@ public class UI extends Application {
         VBox layoutGenerateVBox = new VBox(20);
         HBox gridNpc = new HBox();
 
-        gridNpc.getChildren().addAll(layoutGenerateGrid, npcStack, descriptionStack);
+        gridNpc.getChildren().addAll(layoutGenerateGrid, npcScrollPane, descriptionStack);
         layoutGenerateVBox.getChildren().addAll(menuBar,gridNpc);
 
-        generatePage = new Scene(layoutGenerateVBox, 800, 600);
+        generatePage = new Scene(layoutGenerateVBox, 900, 600);
 
 
 
@@ -480,14 +570,23 @@ public class UI extends Application {
         window.setScene(generatePage);
         window.show();
 
-        /*
+
         window.widthProperty().addListener((obs, oldVal, newVal) -> {
+            /*
             layoutGenerateGrid.setPrefWidth(generatePage.getWidth()/4);
             npcStack.setPrefWidth(generatePage.getWidth()/2);
             descriptionStack.setPrefWidth(generatePage.getWidth()/4);
-
+            */
+            descriptionStack.setMinWidth(generatePage.getWidth()/3);
+            layoutGenerateGrid.setMinWidth(generatePage.getWidth()/3);
+            npcScrollPane.setMinWidth(generatePage.getWidth()/3);
+            line1.setEndX(npcScrollPane.getWidth()-20);
+            line2.setEndX(npcScrollPane.getWidth()-20);
+            line3.setEndX(npcScrollPane.getWidth()-20);
+            line4.setEndX(npcScrollPane.getWidth()-20);
+            line5.setEndX(npcScrollPane.getWidth()-20);
         });
-        */
+
     }
 
 
