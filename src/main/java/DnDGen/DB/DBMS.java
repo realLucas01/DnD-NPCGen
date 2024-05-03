@@ -203,7 +203,7 @@ public class DBMS implements ApplicationContextAware{
 				ClassModel Entryclass = classRepository.findByClassName(searchstring);
 				CD.add(0, Entryclass.getClassId().toString());
 				CD.add(1, Entryclass.getClassName());
-				CD.add(2, Entryclass.getClassHitDice());
+				CD.add(2, Entryclass.getClassHitDice().toString());
 				CD.add(3, Entryclass.getClassProfWeapon());
 				CD.add(4, Entryclass.getClassProfArmor());
 				CD.add(5, Entryclass.getClassSavingThrows());
@@ -304,7 +304,7 @@ public class DBMS implements ApplicationContextAware{
 		    	ClassModel randclass = (ClassModel) questionPage.getContent().get(0);
 		    	randRow.add(0, randclass.getClassId().toString());
 		    	randRow.add(1, randclass.getClassName());
-		    	randRow.add(2, randclass.getClassHitDice());
+		    	randRow.add(2, randclass.getClassHitDice().toString());
 		    	randRow.add(3, randclass.getClassProfWeapon());
 		    	randRow.add(4, randclass.getClassProfArmor());
 		    	randRow.add(5, randclass.getClassSavingThrows());

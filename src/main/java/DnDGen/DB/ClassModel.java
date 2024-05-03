@@ -18,7 +18,7 @@ public class ClassModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer classId;
 	private String className;
-	private String classHitDice;
+	private Integer classHitDice;
 	private String classProfWeapon;
 	private String classProfArmor;
 	private String classSavingThrows;
@@ -32,7 +32,7 @@ public class ClassModel {
 	public ClassModel() {
 		
 	}
-	public ClassModel(String className, String classHitDice, String classProfWeapon, String classProfArmor,
+	public ClassModel(String className, Integer classHitDice, String classProfWeapon, String classProfArmor,
 			String classSavingThrows, String classSkills, Integer classSkillNumber,
 			String classAbilityScoreDistribution, String classSpellKnown,
 			String classFeatures) {
@@ -59,10 +59,10 @@ public class ClassModel {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-	public String getClassHitDice() {
+	public Integer getClassHitDice() {
 		return classHitDice;
 	}
-	public void setClassHitDice(String classHitDice) {
+	public void setClassHitDice(Integer classHitDice) {
 		this.classHitDice = classHitDice;
 	}
 	public String getClassProfWeapon() {
