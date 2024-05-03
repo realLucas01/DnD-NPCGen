@@ -20,7 +20,7 @@ public interface ClassRepository extends CrudRepository<ClassModel, Integer>{
 	long count();
 	ArrayList<ClassModel> findByClassId(Integer id);
 	ClassModel findByClassName(String name);
-	ArrayList<ClassModel> findByClassHitDice(String hitDice);
+	ArrayList<ClassModel> findByClassHitDice(Integer hitDice);
 	ArrayList<ClassModel> findByClassProfWeapon(String profWeapon);
 	ArrayList<ClassModel> findByClassProfArmor(String profArmor);
 	ArrayList<ClassModel> findByClassSavingThrows(String savingThrows);
