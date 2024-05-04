@@ -34,9 +34,6 @@ public class RandomNPC {
     * Zurück erhält man eine ArrayList, diese ist wie folgt aufgebaut:
     * (race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
      */
-    public ArrayList<String> testSpells(){
-        return randGen.randSpellList(randGen.randCharClass(), randGen.randAbilityScore(3),randGen.randLevel() );
-    }
 
     public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
         ArrayList<String> weaponList;
@@ -80,7 +77,7 @@ public class RandomNPC {
         //random Class
         if ((inputClass == null) && (level != 0)) {
             genClass = randGen.randCharClass();
-        } else if (level == 0) {
+        } else if ((level == 0)&&(inputClass != null)) {
             genClass = nameDBCommoner;
         } else {
             genClass = inputClass;
@@ -186,7 +183,6 @@ public class RandomNPC {
             generatedNPCFinished.set(0, race);
         }
         */
-
         return generatedNPCFinished;
     }
 
@@ -257,7 +253,6 @@ public class RandomNPC {
     public ArrayList<String> addAbilityScoreToSkillList(ArrayList<Integer> abilityModifier, ArrayList<String> skillList, int profBonus ){
         ArrayList<String> skillListWithNumbers = new ArrayList<>();
         String dbAbilityScore ;
-        System.out.println("SkillList: " + skillList);
         for (String s : skillList){
             if((s != null) && (!s.equals("Any"))) {
                 s= s.replaceAll("\\s+","");

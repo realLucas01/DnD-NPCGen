@@ -2,7 +2,7 @@ package DnDGen.TSWP1;
 
 import java.security.SecureRandom;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.*;
 
 import org.springframework.context.ApplicationContext;
 
@@ -27,15 +27,9 @@ public class RandomGenerator {
 
 	//Aufteilung eines großen String in kleinere
 	public static ArrayList<String> bigStringToDividedString(String bigString) {
-		ArrayList<String> dividedString = new ArrayList<>(); //rückgabe, des aufgeteilten Strings als eine Liste
-		String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
-
-		for (String s : partsOfTheBigString) { //jeder Teilstring wird der Liste hinzugefügt
-		//	if (!dividedString.contains(s)) {
-				dividedString.add(s);
-		//	}
-		}
-		return dividedString;
+        String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
+        //rückgabe, des aufgeteilten Strings als eine Liste
+        return new ArrayList<>(List.of(partsOfTheBigString));
 	}
 
 	public static ArrayList<Double> divideDoubles(String bigNumber) {
@@ -409,113 +403,177 @@ public class RandomGenerator {
 
 		return alignments.get(rndNum);
 	}
+	/*
+	Funktion die zufällige Zauber und eine zufällige Anzahl ausgibt. Da noch Spells fehlen, und aus Sicherheitsgründen wird jeder DB Aufruf überwacht und nach 3 sekunden automatisch abgebrochen.
+	Dies hat zur Folge, dass der abgebrochene DB Aufruf keinerlei Rückgaben/Ergebnisse produziert
+
+	Eine Beispiel Ausgabe:
+	[Cantrips: [Prestidigitation, Message, BladeWard], 1st Level: [TashasCausticBrew, FogCloud, FloatingDisk]]
+	 */
 	public ArrayList<String> randSpellList (String genClass, ArrayList<Integer> abilityModifier, int level ){
+		ExecutorService executor = Executors.newSingleThreadExecutor();
 		System.out.println("class: " + genClass);
 		String classSpellKnownCol = dbms.getRow("class", genClass).get(9);
-		ArrayList<String> spells = new ArrayList<>();
+		ArrayList<String> spellList = new ArrayList<>();
 		ArrayList<Integer> spellSlots = new ArrayList<>();
-		int classSpellKnownNumber = 0 ;
-		int cantripsNumber = 0 ;
+		ArrayList<String> cantrips = new ArrayList<>();
+		int classSpellKnownNumber ;
+		int cantripsNumber ;
 		int highestSpellSlot = 0;
 		boolean spezialCase = false;
 
 		if (classSpellKnownCol == null){
 			return new ArrayList<>();
 		}
-		/*
-		Liste :
-		Warlock,Sorcerer, ranger, Wizard : funktioniert ??
-		Paladin, Artificer: abgestürzt -> Endlosschleife?
-		level ?
-		Monk,Rogue,Fighter, ja
-
-		Abstürze:
-		Wizard Lvl 5
-		BloodHunter lvl20
-		bard lvl 10
-		cleric lvl 15
-		wizard lvl 10 - classSpellKnownNumber  = null
-		warlock lvl 19
-		 */
-		System.out.println("level: " + level);
-
 		switch (classSpellKnownCol){
 			case "NULL":
-				System.out.println("0");
 				return new ArrayList<>();
             case "tabelle":
-				System.out.println("tabelle");
-				System.out.println("classSpellKnownNumber: " + dbms.getRowMultPref("spellknown",genClass,"Spell Known" ));
-				System.out.println("classSpellKnownNumber2: " + Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1)));
 				classSpellKnownNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1));
 				spellSlots = determineSpellSlots(genClass,level);
 				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow("spellslots", genClass).get(2)).get(level-1));
 				break;
 			case "spezial":
-				System.out.println("spezial");
-				System.out.println("classSpellKnownNumber: " + dbms.getRowMultPref("spellknown",genClass, "Spell Known"));
-				System.out.println("classSpellKnownNumber2: " + Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1)));
-
 				classSpellKnownNumber = Integer.parseInt((bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1)));
 				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Cantrips" ).getLast()).get(level-1));
 				highestSpellSlot = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Slot Level").getLast()).get(level-1));
 				spezialCase = true;
 				break;
 			default:
-				System.out.println("default");
-				System.out.println("classSpellKnownNumber: " + dbms.getRowMultPref("spellknown","Spell Known", genClass));
 				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow("spellslots", genClass).get(2)).get(level-1));
 				spellSlots = determineSpellSlots(genClass,level);
 				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level,abilityModifier);
 				break;
 		}
-			spells.add("Cantrips: " + dbms.getMultRowMultPref("spells", genClass, "Cantrip", cantripsNumber));
+
 		if ((!spezialCase)) {
 			int lastLevelSpellSlot = 1;
 			for (int index : spellSlots) {
 				if(index == 0){
-					highestSpellSlot = lastLevelSpellSlot;
+					//highestSpellSlot = lastLevelSpellSlot-1;
+					break;
 				} else {
+					highestSpellSlot = lastLevelSpellSlot;
 					lastLevelSpellSlot++;
 				}
 			}
 		}
-		for(int spellLevel=1; (spellLevel<highestSpellSlot) && (classSpellKnownNumber>0); spellLevel++ ){
+		if(genClass.contains("(")){
+			genClass = genClass.substring(0, genClass.indexOf("(")-1);
+		}
+		int finalCantripsNumber = cantripsNumber;
+		String finalGenClass = genClass;
+		Future<?> future0 = executor.submit(() ->{
+			cantrips.addAll(dbms.getMultRowMultPref("spells", finalGenClass, "Cantrip", finalCantripsNumber));
+			System.out.println("cantrips: " + cantrips);
+		});try {
+			future0.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+		} catch (InterruptedException | ExecutionException | TimeoutException e) {
+			future0.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+		}
+		spellList.add("Cantrips: " + determineSpellNames(cantrips));
+		for(int spellLevel=1; (spellLevel<=highestSpellSlot) && (classSpellKnownNumber>0); spellLevel++ ) {
 			int numberSpells  = rand.nextInt(classSpellKnownNumber)+1;
 			classSpellKnownNumber = classSpellKnownNumber - numberSpells;
-			switch (spellLevel){
+			int finalSpellLevel = spellLevel;
+
+			switch (spellLevel) {
 				case 1:
-					spells.add("1st Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future1 = executor.submit(() ->{
+						spellList.add("1st Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future1.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future1.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 2:
-					spells.add("2nd Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future2 = executor.submit(() ->{
+						spellList.add("2nd Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future2.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future2.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 3:
-					spells.add("3rd Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future3 = executor.submit(() ->{
+						spellList.add("3nd Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future3.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future3.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 4:
-					spells.add("4th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future4 = executor.submit(() ->{
+						spellList.add("4th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future4.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future4.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 5:
-					spells.add("5th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future5 = executor.submit(() ->{
+						spellList.add("5th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future5.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future5.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 6:
-					spells.add("6th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future6 = executor.submit(() ->{
+						spellList.add("6th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future6.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future6.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 7:
-					spells.add("7th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future7 = executor.submit(() ->{
+						spellList.add("7th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future7.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future7.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 8:
-					spells.add("8th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future8 = executor.submit(() ->{
+						spellList.add("8th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future8.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future8.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				case 9:
-					spells.add("9th Level: " + dbms.getMultRowMultPref("spells", genClass, Integer.toString(spellLevel), numberSpells));
+					Future<?> future9 = executor.submit(() ->{
+						spellList.add("9th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+					});
+					try {
+						future9.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+					} catch (InterruptedException | ExecutionException | TimeoutException e) {
+						future9.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+					}
 					break;
 				default:
 					break;
 			}
 		}
-		return spells;
+		executor.shutdown();
+		return spellList;
 	}
 	/*
 	gibt ein Integer Liste wieder, mit den Spell Slots für das Level
@@ -523,19 +581,19 @@ public class RandomGenerator {
 	public ArrayList<Integer>determineSpellSlots(String genClass, int level){
 		ArrayList<Integer> spellSlots = new ArrayList<>();
 		ArrayList<String> dbSpellSlot = dbms.getRow("spellslots", genClass);
-		System.out.println("determine SpellSlots: "+ dbms.getRow("spellslots", genClass));
 		for(int index=0; index<9; index ++){
 			spellSlots.add(Integer.parseInt(bigStringToDividedString(dbSpellSlot.get(3+index)).get(level-1)));
 		}
-		System.out.println("SpellSlots: "+ spellSlots);
 		return spellSlots;
 	}
+	/*
+	Anzahl der möglichen Spells für die Klasse
+	 */
 	public int determineNumberOfKnownSpell(String genClass, int level, ArrayList<Integer> abilityModifier) {
 		String colClassForSpell = dbms.getRow("class", genClass).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
 		int knownSpells;
-		System.out.println("abilityModifierForSpells: "+ abilityModifierForSpells);
 		switch (abilityModifierForSpells) {
 			case "Str":
 				spellModNumber = abilityModifier.getFirst();
@@ -564,6 +622,20 @@ public class RandomGenerator {
 			knownSpells = spellModNumber * level;
 		}
 		return knownSpells;
+	}
+	/*
+	Damit nicht die alles von den Spells ausgegeben wird, werden hier nur die Namen extrahiert
+	 */
+	public ArrayList<String> determineSpellNames (ArrayList<String> spells ){
+		ArrayList<String> spellNames = new ArrayList<>();
+		int lengthSpells;
+		int positionSpellName = 1;
+		lengthSpells = spells.size()/11;
+		for(int indexName=0;indexName<lengthSpells;indexName++ ){
+			spellNames.add(spells.get(positionSpellName));
+			positionSpellName= positionSpellName+11;
+		}
+		return spellNames;
 	}
 
 	/* TO DO @Kristina */
