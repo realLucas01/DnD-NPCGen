@@ -337,11 +337,9 @@ public class UI extends Application {
         skillTF.getChildren().addAll(text1);
 
         TextFlow senseTF = new TextFlow();
-        Text text3=new Text("Sense1: ");
+        Text text3=new Text("Spells:\n");
         text3.setStyle("-fx-font-weight: bold");
-        Text text4=new Text("Some Text");
-        text4.setStyle("-fx-font-weight: normal");
-        senseTF.getChildren().addAll(text3, text4);
+        senseTF.getChildren().addAll(text3);
 
         skillSensesBox.getChildren().addAll(skillTF,senseTF);
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
@@ -351,9 +349,8 @@ public class UI extends Application {
         TextFlow spellTF = new TextFlow();
         text1 = new Text("Zauber: ");
         text1.setStyle("-fx-font-weight: bold");
-        text4 = new Text("Some Text");
-        text4.setStyle("-fx-font-weight: normal");
-        spellTF.getChildren().addAll(text1, text4);
+        spellTF.getChildren().addAll(text1);
+
 
         TextFlow actionTF = new TextFlow();
         text3 = new Text("Aktionen:\n");
@@ -402,7 +399,7 @@ public class UI extends Application {
             for(int i = 0; i < npc.size(); i++) {
                 System.out.println(i + " - " + npc.get(i));
             }
-            */
+             */
 
             String stringNpc = "";
             List listNpc = new ArrayList<>();
@@ -524,9 +521,7 @@ public class UI extends Application {
 
 
             //Skills
-            for(int i = 1; i < skillTF.getChildren().size(); i++) {
-                skillTF.getChildren().remove(i);
-            }
+            skillTF.getChildren().remove(1, skillTF.getChildren().size());
             listNpc.clear();
             listNpc = stringToList(npc.get(12));
             for(int i = 0; i < listNpc.size(); i++) {
@@ -534,6 +529,23 @@ public class UI extends Application {
                 skillTF.getChildren().add(action);
             }
 
+
+            //Spells
+            /*
+            senseTF.getChildren().remove(1, senseTF.getChildren().size());
+
+            List<Integer> abilityModifierList = stringToList(npc.get(5));
+            List<String> spells = rGenerator.randSpellList(npc.get(3).toString(),abilityModifierList,Integer.parseInt(npc.get(1).toString()));
+
+            for(int i = 0; i < spells.size(); i++) {
+                String spell = spells.get(i).replace('[',' ');
+                spell = spell.replace(']',' ');
+                Text spellText = new Text("    - " + spell + "\n");
+                spellText.setWrappingWidth(50);
+                senseTF.getChildren().add(spellText);
+            }
+            */
+            //System.out.println(spells);
 
             //Beschreibung
             descriptionStack.getChildren().clear();
