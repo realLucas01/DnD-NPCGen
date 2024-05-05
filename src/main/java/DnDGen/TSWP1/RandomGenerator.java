@@ -24,7 +24,10 @@ public class RandomGenerator {
 	Random rand = new SecureRandom();
 
 	String nameDBClass = "class";
-
+	String nameDBDSpellKnown = "spellknown";
+	String nameDBSpells = "spells";
+	String nameDBFeatures = "features";
+	String nameDBSpellSlots = "spellslots";
 	//Aufteilung eines großen String in kleinere
 	public static ArrayList<String> bigStringToDividedString(String bigString) {
         String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
@@ -193,72 +196,72 @@ public class RandomGenerator {
 		return desc;
 	}
 
-	//UNGETESTET
-	// Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
+	/* Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
+		Derzeit ist es möglich mit dieser Funktion die Profs für Waffen, Rüstung und zusätzliche Sicht zu bekommen
+	*/
 	/* @Luca */
 	public ArrayList<String> figureOutProfList(String neededProfList, String charClass, String race) {
 		ArrayList<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
 		ArrayList<String> databaseReturn; // Liste die von der DB zurückkommt
-		ArrayList<String> featureList; // Rassen Features
 		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
 
 		switch (neededProfList) {    // Entscheidung welche ProfListe man benötigt
 			case "armor":
 				profList = bigStringToDividedString(dbms.getRow(nameDBClass, charClass).get(4));
-
 				databaseReturn = dbms.getRow("race", race);
 				if(databaseReturn.get(3)!=null) {
-					featureList = bigStringToDividedString(databaseReturn.get(3));    //Datensätze werden aus der DB genommen, die richtigen Spalten ausgewählt und die Strings auseinander genommen
-					for (String feature : featureList) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
-						if (feature != null) {
-							databaseReturn = dbms.getRow("features", feature);
-							kindOfFeature = databaseReturn.get(3);
-
-							if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
-								kindOfFeature= kindOfFeature.replace("armor: ", "");
-								profList.addAll(bigStringToDividedString(kindOfFeature));
-								break;
-							}
+					for (String feature : bigStringToDividedString(databaseReturn.get(3))) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
+						databaseReturn = dbms.getRow(nameDBFeatures, feature);
+						kindOfFeature = databaseReturn.get(3);
+						if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
+							kindOfFeature= kindOfFeature.replace("armor: ", "");
+							profList.addAll(bigStringToDividedString(kindOfFeature));
 						}
 					}
 				}
 				break;
 			case "weapon":    //siehe "armor" nur jetzt mit den waffen
 				databaseReturn = dbms.getRow(nameDBClass, charClass);
-				if(databaseReturn.get(3)!= null){
-				profList = bigStringToDividedString(databaseReturn.get(3));
-				databaseReturn = dbms.getRow("race", race);
 				if(databaseReturn.get(3)!=null) {
 
-					featureList = bigStringToDividedString(databaseReturn.get(3));
-					for (String feature : featureList) {
-						if (feature != null) {
-							databaseReturn = dbms.getRow("features", feature);
+					profList = bigStringToDividedString(databaseReturn.get(3));
+					databaseReturn = dbms.getRow("race", race);
+					if (databaseReturn.get(3) != null) {
+						for (String feature : bigStringToDividedString(databaseReturn.get(3))) {
+							databaseReturn = dbms.getRow(nameDBFeatures, feature);
 							kindOfFeature = databaseReturn.get(3);
-
 							if (kindOfFeature.contains("weapon:")) {
-								kindOfFeature =kindOfFeature.replace("weapon:", " ");
+								kindOfFeature = kindOfFeature.replace("weapon:", " ");
 								profList.addAll(bigStringToDividedString(kindOfFeature));
-								break;
 							}
-
-							//jederzeit erweiterbar mit weiteren cases
 						}
 					}
 				}
-				}
 				break;
-			default:
+				default:
+					break;
 		}
 		Set<String> removeDuplicate = new HashSet<>(profList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
 		profList.clear();
 		profList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
 		return profList;
 	}
+	public List<String> getVision (String race){
+		ArrayList<String> visions = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
+		ArrayList<String> databaseReturn; // Liste die von der DB zurückkommt
+		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
+		for(String feature: bigStringToDividedString(dbms.getRow("race", race).get(3))){
+			databaseReturn = dbms.getRow(nameDBFeatures, feature);
+			kindOfFeature = databaseReturn.get(3);
+			if(kindOfFeature.contains("vision")){
+				visions.add(kindOfFeature);
+			}
+		}
+		return visions;
+	}
 
-	//UNGETESTET
 	/* TO DO @Luca */
-	public   String randArmor(ArrayList<String> armorProf) {
+	public String randArmor(ArrayList<String> armorProf) {
 		String armor; //return value
 		armorProf.remove("Shield");
 		int lengthOfArmorProfList = armorProf.size();
@@ -361,11 +364,14 @@ public class RandomGenerator {
 			return knownSkillList;
 		}
 		//es werden so lange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
-		for (int currentNumberOfNewSkills = 0; currentNumberOfNewSkills < numberSkill; currentNumberOfNewSkills++) {
+		for (int currentNumberOfNewSkills = 0; currentNumberOfNewSkills < numberSkill; ) {
 			int lengthListPossibleSkills = possibleSkills.size();
-			Integer skillIndex = rand.nextInt(lengthListPossibleSkills);
-			knownSkillList.add(possibleSkills.get(skillIndex));
-			possibleSkills.remove(skillIndex);
+			int skillIndex = rand.nextInt(lengthListPossibleSkills);
+			if(!knownSkillList.contains(possibleSkills.get(skillIndex))){
+				knownSkillList.add(possibleSkills.get(skillIndex));
+				possibleSkills.remove(skillIndex);
+				currentNumberOfNewSkills++;
+			}
 		}
 		Set<String> removeDuplicate = new HashSet<>(knownSkillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
 		knownSkillList.clear();
@@ -410,13 +416,11 @@ public class RandomGenerator {
 	Eine Beispiel Ausgabe:
 	[Cantrips: [Prestidigitation, Message, BladeWard], 1st Level: [TashasCausticBrew, FogCloud, FloatingDisk]]
 	 */
-	public ArrayList<String> randSpellList (String genClass, ArrayList<Integer> abilityModifier, int level ){
+	public List<String> randSpellList (String genClass, List<Integer> abilityModifier, int level ){
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-		System.out.println("class: " + genClass);
-		String classSpellKnownCol = dbms.getRow("class", genClass).get(9);
+		String classSpellKnownCol = dbms.getRow(nameDBClass, genClass).get(9);
 		ArrayList<String> spellList = new ArrayList<>();
 		ArrayList<Integer> spellSlots = new ArrayList<>();
-		ArrayList<String> cantrips = new ArrayList<>();
 		int classSpellKnownNumber ;
 		int cantripsNumber ;
 		int highestSpellSlot = 0;
@@ -429,20 +433,20 @@ public class RandomGenerator {
 			case "NULL":
 				return new ArrayList<>();
             case "tabelle":
-				classSpellKnownNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1));
+				classSpellKnownNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Spell Known").getLast()).get(level-1));
 				spellSlots = determineSpellSlots(genClass,level);
-				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow("spellslots", genClass).get(2)).get(level-1));
+				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, genClass).get(2)).get(level-1));
 				break;
 			case "spezial":
-				classSpellKnownNumber = Integer.parseInt((bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Spell Known").getLast()).get(level-1)));
-				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Cantrips" ).getLast()).get(level-1));
-				highestSpellSlot = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref("spellknown",genClass, "Slot Level").getLast()).get(level-1));
+				classSpellKnownNumber = Integer.parseInt((bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Spell Known").getLast()).get(level-1)));
+				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Cantrips" ).getLast()).get(level-1));
+				highestSpellSlot = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Slot Level").getLast()).get(level-1));
 				spezialCase = true;
 				break;
 			default:
-				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow("spellslots", genClass).get(2)).get(level-1));
+				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, genClass).get(2)).get(level-1));
 				spellSlots = determineSpellSlots(genClass,level);
-				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level,abilityModifier);
+				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level, (ArrayList<Integer>) abilityModifier);
 				break;
 		}
 
@@ -450,7 +454,6 @@ public class RandomGenerator {
 			int lastLevelSpellSlot = 1;
 			for (int index : spellSlots) {
 				if(index == 0){
-					//highestSpellSlot = lastLevelSpellSlot-1;
 					break;
 				} else {
 					highestSpellSlot = lastLevelSpellSlot;
@@ -461,126 +464,20 @@ public class RandomGenerator {
 		if(genClass.contains("(")){
 			genClass = genClass.substring(0, genClass.indexOf("(")-1);
 		}
-		int finalCantripsNumber = cantripsNumber;
 		String finalGenClass = genClass;
-		Future<?> future0 = executor.submit(() ->{
-			cantrips.addAll(dbms.getMultRowMultPref("spells", finalGenClass, "Cantrip", finalCantripsNumber));
-			System.out.println("cantrips: " + cantrips);
-		});try {
-			future0.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-		} catch (InterruptedException | ExecutionException | TimeoutException e) {
-			future0.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-		}
-		spellList.add("Cantrips: " + determineSpellNames(cantrips));
-		for(int spellLevel=1; (spellLevel<=highestSpellSlot) && (classSpellKnownNumber>0); spellLevel++ ) {
-			int numberSpells  = rand.nextInt(classSpellKnownNumber)+1;
-			classSpellKnownNumber = classSpellKnownNumber - numberSpells;
-			int finalSpellLevel = spellLevel;
 
-			switch (spellLevel) {
-				case 1:
-					Future<?> future1 = executor.submit(() ->{
-						spellList.add("1st Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future1.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future1.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 2:
-					Future<?> future2 = executor.submit(() ->{
-						spellList.add("2nd Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future2.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future2.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 3:
-					Future<?> future3 = executor.submit(() ->{
-						spellList.add("3nd Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future3.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future3.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 4:
-					Future<?> future4 = executor.submit(() ->{
-						spellList.add("4th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future4.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future4.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 5:
-					Future<?> future5 = executor.submit(() ->{
-						spellList.add("5th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future5.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future5.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 6:
-					Future<?> future6 = executor.submit(() ->{
-						spellList.add("6th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future6.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future6.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 7:
-					Future<?> future7 = executor.submit(() ->{
-						spellList.add("7th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future7.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future7.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 8:
-					Future<?> future8 = executor.submit(() ->{
-						spellList.add("8th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future8.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future8.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				case 9:
-					Future<?> future9 = executor.submit(() ->{
-						spellList.add("9th Level: " + determineSpellNames(dbms.getMultRowMultPref("spells", finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
-					});
-					try {
-						future9.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
-					} catch (InterruptedException | ExecutionException | TimeoutException e) {
-						future9.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
-					}
-					break;
-				default:
-					break;
-			}
-		}
+
+		spellList.add("Cantrips: " + determineSpellNames(determineCantrips(cantripsNumber,finalGenClass)));
+		spellList.addAll(determineSpells(finalGenClass,highestSpellSlot,classSpellKnownNumber));
 		executor.shutdown();
 		return spellList;
 	}
 	/*
 	gibt ein Integer Liste wieder, mit den Spell Slots für das Level
 	 */
-	public ArrayList<Integer>determineSpellSlots(String genClass, int level){
+	private ArrayList<Integer>determineSpellSlots(String genClass, int level){
 		ArrayList<Integer> spellSlots = new ArrayList<>();
-		ArrayList<String> dbSpellSlot = dbms.getRow("spellslots", genClass);
+		ArrayList<String> dbSpellSlot = dbms.getRow(nameDBSpellSlots, genClass);
 		for(int index=0; index<9; index ++){
 			spellSlots.add(Integer.parseInt(bigStringToDividedString(dbSpellSlot.get(3+index)).get(level-1)));
 		}
@@ -589,7 +486,7 @@ public class RandomGenerator {
 	/*
 	Anzahl der möglichen Spells für die Klasse
 	 */
-	public int determineNumberOfKnownSpell(String genClass, int level, ArrayList<Integer> abilityModifier) {
+	private int determineNumberOfKnownSpell(String genClass, int level, ArrayList<Integer> abilityModifier) {
 		String colClassForSpell = dbms.getRow("class", genClass).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
@@ -619,14 +516,14 @@ public class RandomGenerator {
 		if (colClassForSpell.contains("1/2")){
 			knownSpells = (int) (spellModNumber +  level*0.5);
 		}else {
-			knownSpells = spellModNumber * level;
+			knownSpells = spellModNumber + level;
 		}
 		return knownSpells;
 	}
 	/*
 	Damit nicht die alles von den Spells ausgegeben wird, werden hier nur die Namen extrahiert
 	 */
-	public ArrayList<String> determineSpellNames (ArrayList<String> spells ){
+	private ArrayList<String> determineSpellNames (ArrayList<String> spells ){
 		ArrayList<String> spellNames = new ArrayList<>();
 		int lengthSpells;
 		int positionSpellName = 1;
@@ -638,7 +535,76 @@ public class RandomGenerator {
 		return spellNames;
 	}
 
+	private ArrayList<String> determineCantrips(int cantripsNumber, String finalGenClass ){
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		ArrayList<String> cantrips = new ArrayList<>();
+		Future<?> future0 = executor.submit(() ->{
+			cantrips.addAll(dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber));
+		});try {
+			future0.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+		} catch (ExecutionException | TimeoutException | InterruptedException e) {
+			future0.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+		}
+		return cantrips;
+	}
+
+	private ArrayList<String> determineSpells(String finalGenClass, int highestSpellSlot, int classSpellKnownNumber){
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		ArrayList<String> spellList = new ArrayList<>();
+		String spellLeveName = null;
+
+
+		for(int spellLevel=1; (spellLevel<=highestSpellSlot) && (classSpellKnownNumber>0); spellLevel++ ) {
+			int numberSpells  = rand.nextInt(classSpellKnownNumber)+1;
+			classSpellKnownNumber = classSpellKnownNumber - numberSpells;
+			int finalSpellLevel = spellLevel;
+			switch (spellLevel){
+				case 1 :
+					spellLeveName = "1st Level";
+					break;
+				case 2 :
+					spellLeveName = "2nd Level";
+					break;
+				case 3 :
+					spellLeveName = "3th Level";
+					break;
+				case 4 :
+					spellLeveName = "4th Level";
+					break;
+				case 5 :
+					spellLeveName = "5th Level";
+					break;
+				case 6 :
+					spellLeveName = "6th Level";
+					break;
+				case 7 :
+					spellLeveName = "7th Level";
+					break;
+				case 8 :
+					spellLeveName = "8th Level";
+					break;
+				case 9:
+					spellLeveName = "9th Level";
+					break;
+				default:
+						break;
+
+			}
+			String finalSpellLeveName = spellLeveName;
+			Future<?> future1 = executor.submit(() ->{
+				spellList.add(finalSpellLeveName + ": " + determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+			});
+			try {
+				future1.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
+			} catch (InterruptedException | ExecutionException | TimeoutException e) {
+				future1.cancel(true); // Thread abbrechen, falls Timeout erreicht wurde
+			}
+
+		}
+		return spellList;
+	}
 	/* TO DO @Kristina */
+	/*
 	public ArrayList<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {
 		ArrayList<String> spells = new ArrayList<>();
 		ArrayList<String> cantrip = new ArrayList<>();
@@ -658,6 +624,7 @@ public class RandomGenerator {
 		 * Ganz unten ist auch noch ein Kommentar von mir falls ihr euch wundert warum eurer Debug/Fehler Menü laggt, gar nicht mehr geht oder falsche/zu wenige anzeigen macht.
 		 *
 		 */
+	/*
 		int spellCount = 0;
 		int levelHalb = 0;
 		int spellUpCount = 0;
@@ -1261,7 +1228,7 @@ public class RandomGenerator {
 			spells.add("NO SPELLS");
 		}
 		return spells;
-	}
+	}*/
 }
 //@autor Lucas
 //sie hat mehrmals irgendwo vergessen if's zu schließen, und ich hab keine Lust zu suchen wo, deswegen hier ein paar extra klammern,
