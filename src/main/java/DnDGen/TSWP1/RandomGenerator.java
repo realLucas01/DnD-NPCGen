@@ -1,5 +1,6 @@
 package DnDGen.TSWP1;
 
+import java.lang.reflect.Array;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.*;
@@ -416,7 +417,7 @@ public class RandomGenerator {
 	Eine Beispiel Ausgabe:
 	[Cantrips: [Prestidigitation, Message, BladeWard], 1st Level: [TashasCausticBrew, FogCloud, FloatingDisk]]
 	 */
-	public List<String> randSpellList (String genClass, List<Integer> abilityModifier, int level ){
+	public List<String> randSpellList (String genClass, List<String> abilityModifier, int level ){
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		String classSpellKnownCol = dbms.getRow(nameDBClass, genClass).get(9);
 		ArrayList<String> spellList = new ArrayList<>();
@@ -446,7 +447,7 @@ public class RandomGenerator {
 			default:
 				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, genClass).get(2)).get(level-1));
 				spellSlots = determineSpellSlots(genClass,level);
-				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level, (ArrayList<Integer>) abilityModifier);
+				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level, (ArrayList<String>) abilityModifier);
 				break;
 		}
 
@@ -486,11 +487,16 @@ public class RandomGenerator {
 	/*
 	Anzahl der möglichen Spells für die Klasse
 	 */
-	private int determineNumberOfKnownSpell(String genClass, int level, ArrayList<Integer> abilityModifier) {
+	private int determineNumberOfKnownSpell(String genClass, int level, ArrayList<String> abilityModifierString) {
 		String colClassForSpell = dbms.getRow("class", genClass).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
 		int knownSpells;
+		ArrayList<Integer> abilityModifier = new ArrayList<>();
+		for (String element : abilityModifierString) {
+			int value = Integer.parseInt(element);
+			abilityModifier.add(value);
+		}
 		switch (abilityModifierForSpells) {
 			case "Str":
 				spellModNumber = abilityModifier.getFirst();

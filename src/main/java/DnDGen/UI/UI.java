@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UI extends Application {
     Stage window;
@@ -531,11 +532,10 @@ public class UI extends Application {
 
 
             //Spells
-            /*
             senseTF.getChildren().remove(1, senseTF.getChildren().size());
 
-            List<Integer> abilityModifierList = stringToList(npc.get(5));
-            List<String> spells = rGenerator.randSpellList(npc.get(3).toString(),abilityModifierList,Integer.parseInt(npc.get(1).toString()));
+            List<String> abilityModifierList = stringToList(npc.get(5));
+            List<String> spells = rGenerator.randSpellList(npc.get(3),abilityModifierList,Integer.parseInt(npc.get(1)));
 
             for(int i = 0; i < spells.size(); i++) {
                 String spell = spells.get(i).replace('[',' ');
@@ -544,7 +544,7 @@ public class UI extends Application {
                 spellText.setWrappingWidth(50);
                 senseTF.getChildren().add(spellText);
             }
-            */
+
             //System.out.println(spells);
 
             //Beschreibung
