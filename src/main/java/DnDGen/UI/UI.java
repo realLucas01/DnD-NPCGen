@@ -3,11 +3,13 @@ package DnDGen.UI;
 
 import DnDGen.TSWP1.RandomGenerator;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.ColumnConstraints;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
@@ -41,7 +43,8 @@ public class UI extends Application {
     Stage window;
     Scene generatePage;
     String name;
-    
+    VBox descriptionVBox;
+
 	/* @author Lucas
 	 * 
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
@@ -337,28 +340,29 @@ public class UI extends Application {
         text1.setStyle("-fx-font-weight: bold");
         skillTF.getChildren().addAll(text1);
 
-        TextFlow senseTF = new TextFlow();
+        VBox spellTF = new VBox();
         Text text3=new Text("Spells:\n");
         text3.setStyle("-fx-font-weight: bold");
-        senseTF.getChildren().addAll(text3);
+        spellTF.getChildren().addAll(text3);
 
-        skillSensesBox.getChildren().addAll(skillTF,senseTF);
+        skillSensesBox.getChildren().addAll(skillTF,spellTF);
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
 
         //Spell, Action
         VBox spellActionBox = new VBox();
+        /*
         TextFlow spellTF = new TextFlow();
         text1 = new Text("Zauber: ");
         text1.setStyle("-fx-font-weight: bold");
         spellTF.getChildren().addAll(text1);
-
+        */
 
         TextFlow actionTF = new TextFlow();
         text3 = new Text("Aktionen:\n");
         text3.setStyle("-fx-font-weight: bold");
         actionTF.getChildren().addAll(text3);
 
-        spellActionBox.getChildren().addAll(spellTF,actionTF);
+        spellActionBox.getChildren().addAll(actionTF);
         spellActionBox.setPadding(new Insets(10, 10, 10, 10));
 
         ScrollPane npcScrollPane = new ScrollPane(npcStack);
@@ -373,11 +377,10 @@ public class UI extends Application {
         npcStack.getChildren().addAll(nameClassGrid,line1,acHpSpLangGrid,line2,statsGrid,line3, inventoryGrid, line5,skillSensesBox,line4,featuresGrid);
         npcStack.setVisible(false);
 
-        VBox descriptionStack = new VBox();
-        descriptionStack.setVisible(false);
-        descriptionStack.setMinWidth(300);
-        descriptionStack.setMaxWidth(330);
+        /*
 
+
+        */
         npcScrollPane.setVisible(false);
 
         //layoutGenerateGrid.getChildren().add(npcStack);
@@ -388,11 +391,29 @@ public class UI extends Application {
 
         buttonGenerate.setStyle("-fx-font: bold italic 20pt \"Arial\"; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
 
+        HBox gridNpc = new HBox();
 
 
 //    Button Klick
         buttonGenerate.setOnAction(e -> {
-            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
+            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
+                                    zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
+
+            if(gridNpc.getChildren().size() > 2) {
+                gridNpc.getChildren().remove(2);
+            }
+
+
+            ElementNPC elementNPC = new ElementNPC(npc);
+
+            elementNPC.getDescription();
+            descriptionVBox = elementNPC.getDescriptionVBox();
+            descriptionVBox.setMinWidth(300);
+            descriptionVBox.setMaxWidth(330);
+
+
+
+
 
             //Liste mit Positionen vom NPC
             /*
@@ -532,23 +553,25 @@ public class UI extends Application {
 
 
             //Spells
-            senseTF.getChildren().remove(1, senseTF.getChildren().size());
+            spellTF.getChildren().remove(1, spellTF.getChildren().size());
 
             List<String> abilityModifierList = stringToList(npc.get(5));
             List<String> spells = rGenerator.randSpellList(npc.get(3),abilityModifierList,Integer.parseInt(npc.get(1)));
 
+
             for(int i = 0; i < spells.size(); i++) {
                 String spell = spells.get(i).replace('[',' ');
                 spell = spell.replace(']',' ');
-                Text spellText = new Text("    - " + spell + "\n");
-                spellText.setWrappingWidth(50);
-                senseTF.getChildren().add(spellText);
+                Label spellText = new Label("    - " + spell);
+                spellText.setWrapText(true);
+                spellTF.getChildren().add(spellText);
             }
 
             //System.out.println(spells);
 
             //Beschreibung
-            descriptionStack.getChildren().clear();
+            /*
+            descriptionVBox.getChildren().clear();
 
             //Beschreibung kurz (direkten zugriff auf Methode von NPC)
             GridPane descriptionGrid = new GridPane();
@@ -583,14 +606,14 @@ public class UI extends Application {
                 GridPane.setConstraints(descriptionTextNew,1,i);
                 descriptionGrid.getChildren().add(descriptionTextNew);
             }
-            descriptionStack.getChildren().add(descriptionGrid);
+            descriptionVBox.getChildren().add(descriptionGrid);
 
 
             TextFlow descriptionTextNew = new TextFlow();
             String description = "\n\n";
             Text text = new Text(description);
             descriptionTextNew.getChildren().add(text);
-            descriptionStack.getChildren().add(descriptionTextNew);
+            descriptionVBox.getChildren().add(descriptionTextNew);
 
             //Beschreibung lang (altes Modell / meine Methode für StringToList)
             //listNpc = stringToList(npc.get(17));
@@ -612,10 +635,11 @@ public class UI extends Application {
                     " and " + getPossessivePronoun(sex) + " is " + listNpc.get(listNpc.size()-1));
 
             text = new Text(description);
-            text.wrappingWidthProperty().bind(descriptionStack.widthProperty());
+            text.wrappingWidthProperty().bind(descriptionVBox.widthProperty());
             descriptionText.getChildren().add(text);
 
-            descriptionStack.getChildren().add(descriptionText);
+            descriptionVBox.getChildren().add(descriptionText);
+            */
 
             //Trennlinien auf breite anpassen
             line1.setEndX(npcScrollPane.getWidth()-20);
@@ -624,10 +648,12 @@ public class UI extends Application {
             line4.setEndX(npcScrollPane.getWidth()-20);
             line5.setEndX(npcScrollPane.getWidth()-20);
 
+
             //Den Generireten Inhalt sichtbar machen
+            descriptionVBox.setVisible(true);
             npcStack.setVisible(true);
-            descriptionStack.setVisible(true);
             npcScrollPane.setVisible(true);
+            gridNpc.getChildren().add(descriptionVBox);
         });
 
 
@@ -637,9 +663,9 @@ public class UI extends Application {
         layoutGenerateGrid.getChildren().addAll(nameField, labelRace, labelClass, labelJob, labelLevel, labelAbSc, cbRace, cbClass,
                                                 cbJob, cbLevel, cbAbSc,buttonGenerate, rbMale, rbFemale, rbRandom, labelName);
         VBox layoutGenerateVBox = new VBox(20);
-        HBox gridNpc = new HBox();
 
-        gridNpc.getChildren().addAll(layoutGenerateGrid, npcScrollPane, descriptionStack);
+
+        gridNpc.getChildren().addAll(layoutGenerateGrid, npcScrollPane);
         layoutGenerateVBox.getChildren().addAll(menuBar,gridNpc);
 
         generatePage = new Scene(layoutGenerateVBox, 1000, 600);
@@ -660,9 +686,10 @@ public class UI extends Application {
             npcStack.setPrefWidth(generatePage.getWidth()/2);
             descriptionStack.setPrefWidth(generatePage.getWidth()/4);
             */
-            descriptionStack.setMinWidth(generatePage.getWidth()/3);
+            descriptionVBox.setMinWidth(generatePage.getWidth()/3);
             layoutGenerateGrid.setMinWidth(generatePage.getWidth()/3);
             npcScrollPane.setMinWidth(generatePage.getWidth()/3);
+            npcScrollPane.setFitToWidth(true);
             featuresGrid.setPrefWidth(npcScrollPane.getWidth()-20);
             line1.setEndX(npcScrollPane.getWidth()-20);
             line2.setEndX(npcScrollPane.getWidth()-20);
@@ -670,6 +697,8 @@ public class UI extends Application {
             line4.setEndX(npcScrollPane.getWidth()-20);
             line5.setEndX(npcScrollPane.getWidth()-20);
         });
+
+
 
     }
 
@@ -690,6 +719,7 @@ public class UI extends Application {
         }
     }
 
+    //TIP wie Zufall nur speziell für das Level
     public Integer zufallLevel(ComboBox cb) {
         if(cb.getValue() == "zufall") {
             return null;
@@ -744,6 +774,7 @@ public class UI extends Application {
         return string;
     }
 
+    // Gibt den Inhalt von vom String zurück, außer wenn Zufall, dann null
     public String getSex(String sex) {
         if(sex.equals("zufall")) {
             return null;
@@ -751,6 +782,7 @@ public class UI extends Application {
         return sex;
     }
 
+    // Gibt das richtige Pronoun(his, her) zum sex wieder
     public String getPronoun(String sex) {
         if(sex.equals("male")) {
             return "his";
@@ -759,6 +791,7 @@ public class UI extends Application {
         }
     }
 
+    // Gibt das richtige possessiv Pronoun(he, she) zum sex wieder
     public String getPossessivePronoun(String sex) {
         if(sex.equals("male")) {
             return "he";
@@ -767,12 +800,14 @@ public class UI extends Application {
         }
     }
 
+    // macht den ersten Buchstaben groß
     public String firstLetterBig(String word) {
         String big = word.substring(0,1).toUpperCase();
         big = big.concat(word.substring(1));
         return big;
     }
 
+    // macht den ersten Buchstaben klein
     public String firstLetterSmall(String word) {
         String small = word.substring(0,1).toLowerCase();
         small = small.concat(word.substring(1));
