@@ -56,7 +56,7 @@ public class RandomGenerator {
 	public int diceThrower(Integer diceCount, Integer diceNumber) {
 
 		int addedRolls = 0;
-
+				
 		for (int i = 0; i < diceCount; i++) {
 			int value = rand.nextInt(diceNumber) + 1;
 			addedRolls = addedRolls + value;
@@ -68,10 +68,10 @@ public class RandomGenerator {
 	public ArrayList<Integer> randAbilityScore(Integer amountOfThrows) {
 		ArrayList<Integer> value = new ArrayList<>();
 		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
-		
+				
 		for (int i = 0; i < 6; i++) {
 			int j = 0;
-			while(j <= amountOfThrows + 1) {
+			while(j < amountOfThrows + 1) {
 				value.add(diceThrower(1, 6));
 				j++;
 			}
@@ -144,7 +144,8 @@ public class RandomGenerator {
 	/* @Luca */
 	public int randLevel() {
 		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
-		return rand.nextInt(21);
+		int lvl = rand.nextInt(21);
+		return lvl;
 	}
 	
 	public String randSize(String race) {
