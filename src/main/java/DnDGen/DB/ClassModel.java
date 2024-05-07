@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,66 +48,77 @@ public class ClassModel {
 		this.classSpellKnown = classSpellKnown;
 		this.classFeatures = classFeatures;
 	}
+	@Order(value = 1)
 	public Integer getClassId() {
 		return classId;
 	}
 	public void setClassId(Integer classId) {
 		this.classId = classId;
 	}
+	@Order(value = 2)
 	public String getClassName() {
 		return className;
 	}
 	public void setClassName(String className) {
 		this.className = className;
 	}
+	@Order(value = 3)
 	public Integer getClassHitDice() {
 		return classHitDice;
 	}
 	public void setClassHitDice(Integer classHitDice) {
 		this.classHitDice = classHitDice;
 	}
+	@Order(value = 4)
 	public String getClassProfWeapon() {
 		return classProfWeapon;
 	}
 	public void setClassProfWeapon(String classProfWeapon) {
 		this.classProfWeapon = classProfWeapon;
 	}
+	@Order(value = 5)
 	public String getClassProfArmor() {
 		return classProfArmor;
 	}
 	public void setClassProfArmor(String classProfArmor) {
 		this.classProfArmor = classProfArmor;
 	}
+	@Order(value = 6)
 	public String getClassSavingThrows() {
 		return classSavingThrows;
 	}
 	public void setClassSavingThrows(String classSavingThrows) {
 		this.classSavingThrows = classSavingThrows;
 	}
+	@Order(value = 7)
 	public String getClassSkills() {
 		return classSkills;
 	}
 	public void setClassSkills(String classSkills) {
 		this.classSkills = classSkills;
 	}
+	@Order(value = 8)
 	public Integer getClassSkillNumber() {
 		return classSkillNumber;
 	}
 	public void setClassSkillNumber(Integer classSkillNumber) {
 		this.classSkillNumber = classSkillNumber;
 	}
+	@Order(value = 9)
 	public String getClassAbilityScoreDistribution() {
 		return classAbilityScoreDistribution;
 	}
 	public void setClassAbilityScoreDistribution(String classAbilityScoreDistribution) {
 		this.classAbilityScoreDistribution = classAbilityScoreDistribution;
 	}
+	@Order(value = 10)
 	public String getClassSpellKnown() {
 		return classSpellKnown;
 	}
 	public void setClassSpellKnown(String classSpellKnown) {
 		this.classSpellKnown = classSpellKnown;
 	}
+	@Order(value = 11)
 	public String getClassFeatures() {
 		return classFeatures;
 	}

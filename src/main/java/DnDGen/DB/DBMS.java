@@ -17,7 +17,8 @@ package DnDGen.DB;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -30,6 +31,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
+
+import DnDGen.DB.Sortierung.Order;
+
 
 @SpringBootApplication
 public class DBMS implements ApplicationContextAware{
@@ -81,7 +85,6 @@ public class DBMS implements ApplicationContextAware{
 	SpellKnownRepository spellKnownRepository; 
 	@Autowired
 	SpellSlotsRepository spellSlotsRepository; 
-	
     Object r;
 	
 	/* @author Lucas
@@ -124,6 +127,56 @@ public class DBMS implements ApplicationContextAware{
 	 */
 	public static void dbmsClose(String[] args,ConfigurableApplicationContext ctx) {
 		ctx.close();
+	}
+	
+	/* @author Lucas
+	 *
+	 * Implementiert einen genrellen ExceptionThrower für sneaky
+	 */
+	public interface RunnableThrowingException<T extends Exception> {
+	    void run() throws T;
+	}
+	
+	/* @author Lucas
+	 *
+	 * Verallgemeinert alle Try-Catch statements im Code um die LOC in der Klasse
+	 * so weit zu reduzieren wie möglich
+	 */
+	public static void sneaky(RunnableThrowingException<?> runnableThrowing) {
+		try {
+	        runnableThrowing.run();
+	    } catch (Exception e) {
+	        throw new RuntimeException(e);
+	    }
+	}
+	
+	/* @author Lucas
+	 *
+	 * Ordnet alle methoden innerhalb der Datenbankmodellen in der Reihenfolge in der sie deklariert wurden.
+	 * 
+	 * @param clazz Classe deren Methoden geordnet werden sollen
+	 */
+	public Method[] ordner(Class<?> clazz) {
+		Method[] methods = clazz.getMethods();
+        Arrays.sort(methods, new Comparator<Method>() {
+            @Override
+            public int compare(Method o1, Method o2) {
+                Order or1 = o1.getAnnotation(Order.class);
+                Order or2 = o2.getAnnotation(Order.class);
+                // nulls last
+                if (or1 != null && or2 != null) {
+                    return or1.value() - or2.value();
+                } else
+                if (or1 != null && or2 == null) {
+                    return -1;
+                } else
+                if (or1 == null && or2 != null) {
+                    return 1;
+                }
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return methods;
 	}
 	
 	/* @author Lucas
@@ -179,100 +232,93 @@ public class DBMS implements ApplicationContextAware{
 			switch(DBNAME) {
 			case "race":
 				RaceModel Entryrace = raceRepository.findByRaceName(searchstring);
-				CD.add(0, Entryrace.getRaceId().toString());
-				CD.add(1, Entryrace.getRaceName());
-				CD.add(2, Entryrace.getRaceAbilityScore());
-				CD.add(3, Entryrace.getRaceFeatures());
-				CD.add(4, Entryrace.getRaceAgeAdult().toString());
-				CD.add(5, Entryrace.getRaceAgeMax().toString());
-				CD.add(6, Entryrace.getRaceSkills());
-				CD.add(7, Entryrace.getRaceHeight());
-				CD.add(8, Entryrace.getRaceSize());
-				CD.add(9, Entryrace.getRaceSpeed());
-				CD.add(10, Entryrace.getRaceLanguages());
-				CD.add(11, Entryrace.getRaceCreatureType());
+				for (Method m : ordner(Entryrace.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryrace));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "job":
 				JobModel Entryjob = jobRepository.findByJobName(searchstring);
-				CD.add(0, Entryjob.getJobId().toString());
-				CD.add(1, Entryjob.getJobName());
-				CD.add(2, Entryjob.getJobSkills());
-				CD.add(3, Entryjob.getJobLanguage());
+				for (Method m : ordner(Entryjob.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryjob));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "class":
 				ClassModel Entryclass = classRepository.findByClassName(searchstring);
-				CD.add(0, Entryclass.getClassId().toString());
-				CD.add(1, Entryclass.getClassName());
-				CD.add(2, Entryclass.getClassHitDice().toString());
-				CD.add(3, Entryclass.getClassProfWeapon());
-				CD.add(4, Entryclass.getClassProfArmor());
-				CD.add(5, Entryclass.getClassSavingThrows());
-				CD.add(6, Entryclass.getClassSkills());
-				CD.add(7, Entryclass.getClassSkillNumber().toString());
-				CD.add(8, Entryclass.getClassAbilityScoreDistribution());
-				CD.add(9, Entryclass.getClassSpellKnown());
-				CD.add(10, Entryclass.getClassFeatures());
+				for (Method m : ordner(Entryclass.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryclass));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "features":
 				FeatureModel Entryfeature = featureRepository.findByFeatureName(searchstring);
-				CD.add(0, Entryfeature.getFeatureId().toString());
-				CD.add(1, Entryfeature.getFeatureName());
-				CD.add(2, Entryfeature.getFeatureDescription());
-				CD.add(3, Entryfeature.getFeatureKindOf());
+				for (Method m : ordner(Entryfeature.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryfeature));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "armor":
 			    ArmorModel Entryarmor = armorRepository.findByArmorName(searchstring);
-			    CD.add(0, Entryarmor.getArmorId().toString());
-			    CD.add(1, Entryarmor.getArmorName());
-			    CD.add(2, Entryarmor.getArmorKind());
-			    CD.add(3, Entryarmor.getArmorAc());
-			    CD.add(4, Entryarmor.getArmorMax());
-			    CD.add(5, Entryarmor.getArmorBonus());
-			    CD.add(6, Entryarmor.getArmorStrength());
-			    CD.add(7, Entryarmor.getArmorStealth());
+			    for (Method m : ordner(Entryarmor.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryarmor));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "weapon":
 			    WeaponModel Entryweapon = weaponRepository.findByWeaponName(searchstring);
-			    CD.add(0, Entryweapon.getWeaponId().toString());
-			    CD.add(1, Entryweapon.getWeaponName());
-			    CD.add(2, Entryweapon.getWeaponProperty());
-			    CD.add(3, Entryweapon.getWeaponDamageType());
-			    CD.add(4, Entryweapon.getWeaponDamageDice());
-			    CD.add(5, Entryweapon.getWeaponKind());
+			    for (Method m : ordner(Entryweapon.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryweapon));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "level":
 			    LevelModel Entrylevel = levelRepository.findByLevelNumber(Integer.parseInt(searchstring));
-			    CD.add(0, Entrylevel.getLevelId().toString());
-			    CD.add(1, Entrylevel.getLevelNumber().toString());
-			    CD.add(2, Entrylevel.getLevelProfBonus().toString());
+			    for (Method m : ordner(Entrylevel.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entrylevel));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "skills":
 				SkillModel Entryskill = skillRepository.findBySkillName(searchstring);
-				CD.add(0, Entryskill.getSkillId().toString());
-				CD.add(1, Entryskill.getSkillName());
-				CD.add(2, Entryskill.getSkillAbilityScore());
+				for (Method m : ordner(Entryskill.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryskill));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "dracances":
 				DracAncesModel Entrydracances = dracAncesRepository.findByDraconicDragon(searchstring);
-				CD.add(0, Entrydracances.getDraconicId().toString());
-				CD.add(1, Entrydracances.getDraconicDragon());
-				CD.add(2, Entrydracances.getDraconicDamageType());
-				CD.add(3, Entrydracances.getDraconicBreathWeapon());
+				for (Method m : ordner(Entrydracances.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entrydracances));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			case "spellslots":
 				SpellSlotsModel Entryspellslots = spellSlotsRepository.findBySpellSlotsClass(searchstring);
-				CD.add(0, Entryspellslots.getSpellSlotsId().toString());
-				CD.add(1, Entryspellslots.getSpellSlotsClass());
-				CD.add(2, Entryspellslots.getSpellSlotsCantrips().toString());
-				CD.add(3, Entryspellslots.getSpellSlots1Level().toString());
-				CD.add(4, Entryspellslots.getSpellSlots2Level().toString());
-				CD.add(5, Entryspellslots.getSpellSlots3Level().toString());
-				CD.add(6, Entryspellslots.getSpellSlots4Level().toString());
-				CD.add(7, Entryspellslots.getSpellSlots5Level().toString());
-				CD.add(8, Entryspellslots.getSpellSlots6Level().toString());
-				CD.add(9, Entryspellslots.getSpellSlots7Level().toString());
-				CD.add(10, Entryspellslots.getSpellSlots8Level().toString());
-				CD.add(11, Entryspellslots.getSpellSlots9Level().toString());
+				for (Method m : ordner(Entryspellslots.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entryspellslots));
+							CD.add(String.valueOf(r));
+		    		}
+		    	}
 				break;
 			default:
 				CD = null;
@@ -294,7 +340,7 @@ public class DBMS implements ApplicationContextAware{
 	    Page<?> questionPage;
 	    int idx;
 	    ArrayList<String> randRow = new ArrayList<String>();
-	    
+
 	    switch(dbname) {
 		case "class":
 			qty = classRepository.count();
@@ -302,17 +348,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = classRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	ClassModel randclass = (ClassModel) questionPage.getContent().get(0);
-		    	randRow.add(0, randclass.getClassId().toString());
-		    	randRow.add(1, randclass.getClassName());
-		    	randRow.add(2, randclass.getClassHitDice().toString());
-		    	randRow.add(3, randclass.getClassProfWeapon());
-		    	randRow.add(4, randclass.getClassProfArmor());
-		    	randRow.add(5, randclass.getClassSavingThrows());
-		    	randRow.add(6, randclass.getClassSkills());
-		    	randRow.add(7, randclass.getClassSkillNumber().toString());
-		    	randRow.add(8, randclass.getClassAbilityScoreDistribution());
-		    	randRow.add(9, randclass.getClassSpellKnown());
-		    	randRow.add(10, randclass.getClassFeatures());
+			    for (Method m : ordner(randclass.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randclass));
+		    			 randRow.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "language":
@@ -321,8 +362,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = languageRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	LanguageModel randlanuguage = (LanguageModel) questionPage.getContent().get(0);
-		    	randRow.add(0, randlanuguage.getLanguageId().toString());
-		    	randRow.add(1, randlanuguage.getLanguageName());
+			    for (Method m : ordner(randlanuguage.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randlanuguage));
+		    			 randRow.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "job":
@@ -331,10 +376,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = jobRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	JobModel randjob =  (JobModel) questionPage.getContent().get(0);
-		    	randRow.add(0, randjob.getJobId().toString());
-		    	randRow.add(1, randjob.getJobName());
-		    	randRow.add(2, randjob.getJobSkills());
-		    	randRow.add(3, randjob.getJobLanguage());
+			    for (Method m : ordner(randjob.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randjob));
+		    			 randRow.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "race":
@@ -343,18 +390,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = raceRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	RaceModel randrace = (RaceModel) questionPage.getContent().get(0);
-		    randRow.add(0, randrace.getRaceId().toString());
-		    randRow.add(1, randrace.getRaceName());
-		    randRow.add(2, randrace.getRaceAbilityScore());
-		    randRow.add(3, randrace.getRaceFeatures());
-		    randRow.add(4, randrace.getRaceAgeAdult().toString());
-		    randRow.add(5, randrace.getRaceAgeMax().toString());
-		    randRow.add(6, randrace.getRaceSkills());
-		    randRow.add(7, randrace.getRaceHeight());
-		    randRow.add(8, randrace.getRaceSize());
-		    randRow.add(9, randrace.getRaceSpeed());
-		    randRow.add(10, randrace.getRaceLanguages());
-		    randRow.add(11, randrace.getRaceCreatureType());
+			    for (Method m : ordner(randrace.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randrace));
+		    			 randRow.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "description":
@@ -363,20 +404,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = descriptionRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	DescriptionModel randesc = (DescriptionModel) questionPage.getContent().get(0);
-		    randRow.add(0, randesc.getDescriptionId().toString());
-		    randRow.add(1, randesc.getDescriptionEyes());
-		    randRow.add(2, randesc.getDescriptionHairColor());
-		    randRow.add(3, randesc.getDescriptionHairStyle());
-		    randRow.add(4, randesc.getDescriptionSkin());
-		    randRow.add(5, randesc.getDescriptionTrait());
-		    randRow.add(6, randesc.getDescriptionMannerism());
-		    randRow.add(7, randesc.getDescriptionBond());
-		    randRow.add(8, randesc.getDescriptionFlaw());
-		    randRow.add(9, randesc.getDescriptionIdeal());
-		    randRow.add(10, randesc.getDescriptionVoice());
-		    randRow.add(11, randesc.getDescriptionClothing());
-		    randRow.add(12, randesc.getDescriptionAttitute());
-		    randRow.add(13, randesc.getDescriptionPlothook());
+			    for (Method m : ordner(randesc.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randesc));
+		    			 randRow.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "alignment":
@@ -385,9 +418,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = alignmentRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	AlignmentModel randalig = (AlignmentModel) questionPage.getContent().get(0);
-		    randRow.add(0, randalig.getAlignmentId().toString());
-		    randRow.add(1, randalig.getAlignmentName());
-		    randRow.add(2, randalig.getAlignmentShorted());
+			    for (Method m : ordner(randalig.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randalig));
+		    			 randRow.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "dracances":
@@ -396,10 +432,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = dracAncesRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	DracAncesModel randdracances = (DracAncesModel) questionPage.getContent().get(0);
-			randRow.add(0, randdracances.getDraconicId().toString());
-			randRow.add(1, randdracances.getDraconicDragon());
-			randRow.add(2, randdracances.getDraconicDamageType());
-			randRow.add(3, randdracances.getDraconicBreathWeapon());
+			    for (Method m : ordner(randdracances.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randdracances));
+		    			 randRow.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		default:
@@ -433,14 +471,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = armorRepository.getArmorPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	ArmorModel randarmorpref = (ArmorModel) questionPage2.getContent().get(0);
-		    	randRowPref.add(0, randarmorpref.getArmorId().toString());
-		    	randRowPref.add(1, randarmorpref.getArmorName());
-		    	randRowPref.add(2, randarmorpref.getArmorKind());
-		    	randRowPref.add(3, randarmorpref.getArmorAc());
-		    	randRowPref.add(4, randarmorpref.getArmorMax());
-		    	randRowPref.add(5, randarmorpref.getArmorBonus());
-		    	randRowPref.add(6, randarmorpref.getArmorStrength());
-		    	randRowPref.add(7, randarmorpref.getArmorStealth());
+		    	for (Method m : ordner(randarmorpref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0) {	
+		    			 sneaky(() -> r = m.invoke(randarmorpref));
+		    			 randRowPref.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "weapon":
@@ -449,12 +485,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = weaponRepository.getWeaponPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	WeaponModel randweaponpref = (WeaponModel) questionPage2.getContent().get(0);
-		    	randRowPref.add(0, randweaponpref.getWeaponId().toString());
-		    	randRowPref.add(1, randweaponpref.getWeaponName());
-		    	randRowPref.add(2, randweaponpref.getWeaponProperty());
-		    	randRowPref.add(3, randweaponpref.getWeaponDamageType());
-		    	randRowPref.add(4, randweaponpref.getWeaponDamageDice());
-		    	randRowPref.add(5, randweaponpref.getWeaponKind());
+		    	for (Method m : ordner(randweaponpref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randweaponpref));
+		    			 randRowPref.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "deity":
@@ -463,9 +499,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = deityRepository.getDeityPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	DeityModel randdeitypref = (DeityModel) questionPage2.getContent().get(0);
-		    	randRowPref.add(0, randdeitypref.getDeityId().toString());
-		    	randRowPref.add(1, randdeitypref.getDeityName());
-		    	randRowPref.add(2, randdeitypref.getDeityAlignment());
+		    	for (Method m : ordner(randdeitypref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randdeitypref));
+		    			 randRowPref.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "name":
@@ -474,11 +513,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = nameRepository.getNamePref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	NameModel randnamepref = (NameModel) questionPage2.getContent().get(0);
-		    	randRowPref.add(0, randnamepref.getNameId().toString());
-		    	randRowPref.add(1, randnamepref.getNameFirstName());
-		    	randRowPref.add(2, randnamepref.getNameLastName());
-		    	randRowPref.add(3, randnamepref.getNameRace());
-		    	randRowPref.add(4, randnamepref.getNameGender());
+		    	for (Method m : ordner(randnamepref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randnamepref));
+		    			 randRowPref.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		case "abilisc":
@@ -487,10 +527,12 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = abiliScRepository.getAbiliScPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	AbiliScModel randabilipref = (AbiliScModel) questionPage2.getContent().get(0);
-		    	randRowPref.add(0, randabilipref.getAbiliScId().toString());
-		    	randRowPref.add(1, randabilipref.getAbiliScName());
-		    	randRowPref.add(2, randabilipref.getAbiliScKind());
-		    	randRowPref.add(3, randabilipref.getAbiliScGenerationMethod());
+		    	for (Method m : ordner(randabilipref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randabilipref));
+		    			 randRowPref.add(String.valueOf(r));
+		    		}
+		    	}
 		    }
 			break;
 		default:
@@ -522,6 +564,8 @@ public class DBMS implements ApplicationContextAware{
 		
 		switch(dbname) {
 		default:
+			rand= null;
+			multRowPref= null;
 		}
 		return multRowPref;
 	}
@@ -551,40 +595,36 @@ public class DBMS implements ApplicationContextAware{
 	    
 		switch(dbname) {
 		case "spells":
+			//System.out.println("getRowMultPref wird für spells mit folgenden Parametern ausgeführt: pref:"+pref1+" ,pref2:"+pref2);
 			qty = spellRepository.findByMultPrefsize(pref1, pref2).size();
 			idx = (int)(Math.random() * qty);
 		    questionPage = spellRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
 		    if (questionPage.hasContent()) {
 		    	SpellModel spellmultpref = (SpellModel) questionPage.getContent().get(0);
-		    	rowMultPref.add(0, spellmultpref.getSpellId().toString());
-		    	rowMultPref.add(1, spellmultpref.getSpellName());
-		    	rowMultPref.add(2, spellmultpref.getSpellLevel().toString());
-		    	rowMultPref.add(3, spellmultpref.getSpellSchool());
-		    	rowMultPref.add(4, spellmultpref.getSpellCastingTime());
-		    	rowMultPref.add(5, spellmultpref.getSpellRange());
-		    	rowMultPref.add(6, spellmultpref.getSpellComponents());
-		    	rowMultPref.add(7, spellmultpref.getSpellDuration());
-		    	rowMultPref.add(8, spellmultpref.getSpellDescription());
-		    	rowMultPref.add(9, spellmultpref.getSpellLevelUpScale());
-		    	rowMultPref.add(10, spellmultpref.getSpellAvailability());
+		    	for (Method m : ordner(spellmultpref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(spellmultpref));
+		    			 rowMultPref.add((String) r.toString());
+		    		}
+		    	}
 		    }
-			break;
+		    break;
 		case "spellknown":
 			qty = spellKnownRepository.findByMultPrefsize(pref1, pref2).size();
 			idx = (int)(Math.random() * qty);
 		    questionPage = spellKnownRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
 		    if (questionPage.hasContent()) {
 		    	SpellKnownModel spellknownmultpref = (SpellKnownModel) questionPage.getContent().get(0);
-		    	rowMultPref.add(0, spellknownmultpref.getSpellKnownId().toString());
-		    	rowMultPref.add(1, spellknownmultpref.getSpellKnownClass());
-		    	rowMultPref.add(2, spellknownmultpref.getSpellKnownKind());
-		    	rowMultPref.add(3, spellknownmultpref.getSpellKnownStuff());
+		    	for (Method m : ordner(spellknownmultpref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(spellknownmultpref));
+		    			 rowMultPref.add((String) r.toString());
+		    		}
+		    	}
 		    }
-			break;
+		    break;
 		default:
-			//Aus irgendeinem Grund geht er wenn der case "spellkown" ausgeführt wird direkt dannach
-			//in den default case und setzt die ArrayList direkt wieder auf null, ka warum....
-			//rowMultPref = null;
+			rowMultPref = null;
 			break;
 		}
 		return rowMultPref;
@@ -614,6 +654,7 @@ public class DBMS implements ApplicationContextAware{
 		
 		switch(dbname) {
 		case "spells":
+			//System.out.println("getMultRowMultPref wird für spells mit folgenden Parametern ausgeführt: pref:"+pref+" ,pref2:"+pref2+" ,rownumber:"+rownumber);
 			multRowMultPref.addAll(getRowMultPref(dbname, pref, pref2));
 			while (i <= rownumber) {
 				rand.addAll(getRowMultPref(dbname, pref, pref2));

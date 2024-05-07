@@ -210,7 +210,7 @@ public class RandomGenerator {
 			case "armor":
 				profList = bigStringToDividedString(dbms.getRow(nameDBClass, charClass).get(4));
 				databaseReturn = dbms.getRow("race", race);
-				if(databaseReturn.get(3)!=null) {
+				if(databaseReturn.get(3)!="null") {
 					for (String feature : bigStringToDividedString(databaseReturn.get(3))) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
 						databaseReturn = dbms.getRow(nameDBFeatures, feature);
 						kindOfFeature = databaseReturn.get(3);
@@ -223,11 +223,11 @@ public class RandomGenerator {
 				break;
 			case "weapon":    //siehe "armor" nur jetzt mit den waffen
 				databaseReturn = dbms.getRow(nameDBClass, charClass);
-				if(databaseReturn.get(3)!=null) {
+				if(databaseReturn.get(3)!="null") {
 
 					profList = bigStringToDividedString(databaseReturn.get(3));
 					databaseReturn = dbms.getRow("race", race);
-					if (databaseReturn.get(3) != null) {
+					if (databaseReturn.get(3) != "null") {
 						for (String feature : bigStringToDividedString(databaseReturn.get(3))) {
 							databaseReturn = dbms.getRow(nameDBFeatures, feature);
 							kindOfFeature = databaseReturn.get(3);
@@ -427,11 +427,11 @@ public class RandomGenerator {
 		int highestSpellSlot = 0;
 		boolean spezialCase = false;
 
-		if (classSpellKnownCol == null){
+		if (classSpellKnownCol == "null"){
 			return new ArrayList<>();
 		}
 		switch (classSpellKnownCol){
-			case "NULL":
+			case "null":
 				return new ArrayList<>();
             case "tabelle":
 				classSpellKnownNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Spell Known").getLast()).get(level-1));

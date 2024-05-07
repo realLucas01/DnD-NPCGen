@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,18 +28,21 @@ public class SkillModel {
 		this.skillName = skillName;
 		this.skillAbilityScore = skillAbilityScore;
 	}
+	@Order(value = 1)
 	public Integer getSkillId() {
 		return skillId;
 	}
 	public void setSkillId(Integer skillId) {
 		this.skillId = skillId;
 	}
+	@Order(value = 2)
 	public String getSkillName() {
 		return skillName;
 	}
 	public void setSkillName(String skillName) {
 		this.skillName = skillName;
 	}
+	@Order(value = 3)
 	public String getSkillAbilityScore() {
 		return skillAbilityScore;
 	}

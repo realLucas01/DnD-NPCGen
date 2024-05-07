@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,48 +39,56 @@ public class ArmorModel {
 		this.armorStrength = armorStrength;
 		this.armorStealth = armorStealth;
 	}
+	@Order(value = 1)
 	public Integer getArmorId() {
 		return armorId;
 	}
 	public void setArmorId(Integer armorId) {
 		this.armorId = armorId;
 	}
+	@Order(value = 2)
 	public String getArmorName() {
 		return armorName;
 	}
 	public void setArmorName(String armorName) {
 		this.armorName = armorName;
 	}
+	@Order(value = 3)
 	public String getArmorKind() {
 		return armorKind;
 	}
 	public void setArmorKind(String armorKind) {
 		this.armorKind = armorKind;
 	}
+	@Order(value = 4)
 	public String getArmorAc() {
 		return armorAc;
 	}
 	public void setArmorAc(String armorAc) {
 		this.armorAc = armorAc;
 	}
+	@Order(value = 5)
 	public String getArmorMax() {
 		return armorMax;
 	}
 	public void setArmorMax(String armorMax) {
 		this.armorMax = armorMax;
 	}
+	@Order(value = 6)
 	public String getArmorBonus() {
 		return armorBonus;
 	}
 	public void setArmorBonus(String armorBonus) {
 		this.armorBonus = armorBonus;
 	}
+	@Order(value = 7)
 	public String getArmorStrength() {
 		return armorStrength;
 	}
 	public void setArmorStrength(String armorStrength) {
 		this.armorStrength = armorStrength;
 	}
+	@Order(value = 8)
 	public String getArmorStealth() {
 		return armorStealth;
 	}

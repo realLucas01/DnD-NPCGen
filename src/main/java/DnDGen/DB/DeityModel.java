@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,18 +28,21 @@ public class DeityModel {
 		this.deityName = deityName;
 		this.deityAlignment = deityAlignment;
 	}
+	@Order(value = 1)
 	public Integer getDeityId() {
 		return deityId;
 	}
 	public void setDeityId(Integer deityId) {
 		this.deityId = deityId;
 	}
+	@Order(value = 2)
 	public String getDeityName() {
 		return deityName;
 	}
 	public void setDeityName(String deityName) {
 		this.deityName = deityName;
 	}
+	@Order(value = 3)
 	public String getDeityAlignment() {
 		return deityAlignment;
 	}

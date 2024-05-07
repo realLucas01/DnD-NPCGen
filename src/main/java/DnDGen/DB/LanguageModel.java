@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,12 +26,14 @@ public class LanguageModel {
 		super();
 		this.languageName = languageName;
 	}
+	@Order(value = 1)
 	public Integer getLanguageId() {
 		return languageId;
 	}
 	public void setLanguageId(Integer languageId) {
 		this.languageId = languageId;
 	}
+	@Order(value = 2)
 	public String getLanguageName() {
 		return languageName;
 	}

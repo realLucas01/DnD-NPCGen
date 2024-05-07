@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,24 +30,28 @@ public class DracAncesModel {
 		this.draconicDamageType = draconicDamageType;
 		this.draconicBreathWeapon = draconicBreathWeapon;
 	}
+	@Order(value = 1)
 	public Integer getDraconicId() {
 		return draconicId;
 	}
 	public void setDraconicId(Integer draconicId) {
 		this.draconicId = draconicId;
 	}
+	@Order(value = 2)
 	public String getDraconicDragon() {
 		return draconicDragon;
 	}
 	public void setDraconicDragon(String draconicDragon) {
 		this.draconicDragon = draconicDragon;
 	}
+	@Order(value = 3)
 	public String getDraconicDamageType() {
 		return draconicDamageType;
 	}
 	public void setDraconicDamageType(String draconicDamageType) {
 		this.draconicDamageType = draconicDamageType;
 	}
+	@Order(value = 4)
 	public String getDraconicBreathWeapon() {
 		return draconicBreathWeapon;
 	}

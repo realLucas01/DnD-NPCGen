@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,18 +28,21 @@ public class LevelModel {
 		this.levelNumber = levelNumber;
 		this.levelProfBonus = levelProfBonus;
 	}
+	@Order(value = 1)
 	public Integer getLevelId() {
 		return levelId;
 	}
 	public void setLevelId(Integer levelId) {
 		this.levelId = levelId;
 	}
+	@Order(value = 2)
 	public Integer getLevelNumber() {
 		return levelNumber;
 	}
 	public void setLevelNumber(Integer levelNumber) {
 		this.levelNumber = levelNumber;
 	}
+	@Order(value = 3)
 	public Integer getLevelProfBonus() {
 		return levelProfBonus;
 	}

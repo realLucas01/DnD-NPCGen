@@ -1,5 +1,6 @@
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,36 +29,42 @@ public class ActionModel {
 		this.actionLevel = actionLevel;
 		this.actionType = actionType;
 	}
+	@Order(value = 1)
 	public Integer getActionId() {
 		return actionId;
 	}
 	public void setActionId(Integer actionId) {
 		this.actionId = actionId;
 	}
+	@Order(value = 2)
 	public String getActionName() {
 		return actionName;
 	}
 	public void setActionName(String actionName) {
 		this.actionName = actionName;
 	}
+	@Order(value = 3)
 	public String getActionDescription() {
 		return actionDescription;
 	}
 	public void setActionDescription(String actionDescription) {
 		this.actionDescription = actionDescription;
 	}
+	@Order(value = 4)
 	public String getActionClass() {
 		return actionClass;
 	}
 	public void setActionClass(String actionClass) {
 		this.actionClass = actionClass;
 	}
+	@Order(value = 5)
 	public Integer getActionLevel() {
 		return actionLevel;
 	}
 	public void setActionLevel(Integer actionLevel) {
 		this.actionLevel = actionLevel;
 	}
+	@Order(value = 6)
 	public String getActionType() {
 		return actionType;
 	}

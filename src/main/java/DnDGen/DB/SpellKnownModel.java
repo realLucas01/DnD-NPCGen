@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,24 +30,28 @@ public class SpellKnownModel {
 		this.spellKnownKind = spellKnownKind;
 		this.spellKnownStuff = spellKnownStuff;
 	}
+	@Order(value = 1)
 	public Integer getSpellKnownId() {
 		return spellKnownId;
 	}
 	public void setSpellKnownId(Integer spellKnownId) {
 		this.spellKnownId = spellKnownId;
 	}
+	@Order(value = 2)
 	public String getSpellKnownClass() {
 		return spellKnownClass;
 	}
 	public void setSpellKnownClass(String spellKnownClass) {
 		this.spellKnownClass = spellKnownClass;
 	}
+	@Order(value = 3)
 	public String getSpellKnownKind() {
 		return spellKnownKind;
 	}
 	public void setSpellKnownKind(String spellKnownKind) {
 		this.spellKnownKind = spellKnownKind;
 	}
+	@Order(value = 4)
 	public String getSpellKnownStuff() {
 		return spellKnownStuff;
 	}

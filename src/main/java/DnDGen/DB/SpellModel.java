@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,66 +49,77 @@ public class SpellModel {
 		this.spellLevelUpScale = spellLevelUpScale;
 		this.spellAvailability = spellAvailability;
 	}
+	@Order(value = 1)
 	public Integer getSpellId() {
 		return spellId;
 	}
 	public void setSpellId(Integer spellId) {
 		this.spellId = spellId;
 	}
+	@Order(value = 2)
 	public String getSpellName() {
 		return spellName;
 	}
 	public void setSpellName(String spellName) {
 		this.spellName = spellName;
 	}
+	@Order(value = 3)
 	public String getSpellLevel() {
 		return spellLevel;
 	}
 	public void setSpellLevel(String spellLevel) {
 		this.spellLevel = spellLevel;
 	}
+	@Order(value = 4)
 	public String getSpellSchool() {
 		return spellSchool;
 	}
 	public void setSpellSchool(String spellSchool) {
 		this.spellSchool = spellSchool;
 	}
+	@Order(value = 5)
 	public String getSpellCastingTime() {
 		return spellCastingTime;
 	}
 	public void setSpellCastingTime(String spellCastingTime) {
 		this.spellCastingTime = spellCastingTime;
 	}
+	@Order(value = 6)
 	public String getSpellRange() {
 		return spellRange;
 	}
 	public void setSpellRange(String spellRange) {
 		this.spellRange = spellRange;
 	}
+	@Order(value = 7)
 	public String getSpellComponents() {
 		return spellComponents;
 	}
 	public void setSpellComponents(String spellComponents) {
 		this.spellComponents = spellComponents;
 	}
+	@Order(value = 8)
 	public String getSpellDuration() {
 		return spellDuration;
 	}
 	public void setSpellDuration(String spellDuration) {
 		this.spellDuration = spellDuration;
 	}
+	@Order(value = 9)
 	public String getSpellDescription() {
 		return spellDescription;
 	}
 	public void setSpellDescription(String spellDescription) {
 		this.spellDescription = spellDescription;
 	}
+	@Order(value = 10)
 	public String getSpellLevelUpScale() {
 		return spellLevelUpScale;
 	}
 	public void setSpellLevelUpScale(String spellLevelUpScale) {
 		this.spellLevelUpScale = spellLevelUpScale;
 	}
+	@Order(value = 11)
 	public String getSpellAvailability() {
 		return spellAvailability;
 	}

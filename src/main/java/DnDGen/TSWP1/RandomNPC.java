@@ -248,7 +248,7 @@ public class RandomNPC {
         ArrayList<String> skillListWithNumbers = new ArrayList<>();
         String dbAbilityScore ;
         for (String s : skillList){
-            if((s != null) && (!s.equals("Any"))) {
+            if((s != "null") && (!s.equals("Any"))) {
                 s= s.replaceAll("\\s+","");
                 dbAbilityScore = dbms.getRow("skills", s).get(2);
                 switch (s){
@@ -495,7 +495,7 @@ public class RandomNPC {
         ArrayList<String> finalFeatures = new ArrayList<>();
         String searchTermDB = null;
 
-        if((dbms.getRow("race", race).get(3) != null)){
+        if((dbms.getRow("race", race).get(3) != "null")){
             features.addAll(bigStringToDividedString(dbms.getRow("race", race).get(3)));
         }
         switch (searchedFeature) {

@@ -13,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-import jakarta.persistence.TypedQuery;
-
 public interface SpellSlotsRepository extends CrudRepository<SpellSlotsModel, Integer>{
 	
 	long count();
@@ -32,4 +30,3 @@ public interface SpellSlotsRepository extends CrudRepository<SpellSlotsModel, In
 	ArrayList<SpellSlotsModel> findBySpellSlots9Level(String level9);
 	Page<SpellSlotsModel> findAll(Pageable pageable);
 }
-

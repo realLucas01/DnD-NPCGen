@@ -6,6 +6,8 @@
 
 package DnDGen.DB;
 
+
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,18 +28,21 @@ public class AlignmentModel {
 		this.alignmentName = alignmentName;
 		this.alignmentShorted = alignmentShorted;
 	}
+	@Order(value = 1)
 	public Integer getAlignmentId() {
 		return alignmentId;
 	}
 	public void setAlignmentId(Integer alignmentId) {
 		this.alignmentId = alignmentId;
 	}
+	@Order(value = 2)
 	public String getAlignmentName() {
 		return alignmentName;
 	}
 	public void setAlignmentName(String alignmentName) {
 		this.alignmentName = alignmentName;
 	}
+	@Order(value = 3)
 	public String getAlignmentShorted() {
 		return alignmentShorted;
 	}

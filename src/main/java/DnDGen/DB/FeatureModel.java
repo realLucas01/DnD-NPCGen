@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,24 +32,28 @@ public class FeatureModel {
 		this.featureDescription = featureDescription;
 		this.featureKindOf = featureKindOf;
 	}
+	@Order(value = 1)
 	public Integer getFeatureId() {
 		return featureId;
 	}
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+	@Order(value = 2)
 	public String getFeatureName() {
 		return featureName;
 	}
 	public void setFeatureName(String featureName) {
 		this.featureName = featureName;
 	}
+	@Order(value = 3)
 	public String getFeatureDescription() {
 		return featureDescription;
 	}
 	public void setFeatureDescription(String featureDescription) {
 		this.featureDescription = featureDescription;
 	}
+	@Order(value = 4)
 	public String getFeatureKindOf() {
 		return featureKindOf;
 	}

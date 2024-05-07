@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,36 +34,42 @@ public class WeaponModel {
 		this.weaponDamageDice = weaponDamageDice;
 		this.weaponKind = weaponKind;
 	}
+	@Order(value = 1)
 	public Integer getWeaponId() {
 		return weaponId;
 	}
 	public void setWeaponId(Integer weaponId) {
 		this.weaponId = weaponId;
 	}
+	@Order(value = 2)
 	public String getWeaponName() {
 		return weaponName;
 	}
 	public void setWeaponName(String weaponName) {
 		this.weaponName = weaponName;
 	}
+	@Order(value = 3)
 	public String getWeaponProperty() {
 		return weaponProperty;
 	}
 	public void setWeaponProperty(String weaponProperty) {
 		this.weaponProperty = weaponProperty;
 	}
+	@Order(value = 4)
 	public String getWeaponDamageType() {
 		return weaponDamageType;
 	}
 	public void setWeaponDamageType(String weaponDamageType) {
 		this.weaponDamageType = weaponDamageType;
 	}
+	@Order(value = 5)
 	public String getWeaponDamageDice() {
 		return weaponDamageDice;
 	}
 	public void setWeaponDamageDice(String weaponDamageDice) {
 		this.weaponDamageDice = weaponDamageDice;
 	}
+	@Order(value = 6)
 	public String getWeaponKind() {
 		return weaponKind;
 	}

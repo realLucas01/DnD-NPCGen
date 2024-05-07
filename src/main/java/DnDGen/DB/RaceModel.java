@@ -6,6 +6,7 @@
 
 package DnDGen.DB;
 
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,72 +47,84 @@ public class RaceModel {
 		this.raceLanguages = raceLanguages;
 		this.raceCreatureType = raceCreatureType;
 	}
+	@Order(value = 1)
 	public Integer getRaceId() {
 		return raceId;
 	}
 	public void setRaceId(Integer raceId) {
 		this.raceId = raceId;
 	}
+	@Order(value = 2)
 	public String getRaceName() {
 		return raceName;
 	}
 	public void setRaceName(String raceName) {
 		this.raceName = raceName;
 	}
+	@Order(value = 3)
 	public String getRaceAbilityScore() {
 		return raceAbilityScore;
 	}
 	public void setRaceAbilityScore(String raceAbilityScore) {
 		this.raceAbilityScore = raceAbilityScore;
 	}
+	@Order(value = 4)
 	public String getRaceFeatures() {
 		return raceFeatures;
 	}
 	public void setRaceFeatures(String raceFeatures) {
 		this.raceFeatures = raceFeatures;
 	}
+	@Order(value = 5)
 	public Integer getRaceAgeAdult() {
 		return raceAgeAdult;
 	}
 	public void setRaceAgeAdult(Integer raceAgeAdult) {
 		this.raceAgeAdult = raceAgeAdult;
 	}
+	@Order(value = 6)
 	public Integer getRaceAgeMax() {
 		return raceAgeMax;
 	}
 	public void setRaceAgeMax(Integer raceAgeMax) {
 		this.raceAgeMax = raceAgeMax;
 	}
+	@Order(value = 7)
 	public String getRaceSkills() {
 		return raceSkills;
 	}
 	public void setRaceSkills(String raceSkills) {
 		this.raceSkills = raceSkills;
 	}
+	@Order(value = 8)
 	public String getRaceHeight() {
 		return raceHeight;
 	}
 	public void setRaceHeight(String raceHeight) {
 		this.raceHeight = raceHeight;
 	}
+	@Order(value = 9)
 	public String getRaceSize() {
 		return raceSize;
 	}
 	public void setRaceSize(String raceSize) {
 		this.raceSize = raceSize;
 	}
+	@Order(value = 10)
 	public String getRaceSpeed() {
 		return raceSpeed;
 	}
 	public void setRaceSpeed(String raceSpeed) {
 		this.raceSpeed = raceSpeed;
 	}
+	@Order(value = 11)
 	public String getRaceLanguages() {
 		return raceLanguages;
 	}
 	public void setRaceLanguages(String raceLanguages) {
 		this.raceLanguages = raceLanguages;
 	}
+	@Order(value = 12)
 	public String getRaceCreatureType() {
 		return raceCreatureType;
 	}

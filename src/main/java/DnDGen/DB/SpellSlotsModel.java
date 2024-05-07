@@ -6,12 +6,7 @@
 
 package DnDGen.DB;
 
-import java.util.Arrays;
-import java.util.List;
-
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
+import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -54,72 +49,84 @@ public class SpellSlotsModel {
 		this.spellSlots8Level = spellSlots8Level;
 		this.spellSlots9Level = spellSlots9Level;
 	}
+	@Order(value = 1)
 	public Integer getSpellSlotsId() {
 		return spellSlotsId;
 	}
 	public void setSpellSlotsId(Integer spellSlotsId) {
 		this.spellSlotsId = spellSlotsId;
 	}
+	@Order(value = 2)
 	public String getSpellSlotsClass() {
 		return spellSlotsClass;
 	}
 	public void setSpellSlotsClass(String spellSlotsClass) {
 		this.spellSlotsClass = spellSlotsClass;
 	}
+	@Order(value = 3)
 	public String getSpellSlotsCantrips() {
 		return spellSlotsCantrips;
 	}
 	public void setSpellSlotsCantrips(String spellSlotsCantrips) {
 		this.spellSlotsCantrips = spellSlotsCantrips;
 	}
+	@Order(value = 4)
 	public String getSpellSlots1Level() {
 		return spellSlots1Level;
 	}
 	public void setSpellSlots1Level(String spellSlots1Level) {
 		this.spellSlots1Level = spellSlots1Level;
 	}
+	@Order(value = 5)
 	public String getSpellSlots2Level() {
 		return spellSlots2Level;
 	}
 	public void setSpellSlots2Level(String spellSlots2Level) {
 		this.spellSlots2Level = spellSlots2Level;
 	}
+	@Order(value = 6)
 	public String getSpellSlots3Level() {
 		return spellSlots3Level;
 	}
 	public void setSpellSlots3Level(String spellSlots3Level) {
 		this.spellSlots3Level = spellSlots3Level;
 	}
+	@Order(value = 7)
 	public String getSpellSlots4Level() {
 		return spellSlots4Level;
 	}
 	public void setSpellSlots4Level(String spellSlots4Level) {
 		this.spellSlots4Level = spellSlots4Level;
 	}
+	@Order(value = 8)
 	public String getSpellSlots5Level() {
 		return spellSlots5Level;
 	}
 	public void setSpellSlots5Level(String spellSlots5Level) {
 		this.spellSlots5Level = spellSlots5Level;
 	}
+	@Order(value = 9)
 	public String getSpellSlots6Level() {
 		return spellSlots6Level;
 	}
 	public void setSpellSlots6Level(String spellSlots6Level) {
 		this.spellSlots6Level = spellSlots6Level;
 	}
+	@Order(value = 10)
 	public String getSpellSlots7Level() {
 		return spellSlots7Level;
 	}
 	public void setSpellSlots7Level(String spellSlots7Level) {
 		this.spellSlots7Level = spellSlots7Level;
 	}
+	@Order(value = 11)
 	public String getSpellSlots8Level() {
 		return spellSlots8Level;
 	}
 	public void setSpellSlots8Level(String spellSlots8Level) {
 		this.spellSlots8Level = spellSlots8Level;
 	}
+	@Order(value = 12)
 	public String getSpellSlots9Level() {
 		return spellSlots9Level;
 	}
