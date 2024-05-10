@@ -428,7 +428,7 @@ public class RandomGenerator {
 		int highestSpellSlot = 0;
 		boolean spezialCase = false;
 
-		if (classSpellKnownCol == "null"){
+		if (Objects.equals(classSpellKnownCol, "null")){
 			return new ArrayList<>();
 		}
 		switch (classSpellKnownCol){
@@ -464,7 +464,7 @@ public class RandomGenerator {
 			}
 		}
 		if(genClass.contains("(")){
-			genClass = genClass.substring(0, genClass.indexOf("(")-1);
+			genClass = genClass.substring(0, genClass.indexOf("("));
 		}
 		String finalGenClass = genClass;
 

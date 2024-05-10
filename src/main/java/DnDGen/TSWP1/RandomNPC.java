@@ -51,6 +51,7 @@ public class RandomNPC {
         String name;
         String alignment;
         String deity;
+        String senses;
         int level;
         int age;
         int profBonus;
@@ -181,7 +182,8 @@ public class RandomNPC {
         languages = determineLanguages(race,job);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
 
-        generatedNPCFinished.add(randGen.passivePerception(abilityModifier, skillList ,profBonus));
+        senses = randGen.getVision(race) + ", " + randGen.passivePerception(abilityModifier,skillList,profBonus);
+        generatedNPCFinished.add(senses);
         return generatedNPCFinished;
     }
 
@@ -404,7 +406,7 @@ public class RandomNPC {
                         savingThrows.add("Wis " + "+" +(abilityModifier.get(4) + profBonus));
                         break;
                     case "Cha":
-                        savingThrows.add("Cha" + "+" +(abilityModifier.get(5) + profBonus));
+                        savingThrows.add("Cha " + "+" +(abilityModifier.get(5) + profBonus));
                         break;
                     default:
                         savingThrows.add("none");
