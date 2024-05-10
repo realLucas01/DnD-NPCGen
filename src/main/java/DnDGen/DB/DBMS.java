@@ -604,7 +604,7 @@ public class DBMS implements ApplicationContextAware{
 		    	for (Method m : ordner(spellmultpref.getClass())) {
 		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
 		    			 sneaky(() -> r = m.invoke(spellmultpref));
-		    			 rowMultPref.add((String) r.toString());
+		    			 rowMultPref.add(String.valueOf(r));
 		    		}
 		    	}
 		    }
@@ -618,7 +618,7 @@ public class DBMS implements ApplicationContextAware{
 		    	for (Method m : ordner(spellknownmultpref.getClass())) {
 		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
 		    			 sneaky(() -> r = m.invoke(spellknownmultpref));
-		    			 rowMultPref.add((String) r.toString());
+		    			 rowMultPref.add(String.valueOf(r));
 		    		}
 		    	}
 		    }
@@ -731,7 +731,7 @@ public class DBMS implements ApplicationContextAware{
 			 historyRepository.save(histentry);
 			 historyRepository.findById(11).get().setRunVar(historyRepository.findById(11).get().getRunVar()+1);
 		 case "update":
-			 //historyRepository.setNameInfoById(histentry.getHistoryFirstName(),histentry.getHistoryLastName(),histentry.getHistoryOccurance(),histentry.getHistoryId());
+			 //historyRepository.setNewInfoById(histentry.getHistoryFirstName(),histentry.getHistoryLastName(),histentry.getHistoryOccurance(),histentry.getHistoryId());
 		 }
 	}
 	
