@@ -40,6 +40,7 @@ public class RandomNPC {
         ArrayList<String> languages;
         ArrayList<String> savingThrows;
         ArrayList<String> description;
+        ArrayList<String> skillList = new ArrayList<>();
         ArrayList<Integer> abilityScores = new ArrayList<>();
         ArrayList<Integer> abilityModifier;
         ArrayList<String> generatedNPCFinished = new ArrayList<>();
@@ -141,7 +142,8 @@ public class RandomNPC {
 
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
         if (!genClass.equals(nameDBCommoner)) {     // Fall Commoner?
-            generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(addAbilityScoreToSkillList(abilityModifier,determineSkillList(race, job, genClass), profBonus)));
+            skillList = determineSkillList(race, job, genClass);
+            generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(addAbilityScoreToSkillList(abilityModifier,skillList, profBonus)));
         } else {
             generatedNPCFinished.add(generatedNPCFinished.size(), "none");
         }
@@ -179,6 +181,7 @@ public class RandomNPC {
         languages = determineLanguages(race,job);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
 
+        generatedNPCFinished.add(randGen.passivePerception(abilityModifier, skillList ,profBonus));
         return generatedNPCFinished;
     }
 

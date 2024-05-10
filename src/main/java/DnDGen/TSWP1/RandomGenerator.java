@@ -610,6 +610,21 @@ public class RandomGenerator {
 		}
 		return spellList;
 	}
+
+	public String passivePerception(ArrayList<Integer> abilityModifier, ArrayList<String> skillList, int profBonus){
+		System.out.println("Ability M.: " + abilityModifier.get(4));
+		int perception = 0;
+
+		if(skillList.contains("Perception")){
+			perception = 10 + abilityModifier.get(4) + profBonus;
+		}
+		else {
+			perception = 10 + abilityModifier.get(4);
+		}
+		System.out.println("passive Perception: " + perception);
+        return String.valueOf(perception);
+	}
+
 	/* TO DO @Kristina */
 	/*
 	public ArrayList<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {
