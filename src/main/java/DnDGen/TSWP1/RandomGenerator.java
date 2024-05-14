@@ -1,6 +1,5 @@
 package DnDGen.TSWP1;
 
-import java.lang.reflect.Array;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.*;
@@ -52,11 +51,11 @@ public class RandomGenerator {
 		}
 		return parsedToDouble;
 	}
-	
+
 	public int diceThrower(Integer diceCount, Integer diceNumber) {
 
 		int addedRolls = 0;
-				
+
 		for (int i = 0; i < diceCount; i++) {
 			int value = rand.nextInt(diceNumber) + 1;
 			addedRolls = addedRolls + value;
@@ -68,17 +67,17 @@ public class RandomGenerator {
 	public ArrayList<Integer> randAbilityScore(Integer amountOfThrows) {
 		ArrayList<Integer> value = new ArrayList<>();
 		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
-				
+
 		for (int i = 0; i < 6; i++) {
 			int j = 0;
 			while(j < amountOfThrows + 1) {
 				value.add(diceThrower(1, 6));
 				j++;
 			}
-			
+
 			Collections.sort(value, Collections.reverseOrder());
 			value.removeLast();
-			
+
 			int k = 0;
 			int number = 0;
 			while(k <= amountOfThrows - 1) {
@@ -87,32 +86,32 @@ public class RandomGenerator {
 			}
 
 			finishedSetForAbilityScores.add(number);
-			
+
 			value.clear();
 		}
 		Collections.sort(finishedSetForAbilityScores, Collections.reverseOrder());
 		return finishedSetForAbilityScores;
 	}
-	
+
 	public double randHeight(String race) {
 		ArrayList<String> rawHeight;
 		ArrayList<Double> minMaxArray;
 		String height;
 		double min;
 		double max;
-		
+
 		rawHeight = dbms.getRow("race", race);
 		height = rawHeight.get(7);
-		
+
 		minMaxArray = divideDoubles(height);
 		min = minMaxArray.get(0);
 		max = minMaxArray.get(1);
-		
+
 		double randomNum = ThreadLocalRandom.current().nextDouble(min, max);
 
         return Math.round(randomNum * 10.0) / 10.0;
 	}
-	
+
 	/* @Luca */
 	public   String randCharClass() {
 		ArrayList<String> rndClass = dbms.getRandomRow(nameDBClass);
@@ -147,38 +146,38 @@ public class RandomGenerator {
 		int lvl = rand.nextInt(21);
 		return lvl;
 	}
-	
+
 	public String randSize(String race) {
 		String size;
 		ArrayList<String> sizeArray;
 		ArrayList<String> newSize;
-		
+
 		sizeArray = dbms.getRow("race", race);
 		size = sizeArray.get(8);
 		newSize =  bigStringToDividedString(size);
-		
+
 		if(newSize.size() == 2) {
 			int value = rand.nextInt(2);
-			size = newSize.get(value);		
+			size = newSize.get(value);
 		} else {
 			size = sizeArray.get(8);
 		}
 
 		return size;
 	}
-	
+
 	/* TO DO @Lenard */
 	public ArrayList<String> randDescription(String race, String alignment) {
 		ArrayList<String> desc = new ArrayList<>();
 		ArrayList<String> dbData;
-		
+
 		String job = randJob();
 		String gender = randGender();
 		int age = randAge(race);
 		String deity = randDeity(alignment);
 		String size = randSize(race);
 		double height = randHeight(race);
-		
+
 		int i = 1;
 		while(i < 13) {
 			dbData = dbms.getRandomRow("description");
@@ -186,14 +185,14 @@ public class RandomGenerator {
 			dbData.clear();
 			i++;
 		}
-		
+
 		desc.add(job);
 		desc.add(gender);
 		desc.add(Integer.toString(age));
 		desc.add(deity);
 		desc.add(size);
 		desc.add(Double.toString(height));
-		
+
 		//Eyes, HairColor, HairStyle, Skin, Trait, Mannerism, DOnd, Flaw, Ideal, Voice, CLothing, Attitude, Plothook, Job, Gender, age, deity, size, height
 		return desc;
 	}
@@ -300,7 +299,7 @@ public class RandomGenerator {
 		String deity;
 
 		ArrayList<String> newDeity;
-		
+
 		newDeity = dbms.getRowPref("deity", alignment);
 		deity = newDeity.get(1);
 
@@ -321,7 +320,7 @@ public class RandomGenerator {
 		String secondName;
 		ArrayList<String> splitRaceArray = new ArrayList<>();
 		String[] newRace = race.split(" ");
-		
+
 		for (String s : newRace) {
 			if (!splitRaceArray.contains(s)) {
 				splitRaceArray.add(s);
@@ -330,9 +329,9 @@ public class RandomGenerator {
 		String newRaceString = splitRaceArray.getLast();
 		ArrayList<String> newName;
 		newName = dbms.getRowPref("name", newRaceString);
-		
+
 		firstName = newName.get(1);
-		
+
 		while (!(gender.equals(newName.get(4)))) {
 
 			newName = dbms.getRowPref("name", newRaceString);
@@ -418,7 +417,7 @@ public class RandomGenerator {
 	Eine Beispiel Ausgabe:
 	[Cantrips: [Prestidigitation, Message, BladeWard], 1st Level: [TashasCausticBrew, FogCloud, FloatingDisk]]
 	 */
-	public List<String> randSpellList (String genClass, List<String> abilityModifier, int level ){
+	public ArrayList<String> randSpellList (String genClass, ArrayList<Integer> abilityModifier, int level ){
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		String classSpellKnownCol = dbms.getRow(nameDBClass, genClass).get(9);
 		ArrayList<String> spellList = new ArrayList<>();
@@ -448,7 +447,7 @@ public class RandomGenerator {
 			default:
 				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, genClass).get(2)).get(level-1));
 				spellSlots = determineSpellSlots(genClass,level);
-				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level, (ArrayList<String>) abilityModifier);
+				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level,  abilityModifier);
 				break;
 		}
 
@@ -488,16 +487,16 @@ public class RandomGenerator {
 	/*
 	Anzahl der möglichen Spells für die Klasse
 	 */
-	private int determineNumberOfKnownSpell(String genClass, int level, ArrayList<String> abilityModifierString) {
+	private int determineNumberOfKnownSpell(String genClass, int level, ArrayList<Integer> abilityModifier) {
 		String colClassForSpell = dbms.getRow("class", genClass).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
 		int knownSpells;
-		ArrayList<Integer> abilityModifier = new ArrayList<>();
-		for (String element : abilityModifierString) {
+		//ArrayList<Integer> abilityModifier = new ArrayList<>();
+		/*for (String element : abilityModifierString) {
 			int value = Integer.parseInt(element);
 			abilityModifier.add(value);
-		}
+		}*/
 		switch (abilityModifierForSpells) {
 			case "Str":
 				spellModNumber = abilityModifier.getFirst();

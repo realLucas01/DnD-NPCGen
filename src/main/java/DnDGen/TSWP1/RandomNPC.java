@@ -126,6 +126,8 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(healthPoints));
 
         ArrayList<String> armorList = determineArmorAndAC(genClass, race, abilityModifier);
+        String armor = armorList.get(0);
+        int armorClass = Integer.parseInt(armorList.get(1));
         generatedNPCFinished.add(generatedNPCFinished.size(), armorList.get(0));//armor
         generatedNPCFinished.add(generatedNPCFinished.size(), armorList.get(1));//AC
 
@@ -182,8 +184,27 @@ public class RandomNPC {
         languages = determineLanguages(race,job);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
 
-        senses = randGen.getVision(race) + ", " + randGen.passivePerception(abilityModifier,skillList,profBonus);
-        generatedNPCFinished.add(senses);
+
+        senses = randGen.getVision(race) + ", " + randGen.passivePerception(abilityModifier, skillList, profBonus);
+        generatedNPCFinished.add(generatedNPCFinished.size(), senses);
+
+        //spells
+
+        ArrayList<String> spellList = randGen.randSpellList(genClass,abilityModifier,level);
+        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(spellList));
+
+        //dragonborn
+        if(race.equals("Dragonborn")){
+            race= dbms.getRandomRow("dracances").get(1) + " - " + race;
+            generatedNPCFinished.set(0, race);
+        }
+
+        ArrayList<String> spellAbility =new ArrayList<>();
+        ArrayList<String> actionList =new ArrayList<>();
+        ArrayList<String> bonusActionList =new ArrayList<>();
+
+        dbms.saveEntry(name,level, genClass, race, job, armorClass, healthPoints, movementSpeedList, languages,abilityScores, savingThrows, armor, weaponList,skillList, senses, spellList, spellAbility, description, actionList, bonusActionList, profBonus );
+
         return generatedNPCFinished;
     }
 
