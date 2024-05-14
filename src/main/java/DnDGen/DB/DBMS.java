@@ -687,10 +687,15 @@ public class DBMS implements ApplicationContextAware{
 	 * genaue Struktur der History DB aktuell noch unbekannt ist, ist diese funktion
 	 * was Eingaben und teilweise Struktur betrift noch WIP.
 	 */
-	public void saveEntry() {
-		 HistoryModel newentry = new HistoryModel();
+	public void saveEntry(ArrayList<String> NPC) {
+		HistoryModel newentry = new HistoryModel();
 		 //hier würden die übertragenen Daten in das Model newentry eingetragen werden.
-		 
+	    	for (Method m : ordner(newentry.getClass())) {
+	    		if (m.getName().startsWith("set") && m.getParameterTypes().length == 0 && !m.getName().equals("setClass")) {	
+	    			 sneaky(() -> r = m.invoke(NPC.getFirst()));
+	    			 NPC.removeFirst();
+	    		}
+	    	}
 		 manageHistory("save",newentry);
 		 return;
 	 }

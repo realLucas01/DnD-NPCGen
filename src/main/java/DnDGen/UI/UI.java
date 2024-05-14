@@ -553,7 +553,7 @@ public class UI extends Application {
 
 
             //Spells
-            spellTF.getChildren().remove(1, spellTF.getChildren().size());
+            /*spellTF.getChildren().remove(1, spellTF.getChildren().size());
 
             List<String> abilityModifierList = stringToList(npc.get(5));
             List<String> spells = rGenerator.randSpellList(npc.get(3),abilityModifierList,Integer.parseInt(npc.get(1)));
@@ -568,7 +568,7 @@ public class UI extends Application {
             }
 
             //System.out.println(spells);
-
+			*/
             //Beschreibung
             /*
             descriptionVBox.getChildren().clear();
