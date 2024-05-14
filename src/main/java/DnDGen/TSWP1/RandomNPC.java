@@ -202,8 +202,31 @@ public class RandomNPC {
         ArrayList<String> spellAbility =new ArrayList<>();
         ArrayList<String> actionList =new ArrayList<>();
         ArrayList<String> bonusActionList =new ArrayList<>();
+        ArrayList<String> history = new ArrayList<>();
+        
+        history.add(name);
+        history.add(String.valueOf(level));
+        history.add(genClass);
+        history.add(race);
+        history.add(job);
+        history.add(String.valueOf(armorClass));
+        history.add(String.valueOf(healthPoints));
+        history.add(String.valueOf(movementSpeedList));
+        history.add(String.valueOf(languages));
+        history.add(String.valueOf(abilityScores));
+        history.add(String.valueOf(savingThrows));
+        history.add(armor);
+        history.add(String.valueOf(weaponList));
+        history.add(String.valueOf(skillList));
+        history.add(senses);
+        history.add(String.valueOf(spellList));
+        history.add(String.valueOf(spellAbility));
+        history.add(String.valueOf(description));
+        history.add(String.valueOf(actionList));
+        history.add(String.valueOf(bonusActionList));
+        history.add(String.valueOf(profBonus));
 
-        dbms.saveEntry(name,level, genClass, race, job, armorClass, healthPoints, movementSpeedList, languages,abilityScores, savingThrows, armor, weaponList,skillList, senses, spellList, spellAbility, description, actionList, bonusActionList, profBonus );
+        dbms.saveEntry(history);
 
         return generatedNPCFinished;
     }
