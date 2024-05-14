@@ -611,7 +611,7 @@ public class RandomGenerator {
 	}
 
 	public String passivePerception(ArrayList<Integer> abilityModifier, ArrayList<String> skillList, int profBonus){
-		System.out.println("Ability M.: " + abilityModifier.get(4));
+		//System.out.println("Ability M.: " + abilityModifier.get(4));
 		int perception = 0;
 
 		if(skillList.contains("Perception")){
@@ -620,7 +620,7 @@ public class RandomGenerator {
 		else {
 			perception = 10 + abilityModifier.get(4);
 		}
-		System.out.println("passive Perception: " + perception);
+		//System.out.println("passive Perception: " + perception);
         return String.valueOf(perception);
 	}
 
