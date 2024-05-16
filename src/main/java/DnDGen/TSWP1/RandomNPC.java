@@ -32,7 +32,29 @@ public class RandomNPC {
     * Race, Class, Job, Level, AbilityScore, Gender
     *
     * Zurück erhält man eine ArrayList, diese ist wie folgt aufgebaut:
-    * (race, level, job, class, AbilityScore(Str, Dex, Con, Int, Wis, Cha), AbilityModifier(Str, Dex, Con, Int, Wis, Cha), HP, Armor, AC, Weapon(), Skills(), Gender, Age, Name, Description, Alignment, Deity, Languages())
+    * (race, level, job, class, AbilityScore, AbilityModifier, HP, Armor, AC, Weapon(), walkingSpeed, SavingThrows, Skills(), Gender, Age, Name, Description, Deity, Languages, Senses, spellList)
+    *   0: race
+    *   1: level
+    *   2: job
+    *   3: class
+    *   4: AbilityScore
+    *   5: AbilityModifier
+    *   6: HP
+    *   7: Armor
+    *   8: AC
+    *   9: WeaponList
+    *   10: walkingSpeedList
+    *   11: SavingThrows
+    *   12: SkillList
+    *   13: Gender
+    *     14: Age
+    *   15: Name
+    *   16: Description
+    *   17: Deity
+    *   18: Languages
+    *   19: Senses
+    *   20: spellList
+
      */
 
     public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
