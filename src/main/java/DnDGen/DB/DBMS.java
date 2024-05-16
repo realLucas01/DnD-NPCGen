@@ -28,6 +28,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
@@ -687,12 +688,12 @@ public class DBMS implements ApplicationContextAware{
 	 * genaue Struktur der History DB aktuell noch unbekannt ist, ist diese funktion
 	 * was Eingaben und teilweise Struktur betrift noch WIP.
 	 */
-	public void saveEntry(ArrayList<String> NPC) {
+	public void saveEntry(ArrayList<Object> NPC) {
 		HistoryModel newentry = new HistoryModel();
 		 //hier würden die übertragenen Daten in das Model newentry eingetragen werden.
 	    	for (Method m : ordner(newentry.getClass())) {
-	    		if (m.getName().startsWith("set") && m.getParameterTypes().length == 0 && !m.getName().equals("setClass")) {	
-	    			 sneaky(() -> r = m.invoke(NPC.getFirst()));
+	    		if (m.getName().startsWith("set") && m.getParameterTypes().length == 1 && !m.getName().equals("setHistoryId")&& !m.getName().equals("setRunVar")) {	
+	    			 sneaky(() -> r = m.invoke(newentry, NPC.getFirst()));
 	    			 NPC.removeFirst();
 	    		}
 	    	}
@@ -722,21 +723,26 @@ public class DBMS implements ApplicationContextAware{
 	 * gibt und immer der älteste gelöscht wird.
 	 */
 	@Transactional
+	@Modifying
 	public void manageHistory(String typeOfChange, HistoryModel histchange) {
-		 HistoryModel histentry = histchange;
-		 
 		 switch(typeOfChange) {
 		 case "save":
 			 if (historyRepository.count() == 0) {
 				 historyRepository.findById(11).get().setRunVar(1);
+				 break;	 
 			 }else if (historyRepository.findById(11).get().getRunVar() == 11) {
-				 historyRepository.findById(11).get().setRunVar(1);
+				 historyRepository.setRuVaManuel(1, 11);;
+				 break;
 			 }
-			 histentry.setHistoryId(historyRepository.findById(11).get().getRunVar());
-			 historyRepository.save(histentry);
-			 historyRepository.findById(11).get().setRunVar(historyRepository.findById(11).get().getRunVar()+1);
+			 histchange.setHistoryId(historyRepository.findById(11).get().getRunVar());
+			 histchange.setHistoryDesc(null);
+			 histchange.setHistorySpells(null);
+			 historyRepository.save(histchange);
+			 historyRepository.setRuVaManuel((historyRepository.findById(11).get().getRunVar())+1, 11);
+			 break;
 		 case "update":
 			 //historyRepository.setNewInfoById(histentry.getHistoryFirstName(),histentry.getHistoryLastName(),histentry.getHistoryOccurance(),histentry.getHistoryId());
+			 break;
 		 }
 	}
 	

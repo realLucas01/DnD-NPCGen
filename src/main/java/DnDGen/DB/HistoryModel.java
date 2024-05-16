@@ -9,6 +9,8 @@ package DnDGen.DB;
 
 import java.util.ArrayList;
 
+import DnDGen.DB.Sortierung.Order;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -24,29 +26,32 @@ public class HistoryModel {
 	private String historyJob;
 	private Integer historyAc;
 	private Integer historyHp;
-	private String historySpeed;
-	private String historyLanguages;
+	private ArrayList<String> historySpeed;
+	private ArrayList<String> historyLanguages;
 	private ArrayList<Integer> historyAbiliSc;
-	private ArrayList<Integer> historySavingTh;
+	private ArrayList<String> historySavingTh;
 	private String historyArmor;
-	private String historyWeapon;
-	private String historySp;
-	private String historySpells;
-	private String historySpellAb;
-	private String historyDesc;
-	private String historyActions;
-	private String historyBonusAct;
-	private ArrayList<Integer> historyProfBonus;
+	private ArrayList<String> historyWeapon;
+	private ArrayList<String> historySkills;
+	private String historySenses;
+	@Column(columnDefinition="TEXT")
+	private ArrayList<String> historySpells;
+	private ArrayList<String> historySpellAb;
+	@Column(columnDefinition="MEDIUMTEXT")
+	private ArrayList<String> historyDesc;
+	private ArrayList<String> historyActions;
+	private ArrayList<String> historyBonusAct;
+	private Integer historyProfBonus;
 	
 	public HistoryModel() {
-		
 	}
 	public HistoryModel(Integer historyId, Integer runVar, String historyName, Integer historyLevel,
 			String historyClass, String historyRace, String historyJob, Integer historyAc, Integer historyHp,
-			String historySpeed, String historyLanguages, ArrayList<Integer> historyAbiliSc,
-			ArrayList<Integer> historySavingTh, String historyArmor, String historyWeapon, String historySp,
-			String historySpells, String historySpellAb, String historyDesc, String historyActions,
-			String historyBonusAct, ArrayList<Integer> historyProfBonus) {
+			ArrayList<String> historySpeed, ArrayList<String> historyLanguages, ArrayList<Integer> historyAbiliSc,
+			ArrayList<String> historySavingTh, String historyArmor, ArrayList<String> historyWeapon,
+			ArrayList<String> historySkills, String historySenses, ArrayList<String> historySpells,
+			ArrayList<String> historySpellAb, ArrayList<String> historyDesc, ArrayList<String> historyActions,
+			ArrayList<String> historyBonusAct, Integer historyProfBonus) {
 		super();
 		this.historyId = historyId;
 		this.runVar = runVar;
@@ -63,7 +68,8 @@ public class HistoryModel {
 		this.historySavingTh = historySavingTh;
 		this.historyArmor = historyArmor;
 		this.historyWeapon = historyWeapon;
-		this.historySp = historySp;
+		this.historySkills = historySkills;
+		this.historySenses = historySenses;
 		this.historySpells = historySpells;
 		this.historySpellAb = historySpellAb;
 		this.historyDesc = historyDesc;
@@ -86,133 +92,160 @@ public class HistoryModel {
 	public String getHistoryName() {
 		return historyName;
 	}
+	@Order(value = 1)
 	public void setHistoryName(String historyName) {
 		this.historyName = historyName;
 	}
 	public Integer getHistoryLevel() {
 		return historyLevel;
 	}
+	@Order(value = 2)
 	public void setHistoryLevel(Integer historyLevel) {
 		this.historyLevel = historyLevel;
 	}
 	public String getHistoryClass() {
 		return historyClass;
 	}
+	@Order(value = 3)
 	public void setHistoryClass(String historyClass) {
 		this.historyClass = historyClass;
 	}
 	public String getHistoryRace() {
 		return historyRace;
 	}
+	@Order(value = 4)
 	public void setHistoryRace(String historyRace) {
 		this.historyRace = historyRace;
 	}
 	public String getHistoryJob() {
 		return historyJob;
 	}
+	@Order(value = 5)
 	public void setHistoryJob(String historyJob) {
 		this.historyJob = historyJob;
 	}
 	public Integer getHistoryAc() {
 		return historyAc;
 	}
+	@Order(value = 6)
 	public void setHistoryAc(Integer historyAc) {
 		this.historyAc = historyAc;
 	}
 	public Integer getHistoryHp() {
 		return historyHp;
 	}
-	public void setHistoryHP(Integer historyHp) {
+	@Order(value = 7)
+	public void setHistoryHp(Integer historyHp) {
 		this.historyHp = historyHp;
 	}
-	public String getHistorySpeed() {
+	public ArrayList<String> getHistorySpeed() {
 		return historySpeed;
 	}
-	public void setHistorySpeed(String historySpeed) {
+	@Order(value = 8)
+	public void setHistorySpeed(ArrayList<String> historySpeed) {
 		this.historySpeed = historySpeed;
 	}
-	public String getHistoryLanguages() {
+	public ArrayList<String> getHistoryLanguages() {
 		return historyLanguages;
 	}
-	public void setHistoryLanguages(String historyLanguages) {
+	@Order(value = 9)
+	public void setHistoryLanguages(ArrayList<String> historyLanguages) {
 		this.historyLanguages = historyLanguages;
 	}
 	public ArrayList<Integer> getHistoryAbiliSc() {
 		return historyAbiliSc;
 	}
+	@Order(value = 10)
 	public void setHistoryAbiliSc(ArrayList<Integer> historyAbiliSc) {
 		this.historyAbiliSc = historyAbiliSc;
 	}
-	public ArrayList<Integer> getHistorySavingTh() {
+	public ArrayList<String> getHistorySavingTh() {
 		return historySavingTh;
 	}
-	public void setHistorySavingTh(ArrayList<Integer> historySavingTh) {
+	@Order(value = 11)
+	public void setHistorySavingTh(ArrayList<String> historySavingTh) {
 		this.historySavingTh = historySavingTh;
 	}
 	public String getHistoryArmor() {
 		return historyArmor;
 	}
+	@Order(value = 12)
 	public void setHistoryArmor(String historyArmor) {
 		this.historyArmor = historyArmor;
 	}
-	public String getHistoryWeapon() {
+	public ArrayList<String> getHistoryWeapon() {
 		return historyWeapon;
 	}
-	public void setHistoryWeapon(String historyWeapon) {
+	@Order(value = 13)
+	public void setHistoryWeapon(ArrayList<String> historyWeapon) {
 		this.historyWeapon = historyWeapon;
 	}
-	public String getHistorySp() {
-		return historySp;
+	public ArrayList<String> getHistorySkills() {
+		return historySkills;
 	}
-	public void setHistorySp(String historySp) {
-		this.historySp = historySp;
+	@Order(value = 14)
+	public void setHistorySkills(ArrayList<String> historySkills) {
+		this.historySkills = historySkills;
 	}
-	public String getHistorySpells() {
+	public String getHistorySenses() {
+		return historySenses;
+	}
+	@Order(value = 15)
+	public void setHistorySenses(String historySenses) {
+		this.historySenses = historySenses;
+	}
+	public ArrayList<String> getHistorySpells() {
 		return historySpells;
 	}
-	public void setHistorySpells(String historySpells) {
+	@Order(value = 16)
+	public void setHistorySpells(ArrayList<String> historySpells) {
 		this.historySpells = historySpells;
 	}
-	public String getHistorySpellAb() {
+	public ArrayList<String> getHistorySpellAb() {
 		return historySpellAb;
 	}
-	public void setHistorySpellAb(String historySpellAb) {
+	@Order(value = 17)
+	public void setHistorySpellAb(ArrayList<String> historySpellAb) {
 		this.historySpellAb = historySpellAb;
 	}
-	public String getHistoryDesc() {
+	public ArrayList<String> getHistoryDesc() {
 		return historyDesc;
 	}
-	public void setHistoryDesc(String historyDesc) {
+	@Order(value = 18)
+	public void setHistoryDesc(ArrayList<String> historyDesc) {
 		this.historyDesc = historyDesc;
 	}
-	public String getHistoryActions() {
+	public ArrayList<String> getHistoryActions() {
 		return historyActions;
 	}
-	public void setHistoryActions(String historyActions) {
+	@Order(value = 19)
+	public void setHistoryActions(ArrayList<String> historyActions) {
 		this.historyActions = historyActions;
 	}
-	public String getHistoryBonusAct() {
+	public ArrayList<String> getHistoryBonusAct() {
 		return historyBonusAct;
 	}
-	public void setHistoryBonusAct(String historyBonusAct) {
+	@Order(value = 20)
+	public void setHistoryBonusAct(ArrayList<String> historyBonusAct) {
 		this.historyBonusAct = historyBonusAct;
 	}
-	public ArrayList<Integer> getHistoryProfBonus() {
+	public Integer getHistoryProfBonus() {
 		return historyProfBonus;
 	}
-	public void setHistoryProfBonus(ArrayList<Integer> historyProfBonus) {
+	@Order(value = 21)
+	public void setHistoryProfBonus(Integer historyProfBonus) {
 		this.historyProfBonus = historyProfBonus;
 	}
 	@Override
 	public String toString() {
 		return "HistoryModel [historyId=" + historyId + ", runVar=" + runVar + ", historyName=" + historyName
 				+ ", historyLevel=" + historyLevel + ", historyClass=" + historyClass + ", historyRace=" + historyRace
-				+ ", historyJob=" + historyJob + ", historyAC=" + historyAc + ", historyHP=" + historyHp
+				+ ", historyJob=" + historyJob + ", historyAc=" + historyAc + ", historyHp=" + historyHp
 				+ ", historySpeed=" + historySpeed + ", historyLanguages=" + historyLanguages + ", historyAbiliSc="
-				+ historyAbiliSc + ", historySavingT=" + historySavingTh + ", historyArmor=" + historyArmor
-				+ ", historyWeapon=" + historyWeapon + ", historySP=" + historySp + ", historySpells=" + historySpells
-				+ ", historySpellAb=" + historySpellAb + ", historyDesc=" + historyDesc + ", historyActions="
-				+ historyActions + ", historyBonusAct=" + historyBonusAct + ", historyProfBonus=" + historyProfBonus
-				+ "]";
+				+ historyAbiliSc + ", historySavingTh=" + historySavingTh + ", historyArmor=" + historyArmor
+				+ ", historyWeapon=" + historyWeapon + ", historySkills=" + historySkills + ", historySenses="
+				+ historySenses + ", historySpells=" + historySpells + ", historySpellAb=" + historySpellAb
+				+ ", historyDesc=" + historyDesc + ", historyActions=" + historyActions + ", historyBonusAct="
+				+ historyBonusAct + ", historyProfBonus=" + historyProfBonus + "]";
 	}
 }

@@ -1,5 +1,6 @@
 package DnDGen.TSWP1;
 
+import java.lang.reflect.Array;
 import java.security.SecureRandom;
 import java.util.*;
 import org.springframework.context.ApplicationContext;
@@ -224,29 +225,29 @@ public class RandomNPC {
         ArrayList<String> spellAbility =new ArrayList<>();
         ArrayList<String> actionList =new ArrayList<>();
         ArrayList<String> bonusActionList =new ArrayList<>();
-        ArrayList<String> history = new ArrayList<>();
+        ArrayList<Object> history = new ArrayList<Object>();
         
         history.add(name);
-        history.add(String.valueOf(level));
+        history.add(level);
         history.add(genClass);
         history.add(race);
         history.add(job);
-        history.add(String.valueOf(armorClass));
-        history.add(String.valueOf(healthPoints));
-        history.add(String.valueOf(movementSpeedList));
-        history.add(String.valueOf(languages));
-        history.add(String.valueOf(abilityScores));
-        history.add(String.valueOf(savingThrows));
+        history.add(armorClass);
+        history.add(healthPoints);
+        history.add(movementSpeedList);
+        history.add(languages);
+        history.add(abilityScores);
+        history.add(savingThrows);
         history.add(armor);
-        history.add(String.valueOf(weaponList));
-        history.add(String.valueOf(skillList));
+        history.add(weaponList);
+        history.add(skillList);
         history.add(senses);
-        history.add(String.valueOf(spellList));
-        history.add(String.valueOf(spellAbility));
-        history.add(String.valueOf(description));
-        history.add(String.valueOf(actionList));
-        history.add(String.valueOf(bonusActionList));
-        history.add(String.valueOf(profBonus));
+        history.add(spellList);
+        history.add(spellAbility);
+        history.add(description);
+        history.add(actionList);
+        history.add(bonusActionList);
+        history.add(profBonus);
 
         dbms.saveEntry(history);
 

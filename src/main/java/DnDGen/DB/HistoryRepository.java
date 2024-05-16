@@ -10,12 +10,18 @@ package DnDGen.DB;
 
 import java.util.ArrayList;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface HistoryRepository extends CrudRepository<HistoryModel, Integer>{
 	
 	long count();
-	ArrayList<HistoryModel> findByHistoryId(Integer id);
+	HistoryModel findByHistoryId(Integer id);
 	ArrayList<HistoryModel> findByRunVar(Integer runVar);
-
+	@Modifying
+	@Transactional
+	@Query("update HistoryModel u set u.runVar = ?1 where u.historyId = ?2")
+	void setRuVaManuel(Integer runVar, Integer historyId);
 }
