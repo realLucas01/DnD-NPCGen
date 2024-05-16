@@ -74,11 +74,14 @@ public class UI extends Application {
         RandomNPC rNPC = new RandomNPC();
         RandomGenerator rGenerator = new RandomGenerator();
 
+        ElementHistory elementHistory = new ElementHistory(window);
+
         GridPane layoutGenerateGrid = new GridPane();
         layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
         layoutGenerateGrid.setVgap(7);
         layoutGenerateGrid.setHgap(10);
         layoutGenerateGrid.setMinWidth(300);
+
 
 
         //Menü
@@ -92,6 +95,8 @@ public class UI extends Application {
 
         MenuItem menuItem1 = new MenuItem("Item 1");
         MenuItem menuItem2 = new MenuItem("Item 2");
+        MenuItem menuItemHistory = new MenuItem("History");
+
 
         menuItem1.setOnAction(e -> {
             e.consume();
@@ -104,10 +109,20 @@ public class UI extends Application {
         });
 
 
+        menuItemHistory.setOnAction(e -> {
+            e.consume();
+            window.setScene(elementHistory.getScene());
+        });
+
+
+
+
         menu.getItems().add(menuItem1);
         menu.getItems().add(menuItem2);
+        menu.getItems().add(menuItemHistory);
 
         menuBar.getMenus().add(menu);
+
 
 
         //Seite generatePage
@@ -411,10 +426,7 @@ public class UI extends Application {
             descriptionVBox.setMinWidth(300);
             descriptionVBox.setMaxWidth(330);
 
-
-
-
-
+            
             //Liste mit Positionen vom NPC
             /*
             System.out.println(npc);
@@ -679,6 +691,7 @@ public class UI extends Application {
         window.setScene(generatePage);
         window.show();
 
+        elementHistory.menuBar(generatePage);
 
         window.widthProperty().addListener((obs, oldVal, newVal) -> {
             /*

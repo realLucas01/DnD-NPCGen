@@ -72,8 +72,6 @@ public class ElementNPC {
 
     // gibt Beschreibung als Fließtext
     public void getDescriptionOld() {
-        //Beschreibung lang (altes Modell / meine Methode für StringToList)
-        //listNpc = stringToList(npc.get(17));
         String name = npc.get(15);
 
         ArrayList<String> npcDescriptionArray = rGenerator.randDescription(npc.get(0),npc.get(16));
@@ -94,16 +92,13 @@ public class ElementNPC {
                 listNpc.get(listNpc.size()-3) + " " + name + " is wearing a " + listNpc.get(listNpc.size()-2) +
                 " and " + getPossessivePronoun(sex) + " is " + listNpc.get(listNpc.size()-1));
 
-       Text text = new Text(description);
+        Text text = new Text(description);
         text.wrappingWidthProperty().bind(descriptionVBox.widthProperty());
         descriptionText.getChildren().add(text);
 
         descriptionVBox.getChildren().add(descriptionText);
     }
 
-
-
-    //Beschreibung
 
 
 
