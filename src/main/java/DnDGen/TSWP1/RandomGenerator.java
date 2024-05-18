@@ -252,6 +252,10 @@ public class RandomGenerator {
 		ArrayList<String> databaseReturn; // Liste die von der DB zurückkommt
 		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
 		for(String feature: bigStringToDividedString(dbms.getRow("race", race).get(3))){
+			if(feature.equals("null") ){
+				break;
+			}
+
 			databaseReturn = dbms.getRow(nameDBFeatures, feature);
 			kindOfFeature = databaseReturn.get(3);
 			if(kindOfFeature.contains("vision")){

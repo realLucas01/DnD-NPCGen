@@ -1,6 +1,5 @@
 package DnDGen.TSWP1;
 
-import java.lang.reflect.Array;
 import java.security.SecureRandom;
 import java.util.*;
 import org.springframework.context.ApplicationContext;
@@ -50,15 +49,16 @@ public class RandomNPC {
     *   13: Gender
     *     14: Age
     *   15: Name
-    *   16: Description
-    *   17: Deity
-    *   18: Languages
-    *   19: Senses
-    *   20: spellList
+    *       16: Alignment
+    *   17: Description
+    *    18: Deity
+    *   19: Languages
+    *   20: Senses
+    *   21: spellList
 
      */
 
-    public ArrayList<String> createRandomNPC(String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
+    public ArrayList<String> createRandomNPC(String inputName,String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
         ArrayList<String> weaponList;
         ArrayList<String> languages;
         ArrayList<String> savingThrows;
@@ -187,15 +187,18 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(age));
 
         //RandomName
-        name = randGen.randName(gender,race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), name);
-
+        if (inputName ==null) {
+            name = randGen.randName(gender, race);
+            generatedNPCFinished.add(generatedNPCFinished.size(), name);
+        }else {
+            name = inputName;
+        }
 
         //random Alignment
         alignment = randGen.randAlignment();
         generatedNPCFinished.add(generatedNPCFinished.size(), alignment);
         
-      //random Description
+        //random Description
         description = randGen.randDescription(race, alignment);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(description));
 
@@ -212,7 +215,6 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), senses);
 
         //spells
-
         ArrayList<String> spellList = randGen.randSpellList(genClass,abilityModifier,level);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(spellList));
 
@@ -567,7 +569,7 @@ public class RandomNPC {
         ArrayList<String> finalFeatures = new ArrayList<>();
         String searchTermDB = null;
 
-        if((dbms.getRow("race", race).get(3) != "null")){
+        if((!Objects.equals(dbms.getRow("race", race).get(3), "null"))){
             features.addAll(bigStringToDividedString(dbms.getRow("race", race).get(3)));
         }
         switch (searchedFeature) {
