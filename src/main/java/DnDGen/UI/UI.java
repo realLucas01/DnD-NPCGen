@@ -563,7 +563,7 @@ public class UI extends Application {
                 skillTF.getChildren().add(action);
             }
 
-
+        /*
             //Spells
             /*spellTF.getChildren().remove(1, spellTF.getChildren().size());
 
