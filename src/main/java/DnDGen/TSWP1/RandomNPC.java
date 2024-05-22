@@ -189,10 +189,13 @@ public class RandomNPC {
         //RandomName
         if (inputName ==null) {
             name = randGen.randName(gender, race);
-            generatedNPCFinished.add(generatedNPCFinished.size(), name);
         }else {
             name = inputName;
         }
+
+
+
+        generatedNPCFinished.add(generatedNPCFinished.size(), name);
 
         //random Alignment
         alignment = randGen.randAlignment();
