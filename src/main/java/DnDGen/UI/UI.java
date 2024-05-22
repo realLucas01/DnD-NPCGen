@@ -411,7 +411,7 @@ public class UI extends Application {
 
 //    Button Klick
         buttonGenerate.setOnAction(e -> {
-            ArrayList<String> npc = rNPC.createRandomNPC(zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
+            ArrayList<String> npc = rNPC.createRandomNPC(zufallName(nameL),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
                                     zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
 
             if(gridNpc.getChildren().size() > 2) {
@@ -421,7 +421,7 @@ public class UI extends Application {
 
             ElementNPC elementNPC = new ElementNPC(npc);
 
-            elementNPC.getDescription();
+            elementNPC.getDescriptionFromNPC();
             descriptionVBox = elementNPC.getDescriptionVBox();
             descriptionVBox.setMinWidth(300);
             descriptionVBox.setMaxWidth(330);
@@ -433,7 +433,7 @@ public class UI extends Application {
             for(int i = 0; i < npc.size(); i++) {
                 System.out.println(i + " - " + npc.get(i));
             }
-             */
+            */
 
             String stringNpc = "";
             List listNpc = new ArrayList<>();
@@ -699,7 +699,7 @@ public class UI extends Application {
             npcStack.setPrefWidth(generatePage.getWidth()/2);
             descriptionStack.setPrefWidth(generatePage.getWidth()/4);
             */
-            descriptionVBox.setMinWidth(generatePage.getWidth()/3);
+           // descriptionVBox.setMinWidth(generatePage.getWidth()/3);
             layoutGenerateGrid.setMinWidth(generatePage.getWidth()/3);
             npcScrollPane.setMinWidth(generatePage.getWidth()/3);
             npcScrollPane.setFitToWidth(true);
@@ -739,6 +739,13 @@ public class UI extends Application {
         } else {
             return Integer.parseInt(cb.getValue().toString());
         }
+    }
+
+    public String zufallName(Label label) {
+        if((label.getText().equals("zufall")) || (label.getText().equals(""))) {
+            return null;
+        }
+        else return label.getText();
     }
 
     /* @author Marie

@@ -99,6 +99,54 @@ public class ElementNPC {
         descriptionVBox.getChildren().add(descriptionText);
     }
 
+    public void getDescriptionFromNPC() {
+        List descriptionList = stringToList(npc.get(16));
+
+        //ArrayList<String> descriptionList = npc.get(16);
+
+        //Beschreibung kurz (direkten zugriff auf Methode von NPC)
+        GridPane descriptionGrid = new GridPane();
+
+        //Spaltenbreite der Tabelle definieren
+        ColumnConstraints descriptionCol1Constraint = new ColumnConstraints();
+        descriptionCol1Constraint.setPercentWidth(25);
+        descriptionCol1Constraint.setMinWidth(65);
+        ColumnConstraints descriptionCol2Constraint = new ColumnConstraints();
+        descriptionCol2Constraint.setPercentWidth(75);
+        descriptionGrid.getColumnConstraints().addAll(descriptionCol1Constraint,descriptionCol2Constraint);
+
+        //Plothook nicht da Stelle nach attitute
+        ArrayList<String> descriptionTitel = new ArrayList<>(Arrays.asList("Eyes: ","Hair color: ", "Hairstyle: ",
+                "Skin: ", "Trait: ", "Mannerism: ", "Bond: ", "Flaw: ",
+                "Ideal: ", "Voice: ", "Clothing: ", "Attitude: ", "Plothook: ",
+                "Job: ", "Gender: ", "Age: ", "Deity: ",
+                "Size: ", "Height: ", "Hallo: "));
+
+        for(int i = 0; i < descriptionList.size(); i++) {
+            TextFlow descriptionTextNew = new TextFlow();
+            String description = descriptionTitel.get(i);
+            Text text = new Text(description);
+            descriptionTextNew.getChildren().add(text);
+            GridPane.setConstraints(descriptionTextNew,0,i);
+            descriptionGrid.getChildren().add(descriptionTextNew);
+
+            descriptionTextNew = new TextFlow();
+            description = descriptionList.get(i).toString();
+            text = new Text(description);
+            descriptionTextNew.getChildren().add(text);
+            GridPane.setConstraints(descriptionTextNew,1,i);
+            descriptionGrid.getChildren().add(descriptionTextNew);
+        }
+        descriptionVBox.getChildren().add(descriptionGrid);
+
+
+        TextFlow descriptionTextNew = new TextFlow();
+        String description = "\n\n";
+        Text text = new Text(description);
+        descriptionTextNew.getChildren().add(text);
+        descriptionVBox.getChildren().add(descriptionTextNew);
+
+    }
 
 
 
@@ -108,6 +156,32 @@ public class ElementNPC {
 
 
 
+
+    /* @author Marie
+     *
+     * Teilt einen String der die Form eines Array hat in einzelne Elemente und gibt sie als Liste zurück
+     *
+     * @param string: ein String der als Liste geschrieben werden soll.
+     * @return Eine Liste mit dem Inhalt von dem string eingabe.
+     */
+    public List stringToList(String string) {
+        List list = new ArrayList<>();
+        if(string.contains("[")) {
+            string = string.substring(1,string.length()-1);
+        }
+        string = string.trim();
+
+        if(string.isEmpty()) {return list;}
+
+        string = string.concat(",");
+
+        while(string.contains(",")) {
+            list.add(string.substring(0,string.indexOf(",")).trim());
+            string = string.substring(string.indexOf(",")+1);
+        }
+
+        return list;
+    }
 
     // Gibt das richtige Pronoun(his, her) zum sex wieder
     public String getPronoun(String sex) {
