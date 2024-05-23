@@ -411,7 +411,7 @@ public class UI extends Application {
 
 //    Button Klick
         buttonGenerate.setOnAction(e -> {
-            ArrayList<String> npc = rNPC.createRandomNPC(zufallName(nameL),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
+            ArrayList<String> npc = rNPC.createRandomNPC(zufallName(nameField.getText()),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
                                     zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
 
             if(gridNpc.getChildren().size() > 2) {
@@ -741,11 +741,11 @@ public class UI extends Application {
         }
     }
 
-    public String zufallName(Label label) {
-        if((label.getText().equals("zufall")) || (label.getText().equals(""))) {
+    public String zufallName(String string) {
+        if((string.equals("zufall")) || (string.equals(""))) {
             return null;
         }
-        else return label.getText();
+        else return string;
     }
 
     /* @author Marie

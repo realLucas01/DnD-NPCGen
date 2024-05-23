@@ -100,7 +100,7 @@ public class ElementNPC {
     }
 
     public void getDescriptionFromNPC() {
-        List descriptionList = stringToList(npc.get(16));
+        List descriptionList = stringToList(npc.get(17));
 
         //ArrayList<String> descriptionList = npc.get(16);
 
@@ -120,7 +120,7 @@ public class ElementNPC {
                 "Skin: ", "Trait: ", "Mannerism: ", "Bond: ", "Flaw: ",
                 "Ideal: ", "Voice: ", "Clothing: ", "Attitude: ", "Plothook: ",
                 "Job: ", "Gender: ", "Age: ", "Deity: ",
-                "Size: ", "Height: ", "Hallo: "));
+                "Size: ", "Height: ", "Placeholder", "Placeholder", "Placeholder", "Placeholder", "Placeholder", "Placeholder", "Placeholder"));
 
         for(int i = 0; i < descriptionList.size(); i++) {
             TextFlow descriptionTextNew = new TextFlow();
