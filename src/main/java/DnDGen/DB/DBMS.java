@@ -596,7 +596,6 @@ public class DBMS implements ApplicationContextAware{
 	    
 		switch(dbname) {
 		case "spells":
-			//System.out.println("getRowMultPref wird für spells mit folgenden Parametern ausgeführt: pref:"+pref1+" ,pref2:"+pref2);
 			qty = spellRepository.findByMultPrefsize(pref1, pref2).size();
 			idx = (int)(Math.random() * qty);
 		    questionPage = spellRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
@@ -655,7 +654,6 @@ public class DBMS implements ApplicationContextAware{
 		
 		switch(dbname) {
 		case "spells":
-			//System.out.println("getMultRowMultPref wird für spells mit folgenden Parametern ausgeführt: pref:"+pref+" ,pref2:"+pref2+" ,rownumber:"+rownumber);
 			multRowMultPref.addAll(getRowMultPref(dbname, pref, pref2));
 			while (i <= rownumber) {
 				rand.addAll(getRowMultPref(dbname, pref, pref2));
@@ -690,7 +688,6 @@ public class DBMS implements ApplicationContextAware{
 	 */
 	public void saveEntry(ArrayList<Object> NPC) {
 		HistoryModel newentry = new HistoryModel();
-		 //hier würden die übertragenen Daten in das Model newentry eingetragen werden.
 	    	for (Method m : ordner(newentry.getClass())) {
 	    		if (m.getName().startsWith("set") && m.getParameterTypes().length == 1 && !m.getName().equals("setHistoryId")&& !m.getName().equals("setRunVar")) {	
 	    			 sneaky(() -> r = m.invoke(newentry, NPC.getFirst()));
@@ -735,8 +732,6 @@ public class DBMS implements ApplicationContextAware{
 				 break;
 			 }
 			 histchange.setHistoryId(historyRepository.findById(11).get().getRunVar());
-			 histchange.setHistoryDesc(null);
-			 histchange.setHistorySpells(null);
 			 historyRepository.save(histchange);
 			 historyRepository.setRuVaManuel((historyRepository.findById(11).get().getRunVar())+1, 11);
 			 break;
@@ -765,7 +760,6 @@ public class DBMS implements ApplicationContextAware{
 		default: 
 			Repo = nameRepository;
 		}
-		
 		return Repo;
 	}
 }

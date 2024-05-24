@@ -13,6 +13,7 @@ import DnDGen.DB.Sortierung.Order;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class HistoryModel {
@@ -34,11 +35,15 @@ public class HistoryModel {
 	private ArrayList<String> historyWeapon;
 	private ArrayList<String> historySkills;
 	private String historySenses;
-	@Column(columnDefinition="TEXT")
+	@Lob
+	@Column(name="historySpells", length=51200)
 	private ArrayList<String> historySpells;
 	private ArrayList<String> historySpellAb;
-	@Column(columnDefinition="MEDIUMTEXT")
+	@Lob
+	@Column(name="historyDesc", length=51200)
 	private ArrayList<String> historyDesc;
+	@Lob
+	@Column(name="historyActions", length=51200)
 	private ArrayList<String> historyActions;
 	private ArrayList<String> historyBonusAct;
 	private Integer historyProfBonus;
