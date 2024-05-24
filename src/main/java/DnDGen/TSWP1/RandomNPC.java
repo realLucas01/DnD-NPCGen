@@ -172,7 +172,7 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
         if (!genClass.equals(nameDBCommoner)) {     // Fall Commoner?
             skillList = determineSkillList(race, job, genClass);
-            generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(addAbilityScoreToSkillList(abilityModifier,skillList, profBonus)));
+            generatedNPCFinished.add(generatedNPCFinished.size(), (addAbilityScoreToSkillList(abilityModifier,skillList, profBonus)));
         } else {
             generatedNPCFinished.add(generatedNPCFinished.size(), "none");
         }
@@ -222,7 +222,7 @@ public class RandomNPC {
 
         //spells
         ArrayList<String> spellList = randGen.randSpellList(genClass,abilityModifier,level);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(spellList));
+        generatedNPCFinished.add(generatedNPCFinished.size(), (spellList));
 
         //features
         ArrayList<String> actionList = determineFeatures(race,"action");

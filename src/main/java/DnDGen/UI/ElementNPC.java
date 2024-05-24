@@ -79,9 +79,8 @@ public class ElementNPC {
         //Plothook nicht da Stelle nach attitute
         ArrayList<String> descriptionTitel = new ArrayList<>(Arrays.asList("Eyes: ","Hair color: ", "Hairstyle: ",
                 "Skin: ", "Trait: ", "Mannerism: ", "Bond: ", "Flaw: ",
-                "Ideal: ", "Voice: ", "Clothing: ", "Attitude: ", "Plothook: ",
-                "Job: ", "Gender: ", "Age: ", "Deity: ",
-                "Size: ", "Height: ", "Placeholder", "Placeholder", "Placeholder", "Placeholder", "Placeholder", "Placeholder", "Placeholder"));
+                "Ideal: ", "Voice: ", "Clothing: ", "Attitude: ",
+                "Size: ", "Height: "));
 
         for(int i = 0; i < descriptionList.size(); i++) {
             TextFlow descriptionTextNew = new TextFlow();
@@ -183,12 +182,14 @@ public class ElementNPC {
             acHpSpLangGrid.getChildren().add(label);
         }
 
+
         //Features
         GridPane featuresGrid = new GridPane();
         featuresGrid.setPadding(new Insets(5,5,5,5));
         featuresGrid.setVgap(4);
         featuresGrid.setHgap(5);
         //featuresGrid.getChildren().remove(3,featuresGrid.getChildren().size());
+
         Label actionL = new Label("Aktionen: ");
         GridPane.setConstraints(actionL,0,0);
         Label bonusActionL = new Label("Bonus Aktion: ");
@@ -197,14 +198,17 @@ public class ElementNPC {
         GridPane.setConstraints(bonusTextL,0,2);
 
         ColumnConstraints featureGridColCon1 = new ColumnConstraints();
-        featureGridColCon1.setPercentWidth(30);
+        featureGridColCon1.setMinWidth(80);
+        featureGridColCon1.setFillWidth(true);
+       // featureGridColCon1.setPercentWidth(30);
         ColumnConstraints featureGridColCon2 = new ColumnConstraints();
-        featureGridColCon2.setPercentWidth(70);
+        //featureGridColCon2.setPercentWidth(70);
         featuresGrid.getColumnConstraints().addAll(featureGridColCon1, featureGridColCon2);
 
         featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
 
-        ArrayList<String> featureList = rNPC.determineFeatures((String) npc.get(0),"action");
+
+        ArrayList<String> featureList = ((ArrayList<String>) npc.get(22));
         VBox actionBox = new VBox();
         actionBox.setSpacing(5);
         GridPane.setConstraints(actionBox,1,0);
@@ -215,7 +219,7 @@ public class ElementNPC {
         }
 
         featureList.clear();
-        featureList = rNPC.determineFeatures((String) npc.get(0),"bonus action");
+        featureList = ((ArrayList<String>) npc.get(23));
         VBox bonusActionBox = new VBox();
         bonusActionBox.setSpacing(5);
         GridPane.setConstraints(bonusActionBox,1,1);
@@ -226,7 +230,7 @@ public class ElementNPC {
         }
 
         featureList.clear();
-        featureList = rNPC.determineFeatures((String) npc.get(0),"bonus text");
+        featureList = ((ArrayList<String>) npc.get(24));
         VBox bonusTextBox = new VBox();
         bonusTextBox.setSpacing(5);
         GridPane.setConstraints(bonusTextBox,1,2);
@@ -310,27 +314,47 @@ public class ElementNPC {
 
         //Skill, Senses
         HBox skillSensesBox = new HBox();
+        skillSensesBox.setSpacing(15);
         TextFlow skillTF = new TextFlow();
         Text text1=new Text("Skills:\n");
         text1.setStyle("-fx-font-weight: bold");
         skillTF.getChildren().addAll(text1);
+        if(npc.get(12) == "none") {
+            Text skill = new Text( (String) npc.get(12));
+            skillTF.getChildren().add(skill);
+        } else {
+            for(String skill : (ArrayList<String>) npc.get(12)) {
+                Text text = new Text(skill + "\n");
+                skillTF.getChildren().add(text);
+            }
+        }
 
-        VBox spellTF = new VBox();
-        Text text3=new Text("Spells:\n");
+
+        VBox senseTF = new VBox();
+        Text text3=new Text("Sense:\n");
         text3.setStyle("-fx-font-weight: bold");
-        spellTF.getChildren().addAll(text3);
+        senseTF.getChildren().addAll(text3);
 
-        skillSensesBox.getChildren().addAll(skillTF,spellTF);
-        skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
+        Text sense = new Text( npc.get(20) + "\n");
+        senseTF.getChildren().add(sense);
 
-        //Spell, Action
+
+
+        //Spell
         VBox spellActionBox = new VBox();
-        /*
+
         TextFlow spellTF = new TextFlow();
         text1 = new Text("Zauber: ");
         text1.setStyle("-fx-font-weight: bold");
         spellTF.getChildren().addAll(text1);
-        */
+        for(String spell : (ArrayList<String>) npc.get(21)) {
+            Text text = new Text(spell + "\n");
+            spellTF.getChildren().add(text);
+        }
+
+        skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);
+        skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
+
         //Spells
         /*spellTF.getChildren().remove(1, spellTF.getChildren().size());
 
@@ -349,12 +373,6 @@ public class ElementNPC {
         //System.out.println(spells);
         */
 
-        TextFlow actionTF = new TextFlow();
-        text3 = new Text("Aktionen:\n");
-        text3.setStyle("-fx-font-weight: bold");
-        actionTF.getChildren().addAll(text3);
-
-        spellActionBox.getChildren().addAll(actionTF);
         spellActionBox.setPadding(new Insets(10, 10, 10, 10));
 
         Line line1 = new Line(0.0f,0.0f,100f,0.0f);
