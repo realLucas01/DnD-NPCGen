@@ -79,67 +79,67 @@ public class ElementEdit {
         // Name
         Label nameL      = new Label("Name: ");
         GridPane.setConstraints(nameL,0,0);
-        TextField nameF = new TextField(npc.get(0));
+        TextField nameF = new TextField(npc.get(2));
         GridPane.setConstraints(nameF,1,0);
 
         // Level
         Label levelL     = new Label("Level: ");
         GridPane.setConstraints(levelL,2,0);
-        TextField levelF = new TextField(npc.get(0));
+        TextField levelF = new TextField(String.valueOf(npc.get(3)));
         GridPane.setConstraints(levelF,3,0);
 
         // Klasse
         Label classL     = new Label("Klasse: ");
         GridPane.setConstraints(classL,0,1);
-        TextField classF = new TextField(npc.get(0));
+        TextField classF = new TextField(npc.get(4));
         GridPane.setConstraints(classF,1,1);
 
         // Rasse
         Label raceL      = new Label("Rasse: ");
         GridPane.setConstraints(raceL,2,1);
-        TextField raceF = new TextField(npc.get(0));
+        TextField raceF = new TextField(npc.get(5));
         GridPane.setConstraints(raceF,3,1);
 
         // Job
         Label jobL       = new Label("Job: ");
         GridPane.setConstraints(jobL,0,2);
-        TextField jobF = new TextField(npc.get(0));
+        TextField jobF = new TextField(npc.get(6));
         GridPane.setConstraints(jobF,1,2);
 
         // Deity
         Label deityL     = new Label("Gottheit: ");
         GridPane.setConstraints(deityL,0,3);
-        TextField deityF = new TextField(npc.get(0));
+        TextField deityF = new TextField(npc.get(5));
         GridPane.setConstraints(deityF,1,3);
 
         // Alignment
         Label alignmentL = new Label("Alignment: ");
         GridPane.setConstraints(alignmentL,2,3);
-        TextField alignmentF = new TextField(npc.get(0));
+        TextField alignmentF = new TextField(npc.get(5));
         GridPane.setConstraints(alignmentF,3,3);
 
         // Sex
         Label sexL       = new Label("Geschlecht: ");
         GridPane.setConstraints(sexL,0,4);
-        TextField sexF = new TextField(npc.get(0));
+        TextField sexF = new TextField(npc.get(5));
         GridPane.setConstraints(sexF,1,4);
 
         // Age
         Label ageL       = new Label("Alter: ");
         GridPane.setConstraints(ageL,2,4);
-        TextField ageF = new TextField(npc.get(0));
+        TextField ageF = new TextField(String.valueOf(npc.get(7)));
         GridPane.setConstraints(ageF,3,4);
 
         // AmorClass
         Label armorClassL = new Label("Rüstungsklasse: ");
         GridPane.setConstraints(armorClassL,0,5);
-        TextField amorClassF = new TextField(npc.get(0));
+        TextField amorClassF = new TextField(String.valueOf(npc.get(7)));
         GridPane.setConstraints(amorClassF,1,5);
 
         // HitPoints
         Label hitPointsL  = new Label("Trefferpunkte: ");
         GridPane.setConstraints(hitPointsL,2,5);
-        TextField hitPointsF = new TextField(npc.get(0));
+        TextField hitPointsF = new TextField(String.valueOf(npc.get(8)));
         GridPane.setConstraints(hitPointsF,3,5);
 
         nameClassGrid.getChildren().addAll(nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL,
@@ -165,7 +165,7 @@ public class ElementEdit {
         GridPane.setConstraints(aCL,1,0);
         Label hPL = new Label(String.valueOf(npc.get(1)));
         GridPane.setConstraints(hPL,1,1);
-        acHpSpLangGrid.getChildren().addAll(armorClassL,hitPointsL,speedL,languagesL,aCL,hPL);
+        acHpSpLangGrid.getChildren().addAll(speedL,aCL,hPL);
 
 
 

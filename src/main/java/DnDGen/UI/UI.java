@@ -74,7 +74,7 @@ public class UI extends Application {
         RandomNPC rNPC = new RandomNPC();
         RandomGenerator rGenerator = new RandomGenerator();
 
-        ElementHistory elementHistory = new ElementHistory(window);
+        ElementHistory elementHistory = new ElementHistory(window, dbms);
 
         GridPane layoutGenerateGrid = new GridPane();
         layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -295,7 +295,6 @@ public class UI extends Application {
             for(Line line: elementNPC.getLineList()) {
                 line.setEndX(npcScrollPane.getWidth()-20);
             }
-
 
             //Den Generireten Inhalt sichtbar machen
             descriptionVBox.setVisible(true);

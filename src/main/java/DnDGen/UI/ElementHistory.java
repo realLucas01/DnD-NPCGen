@@ -1,5 +1,6 @@
 package DnDGen.UI;
 
+import DnDGen.DB.DBMS;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -20,17 +21,13 @@ public class ElementHistory {
     private ArrayList<String> npcHistoryList;
     private MenuBar menuBar;
     private Stage window;
+    private DBMS dbms;
 
-    ElementHistory(Stage window) {
+    ElementHistory(Stage window, DBMS dbms) {
         this.window = window;
+        this.dbms = dbms;
 
         historyPage = new VBox();
-
-        ArrayList<String> np = new ArrayList<>(Arrays.asList("Test1", "Test2", "Test3"));
-
-        // npc info als item anzeigen
-        historyPage.getChildren().add(makeGridNPC(np));
-
 
         scene = new Scene(historyPage);
     }
@@ -85,23 +82,23 @@ public class ElementHistory {
          */
 
         // Name
-        Label name = new Label("Name: " + npc.get(0));
+        Label name = new Label("Name: " + npc.get(2));
         GridPane.setConstraints(name,0,0);
 
         // Level
-        Label level = new Label("Level: " + npc.get(0));
+        Label level = new Label("Level: " + String.valueOf(npc.get(3)));
         GridPane.setConstraints(level,1,0);
 
         // Rasse
-        Label race = new Label("Rasse: " + npc.get(0));
+        Label race = new Label("Rasse: " + npc.get(5));
         GridPane.setConstraints(race,0,1);
 
         // Klasse
-        Label clas = new Label("Klasse: " + npc.get(0));
+        Label clas = new Label("Klasse: " + npc.get(4));
         GridPane.setConstraints(clas,1,1);
 
         // Job
-        Label job = new Label("Beruf: " + npc.get(0));
+        Label job = new Label("Beruf: " + npc.get(6));
         GridPane.setConstraints(job,0,2 );
 
         npcGrid.getChildren().addAll(name,level,race,clas,job);
@@ -148,6 +145,10 @@ public class ElementHistory {
 
     // Ausgabe von der Scene
     public Scene getScene(){
+        for(Object npcc :  this.dbms.getHistory()) {
+            historyPage.getChildren().add(makeGridNPC((ArrayList<String>) npcc));
+        }
+
         return scene;
     }
 
