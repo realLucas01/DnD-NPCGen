@@ -171,10 +171,6 @@ public class RandomGenerator {
 		ArrayList<String> desc = new ArrayList<>();
 		ArrayList<String> dbData;
 
-		String job = randJob();
-		String gender = randGender();
-		int age = randAge(race);
-		String deity = randDeity(alignment);
 		String size = randSize(race);
 		double height = randHeight(race);
 
@@ -182,18 +178,15 @@ public class RandomGenerator {
 		while(i < 13) {
 			dbData = dbms.getRandomRow("description");
 			desc.add(dbData.get(i));
+			System.out.println("Loop: " + desc.getLast());
 			dbData.clear();
 			i++;
 		}
 
-		desc.add(job);
-		desc.add(gender);
-		desc.add(Integer.toString(age));
-		desc.add(deity);
 		desc.add(size);
 		desc.add(Double.toString(height));
 
-		//Eyes, HairColor, HairStyle, Skin, Trait, Mannerism, DOnd, Flaw, Ideal, Voice, CLothing, Attitude, Plothook, Job, Gender, age, deity, size, height
+		//Eyes, HairColor, HairStyle, Skin, Trait, Mannerism, Bond, Flaw, Ideal, Voice, Clothing, Attitude, Plothook, size, height
 		return desc;
 	}
 
