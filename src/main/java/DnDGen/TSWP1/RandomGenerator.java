@@ -620,6 +620,48 @@ public class RandomGenerator {
         return String.valueOf(perception);
 	}
 
+	public int spellAttackMod(ArrayList<Integer> abilityModifier, int profBonus, String genClass){
+		//System.out.println(profBonus);
+		int spellAttackMod = 0;
+
+		String spellMod = dbms.getRow("class", genClass).get(11);
+		switch(spellMod){
+			case "Cha":
+				 spellAttackMod = abilityModifier.get(5) + profBonus;
+				 break;
+			case "Wis":
+				spellAttackMod = abilityModifier.get(4) + profBonus;
+				break;
+			case "Int":
+				spellAttackMod = abilityModifier.get(3) + profBonus;
+				break;
+			case "Int, Wis":
+				int intelligence = abilityModifier.get(3);
+				int wisdom = abilityModifier.get(4);
+				if(intelligence > wisdom){
+					spellAttackMod = intelligence + profBonus;
+				}
+				else{
+					spellAttackMod = wisdom + profBonus;
+				}
+				break;
+			default :
+				break;
+		}
+		//System.out.println("Mod: " + spellAttackMod);
+		return spellAttackMod;
+	}
+
+	public int spellSaveDC(int spellAttackMod){
+		int spellSaveDC = 0;
+
+		if(spellAttackMod > 0){
+			 spellSaveDC = 8 + spellAttackMod;
+		}
+		//System.out.println("Spell Save: " + spellSaveDC);
+		return spellSaveDC;
+	}
+
 	/* TO DO @Kristina */
 	/*
 	public ArrayList<String> randSpells(String className, int cantripNumber, int level, int spellMod, int spellLvl1) {

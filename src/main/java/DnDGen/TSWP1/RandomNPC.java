@@ -232,7 +232,8 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), actionList);
         generatedNPCFinished.add(generatedNPCFinished.size(), bonusActionList);
         generatedNPCFinished.add(generatedNPCFinished.size(), bonusTextList);
-
+randGen.spellAttackMod(abilityModifier, profBonus, genClass);
+randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass));
         //dragonborn
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
