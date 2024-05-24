@@ -178,7 +178,6 @@ public class RandomGenerator {
 		while(i < 13) {
 			dbData = dbms.getRandomRow("description");
 			desc.add(dbData.get(i));
-			System.out.println("Loop: " + desc.getLast());
 			dbData.clear();
 			i++;
 		}
