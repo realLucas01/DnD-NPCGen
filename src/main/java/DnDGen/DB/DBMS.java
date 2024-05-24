@@ -16,6 +16,7 @@
 package DnDGen.DB;
 
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -689,7 +690,8 @@ public class DBMS implements ApplicationContextAware{
 	public void saveEntry(ArrayList<Object> NPC) {
 		HistoryModel newentry = new HistoryModel();
 	    	for (Method m : ordner(newentry.getClass())) {
-	    		if (m.getName().startsWith("set") && m.getParameterTypes().length == 1 && !m.getName().equals("setHistoryId")&& !m.getName().equals("setRunVar")) {	
+	    		if (m.getName().startsWith("set") && m.getParameterTypes().length == 1 && !m.getName().equals("setHistoryId")&& 
+	    				!m.getName().equals("setRunVar")&& !m.getName().equals("setHistoryEntryAge")) {	
 	    			 sneaky(() -> r = m.invoke(newentry, NPC.getFirst()));
 	    			 NPC.removeFirst();
 	    		}
@@ -732,6 +734,7 @@ public class DBMS implements ApplicationContextAware{
 				 break;
 			 }
 			 histchange.setHistoryId(historyRepository.findById(11).get().getRunVar());
+			 histchange.setHistoryEntryAge(LocalDateTime.now());
 			 historyRepository.save(histchange);
 			 historyRepository.setRuVaManuel((historyRepository.findById(11).get().getRunVar())+1, 11);
 			 break;

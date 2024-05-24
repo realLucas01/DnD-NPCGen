@@ -29,6 +29,7 @@ public class ClassModel {
 	private String classSpellKnown;
 	@Column(columnDefinition="TEXT")
 	private String classFeatures;
+	private String classSpellMod;
 	
 	public ClassModel() {
 		
@@ -36,7 +37,7 @@ public class ClassModel {
 	public ClassModel(String className, Integer classHitDice, String classProfWeapon, String classProfArmor,
 			String classSavingThrows, String classSkills, Integer classSkillNumber,
 			String classAbilityScoreDistribution, String classSpellKnown,
-			String classFeatures) {
+			String classFeatures,String classSpellMod) {
 		this.className = className;
 		this.classHitDice = classHitDice;
 		this.classProfWeapon = classProfWeapon;
@@ -47,6 +48,7 @@ public class ClassModel {
 		this.classAbilityScoreDistribution = classAbilityScoreDistribution;
 		this.classSpellKnown = classSpellKnown;
 		this.classFeatures = classFeatures;
+		this.classSpellMod = classSpellMod;
 	}
 	@Order(value = 1)
 	public Integer getClassId() {
@@ -125,12 +127,20 @@ public class ClassModel {
 	public void setClassFeatures(String classFeatures) {
 		this.classFeatures = classFeatures;
 	}
+	@Order(value = 12)
+	public String getClassSpellMod() {
+		return classSpellMod;
+	}
+	public void setClassSpellMod(String classSpellMod) {
+		this.classSpellMod = classSpellMod;
+	}
 	@Override
 	public String toString() {
 		return "ClassModel [classId=" + classId + ", className=" + className + ", classHitDice=" + classHitDice
 				+ ", classProfWeapon=" + classProfWeapon + ", classProfArmor=" + classProfArmor + ", classSavingThrows="
 				+ classSavingThrows + ", classSkills=" + classSkills + ", classSkillNumber=" + classSkillNumber
 				+ ", classAbilityScoreDistribution=" + classAbilityScoreDistribution + ", classSpellKnown="
-				+ classSpellKnown + ", classFeatures=" + classFeatures + "]";
+				+ classSpellKnown + ", classFeatures=" + classFeatures + ", classSpellMod=" + classSpellMod + "]";
 	}
+	
 }

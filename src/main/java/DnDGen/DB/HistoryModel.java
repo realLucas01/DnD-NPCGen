@@ -7,6 +7,7 @@
 
 package DnDGen.DB;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import DnDGen.DB.Sortierung.Order;
@@ -47,6 +48,7 @@ public class HistoryModel {
 	private ArrayList<String> historyActions;
 	private ArrayList<String> historyBonusAct;
 	private Integer historyProfBonus;
+	private LocalDateTime historyEntryAge;
 	
 	public HistoryModel() {
 	}
@@ -56,7 +58,7 @@ public class HistoryModel {
 			ArrayList<String> historySavingTh, String historyArmor, ArrayList<String> historyWeapon,
 			ArrayList<String> historySkills, String historySenses, ArrayList<String> historySpells,
 			ArrayList<String> historySpellAb, ArrayList<String> historyDesc, ArrayList<String> historyActions,
-			ArrayList<String> historyBonusAct, Integer historyProfBonus) {
+			ArrayList<String> historyBonusAct, Integer historyProfBonus, LocalDateTime historyEntryAge) {
 		super();
 		this.historyId = historyId;
 		this.runVar = runVar;
@@ -81,6 +83,7 @@ public class HistoryModel {
 		this.historyActions = historyActions;
 		this.historyBonusAct = historyBonusAct;
 		this.historyProfBonus = historyProfBonus;
+		this.historyEntryAge = historyEntryAge;
 	}
 	public Integer getHistoryId() {
 		return historyId;
@@ -241,6 +244,12 @@ public class HistoryModel {
 	public void setHistoryProfBonus(Integer historyProfBonus) {
 		this.historyProfBonus = historyProfBonus;
 	}
+	public LocalDateTime getHistoryEntryAge() {
+		return historyEntryAge;
+	}
+	public void setHistoryEntryAge(LocalDateTime historyEntryAge) {
+		this.historyEntryAge = historyEntryAge;
+	}
 	@Override
 	public String toString() {
 		return "HistoryModel [historyId=" + historyId + ", runVar=" + runVar + ", historyName=" + historyName
@@ -251,6 +260,7 @@ public class HistoryModel {
 				+ ", historyWeapon=" + historyWeapon + ", historySkills=" + historySkills + ", historySenses="
 				+ historySenses + ", historySpells=" + historySpells + ", historySpellAb=" + historySpellAb
 				+ ", historyDesc=" + historyDesc + ", historyActions=" + historyActions + ", historyBonusAct="
-				+ historyBonusAct + ", historyProfBonus=" + historyProfBonus + "]";
+				+ historyBonusAct + ", historyProfBonus=" + historyProfBonus + ", historyEntryAge=" + historyEntryAge
+				+ "]";
 	}
 }
