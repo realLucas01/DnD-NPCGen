@@ -4,7 +4,6 @@ import java.security.SecureRandom;
 import java.util.*;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
-import static DnDGen.TSWP1.RandomGenerator.bigStringToDividedString;
 
 public class RandomNPC {
 	/* @author Lucas
@@ -27,6 +26,7 @@ public class RandomNPC {
 
 
     /*
+
     * Diese Funktion dient dazu einen NPC Stat Block zufällig generieren zu lassen.
     * Die Eingabe Werte sind:
     * Race, Class, Job, Level, AbilityScore, Gender
@@ -58,6 +58,7 @@ public class RandomNPC {
     *   22: Action
     *   23: BonusAction
     *   24: Bonus Text
+        25: Spell Ability = Spell Attack Mod und Spell Save DC
 
      */
 
@@ -128,7 +129,7 @@ public class RandomNPC {
                 break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
-                ArrayList<String> abilityScoreNew = bigStringToDividedString(inputAbilityScore);
+                ArrayList<String> abilityScoreNew = randGen.bigStringToDividedString(inputAbilityScore);
                 ArrayList<Integer> abilityScoreNewInteger = new ArrayList<>();
                 for (String abilistr : abilityScoreNew) {
                     abilityScoreNewInteger.add(Integer.parseInt(abilistr));
@@ -166,9 +167,10 @@ public class RandomNPC {
         //Prof Bonus
         profBonus = determineProfBonus(level);
 
-        savingThrows = determineSavingThrows(genClass, abilityModifier, profBonus);// saving throws
         //Saving Throws
+        savingThrows = determineSavingThrows(genClass, abilityModifier, profBonus);// saving throws
 
+        //SkillList
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
         if (!genClass.equals(nameDBCommoner)) {     // Fall Commoner?
             skillList = determineSkillList(race, job, genClass);
@@ -217,13 +219,15 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
 
 
-        senses = randGen.getVision(race) + ", " + randGen.passivePerception(abilityModifier, skillList, profBonus);
+        senses = randGen.getVision(race) + ", Passive Perception " + randGen.passivePerception(abilityModifier, skillList, profBonus);
+        System.out.println(senses);
         generatedNPCFinished.add(generatedNPCFinished.size(), senses);
 
         //spells
-        ArrayList<String> spellList = randGen.randSpellList(genClass,abilityModifier,level);
+        ArrayList<Object> spellList = randGen.randSpellList(genClass,abilityModifier,level);
         generatedNPCFinished.add(generatedNPCFinished.size(), (spellList));
-
+        System.out.println("spell: "+ spellList);
+        System.out.println("NPC: "+ generatedNPCFinished);
         //features
         ArrayList<String> actionList = determineFeatures(race,"action");
         ArrayList<String> bonusActionList = determineFeatures(race, "bonus action");
@@ -232,15 +236,22 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), actionList);
         generatedNPCFinished.add(generatedNPCFinished.size(), bonusActionList);
         generatedNPCFinished.add(generatedNPCFinished.size(), bonusTextList);
-randGen.spellAttackMod(abilityModifier, profBonus, genClass);
-randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass));
+
+       //Spell Ability = Spell Attack Mod und Spell Save DC
+        int spellAttack = randGen.spellAttackMod(abilityModifier, profBonus, genClass);
+        int spellSave = randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass));
+        ArrayList<String> spellAbility =new ArrayList<>();
+
+        spellAbility.add(String.valueOf(spellAttack));
+        spellAbility.add(String.valueOf(spellSave)) ;
+        generatedNPCFinished.add(generatedNPCFinished.size(), spellAbility);
+
         //dragonborn
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
             generatedNPCFinished.set(0, race);
         }
 
-        ArrayList<String> spellAbility =new ArrayList<>();
 
         ArrayList<Object> history = new ArrayList<Object>();
         
@@ -282,7 +293,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
 
         arrayForClass = dbms.getRow(nameDBClass, charClass);
     	
-    	dividedAbilityScores = bigStringToDividedString(arrayForClass.get(8));
+    	dividedAbilityScores = randGen.bigStringToDividedString(arrayForClass.get(8));
     	
     	finishedAbilityScores.add("Str");
     	finishedAbilityScores.add("Dex");
@@ -323,7 +334,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
     	}
     }
 
-    public static ArrayList<Integer> determineAbilityModifier(ArrayList<Integer> abilityScore){
+    public ArrayList<Integer> determineAbilityModifier(ArrayList<Integer> abilityScore){
         ArrayList<Integer> abilityModifier = new ArrayList<>();
         float calcMod;
         for (Integer i: abilityScore){
@@ -337,7 +348,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
         ArrayList<String> skillListWithNumbers = new ArrayList<>();
         String dbAbilityScore ;
         for (String s : skillList){
-            if((s != "null") && (!s.equals("Any"))) {
+            if((!Objects.equals(s, "null")) && (!s.equals("Any"))) {
                 s= s.replaceAll("\\s+","");
                 dbAbilityScore = dbms.getRow("skills", s).get(2);
                 switch (s){
@@ -396,7 +407,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
         }
         currentArmor= dbms.getRow("armor",armorList);
         armorClass = Integer.parseInt(currentArmor.get(3));
-        armorBoni = bigStringToDividedString(currentArmor.get(5));
+        armorBoni = randGen.bigStringToDividedString(currentArmor.get(5));
 
         kindOfArmor = currentArmor.get(2);
         if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
@@ -445,7 +456,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
     }
     public ArrayList<String> determineMovementSpeed(String race) {
         //creature Speed
-        ArrayList<String> movementSpeed = bigStringToDividedString(dbms.getRow("race", race).get(9));
+        ArrayList<String> movementSpeed = randGen.bigStringToDividedString(dbms.getRow("race", race).get(9));
         ArrayList<String> movementSpeedList = new ArrayList<>();
         for (String s : movementSpeed) {
             switch (s.substring(s.length() - 1)) {
@@ -470,7 +481,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
     public ArrayList<String> determineSavingThrows(String genClass, ArrayList<Integer> abilityModifier, int profBonus){
         ArrayList<String> savingThrows = new ArrayList<>();
         if(!genClass.equals(nameDBCommoner)) {
-            ArrayList<String> savingThrowList =  bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(5));
+            ArrayList<String> savingThrowList =  randGen.bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(5));
             for (String s : savingThrowList) {
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 switch (s) {
@@ -519,22 +530,22 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
         if((raceSkillList != null)&&(!raceSkillList.contains("Any"))&&(raceSkillList.contains(":"))){ // nicht null, nicht Any, aber enthält":"
             numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
             raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":")+1, raceSkillList.length()-1);
-            skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
+            skillList = (ArrayList<String>) randGen.randSkillProf(randGen.bigStringToDividedString(raceSkillList),numberSkill, skillList);
 
         } else if ((raceSkillList !=null) && raceSkillList.contains("Any")) { //nicht null, enthält Any
             raceSkillList=raceSkillList.replace("Any","");
             numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
             raceSkillList= "Acrobatics, Animal Handling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, Sleight of Hand, Stealth, Survival";
-            skillList = (ArrayList<String>) randGen.randSkillProf(bigStringToDividedString(raceSkillList),numberSkill, skillList);
+            skillList = (ArrayList<String>) randGen.randSkillProf(randGen.bigStringToDividedString(raceSkillList),numberSkill, skillList);
 
         } else {
             skillList.add(raceSkillList);
         }
         //Job Skills
-        skillList.addAll(bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
+        skillList.addAll(randGen.bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
 
         //ClassSkills
-        ArrayList<String> possibleSkillList = bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(6)); // Skills durch class
+        ArrayList<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(6)); // Skills durch class
         numberSkill = Integer.parseInt(dbms.getRow(nameDBClass, genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
             if (possibleSkillList.contains("Any")) { // fall barde
                 possibleSkillList.add("Acrobatics");
@@ -565,7 +576,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
     public ArrayList<String> determineLanguages(String race, String job){
         String languagesRace = dbms.getRow("race", race).get(10);   // Sprachen der Rasse
         String languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
-        ArrayList<String> languages = bigStringToDividedString(languagesRace); //aufteilung des Strings
+        ArrayList<String> languages = randGen.bigStringToDividedString(languagesRace); //aufteilung des Strings
 
         int count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
 
@@ -585,7 +596,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
         String searchTermDB = null;
 
         if((!Objects.equals(dbms.getRow("race", race).get(3), "null"))){
-            features.addAll(bigStringToDividedString(dbms.getRow("race", race).get(3)));
+            features.addAll(randGen.bigStringToDividedString(dbms.getRow("race", race).get(3)));
         }
         switch (searchedFeature) {
             case "action":
@@ -609,7 +620,7 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
         return finalFeatures;
     }
     public ArrayList<Integer> addRaceModifierToAbilityScore(String race, ArrayList<Integer> abilityScore){
-        ArrayList<String> raceAbilityModifier = bigStringToDividedString(dbms.getRow("race", race).get(2));
+        ArrayList<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
         int raceModNumber;
         for (String s: raceAbilityModifier) {
             raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
@@ -655,10 +666,10 @@ randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass)
                 improveCount = improveCount +4;
                 break;
             case 12,13,14,15:
-                improveCount= improveCount +3;
+                improveCount = improveCount +3;
                 break;
             case 8,9,10,11:
-                improveCount= improveCount +2;
+                improveCount = improveCount +2;
                 break;
             case 4,5,6,7:
                 improveCount = improveCount +1;

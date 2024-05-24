@@ -29,7 +29,7 @@ public class RandomGenerator {
 	String nameDBFeatures = "features";
 	String nameDBSpellSlots = "spellslots";
 	//Aufteilung eines großen String in kleinere
-	public static ArrayList<String> bigStringToDividedString(String bigString) {
+	public ArrayList<String> bigStringToDividedString(String bigString) {
         String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
         //rückgabe, des aufgeteilten Strings als eine Liste
         return new ArrayList<>(List.of(partsOfTheBigString));
@@ -239,8 +239,8 @@ public class RandomGenerator {
 		profList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
 		return profList;
 	}
-	public List<String> getVision (String race){
-		ArrayList<String> visions = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
+	public String getVision (String race){
+		String visions = ""; // Liste mit Ergebnissen die zurückgegeben wird
 		ArrayList<String> databaseReturn; // Liste die von der DB zurückkommt
 		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
 		for(String feature: bigStringToDividedString(dbms.getRow("race", race).get(3))){
@@ -251,9 +251,14 @@ public class RandomGenerator {
 			databaseReturn = dbms.getRow(nameDBFeatures, feature);
 			kindOfFeature = databaseReturn.get(3);
 			if(kindOfFeature.contains("vision")){
-				visions.add(kindOfFeature);
+				visions = visions + kindOfFeature;
 			}
 		}
+		if(visions.isEmpty()){
+			visions = "your blind in the dark... live with it";
+		}
+
+
 		return visions;
 	}
 
@@ -413,10 +418,10 @@ public class RandomGenerator {
 	Eine Beispiel Ausgabe:
 	[Cantrips: [Prestidigitation, Message, BladeWard], 1st Level: [TashasCausticBrew, FogCloud, FloatingDisk]]
 	 */
-	public ArrayList<String> randSpellList (String genClass, ArrayList<Integer> abilityModifier, int level ){
+	public ArrayList<Object> randSpellList (String genClass, ArrayList<Integer> abilityModifier, int level ){
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		String classSpellKnownCol = dbms.getRow(nameDBClass, genClass).get(9);
-		ArrayList<String> spellList = new ArrayList<>();
+		ArrayList<Object> spellList = new ArrayList<>();
 		ArrayList<Integer> spellSlots = new ArrayList<>();
 		int classSpellKnownNumber ;
 		int cantripsNumber ;
@@ -488,11 +493,7 @@ public class RandomGenerator {
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
 		int knownSpells;
-		//ArrayList<Integer> abilityModifier = new ArrayList<>();
-		/*for (String element : abilityModifierString) {
-			int value = Integer.parseInt(element);
-			abilityModifier.add(value);
-		}*/
+
 		switch (abilityModifierForSpells) {
 			case "Str":
 				spellModNumber = abilityModifier.getFirst();
@@ -558,6 +559,11 @@ public class RandomGenerator {
 
 		for(int spellLevel=1; (spellLevel<=highestSpellSlot) && (classSpellKnownNumber>0); spellLevel++ ) {
 			int numberSpells  = rand.nextInt(classSpellKnownNumber)+1;
+
+			if (numberSpells > 10 ){
+				numberSpells = 10;
+			}
+
 			classSpellKnownNumber = classSpellKnownNumber - numberSpells;
 			int finalSpellLevel = spellLevel;
 			switch (spellLevel){
@@ -589,12 +595,13 @@ public class RandomGenerator {
 					spellLeveName = "9th Level";
 					break;
 				default:
-						break;
+					break;
 
 			}
 			String finalSpellLeveName = spellLeveName;
+			int finalNumberSpells = numberSpells;
 			Future<?> future1 = executor.submit(() ->{
-				spellList.add(finalSpellLeveName + ": " + determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, finalGenClass, Integer.toString(finalSpellLevel), numberSpells)));
+				spellList.add(finalSpellLeveName + ": " + determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, finalGenClass, Integer.toString(finalSpellLevel), finalNumberSpells)));
 			});
 			try {
 				future1.get(3, TimeUnit.SECONDS); // Timeout nach 5 Sekunden
