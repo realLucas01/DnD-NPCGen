@@ -2,8 +2,7 @@ package DnDGen.UI;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,6 +21,7 @@ public class ElementEdit {
     Scene scene;
     ArrayList<String> npc;
     VBox npcDate;
+    MenuBar menuBar;
 
     ElementEdit(Stage window, ArrayList<String> npc) {
         this.window = window;
@@ -33,6 +33,38 @@ public class ElementEdit {
         scene = new Scene(npcDate);
 
     }
+
+    // Erzeugt und steuert die menuBar
+    public void menuBar(Scene generatePage, Scene elementHistory) {
+        Menu menu = new Menu("Navigation");
+        this.menuBar = new MenuBar();
+
+        MenuItem menuItemHistory = new MenuItem("History");
+        MenuItem menuItemGenerator = new MenuItem("Generator");
+
+
+        menuItemHistory.setOnAction(e -> {
+            e.consume();
+            window.setScene(elementHistory);
+            menuItemGenerator.setVisible(true);
+            menuItemHistory.setVisible(false);
+        });
+
+
+        menu.getItems().addAll(menuItemHistory,menuItemGenerator);
+        menuBar.getMenus().add(menu);
+
+
+        // Zusatz für die MenuBar
+        menuItemGenerator.setOnAction(e -> {
+            e.consume();
+            window.setScene(generatePage);
+        });
+
+        this.npcDate.getChildren().addFirst(menuBar);
+
+    }
+
 
     public void makeEditLayout() {
         List<String> listNpc = new ArrayList<>();

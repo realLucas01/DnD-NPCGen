@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class ElementHistory {
     private VBox historyPage;
-    private Scene scene;
+    private Scene scene, generatePage;
     private ArrayList<String> npcHistoryList;
     private MenuBar menuBar;
     private Stage window;
@@ -26,26 +26,20 @@ public class ElementHistory {
 
         historyPage = new VBox();
 
-
         ArrayList<String> np = new ArrayList<>(Arrays.asList("Test1", "Test2", "Test3"));
+
         // npc info als item anzeigen
         historyPage.getChildren().add(makeGridNPC(np));
 
-        //ElementEdit elementEdit = new ElementEdit(window);
-
-
-
 
         scene = new Scene(historyPage);
-        //this.npcHistoryList = npcHistoryList;
-
-
     }
 
     // Erzeugt und steuert die menuBar
     public void menuBar(Scene generatePage) {
         Menu menu = new Menu("Navigation");
         this.menuBar = new MenuBar();
+        this.generatePage = generatePage;
 
         MenuItem menuItemHistory = new MenuItem("History");
         MenuItem menuItemGenerator = new MenuItem("Generator");
@@ -133,6 +127,7 @@ public class ElementHistory {
             System.out.println("GridPane clicked!");
             // Hier können Sie zusätzliche Logik für den Klick einfügen
             ElementEdit elementEdit = new ElementEdit(window,npc);
+            elementEdit.menuBar(generatePage,scene);
             window.setTitle("Edit");
             window.setScene(elementEdit.getScene());
         });
