@@ -19,14 +19,14 @@ import java.util.List;
 
 public class ElementNPC {
     VBox npcStack, descriptionVBox;
-    ArrayList<String> npc;
+    ArrayList<Object> npc;
     RandomNPC rNPC = new RandomNPC();
     RandomGenerator rGenerator = new RandomGenerator();
     ArrayList<Line> lineList;
 
 
     // Konstruktor
-    ElementNPC(ArrayList<String> npc){
+    ElementNPC(ArrayList<Object> npc){
         this.npc = npc;
         npcStack = new VBox();
         descriptionVBox = new VBox();
@@ -35,11 +35,11 @@ public class ElementNPC {
 
     // gibt Beschreibung als Fließtext
     public void getDescriptionOld() {
-        String name = npc.get(15);
+        String name = (String) npc.get(15);
 
-        ArrayList<String> npcDescriptionArray = rGenerator.randDescription(npc.get(0),npc.get(16));
+        ArrayList<String> npcDescriptionArray = rGenerator.randDescription((String) npc.get(0), (String) npc.get(16));
         List listNpc = npcDescriptionArray;
-        String sex = npc.get(13);
+        String sex = (String) npc.get(13);
         TextFlow descriptionText = new TextFlow();
         String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
                 name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
@@ -64,7 +64,7 @@ public class ElementNPC {
 
     // liefert die Beschreibung als einfache Zeilen
     public void getDescriptionFromNPC() {
-        List descriptionList = stringToList(npc.get(17));
+        List descriptionList = stringToList((String) npc.get(17));
 
         //ArrayList<String> descriptionList = npc.get(16);
 
@@ -170,7 +170,7 @@ public class ElementNPC {
         acHpSpLangGrid.getChildren().addAll(armorClassL,hitPointsL,speedL,languagesL,aCL,hPL);
 
         //Geschwindigkeit
-        listNpc = stringToList(npc.get(10));
+        listNpc = stringToList((String) npc.get(10));
         for(int i = 0; i < listNpc.size(); i++) {
             Label label = new Label(listNpc.get(i).toString());
             GridPane.setConstraints(label,1,i+2);
@@ -179,7 +179,7 @@ public class ElementNPC {
 
         //Sprachen
         listNpc.clear();
-        listNpc = stringToList(npc.get(19));
+        listNpc = stringToList((String) npc.get(19));
         for(int i = 0; i < listNpc.size(); i++) {
             Label label = new Label(listNpc.get(i).toString());
             GridPane.setConstraints(label,1,i+4);
@@ -207,7 +207,7 @@ public class ElementNPC {
 
         featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
 
-        ArrayList<String> featureList = rNPC.determineFeatures(npc.get(0),"action");
+        ArrayList<String> featureList = rNPC.determineFeatures((String) npc.get(0),"action");
         VBox actionBox = new VBox();
         actionBox.setSpacing(5);
         GridPane.setConstraints(actionBox,1,0);
@@ -218,7 +218,7 @@ public class ElementNPC {
         }
 
         featureList.clear();
-        featureList = rNPC.determineFeatures(npc.get(0),"bonus action");
+        featureList = rNPC.determineFeatures((String) npc.get(0),"bonus action");
         VBox bonusActionBox = new VBox();
         bonusActionBox.setSpacing(5);
         GridPane.setConstraints(bonusActionBox,1,1);
@@ -229,7 +229,7 @@ public class ElementNPC {
         }
 
         featureList.clear();
-        featureList = rNPC.determineFeatures(npc.get(0),"bonus text");
+        featureList = rNPC.determineFeatures((String) npc.get(0),"bonus text");
         VBox bonusTextBox = new VBox();
         bonusTextBox.setSpacing(5);
         GridPane.setConstraints(bonusTextBox,1,2);
@@ -267,7 +267,7 @@ public class ElementNPC {
             statsGrid.getChildren().add(label);
         }
         listNpc.clear();
-        listNpc = stringToList(npc.get(11));
+        listNpc = stringToList((String) npc.get(11));
         for(int j = 0; j < listNpc.size(); j++) {
             String ability = listNpc.get(j).toString().substring(0,3);
             String score = listNpc.get(j).toString().substring(4);
@@ -301,7 +301,7 @@ public class ElementNPC {
 
         stringNpc = "";
         listNpc.clear();
-        listNpc = stringToList(npc.get(9));
+        listNpc = stringToList((String) npc.get(9));
         for(int i = 0; i < listNpc.size(); i++) {
             stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
         }
@@ -441,10 +441,10 @@ public class ElementNPC {
     }
 
     // gibt den AbilityScore mit Modifier zurück
-    public String abilityString(int index, ArrayList<String> npc) {
+    public String abilityString(int index, ArrayList<Object> npc) {
         String string = "";
-        List listNpc = stringToList(npc.get(4));
-        List listAbilityModifier = stringToList(npc.get(5));
+        List listNpc = stringToList((String) npc.get(4));
+        List listAbilityModifier = stringToList((String) npc.get(5));
 
         if(listAbilityModifier.get(index).toString().length() > 1) {
             string = listNpc.get(index) + listAbilityModifier.get(index).toString();

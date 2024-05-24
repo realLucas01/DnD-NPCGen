@@ -262,7 +262,7 @@ public class UI extends Application {
 
 //    Button Klick
         buttonGenerate.setOnAction(e -> {
-            ArrayList<String> npc = rNPC.createRandomNPC(zufallName(nameField.getText()),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
+            ArrayList<Object> npc = rNPC.createRandomNPC(zufallName(nameField.getText()),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
                                     zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
 
             if(gridNpc.getChildren().size() > 2) {

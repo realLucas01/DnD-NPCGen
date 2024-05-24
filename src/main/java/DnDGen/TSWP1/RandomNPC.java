@@ -55,10 +55,13 @@ public class RandomNPC {
     *   19: Languages
     *   20: Senses
     *   21: spellList
+    *   22: Action
+    *   23: BonusAction
+    *   24: Bonus Text
 
      */
 
-    public ArrayList<String> createRandomNPC(String inputName,String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
+    public ArrayList<Object> createRandomNPC(String inputName,String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
         ArrayList<String> weaponList;
         ArrayList<String> languages;
         ArrayList<String> savingThrows;
@@ -66,7 +69,7 @@ public class RandomNPC {
         ArrayList<String> skillList = new ArrayList<>();
         ArrayList<Integer> abilityScores = new ArrayList<>();
         ArrayList<Integer> abilityModifier;
-        ArrayList<String> generatedNPCFinished = new ArrayList<>();
+        ArrayList<Object> generatedNPCFinished = new ArrayList<>();
         String race;
         String job;
         String genClass;
@@ -221,6 +224,15 @@ public class RandomNPC {
         ArrayList<String> spellList = randGen.randSpellList(genClass,abilityModifier,level);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(spellList));
 
+        //features
+        ArrayList<String> actionList = determineFeatures(race,"action");
+        ArrayList<String> bonusActionList = determineFeatures(race, "bonus action");
+        ArrayList<String> bonusTextList = determineFeatures(race, "bonus text");
+
+        generatedNPCFinished.add(generatedNPCFinished.size(), actionList);
+        generatedNPCFinished.add(generatedNPCFinished.size(), bonusActionList);
+        generatedNPCFinished.add(generatedNPCFinished.size(), bonusTextList);
+
         //dragonborn
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
@@ -228,8 +240,7 @@ public class RandomNPC {
         }
 
         ArrayList<String> spellAbility =new ArrayList<>();
-        ArrayList<String> actionList =new ArrayList<>();
-        ArrayList<String> bonusActionList =new ArrayList<>();
+
         ArrayList<Object> history = new ArrayList<Object>();
         
         history.add(name);
