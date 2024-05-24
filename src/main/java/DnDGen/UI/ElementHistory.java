@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,7 @@ public class ElementHistory {
         // npc info als item anzeigen
         historyPage.getChildren().add(makeGridNPC(np));
 
+        //ElementEdit elementEdit = new ElementEdit(window);
 
 
 
@@ -40,6 +42,7 @@ public class ElementHistory {
 
     }
 
+    // Erzeugt und steuert die menuBar
     public void menuBar(Scene generatePage) {
         Menu menu = new Menu("Navigation");
         this.menuBar = new MenuBar();
@@ -121,6 +124,27 @@ public class ElementHistory {
             // Placeholder
 
         }
+
+        npcGrid.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+
+        // Event-Handler für Klick-Ereignis
+        npcGrid.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            event.consume();
+            System.out.println("GridPane clicked!");
+            // Hier können Sie zusätzliche Logik für den Klick einfügen
+            ElementEdit elementEdit = new ElementEdit(window,npc);
+            window.setTitle("Edit");
+            window.setScene(elementEdit.getScene());
+        });
+
+        // Event-Handler für Hover-Ereignis
+        npcGrid.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+            npcGrid.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;");
+        });
+
+        npcGrid.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+            npcGrid.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+        });
 
         return npcGrid;
     }

@@ -15,6 +15,7 @@ import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ElementNPC {
@@ -64,11 +65,7 @@ public class ElementNPC {
 
     // liefert die Beschreibung als einfache Zeilen
     public void getDescriptionFromNPC() {
-        List descriptionList = stringToList((String) npc.get(17));
-
-        //ArrayList<String> descriptionList = npc.get(16);
-
-        //Beschreibung kurz (direkten zugriff auf Methode von NPC)
+        ArrayList<String> descriptionList = (ArrayList<String>) npc.get(17);
         GridPane descriptionGrid = new GridPane();
 
         //Spaltenbreite der Tabelle definieren

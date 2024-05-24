@@ -206,7 +206,7 @@ public class RandomNPC {
         
         //random Description
         description = randGen.randDescription(race, alignment);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(description));
+        generatedNPCFinished.add(generatedNPCFinished.size(), description);
 
         //random Deity
         deity = randGen.randDeity(alignment);
