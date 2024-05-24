@@ -85,18 +85,21 @@ public class HistoryModel {
 		this.historyProfBonus = historyProfBonus;
 		this.historyEntryAge = historyEntryAge;
 	}
+	@Order(value = 30)
 	public Integer getHistoryId() {
 		return historyId;
 	}
 	public void setHistoryId(Integer historyId) {
 		this.historyId = historyId;
 	}
+	@Order(value = 31)
 	public Integer getRunVar() {
 		return runVar;
 	}
 	public void setRunVar(Integer runVar) {
 		this.runVar = runVar;
 	}
+	@Order(value = 32)
 	public String getHistoryName() {
 		return historyName;
 	}
@@ -104,6 +107,7 @@ public class HistoryModel {
 	public void setHistoryName(String historyName) {
 		this.historyName = historyName;
 	}
+	@Order(value = 33)
 	public Integer getHistoryLevel() {
 		return historyLevel;
 	}
@@ -111,6 +115,7 @@ public class HistoryModel {
 	public void setHistoryLevel(Integer historyLevel) {
 		this.historyLevel = historyLevel;
 	}
+	@Order(value = 34)
 	public String getHistoryClass() {
 		return historyClass;
 	}
@@ -118,6 +123,7 @@ public class HistoryModel {
 	public void setHistoryClass(String historyClass) {
 		this.historyClass = historyClass;
 	}
+	@Order(value = 35)
 	public String getHistoryRace() {
 		return historyRace;
 	}
@@ -125,6 +131,7 @@ public class HistoryModel {
 	public void setHistoryRace(String historyRace) {
 		this.historyRace = historyRace;
 	}
+	@Order(value = 36)
 	public String getHistoryJob() {
 		return historyJob;
 	}
@@ -132,6 +139,7 @@ public class HistoryModel {
 	public void setHistoryJob(String historyJob) {
 		this.historyJob = historyJob;
 	}
+	@Order(value = 37)
 	public Integer getHistoryAc() {
 		return historyAc;
 	}
@@ -139,6 +147,7 @@ public class HistoryModel {
 	public void setHistoryAc(Integer historyAc) {
 		this.historyAc = historyAc;
 	}
+	@Order(value = 38)
 	public Integer getHistoryHp() {
 		return historyHp;
 	}
@@ -146,6 +155,7 @@ public class HistoryModel {
 	public void setHistoryHp(Integer historyHp) {
 		this.historyHp = historyHp;
 	}
+	@Order(value = 39)
 	public ArrayList<String> getHistorySpeed() {
 		return historySpeed;
 	}
@@ -153,6 +163,7 @@ public class HistoryModel {
 	public void setHistorySpeed(ArrayList<String> historySpeed) {
 		this.historySpeed = historySpeed;
 	}
+	@Order(value = 40)
 	public ArrayList<String> getHistoryLanguages() {
 		return historyLanguages;
 	}
@@ -160,6 +171,7 @@ public class HistoryModel {
 	public void setHistoryLanguages(ArrayList<String> historyLanguages) {
 		this.historyLanguages = historyLanguages;
 	}
+	@Order(value = 41)
 	public ArrayList<Integer> getHistoryAbiliSc() {
 		return historyAbiliSc;
 	}
@@ -167,6 +179,7 @@ public class HistoryModel {
 	public void setHistoryAbiliSc(ArrayList<Integer> historyAbiliSc) {
 		this.historyAbiliSc = historyAbiliSc;
 	}
+	@Order(value = 42)
 	public ArrayList<String> getHistorySavingTh() {
 		return historySavingTh;
 	}
@@ -174,6 +187,7 @@ public class HistoryModel {
 	public void setHistorySavingTh(ArrayList<String> historySavingTh) {
 		this.historySavingTh = historySavingTh;
 	}
+	@Order(value = 43)
 	public String getHistoryArmor() {
 		return historyArmor;
 	}
@@ -181,6 +195,7 @@ public class HistoryModel {
 	public void setHistoryArmor(String historyArmor) {
 		this.historyArmor = historyArmor;
 	}
+	@Order(value = 44)
 	public ArrayList<String> getHistoryWeapon() {
 		return historyWeapon;
 	}
@@ -188,6 +203,7 @@ public class HistoryModel {
 	public void setHistoryWeapon(ArrayList<String> historyWeapon) {
 		this.historyWeapon = historyWeapon;
 	}
+	@Order(value = 45)
 	public ArrayList<String> getHistorySkills() {
 		return historySkills;
 	}
@@ -195,6 +211,7 @@ public class HistoryModel {
 	public void setHistorySkills(ArrayList<String> historySkills) {
 		this.historySkills = historySkills;
 	}
+	@Order(value = 46)
 	public String getHistorySenses() {
 		return historySenses;
 	}
@@ -202,6 +219,7 @@ public class HistoryModel {
 	public void setHistorySenses(String historySenses) {
 		this.historySenses = historySenses;
 	}
+	@Order(value = 47)
 	public ArrayList<String> getHistorySpells() {
 		return historySpells;
 	}
@@ -209,6 +227,7 @@ public class HistoryModel {
 	public void setHistorySpells(ArrayList<String> historySpells) {
 		this.historySpells = historySpells;
 	}
+	@Order(value = 48)
 	public ArrayList<String> getHistorySpellAb() {
 		return historySpellAb;
 	}
@@ -216,6 +235,7 @@ public class HistoryModel {
 	public void setHistorySpellAb(ArrayList<String> historySpellAb) {
 		this.historySpellAb = historySpellAb;
 	}
+	@Order(value = 49)
 	public ArrayList<String> getHistoryDesc() {
 		return historyDesc;
 	}
@@ -223,6 +243,7 @@ public class HistoryModel {
 	public void setHistoryDesc(ArrayList<String> historyDesc) {
 		this.historyDesc = historyDesc;
 	}
+	@Order(value = 50)
 	public ArrayList<String> getHistoryActions() {
 		return historyActions;
 	}
@@ -230,6 +251,7 @@ public class HistoryModel {
 	public void setHistoryActions(ArrayList<String> historyActions) {
 		this.historyActions = historyActions;
 	}
+	@Order(value = 51)
 	public ArrayList<String> getHistoryBonusAct() {
 		return historyBonusAct;
 	}
@@ -237,6 +259,7 @@ public class HistoryModel {
 	public void setHistoryBonusAct(ArrayList<String> historyBonusAct) {
 		this.historyBonusAct = historyBonusAct;
 	}
+	@Order(value = 52)
 	public Integer getHistoryProfBonus() {
 		return historyProfBonus;
 	}
@@ -244,6 +267,7 @@ public class HistoryModel {
 	public void setHistoryProfBonus(Integer historyProfBonus) {
 		this.historyProfBonus = historyProfBonus;
 	}
+	@Order(value = 53)
 	public LocalDateTime getHistoryEntryAge() {
 		return historyEntryAge;
 	}

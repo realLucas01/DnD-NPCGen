@@ -20,8 +20,10 @@ public interface HistoryRepository extends CrudRepository<HistoryModel, Integer>
 	long count();
 	HistoryModel findByHistoryId(Integer id);
 	ArrayList<HistoryModel> findByRunVar(Integer runVar);
-	@Modifying
 	@Transactional
+	@Modifying
 	@Query("update HistoryModel u set u.runVar = ?1 where u.historyId = ?2")
 	void setRuVaManuel(Integer runVar, Integer historyId);
+	@Query("SELECT n FROM HistoryModel n WHERE NOT n.historyId=11")
+	ArrayList<HistoryModel> findEverythingExceptCounter();
 }

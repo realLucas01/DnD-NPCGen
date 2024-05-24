@@ -15,6 +15,7 @@
 
 package DnDGen.DB;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -680,6 +681,27 @@ public class DBMS implements ApplicationContextAware{
 		}
 		return multRowMultPref;
 	}
+	
+	/* @author Lucas
+	 *
+	 * Gibt den Inhalt der HistoryDB als ArrayList aus. Jeder Index
+	 * in der ArrayList ist ein NPC, gespeichert als eigene ArrayList.
+	 */
+	public ArrayList<Object> getHistory() {
+		ArrayList<Object> historycontent = new ArrayList<Object>();
+		//ArrayList<Object> historysingle = new ArrayList<Object>();
+		for(HistoryModel i : historyRepository.findEverythingExceptCounter()) {
+			ArrayList<Object> historysingle = new ArrayList<Object>();
+			for (Method m : ordner(i.getClass())) {
+	    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+	    			 sneaky(() -> r = m.invoke(i));
+	    			 historysingle.add(r);
+	    		}
+	    	}
+			historycontent.add(historysingle);
+		}
+		return historycontent;
+	 }
 	
 	/* @author Lucas
 	 *
