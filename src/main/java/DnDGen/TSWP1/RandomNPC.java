@@ -60,6 +60,35 @@ public class RandomNPC {
     *   24: Bonus Text
         25: Spell Ability = Spell Attack Mod und Spell Save DC
 
+        HISTORY:
+        0: name ;
+        1: level ;
+        2: genClass ;
+        3: race ;
+        4: job ;
+        5: armorClass ;
+        6: healthPoints ;
+        7: movementSpeedList ;
+        8: languages ;
+        9: abilityScores ;
+        10: savingThrows ;
+        11: armor ;
+        12: weaponList ;
+        13: skillList ;
+        14: senses ;
+        15: spellList ;
+        16: spellAbility ;
+        17: description ;
+        18: actionList ;
+        19: bonusActionList ;
+        20: profBonus ;
+
+        21: abilityModifier ;
+        22: gender ;
+        23: age ;
+        24: alignment ;
+        25: deity ;
+        26: bonusTextList ;
      */
 
     public ArrayList<Object> createRandomNPC(String inputName,String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
@@ -276,6 +305,16 @@ public class RandomNPC {
         history.add(actionList);
         history.add(bonusActionList);
         history.add(profBonus);
+
+        history.add(abilityModifier);
+        history.add(gender);
+        history.add(age);
+        history.add(alignment);
+        history.add(deity);
+        history.add(bonusTextList);
+
+
+
 
         dbms.saveEntry(history);
 
