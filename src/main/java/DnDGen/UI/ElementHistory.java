@@ -12,8 +12,9 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class ElementHistory {
     private VBox historyPage;
@@ -22,12 +23,15 @@ public class ElementHistory {
     private MenuBar menuBar;
     private Stage window;
     private DBMS dbms;
+    private GridPane npcGrid;
 
     ElementHistory(Stage window, DBMS dbms) {
         this.window = window;
         this.dbms = dbms;
 
         historyPage = new VBox();
+        npcGrid = new GridPane();
+        historyPage.getChildren().add(npcGrid);
 
         scene = new Scene(historyPage);
     }
@@ -57,6 +61,7 @@ public class ElementHistory {
         // Zusatz für die MenuBar
         menuItemGenerator.setOnAction(e -> {
             e.consume();
+            npcGrid.getChildren().removeAll();
             window.setScene(generatePage);
         });
 
@@ -96,6 +101,7 @@ public class ElementHistory {
         // Klasse
         Label clas = new Label("Klasse: " + npc.get(4));
         GridPane.setConstraints(clas,1,1);
+
 
         // Job
         Label job = new Label("Beruf: " + npc.get(6));
@@ -145,11 +151,64 @@ public class ElementHistory {
 
     // Ausgabe von der Scene
     public Scene getScene(){
-        for(Object npcc :  this.dbms.getHistory()) {
-            historyPage.getChildren().add(makeGridNPC((ArrayList<String>) npcc));
+        int pos = 0, row = 0;
+        //List<Object> npc = this.dbms.getHistory();
+        //npc = sortList(npc);
+
+        for(Object npcc :  sortList(this.dbms.getHistory())) {
+            GridPane grid = makeGridNPC((ArrayList<String>) npcc);
+            GridPane.setConstraints(grid, pos,row);
+            pos++;
+            if(pos > 4) {
+                pos = 0;
+                row++;
+            }
+
+            npcGrid.getChildren().add(grid);
         }
 
         return scene;
+    }
+
+    public List<Object> sortList(List<Object> npcc) {
+        /*
+        int pos, newPos;
+        LocalDateTime np1,np2;
+        ArrayList<LocalDateTime> npL;
+        for(int i = 0; i < npcc.size()-1; i++) {
+            for(int j = 0;j < npcc.size(); j++) {
+                npL = (ArrayList<LocalDateTime>) npcc.get(i);
+                np1 = npL.getLast();
+                npL = (ArrayList<LocalDateTime>) npcc.get(i+1);
+                np2 = npL.getLast();
+
+                if(np2.isAfter(np1)) {
+                    System.out.println(np2 + " > " + np1);
+                    npcc.set(i+1,npcc.get(i));
+                    npcc.set(i,npL);
+                }
+            }
+        }
+        return npcc;
+        */
+
+        // Define a date formatter to parse the datetime strings
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        // Sort the list based on the last element which is a datetime string
+        npcc.sort((o1, o2) -> {
+            ArrayList<Object> list1 = (ArrayList<Object>) o1;
+            ArrayList<Object> list2 = (ArrayList<Object>) o2;
+
+            LocalDateTime dateTime1 = (LocalDateTime) list1.get(list1.size() - 1);
+            LocalDateTime dateTime2 = (LocalDateTime) list2.get(list2.size() - 1);
+
+            return dateTime2.compareTo(dateTime1);
+        });
+
+        return npcc;
+
+
     }
 
 }

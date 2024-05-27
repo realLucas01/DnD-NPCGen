@@ -87,12 +87,7 @@ public class UI extends Application {
         //Menü
         Menu menu = new Menu("Menu 1");
         MenuBar menuBar = new MenuBar();
-
-        menu.setOnShowing(e -> { System.out.println("Showing Menu 1"); });
-        menu.setOnShown  (e -> { System.out.println("Shown Menu 1"); });
-        menu.setOnHiding (e -> { System.out.println("Hiding Menu 1"); });
-        menu.setOnHidden (e -> { System.out.println("Hidden Menu 1"); });
-
+        
         MenuItem menuItem1 = new MenuItem("Item 1");
         MenuItem menuItem2 = new MenuItem("Item 2");
         MenuItem menuItemHistory = new MenuItem("History");
