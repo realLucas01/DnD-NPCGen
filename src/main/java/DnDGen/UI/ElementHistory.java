@@ -19,7 +19,6 @@ import java.util.*;
 public class ElementHistory {
     private VBox historyPage;
     private Scene scene, generatePage;
-    private ArrayList<String> npcHistoryList;
     private MenuBar menuBar;
     private Stage window;
     private DBMS dbms;
@@ -69,22 +68,13 @@ public class ElementHistory {
 
     }
 
-
-
-
-
     // Grid für die NPC Informationen
-    private GridPane makeGridNPC(ArrayList<String> npc){
+    private VBox makeGridNPC(ArrayList<Object> npc){
+        VBox npcVBox = new VBox();
         GridPane npcGrid = new GridPane();
         npcGrid.setPadding(new Insets(10, 10, 10, 10));
         npcGrid.setVgap(7);
         npcGrid.setHgap(10);
-        npcGrid.setMinWidth(300);
-
-        /*  Name Level      STR ...
-            Rasse Klasse
-            Job
-         */
 
         // Name
         Label name = new Label("Name: " + npc.get(2));
@@ -92,7 +82,7 @@ public class ElementHistory {
 
         // Level
         Label level = new Label("Level: " + String.valueOf(npc.get(3)));
-        GridPane.setConstraints(level,1,0);
+        GridPane.setConstraints(level,0,3);
 
         // Rasse
         Label race = new Label("Rasse: " + npc.get(5));
@@ -100,8 +90,7 @@ public class ElementHistory {
 
         // Klasse
         Label clas = new Label("Klasse: " + npc.get(4));
-        GridPane.setConstraints(clas,1,1);
-
+        GridPane.setConstraints(clas,0,4);
 
         // Job
         Label job = new Label("Beruf: " + npc.get(6));
@@ -109,23 +98,34 @@ public class ElementHistory {
 
         npcGrid.getChildren().addAll(name,level,race,clas,job);
 
-        // Abilityscores
+
+        // Ability-scores
+        GridPane abilityGrid = new GridPane();
+        abilityGrid.setPadding(new Insets(0, 10, 10, 10));
+        abilityGrid.setVgap(7);
+        abilityGrid.setHgap(10);
+
         ArrayList<String> abilityString = new ArrayList<>(Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
-        for(int i = 2; i < 5; i++) {
-            for(int j = 0; j < abilityString.size(); j++) {
-                Label label = new Label(abilityString.get(j));
-                GridPane.setConstraints(label,i,j );
-                npcGrid.getChildren().add(label);
+        //System.out.println(npc);
+        ArrayList<Integer> ability = (ArrayList<Integer>) npc.get(11);
+        for(int i = 0; i < abilityString.size(); i++) {
+            Label label = new Label(abilityString.get(i));
+            GridPane.setConstraints(label,i,0);
+
+            if(ability.size() > i) {
+                Label abilityL = new Label(ability.get(i).toString());
+                GridPane.setConstraints(abilityL, i, 1);
+                abilityGrid.getChildren().add(abilityL);
             }
 
-            // Placeholder
-
+            abilityGrid.getChildren().addAll(label);
         }
 
-        npcGrid.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+        npcVBox.getChildren().addAll(npcGrid,abilityGrid);
+        npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
 
         // Event-Handler für Klick-Ereignis
-        npcGrid.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             event.consume();
             System.out.println("GridPane clicked!");
             // Hier können Sie zusätzliche Logik für den Klick einfügen
@@ -136,27 +136,24 @@ public class ElementHistory {
         });
 
         // Event-Handler für Hover-Ereignis
-        npcGrid.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-            npcGrid.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;");
+        npcVBox.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+            npcVBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;");
         });
 
         npcGrid.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-            npcGrid.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+            npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
         });
 
-        return npcGrid;
+        return npcVBox;
     }
-
-
 
     // Ausgabe von der Scene
     public Scene getScene(){
         int pos = 0, row = 0;
-        //List<Object> npc = this.dbms.getHistory();
-        //npc = sortList(npc);
 
+        // fügt für jeden NPC eine VBox hinzu und ordnet sie an
         for(Object npcc :  sortList(this.dbms.getHistory())) {
-            GridPane grid = makeGridNPC((ArrayList<String>) npcc);
+            VBox grid = makeGridNPC((ArrayList<Object>) npcc);
             GridPane.setConstraints(grid, pos,row);
             pos++;
             if(pos > 4) {
@@ -170,27 +167,8 @@ public class ElementHistory {
         return scene;
     }
 
+    // sortieren der NPC's nach Datum
     public List<Object> sortList(List<Object> npcc) {
-        /*
-        int pos, newPos;
-        LocalDateTime np1,np2;
-        ArrayList<LocalDateTime> npL;
-        for(int i = 0; i < npcc.size()-1; i++) {
-            for(int j = 0;j < npcc.size(); j++) {
-                npL = (ArrayList<LocalDateTime>) npcc.get(i);
-                np1 = npL.getLast();
-                npL = (ArrayList<LocalDateTime>) npcc.get(i+1);
-                np2 = npL.getLast();
-
-                if(np2.isAfter(np1)) {
-                    System.out.println(np2 + " > " + np1);
-                    npcc.set(i+1,npcc.get(i));
-                    npcc.set(i,npL);
-                }
-            }
-        }
-        return npcc;
-        */
 
         // Define a date formatter to parse the datetime strings
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");

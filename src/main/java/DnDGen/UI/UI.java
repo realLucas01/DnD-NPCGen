@@ -87,7 +87,7 @@ public class UI extends Application {
         //Menü
         Menu menu = new Menu("Menu 1");
         MenuBar menuBar = new MenuBar();
-        
+
         MenuItem menuItem1 = new MenuItem("Item 1");
         MenuItem menuItem2 = new MenuItem("Item 2");
         MenuItem menuItemHistory = new MenuItem("History");

@@ -19,11 +19,11 @@ import java.util.List;
 public class ElementEdit {
     Stage window;
     Scene scene;
-    ArrayList<String> npc;
+    ArrayList<Object> npc;
     VBox npcDate;
     MenuBar menuBar;
 
-    ElementEdit(Stage window, ArrayList<String> npc) {
+    ElementEdit(Stage window, ArrayList<Object> npc) {
         this.window = window;
         this.npc = npc;
         npcDate = new VBox();
@@ -79,7 +79,7 @@ public class ElementEdit {
         // Name
         Label nameL      = new Label("Name: ");
         GridPane.setConstraints(nameL,0,0);
-        TextField nameF = new TextField(npc.get(2));
+        TextField nameF = new TextField((String) npc.get(2));
         GridPane.setConstraints(nameF,1,0);
 
         // Level
@@ -91,37 +91,37 @@ public class ElementEdit {
         // Klasse
         Label classL     = new Label("Klasse: ");
         GridPane.setConstraints(classL,0,1);
-        TextField classF = new TextField(npc.get(4));
+        TextField classF = new TextField((String) npc.get(4));
         GridPane.setConstraints(classF,1,1);
 
         // Rasse
         Label raceL      = new Label("Rasse: ");
         GridPane.setConstraints(raceL,2,1);
-        TextField raceF = new TextField(npc.get(5));
+        TextField raceF = new TextField((String) npc.get(5));
         GridPane.setConstraints(raceF,3,1);
 
         // Job
         Label jobL       = new Label("Job: ");
         GridPane.setConstraints(jobL,0,2);
-        TextField jobF = new TextField(npc.get(6));
+        TextField jobF = new TextField((String) npc.get(6));
         GridPane.setConstraints(jobF,1,2);
 
         // Deity
         Label deityL     = new Label("Gottheit: ");
         GridPane.setConstraints(deityL,0,3);
-        TextField deityF = new TextField(npc.get(5));
+        TextField deityF = new TextField((String) npc.get(5));
         GridPane.setConstraints(deityF,1,3);
 
         // Alignment
         Label alignmentL = new Label("Alignment: ");
         GridPane.setConstraints(alignmentL,2,3);
-        TextField alignmentF = new TextField(npc.get(5));
+        TextField alignmentF = new TextField((String) npc.get(5));
         GridPane.setConstraints(alignmentF,3,3);
 
         // Sex
         Label sexL       = new Label("Geschlecht: ");
         GridPane.setConstraints(sexL,0,4);
-        TextField sexF = new TextField(npc.get(5));
+        TextField sexF = new TextField((String) npc.get(5));
         GridPane.setConstraints(sexF,1,4);
 
         // Age
@@ -181,5 +181,4 @@ public class ElementEdit {
 
     // gibt die Scene zurück
     public Scene getScene() { return scene;}
-
 }
