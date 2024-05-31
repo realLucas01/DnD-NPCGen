@@ -18,10 +18,9 @@ public class EditNPC {
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
 
-    Random rndNumb =  new SecureRandom();
+    Random rndNumb = new SecureRandom();
     RandomGenerator randGen = new RandomGenerator();
     RandomNPC randNPC = new RandomNPC();
-
 
 
     ArrayList<String> weaponList;
@@ -46,6 +45,13 @@ public class EditNPC {
     int age;
     int profBonus;
     int healthPoints;
+    ArrayList<String> actionList;
+    ArrayList<String> bonusActionList;
+    ArrayList<String> bonusTextList;
+    ArrayList<String> movementSpeedList;
+    ArrayList<String> spellList;
+    ArrayList<String> spellAbility;
+
 
     public ArrayList<Object> applyEdit(ArrayList<Object> newNPC, ArrayList<Object> oldNPC) {
         /*
@@ -97,9 +103,10 @@ public class EditNPC {
          */
         ArrayList<Object> changedNPC = new ArrayList<>(newNPC);
         ArrayList<String> changeList = findChanges(newNPC, oldNPC);
-        if (changeList==null){
+        if (changeList == null) {
             return null;
         }
+        defineVariables(oldNPC);
 
         ArrayList<String> manuelleChangedSkills = manuellChanges(newNPC, oldNPC, 12);
         ArrayList<String> manuelleChangedLanguage = manuellChanges(newNPC, oldNPC, 19);
@@ -109,139 +116,157 @@ public class EditNPC {
         ArrayList<String> editedSkillList = new ArrayList<>();
 
         languages = manuelleChangedLanguage;
-        for(String changes: changeList){
+        for (String changes : changeList) {
 
-            switch(changes){
+            switch (changes) {
                 case "class":
                     //HP, AS Verteilung, ProfWeapon, ProfArmor, ST, Skills, Spells, features, (BonusAction, Action)
                     break;
                 case "race":
                     //AS, features, Age, Skills, description, Language,(BonusAction, Action)
+                    newRaceAbilityScore(newNPC,oldNPC);
+                    race = (String) newNPC.get(3);
+                    actionList = randNPC.determineFeatures(race,"action");
+                    bonusActionList = randNPC.determineFeatures(race, "bonus action");
+                    bonusTextList = randNPC.determineFeatures(race, "bonus text");
+                    age = randGen.randAge(race);
+                    if(!genClass.equals("Commoner")){
+                        skillList = randNPC.determineSkillList(race, job, genClass);
+                    } else {
+                        skillList.add("none");
+                    }
+                    String size = randGen.randSize(race);
+                    double height = randGen.randHeight(race);
+                    description = (ArrayList<String>) oldNPC.get(17);
+                    description.set(13, size);
+                    description.set(14, Double.toString(height));
+
+                    String languagesRace = dbms.getRow("race",race).get(16);
+                    languages.remove(languagesRace);
+                    languages.addAll(randNPC.determineLanguages(race, job));
                     break;
                 case "level":
                     // HP, Action, AS(HP,ST,Skills, Spells) , Spells, PB(-> Skills, SavingThrows)
 
-                    lookAtAbilityScore(newNPC,oldNPC);
+                    lookAtAbilityScore(newNPC, oldNPC);
                     abilityModifier = randNPC.determineAbilityModifier((ArrayList<Integer>) abilityScores);
 
-                    healthPoints = randNPC.calculateHP(genClass,level,abilityModifier);
-                    
-
+                    healthPoints = randNPC.calculateHP(genClass, level, abilityModifier);
                     break;
                 case "job":
                     //Skills, Language
-
-
-
+                    String newJob = (String) newNPC.get(4);
+                    ArrayList<String> jobSkills = randGen.bigStringToDividedString(dbms.getRow("job", job).get(2));
+                    skillList.remove(jobSkills);
+                    skillList.addAll(randGen.bigStringToDividedString(dbms.getRow("job",newJob).get(2)));
                     break;
                 case "abilityScore":
                     //HP, AC, Skills(Berechnung), Spells(Anzahl), ST(Berechnung)
                     break;
-                case "Armor":
+                case "armor":
                     //AC
                     newArmorClass();
                     break;
-                case "Skills":
+                case "skills":
                     //neue Skills berechnen
-                    skillList = randNPC.addAbilityScoreToSkillList(abilityModifier,skillList,profBonus);
+                    skillList = randNPC.addAbilityScoreToSkillList(abilityModifier, skillList, profBonus);
                     break;
+                case "deity":
+                    deity = (String) newNPC.get(18);
                 default:
                     break;
             }
 
 
-
         }
-
-
 
 
         return changedNPC;
     }
+
     /*
         Diese Funktion vergleicht den alten und neuen NPC und gibt eine Liste mit den changes zurück
     */
     public ArrayList<String> findChanges(ArrayList<Object> newNPC, ArrayList<Object> oldNPC) {
         ArrayList<String> formatNPCWithNamesForIndex = new ArrayList<>();
         ArrayList<String> changeList = new ArrayList<>();
-        formatNPCWithNamesForIndex.add("race");
-        formatNPCWithNamesForIndex.add("level");
-        formatNPCWithNamesForIndex.add("job");
-        formatNPCWithNamesForIndex.add("class");
-        formatNPCWithNamesForIndex.add("abilityScore");
-        formatNPCWithNamesForIndex.add("abilityModifier");
-        formatNPCWithNamesForIndex.add("HP");
-        formatNPCWithNamesForIndex.add("armor");
-        formatNPCWithNamesForIndex.add("AC");
-        formatNPCWithNamesForIndex.add("weaponList");
-        formatNPCWithNamesForIndex.add("walkingSpeedList");
-        formatNPCWithNamesForIndex.add("savingThrows");
-        formatNPCWithNamesForIndex.add("skillList");
-        formatNPCWithNamesForIndex.add("gender");
         formatNPCWithNamesForIndex.add("name");
-        formatNPCWithNamesForIndex.add("alignment");
-        formatNPCWithNamesForIndex.add("description");
-        formatNPCWithNamesForIndex.add("deity");
+        formatNPCWithNamesForIndex.add("level");
+        formatNPCWithNamesForIndex.add("class");
+        formatNPCWithNamesForIndex.add("race");
+        formatNPCWithNamesForIndex.add("job");
+        formatNPCWithNamesForIndex.add("armorClass");
+        formatNPCWithNamesForIndex.add("healthPoints");
+        formatNPCWithNamesForIndex.add("movementSpeedList");
         formatNPCWithNamesForIndex.add("languages");
+        formatNPCWithNamesForIndex.add("abilityScores");
+        formatNPCWithNamesForIndex.add("savingThrows");
+        formatNPCWithNamesForIndex.add("armor");
+        formatNPCWithNamesForIndex.add("weaponList");
+        formatNPCWithNamesForIndex.add("skillList");
         formatNPCWithNamesForIndex.add("senses");
         formatNPCWithNamesForIndex.add("spellList");
+        formatNPCWithNamesForIndex.add("spellAbility");
+        formatNPCWithNamesForIndex.add("description");
+        formatNPCWithNamesForIndex.add("actionList");
+        formatNPCWithNamesForIndex.add("bonusActionList");
+        formatNPCWithNamesForIndex.add("profBonus");
+        formatNPCWithNamesForIndex.add("abilityModifier");
+        formatNPCWithNamesForIndex.add("gender");
+        formatNPCWithNamesForIndex.add("age");
+        formatNPCWithNamesForIndex.add("alignment");
+        formatNPCWithNamesForIndex.add("deity");
+        formatNPCWithNamesForIndex.add("bonusTextList");
 
         //finde die Changes
         for (Object s : newNPC) {
-            if(!newNPC.equals(oldNPC)){
-                changeList.add(formatNPCWithNamesForIndex.get(oldNPC.indexOf(s)));
+            int indexOfS = newNPC.indexOf(s);
+            if (!newNPC.get(indexOfS).equals(oldNPC.get(indexOfS))) {
+                changeList.add(formatNPCWithNamesForIndex.get(indexOfS));
             }
         }
         return changeList;
     }
 
-    private ArrayList<Object> editJob(ArrayList<Object> oldNPc, ArrayList<String> manuelleChangedSkills,ArrayList<String> manuelleChangedLanguage ){
+    private ArrayList<Object> editJob(ArrayList<Object> oldNPc, ArrayList<String> manuelleChangedSkills, ArrayList<String> manuelleChangedLanguage) {
         ArrayList<Object> editedJobList = new ArrayList<>();
 
-        languages.addAll(randNPC.determineLanguages(race,job));
-
-
-
-
-
-
-
-
+        languages.addAll(randNPC.determineLanguages(race, job));
 
 
         return null;
     }
 
-    private ArrayList<String> manuellChanges(ArrayList<Object> newNPC, ArrayList<Object> oldNPC, int index){
+    private ArrayList<String> manuellChanges(ArrayList<Object> newNPC, ArrayList<Object> oldNPC, int index) {
         ArrayList<String> changedSkills = new ArrayList<>();
         ArrayList<String> oldStats = (ArrayList<String>) oldNPC.get(index);
         ArrayList<String> newStats = (ArrayList<String>) newNPC.get(index);
 
-        for (String skill: newStats){
-            if(!oldStats.contains(skill)){
+        for (String skill : newStats) {
+            if (!oldStats.contains(skill)) {
                 changedSkills.add(skill);
             }
         }
         return changedSkills;
     }
 
-    private void newArmorClass(){
+    private void newArmorClass() {
         String justArmor;
         boolean isThereAShield = false;
 
-        if(armor.contains("Shield") ){
+        if (armor.contains("Shield")) {
             isThereAShield = true;
-            justArmor = armor.substring(0, armor.indexOf("+")-1);
-        }else{
+            justArmor = armor.substring(0, armor.indexOf("+") - 1);
+        } else {
             justArmor = armor;
         }
 
-        ArrayList<String> armorDBEntry =dbms.getRow("armor", justArmor);
+        ArrayList<String> armorDBEntry = dbms.getRow("armor", justArmor);
         int newAC = Integer.parseInt(armorDBEntry.get(3));
         ArrayList<String> armorBoni = randGen.bigStringToDividedString(justArmor);
         String kindOfArmor = armorDBEntry.get(2);
-        if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
-            for(String s: armorBoni){
+        if ((kindOfArmor.equals("Natural Armor")) || (kindOfArmor.equals("Class Armor"))) {
+            for (String s : armorBoni) {
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 newAC = switch (s) {
                     case "Str" -> newAC + abilityModifier.get(0);
@@ -253,17 +278,17 @@ public class EditNPC {
                     default -> newAC;
                 };
             }
-        }else if((armorBoni.size()==1)&&(armorBoni.contains("Dex"))) {
+        } else if ((armorBoni.size() == 1) && (armorBoni.contains("Dex"))) {
             newAC = Integer.parseInt(armorDBEntry.get(3)) + abilityModifier.get(1);
         }
-        if((newAC> Integer.parseInt(armorDBEntry.get(4)))){//überprüfen ob AC im toleranten Bereich liegt
-            newAC= Integer.parseInt(armorDBEntry.get(4)); // wenn nein, dann diesen festlegen
+        if ((newAC > Integer.parseInt(armorDBEntry.get(4)))) {//überprüfen ob AC im toleranten Bereich liegt
+            newAC = Integer.parseInt(armorDBEntry.get(4)); // wenn nein, dann diesen festlegen
         }
-        if(isThereAShield){
-            int shieldPercent= rndNumb.nextInt(2);
-            if(shieldPercent == 1){
+        if (isThereAShield) {
+            int shieldPercent = rndNumb.nextInt(2);
+            if (shieldPercent == 1) {
                 armor = armor + " + " + "Shield";
-                newAC = newAC +2;
+                newAC = newAC + 2;
             }
         }
         armorClass = newAC;
@@ -271,59 +296,124 @@ public class EditNPC {
     }
 
 
-    private void lookAtAbilityScore(ArrayList<Object> newNpc, ArrayList<Object> oldNPC){
+    private void lookAtAbilityScore(ArrayList<Object> newNpc, ArrayList<Object> oldNPC) {
         int newLevel = (int) newNpc.get(1);
         int oldLevel = (int) oldNPC.get(1);
         int levelDiff = 0;
         int deproveCount = 0;
-       List<Integer> sortedAS = abilityScores;
+        List<Integer> sortedAS = abilityScores;
 
-            if(oldLevel<newLevel) {
-                levelDiff = newLevel - oldLevel;
-                abilityScores = randNPC.addAbilityScoreImprovement(levelDiff-4,abilityScores);
-                return;
-            } else if (oldLevel>newLevel) {
-                levelDiff = oldLevel - newLevel;
+        if (oldLevel < newLevel) {
+            levelDiff = newLevel - oldLevel;
+            abilityScores = randNPC.addAbilityScoreImprovement(levelDiff - 4, abilityScores);
+            return;
+        } else if (oldLevel > newLevel) {
+            levelDiff = oldLevel - newLevel;
+        }
+        switch (levelDiff) {
+            case 19, 20:
+                deproveCount = deproveCount + 5;
+                break;
+            case 16, 17, 18:
+                deproveCount = deproveCount + 4;
+                break;
+            case 12, 13, 14, 15:
+                deproveCount = deproveCount + 3;
+                break;
+            case 8, 9, 10, 11:
+                deproveCount = deproveCount + 2;
+                break;
+            case 4, 5, 6, 7:
+                deproveCount = deproveCount + 1;
+                break;
+            default:
+                break;
+        }
+
+        for (int rounds = 0; deproveCount > rounds; rounds++) {
+            sortedAS.sort(Collections.reverseOrder());
+            int randNumb = rndNumb.nextInt(2) + 1;
+
+            switch (randNumb) {
+                case 1:
+                    sortedAS.set(0, sortedAS.getFirst() - 1);
+                    sortedAS.set(0, sortedAS.get(1) - 1);
+                    break;
+                case 2:
+                    sortedAS.set(0, sortedAS.getFirst() - 2);
             }
-            switch(levelDiff) {
-                case 19, 20:
-                    deproveCount = deproveCount + 5;
+        }
+
+        abilityScores = sortedAS;
+    }
+
+
+    private void newRaceAbilityScore(ArrayList<Object> newNPC, ArrayList<Object> oldNPC ) {
+        String oldRace = (String) oldNPC.get(3);
+        ArrayList<String> oldRaceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", oldRace ).get(2));
+        int raceModNumber;
+        for (String s: oldRaceAbilityModifier) {
+            raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
+            s = s.substring(0,3);
+            switch (s){
+                case "Str":
+                    abilityScores.set(0, abilityScores.get(0) - raceModNumber);
                     break;
-                case 16, 17, 18:
-                    deproveCount = deproveCount + 4;
+                case "Dex":
+                    abilityScores.set(1,abilityScores.get(1) - raceModNumber);
                     break;
-                case 12, 13, 14, 15:
-                    deproveCount = deproveCount + 3;
+                case "Con":
+                    abilityScores.set(2,abilityScores.get(2) - raceModNumber);
                     break;
-                case 8, 9, 10, 11:
-                    deproveCount = deproveCount + 2;
+                case "Int":
+                    abilityScores.set(3,abilityScores.get(3) - raceModNumber);
                     break;
-                case 4, 5, 6, 7:
-                    deproveCount = deproveCount + 1;
+                case "Wis":
+                    abilityScores.set(4,abilityScores.get(4) - raceModNumber);
+                    break;
+                case "Cha":
+                    abilityScores.set(5,abilityScores.get(5) - raceModNumber);
                     break;
                 default:
                     break;
             }
+        }
+        abilityScores = randNPC.addRaceModifierToAbilityScore(race, (ArrayList<Integer>) abilityScores);
+        }
 
-            for (int rounds=0; deproveCount> rounds; rounds++){
-                sortedAS.sort(Collections.reverseOrder());
-                int randNumb = rndNumb.nextInt(2)+1;
-
-                switch (randNumb) {
-                    case 1:
-                        sortedAS.set(0,sortedAS.getFirst() -1);
-                        sortedAS.set(0,sortedAS.get(1) -1);
-                        break;
-                    case 2:
-                        sortedAS.set(0,sortedAS.getFirst() -2);
-                }
-            }
-
-            abilityScores = sortedAS;
-            }
+    private void defineVariables(ArrayList<Object> oldNPC){
+        race = (String) oldNPC.get(0);
+        level = (int) oldNPC.get(1);
+        job = (String) oldNPC.get(2);
+        genClass = (String) oldNPC.get(3);
+        abilityScores = (List<Integer>) oldNPC.get(4);
+        abilityModifier = (ArrayList<Integer>) oldNPC.get(5);
+        healthPoints = (int) oldNPC.get(6);
+        armor = (String) oldNPC.get(7);
+        armorClass = (int) oldNPC.get(8);
+        weaponList = (ArrayList<String>) oldNPC.get(9);
+        movementSpeedList = (ArrayList<String>) oldNPC.get(10);
+        savingThrows = (ArrayList<String>) oldNPC.get(11);
+        skillList = (ArrayList<String>) oldNPC.get(12);
+        gender = (String) oldNPC.get(13);
+        age = (int) oldNPC.get(14);
+        name = (String) oldNPC.get(15);
+        alignment = (String) oldNPC.get(16);
+        description = (ArrayList<String>) oldNPC.get(17);
+        deity = (String) oldNPC.get(18);
+        languages = (ArrayList<String>) oldNPC.get(19);
+        senses = (String) oldNPC.get(20);
+        spellList = (ArrayList<String>) oldNPC.get(21);
+        actionList = (ArrayList<String>) oldNPC.get(22);
+        bonusActionList = (ArrayList<String>) oldNPC.get(23);
+        bonusTextList = (ArrayList<String>) oldNPC.get(24);
+        spellAbility = (ArrayList<String>) oldNPC.get(25);
+    }
 
 
     }
+
+
 
 
 
