@@ -160,11 +160,23 @@ public class EditNPC {
             switch (changes) {
                 case "class":
                     //HP, AS Verteilung, ProfWeapon, ProfArmor, ST, Skills, Spells, features, (BonusAction, Action)
+                    genClass = (String) newNPC.get(4);
+                    removeRaceAbilityAddition();
+                    abilityScores = randNPC.addRaceModifierToAbilityScore(race,randNPC.distributeAbilityScore((ArrayList<Integer>) abilityScores,genClass));
+                    if (isThisManuelleChanged(changeList,"healthPoints")){
+                        healthPoints = randNPC.calculateHP(genClass, level, abilityModifier);
+                    }
+                    weaponList = randNPC.determineWeapons(genClass,race);
+                    armor = randNPC.determineArmorAndAC(genClass,race,abilityModifier).getFirst();
+                    savingThrows = randNPC.determineSavingThrows(genClass,abilityModifier,profBonus);
+                    skillList = randNPC.addAbilityScoreToSkillList(abilityModifier,randNPC.determineSkillList(race,job,genClass), profBonus);
+
+
                     break;
                 case "race":
                     //AS, features, Age, Skills, description, Language,(BonusAction, Action)
-                    newRaceAbilityScore(newNPC,oldNPC);
                     race = (String) newNPC.get(3);
+                    newRaceAbilityScore(newNPC,oldNPC);
                     actionList = randNPC.determineFeatures(race,"action");
                     bonusActionList = randNPC.determineFeatures(race, "bonus action");
                     bonusTextList = randNPC.determineFeatures(race, "bonus text");
@@ -293,8 +305,6 @@ public class EditNPC {
                 default:
                     break;
             }
-
-
         }
 
 
@@ -526,6 +536,49 @@ public class EditNPC {
         bonusTextList = (ArrayList<String>) oldNPC.get(24);
         spellAbility = (ArrayList<String>) oldNPC.get(25);
     }
+
+    private boolean isThisManuelleChanged(ArrayList<String> changedList, String changedParameter ){
+
+        for(String s: changedList ) {
+            if (s.equals(changedParameter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void removeRaceAbilityAddition() {
+        ArrayList<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
+        int raceModNumber;
+        for (String s : raceAbilityModifier) {
+            raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
+            s = s.substring(0, 3);
+            switch (s) {
+                case "Str":
+                    abilityScores.set(0, abilityScores.get(0) - raceModNumber);
+                    break;
+                case "Dex":
+                    abilityScores.set(1, abilityScores.get(1) - raceModNumber);
+                    break;
+                case "Con":
+                    abilityScores.set(2, abilityScores.get(2) - raceModNumber);
+                    break;
+                case "Int":
+                    abilityScores.set(3, abilityScores.get(3) - raceModNumber);
+                    break;
+                case "Wis":
+                    abilityScores.set(4, abilityScores.get(4) - raceModNumber);
+                    break;
+                case "Cha":
+                    abilityScores.set(5, abilityScores.get(5) - raceModNumber);
+                    break;
+                default:
+                    break;
+
+            }
+        }
+    }
+
 
 
     }

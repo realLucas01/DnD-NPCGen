@@ -19,6 +19,7 @@ public class UiHistoryEditUpdate {
      */
     public ArrayList<Object> updateHistoryEdit (ArrayList<String> changes, Integer ID ){
         ArrayList<Object> validAndInvalidList = new ArrayList<>();
+        ArrayList<Object> currentNPC = dbms.getHistory(); // Lucas ToDo
 
 
 
@@ -30,6 +31,7 @@ public class UiHistoryEditUpdate {
         } else if ((changes.getFirst() != null) || (changes.getLast() == null )) {
             //race geändert
             // Änderungen: RaceAbilityScoreAddierung, Features, Skills, Language, Speed, Description:(Age, height, size, creature Type)
+            
         } else if ((changes.getFirst() != null) || (changes.getLast() != null )) {
             //beides hat sich geändert
 
