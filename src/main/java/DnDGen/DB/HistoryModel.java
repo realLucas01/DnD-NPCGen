@@ -48,17 +48,29 @@ public class HistoryModel {
 	private ArrayList<String> historyActions;
 	private ArrayList<String> historyBonusAct;
 	private Integer historyProfBonus;
+	private ArrayList<Integer> historyAbiliMod;
+	private String historyGender;
+	private Integer historyAge;
+	private String historyAlignment;
+	private String historyDeity;
+	@Lob
+	@Column(name="historyBonusTextList", length=51200)
+	private ArrayList<String> historyBonusTextList;
 	private LocalDateTime historyEntryAge;
+
 	
 	public HistoryModel() {
 	}
+
 	public HistoryModel(Integer historyId, Integer runVar, String historyName, Integer historyLevel,
 			String historyClass, String historyRace, String historyJob, Integer historyAc, Integer historyHp,
 			ArrayList<String> historySpeed, ArrayList<String> historyLanguages, ArrayList<Integer> historyAbiliSc,
 			ArrayList<String> historySavingTh, String historyArmor, ArrayList<String> historyWeapon,
 			ArrayList<String> historySkills, String historySenses, ArrayList<String> historySpells,
 			ArrayList<String> historySpellAb, ArrayList<String> historyDesc, ArrayList<String> historyActions,
-			ArrayList<String> historyBonusAct, Integer historyProfBonus, LocalDateTime historyEntryAge) {
+			ArrayList<String> historyBonusAct, Integer historyProfBonus, ArrayList<Integer> historyAbiliMod,
+			String historyGender, Integer historyAge, String historyAlignment, String historyDeity,
+			ArrayList<String> historyBonusTextList, LocalDateTime historyEntryAge) {
 		super();
 		this.historyId = historyId;
 		this.runVar = runVar;
@@ -83,8 +95,15 @@ public class HistoryModel {
 		this.historyActions = historyActions;
 		this.historyBonusAct = historyBonusAct;
 		this.historyProfBonus = historyProfBonus;
+		this.historyAbiliMod = historyAbiliMod;
+		this.historyGender = historyGender;
+		this.historyAge = historyAge;
+		this.historyAlignment = historyAlignment;
+		this.historyDeity = historyDeity;
+		this.historyBonusTextList = historyBonusTextList;
 		this.historyEntryAge = historyEntryAge;
 	}
+
 	@Order(value = 30)
 	public Integer getHistoryId() {
 		return historyId;
@@ -268,6 +287,54 @@ public class HistoryModel {
 		this.historyProfBonus = historyProfBonus;
 	}
 	@Order(value = 53)
+	public ArrayList<Integer> getHistoryAbiliMod() {
+		return historyAbiliMod;
+	}
+	@Order(value = 22)
+	public void setHistoryAbiliMod(ArrayList<Integer> historyAbiliMod) {
+		this.historyAbiliMod = historyAbiliMod;
+	}
+	@Order(value = 54)
+	public String getHistoryGender() {
+		return historyGender;
+	}
+	@Order(value = 23)
+	public void setHistoryGender(String historyGender) {
+		this.historyGender = historyGender;
+	}
+	@Order(value = 55)
+	public Integer getHistoryAge() {
+		return historyAge;
+	}
+	@Order(value = 24)
+	public void setHistoryAge(Integer historyAge) {
+		this.historyAge = historyAge;
+	}
+	@Order(value = 56)
+	public String getHistoryAlignment() {
+		return historyAlignment;
+	}
+	@Order(value = 25)
+	public void setHistoryAlignment(String historyAlignment) {
+		this.historyAlignment = historyAlignment;
+	}
+	@Order(value = 57)
+	public String getHistoryDeity() {
+		return historyDeity;
+	}
+	@Order(value = 26)
+	public void setHistoryDeity(String historyDeity) {
+		this.historyDeity = historyDeity;
+	}
+	@Order(value = 58)
+	public ArrayList<String> getHistoryBonusTextList() {
+		return historyBonusTextList;
+	}
+	@Order(value = 27)
+	public void setHistoryBonusTextList(ArrayList<String> historyBonusTextList) {
+		this.historyBonusTextList = historyBonusTextList;
+	}
+	@Order(value = 59)
 	public LocalDateTime getHistoryEntryAge() {
 		return historyEntryAge;
 	}
