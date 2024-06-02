@@ -60,7 +60,7 @@ public class RandomNPC {
     *   24: Bonus Text
         25: Spell Ability = Spell Attack Mod und Spell Save DC
 
-        HISTORY:
+        HISTORY: +2
         0: name ;
         1: level ;
         2: genClass ;

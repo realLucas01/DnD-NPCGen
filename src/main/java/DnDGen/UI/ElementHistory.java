@@ -127,9 +127,9 @@ public class ElementHistory {
         // Event-Handler für Klick-Ereignis
         npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             event.consume();
-            System.out.println("GridPane clicked!");
+            //System.out.println("GridPane clicked!");
             // Hier können Sie zusätzliche Logik für den Klick einfügen
-            ElementEdit elementEdit = new ElementEdit(window,npc);
+            ElementEdit elementEdit = new ElementEdit(window,npc,dbms);
             elementEdit.menuBar(generatePage,scene);
             window.setTitle("Edit");
             window.setScene(elementEdit.getScene());
