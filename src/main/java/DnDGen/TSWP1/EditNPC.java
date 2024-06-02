@@ -51,6 +51,45 @@ public class EditNPC {
     ArrayList<String> movementSpeedList;
     ArrayList<String> spellList;
     ArrayList<String> spellAbility;
+/*
+    eine ArrayList, diese ist wie folgt aufgebaut:
+            * (race, level, job, class, AbilityScore, AbilityModifier, HP, Armor, AC, Weapon(), walkingSpeed, SavingThrows, Skills(), Gender, Age, Name, Description, Deity, Languages, Senses, spellList)
+    *   0: ID //muss auch wieder zurückgegeben werden
+        1: irgendwas von Lucas
+
+        2: name ;
+        3: level ;
+        4: genClass ;
+        5: race ;
+        6: job ;
+        7: armorClass ;
+        8: healthPoints ;
+        9: movementSpeedList ;
+        10: languages ;
+        11: abilityScores ;
+        12: savingThrows ;
+        13: armor ;
+        14: weaponList ;
+        15: skillList ;
+        16: senses ;
+        17: spellList ;
+        18: spellAbility ;
+        19: description ;
+        20: actionList ;
+        21: bonusActionList ;
+        22: profBonus ;
+
+        23: abilityModifier ;
+        24: gender ;
+        25: age ;
+        26: alignment ;
+        27: deity ;
+        28: bonusTextList ;
+
+        length - 1: Datetime
+
+
+ */
 
 
     public ArrayList<Object> applyEdit(ArrayList<Object> newNPC, ArrayList<Object> oldNPC) {
