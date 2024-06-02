@@ -71,6 +71,7 @@ public class UI extends Application {
     public void start(Stage primaryStage) throws Exception {
     	window = primaryStage;
         window.setTitle("DnD NPC Generator");
+        window.getIcons().add(new Image("ui-image/window_Icon_selfish.png"));
         RandomNPC rNPC = new RandomNPC();
         RandomGenerator rGenerator = new RandomGenerator();
 
