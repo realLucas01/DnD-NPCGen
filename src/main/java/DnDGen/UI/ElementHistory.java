@@ -108,15 +108,24 @@ public class ElementHistory {
         ArrayList<String> abilityString = new ArrayList<>(Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
         //System.out.println(npc);
         ArrayList<Integer> ability = (ArrayList<Integer>) npc.get(11);
+        ArrayList<Integer> abilityMod = (ArrayList<Integer>) npc.get(23);
+        System.out.println(abilityMod);
         for(int i = 0; i < abilityString.size(); i++) {
             Label label = new Label(abilityString.get(i));
             GridPane.setConstraints(label,i,0);
+            String string = "";
 
             if(ability.size() > i) {
-                Label abilityL = new Label(ability.get(i).toString());
+                if(abilityMod.get(i) < 0) {
+                    string = String.valueOf(ability.get(i) + abilityMod.get(i));
+                } else {string = ability.get(i) + "+" + abilityMod.get(i);}
+
+                Label abilityL = new Label(string);
                 GridPane.setConstraints(abilityL, i, 1);
+
                 abilityGrid.getChildren().add(abilityL);
             }
+
 
             abilityGrid.getChildren().addAll(label);
         }
