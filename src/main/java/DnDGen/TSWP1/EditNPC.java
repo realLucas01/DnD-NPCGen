@@ -212,6 +212,84 @@ public class EditNPC {
                     break;
                 case "deity":
                     deity = (String) newNPC.get(18);
+                    break;
+
+                case "name":
+                    name = (String) newNPC.get(2);
+                    break;
+
+                case "armorClass":
+                    armorClass = (int) newNPC.get(7);
+                    break;
+
+                case "healthPoints":
+                    healthPoints = (int) newNPC.get(8);
+                    break;
+
+                case "movementSpeedList":
+                    movementSpeedList = (ArrayList<String>) newNPC.get(9);
+                    break;
+
+                case "languages":
+                    languages = (ArrayList<String>) newNPC.get(10);
+                    break;
+
+                case "savingThrows":
+                    savingThrows = (ArrayList<String>) newNPC.get(12);
+                    break;
+
+                case "weaponList":
+                    weaponList = (ArrayList<String>) newNPC.get(14);
+                    break;
+
+                case "senses":
+                    senses = (String) newNPC.get(16);
+                    break;
+
+                case "spellList":
+                    spellList = (ArrayList<String>) newNPC.get(17);
+                    break;
+
+                case "spellAbility":
+                    spellAbility = (ArrayList<String>) newNPC.get(18);
+                    break;
+
+                case "description":
+                    description = (ArrayList<String>) newNPC.get(19);
+                    break;
+
+                case "actionList":
+                    actionList = (ArrayList<String>) newNPC.get(20);
+                    break;
+
+                case "bonusActionList":
+                    bonusActionList = (ArrayList<String>) newNPC.get(21);
+                    break;
+
+                case "profBonus":
+                    profBonus = (int) newNPC.get(22);
+                    break;
+
+                case "abilityModifier":
+                    abilityModifier = (ArrayList<Integer>) newNPC.get(23);
+                    break;
+
+                case "gender":
+                    gender = (String) newNPC.get(24);
+                    break;
+
+                case "age":
+                    age = (int) newNPC.get(25);
+                    break;
+
+                case "alignment":
+                    alignment = (String) newNPC.get(26);
+                    break;
+
+                case "bonusTextList":
+                    bonusTextList = (ArrayList<String>) newNPC.get(28);
+                    break;
+
                 default:
                     break;
             }
