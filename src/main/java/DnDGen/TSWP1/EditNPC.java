@@ -140,6 +140,23 @@ public class EditNPC {
             }
 
          */
+
+        /*
+            was nach dem neuen Stand berechnet werden möchte, wenn sich dies ändert:
+              Class:
+                - profArmor :
+                       - AC
+                - saving throws
+                - Skills (zahlen)
+                - AbilityScoreDistripution
+                - Spells (Anzahl)
+
+              Race:
+                -
+
+
+
+         */
         ArrayList<Object> changedNPC = new ArrayList<>(newNPC);
         ArrayList<String> changeList = findChanges(newNPC, oldNPC);
         if (changeList == null) {
@@ -159,42 +176,14 @@ public class EditNPC {
 
             switch (changes) {
                 case "class":
-                    //HP, AS Verteilung, ProfWeapon, ProfArmor, ST, Skills, Spells, features, (BonusAction, Action)
-                    genClass = (String) newNPC.get(4);
-                    removeRaceAbilityAddition();
-                    abilityScores = randNPC.addRaceModifierToAbilityScore(race,randNPC.distributeAbilityScore((ArrayList<Integer>) abilityScores,genClass));
-                    if (isThisManuelleChanged(changeList,"healthPoints")){
-                        healthPoints = randNPC.calculateHP(genClass, level, abilityModifier);
-                    }
-                    weaponList = randNPC.determineWeapons(genClass,race);
-                    armor = randNPC.determineArmorAndAC(genClass,race,abilityModifier).getFirst();
-                    savingThrows = randNPC.determineSavingThrows(genClass,abilityModifier,profBonus);
-                    skillList = randNPC.addAbilityScoreToSkillList(abilityModifier,randNPC.determineSkillList(race,job,genClass), profBonus);
+                    //wird in UIHistoryEditUpdate übernommen
+                     genClass = (String) newNPC.get(4);
 
 
                     break;
                 case "race":
-                    //AS, features, Age, Skills, description, Language,(BonusAction, Action)
-                    race = (String) newNPC.get(3);
-                    newRaceAbilityScore(newNPC,oldNPC);
-                    actionList = randNPC.determineFeatures(race,"action");
-                    bonusActionList = randNPC.determineFeatures(race, "bonus action");
-                    bonusTextList = randNPC.determineFeatures(race, "bonus text");
-                    age = randGen.randAge(race);
-                    if(!genClass.equals("Commoner")){
-                        skillList = randNPC.determineSkillList(race, job, genClass);
-                    } else {
-                        skillList.add("none");
-                    }
-                    String size = randGen.randSize(race);
-                    double height = randGen.randHeight(race);
-                    description = (ArrayList<String>) oldNPC.get(17);
-                    description.set(13, size);
-                    description.set(14, Double.toString(height));
-
-                    String languagesRace = dbms.getRow("race",race).get(16);
-                    languages.remove(languagesRace);
-                    languages.addAll(randNPC.determineLanguages(race, job));
+                    //wird in UIHIstoryEditUpdate übernommen
+                    race = (String) newNPC.get(5);
                     break;
                 case "level":
                     // HP, Action, AS(HP,ST,Skills, Spells) , Spells, PB(-> Skills, SavingThrows)
@@ -203,6 +192,15 @@ public class EditNPC {
                     abilityModifier = randNPC.determineAbilityModifier((ArrayList<Integer>) abilityScores);
 
                     healthPoints = randNPC.calculateHP(genClass, level, abilityModifier);
+                    actionList = randNPC.determineFeatures(race,"action");
+                    bonusActionList = randNPC.determineFeatures(race,"bonus action");
+                    profBonus = randNPC.determineProfBonus(level);
+                    skillList = randNPC.addAbilityScoreToSkillList(abilityModifier,removePlusNumberInAStringList(skillList),profBonus);
+                    savingThrows = randNPC.determineSavingThrows(genClass,abilityModifier,profBonus);
+                    spellAbility.set(0,String.valueOf(randGen.spellAttackMod(abilityModifier, profBonus, genClass)));
+                    spellAbility.set(1,String.valueOf(randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass))));
+
+
                     break;
                 case "job":
                     //Skills, Language
@@ -547,7 +545,7 @@ public class EditNPC {
         return false;
     }
 
-    private void removeRaceAbilityAddition() {
+    public ArrayList<Integer> removeRaceAbilityAddition(String race, ArrayList<Integer> abilityScore) {
         ArrayList<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
         int raceModNumber;
         for (String s : raceAbilityModifier) {
@@ -555,31 +553,38 @@ public class EditNPC {
             s = s.substring(0, 3);
             switch (s) {
                 case "Str":
-                    abilityScores.set(0, abilityScores.get(0) - raceModNumber);
+                    abilityScore.set(0, abilityScore.get(0) - raceModNumber);
                     break;
                 case "Dex":
-                    abilityScores.set(1, abilityScores.get(1) - raceModNumber);
+                    abilityScore.set(1, abilityScore.get(1) - raceModNumber);
                     break;
                 case "Con":
-                    abilityScores.set(2, abilityScores.get(2) - raceModNumber);
+                    abilityScore.set(2, abilityScore.get(2) - raceModNumber);
                     break;
                 case "Int":
-                    abilityScores.set(3, abilityScores.get(3) - raceModNumber);
+                    abilityScore.set(3, abilityScore.get(3) - raceModNumber);
                     break;
                 case "Wis":
-                    abilityScores.set(4, abilityScores.get(4) - raceModNumber);
+                    abilityScore.set(4, abilityScore.get(4) - raceModNumber);
                     break;
                 case "Cha":
-                    abilityScores.set(5, abilityScores.get(5) - raceModNumber);
+                    abilityScore.set(5, abilityScore.get(5) - raceModNumber);
                     break;
                 default:
                     break;
 
             }
         }
+        return  abilityScore;
     }
 
-
+    public ArrayList<String> removePlusNumberInAStringList (ArrayList<String> stringList ){
+        ArrayList<String> stringListWithoutNumbers = new ArrayList<>();
+        for(String skills:stringList){
+            stringListWithoutNumbers.add(skills.substring(0,skills.indexOf("+")-1));
+        }
+        return stringListWithoutNumbers;
+    }
 
     }
 
