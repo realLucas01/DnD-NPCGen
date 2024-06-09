@@ -34,5 +34,4 @@ public interface RaceRepository extends CrudRepository<RaceModel, Integer>{
 	@Query("SELECT p FROM RaceModel p WHERE p.raceName = ?1")
 	Page<RaceModel> getRacePref(String raceName,Pageable pageable2);
 	Page<RaceModel> findAll(Pageable pageable);
-	
 }

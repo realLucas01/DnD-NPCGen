@@ -36,6 +36,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 
 import DnDGen.DB.Sortierung.Order;
+import DnDGen.TSWP1.RandomGenerator;
 
 
 @SpringBootApplication
@@ -184,8 +185,7 @@ public class DBMS implements ApplicationContextAware{
 	
 	/* @author Lucas
 	 *
-	 * Gibt lediglich die Namensspalte einer DB wieder um die Vorauswahl 
-	 * der GUI füllen zu können.
+	 * Gibt die Namensspalte einer Datenbank für UI zwecke aus.
 	 * 
 	 * @param dbname: der Name der DB von der Daten gewünscht sind, als 
 	 * 					kleingeschriebener String.
@@ -193,7 +193,7 @@ public class DBMS implements ApplicationContextAware{
 	 */
 	public ArrayList<String> onlyColumn(String dbname) {
 		ArrayList<String> onlycol = new ArrayList<String>();
-		
+		//deity, alignment, languange, Weapon, Armor, Spells, actions
 		switch(dbname) {
 		case "race":
 			onlycol = raceRepository.getallRaceCol();
@@ -207,11 +207,59 @@ public class DBMS implements ApplicationContextAware{
 		case "abilisc":
 			onlycol = abiliScRepository.getallAbiliScCol();
 			break;
+		case "deity":
+			onlycol = deityRepository.getallDeityCol();
+			break;
+		case "alignment":
+			onlycol = alignmentRepository.getallAlignmentCol();
+			break;
+		case "language":
+			onlycol = languageRepository.getallLangCol();
+			break;
 		default:
 			onlycol = null;
 			break;
 		}
 		return onlycol;
+	}
+	
+	/* @author Lucas
+	 *
+	 *Gibt die nach einer Präferenz sortierten Namensspalte einer Datenbank für UI zwecke aus.
+	 * 
+	 * @param dbname: der Name der DB von der Daten gewünscht sind, als 
+	 * 					kleingeschriebener String.
+	 * @param Clazz: KlassenName für den die Funktion ausgeführt werden soll(z.B.: "Fighter")
+	 */
+	public ArrayList<String> getColWithPref(String dbname,String Clazz){
+		ArrayList<String> col = new ArrayList<String>();
+		RandomGenerator randGen = new RandomGenerator();
+		//Liste für Spells nach Klasse, Level, Spelllevel. Für Waffen+Rüstung nach Prof in Klasse in InnerJoin mit der jeweiligen Klasse
+		//-deity, -alignment, -languange, -Weapon, -Armor, -Spells, -actions
+		switch(dbname) {
+		case "weapon":
+			ArrayList<String> weaponprefs = randGen.bigStringToDividedString(classRepository.getWeaponPref(Clazz));
+			for(String weaponpref : weaponprefs) {
+				col.addAll(weaponRepository.getWeaponCol(weaponpref));
+			}
+			break;
+		case "armor":
+			ArrayList<String> armorprefs = randGen.bigStringToDividedString(classRepository.getArmorPref(Clazz));
+			for(String armorpref : armorprefs) {
+				col.addAll(armorRepository.getArmorCol(armorpref));
+			}
+			break;
+		case "spells":
+			col = spellRepository.getSpellCol(Clazz);
+			break;
+		case "actions":
+			col = actionRepository.getActionsCol(Clazz);
+			break;
+		default:
+			col = null;
+			break;
+		}
+		return col;
 	}
 	
 	
@@ -702,6 +750,27 @@ public class DBMS implements ApplicationContextAware{
 		}
 		return historycontent;
 	 }
+	
+	/* @author Lucas
+	 *
+	 * Gibt eine bestimmte Zeile der History DB anhand der ID aus.
+	 * 
+	 * @param ID: ID der Zeile die Ausgegeben werden soll.
+	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Objekten, 
+	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
+	 */
+	public ArrayList<Object> getHistoryEntry(Integer ID){
+		ArrayList<Object> FinalEntry = new ArrayList<Object>(); 
+		HistoryModel Entry = historyRepository.findByHistoryId(ID);
+		for (Method m : ordner(Entry.getClass())) {
+    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+    			 sneaky(() -> r = m.invoke(Entry));
+    			 FinalEntry.add(String.valueOf(r));
+    		}
+    	}
+		return FinalEntry;
+	}
+	
 	
 	/* @author Lucas
 	 *

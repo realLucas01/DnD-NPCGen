@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface AlignmentRepository extends CrudRepository<AlignmentModel, Integer>{
@@ -20,5 +21,6 @@ public interface AlignmentRepository extends CrudRepository<AlignmentModel, Inte
 	ArrayList<AlignmentModel> findByAlignmentName(String name);
 	ArrayList<AlignmentModel> findByAlignmentShorted(String shorted);
 	Page<AlignmentModel> findAll(Pageable pageable);
-
+	@Query("SELECT s.alignmentName FROM AlignmentModel s")
+	ArrayList<String> getallAlignmentCol();
 }

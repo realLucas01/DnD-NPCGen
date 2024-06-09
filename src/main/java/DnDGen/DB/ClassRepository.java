@@ -31,5 +31,8 @@ public interface ClassRepository extends CrudRepository<ClassModel, Integer>{
 	@Query("SELECT s.className FROM ClassModel s")
 	ArrayList<String> getallClassCol();
 	Page<ClassModel> findAll(Pageable pageable);
-	
+	@Query("SELECT l.classProfWeapon FROM ClassModel l WHERE l.className = ?1")
+	String getWeaponPref(String classname);
+	@Query("SELECT l.classProfArmor FROM ClassModel l WHERE l.className = ?1")
+	String getArmorPref(String classname);
 }

@@ -1,6 +1,7 @@
 package DnDGen.DB;
 
 import DnDGen.DB.Sortierung.Order;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +13,7 @@ public class ActionModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer actionId;
 	private String actionName;
+	@Column(columnDefinition="TEXT")
 	private String actionDescription;
 	private String actionClass;
 	private Integer actionLevel;

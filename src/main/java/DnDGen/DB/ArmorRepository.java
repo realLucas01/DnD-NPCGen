@@ -27,4 +27,6 @@ public interface ArmorRepository extends CrudRepository<ArmorModel, Integer>{
 	ArrayList<ArmorModel> findByArmorStealth(String stealth);
 	@Query("SELECT p FROM ArmorModel p WHERE p.armorKind = ?1")
 	Page<ArmorModel> getArmorPref(String armorKind,Pageable pageable);
+	@Query("SELECT l.armorName FROM ArmorModel l WHERE l.armorKind Like %?1%")
+	ArrayList<String> getArmorCol(String weaponKind);
 }

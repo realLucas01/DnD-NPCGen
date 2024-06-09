@@ -32,4 +32,6 @@ public interface SpellRepository extends CrudRepository<SpellModel, Integer>{
 	ArrayList<SpellModel> findByMultPrefsize(String spellAvailability,String spellLevel);
 	@Query("SELECT m FROM SpellModel m WHERE m.spellAvailability Like %?1% AND m.spellLevel LIKE %?2%")
 	Page<SpellModel> findByMultPrefdata(String spellAvailability,String spellLevel,Pageable pageable1);
+	@Query("SELECT n.spellName FROM SpellModel n WHERE  n.spellAvailability Like %?1%")
+	ArrayList<String> getSpellCol(String spellAvailability);
 }
