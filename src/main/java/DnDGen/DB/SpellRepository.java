@@ -18,7 +18,7 @@ public interface SpellRepository extends CrudRepository<SpellModel, Integer>{
 	
 	long count();
 	ArrayList<SpellModel> findBySpellId(Integer id);
-	ArrayList<SpellModel> findBySpellName(String name);
+	SpellModel findBySpellName(String name);
 	ArrayList<SpellModel> findBySpellLevel(String level);
 	ArrayList<SpellModel> findBySpellSchool(String school);
 	ArrayList<SpellModel> findBySpellCastingTime(String castingTime);
