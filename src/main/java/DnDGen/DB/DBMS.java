@@ -586,6 +586,20 @@ public class DBMS implements ApplicationContextAware{
 		    	}
 		    }
 			break;
+		case "spells":
+			qty = spellRepository.findBySpellName(pref).size();
+			idx = (int)(Math.random() * qty);
+		    questionPage2 = spellRepository.getSpellOnePref(pref,PageRequest.of(idx,1));
+		    if (questionPage2.hasContent()) {
+		    	SpellModel randabilipref = (SpellModel) questionPage2.getContent().get(0);
+		    	for (Method m : ordner(randabilipref.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(randabilipref));
+		    			 randRowPref.add(String.valueOf(r));
+		    		}
+		    	}
+		    }
+			break;
 		default:
 		
 		}
