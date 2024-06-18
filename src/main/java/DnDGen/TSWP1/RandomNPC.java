@@ -254,9 +254,11 @@ public class RandomNPC {
 
         //spells
         ArrayList<Object> spellList = randGen.randSpellList(genClass,abilityModifier,level);
-        generatedNPCFinished.add(generatedNPCFinished.size(), (spellList));
         System.out.println("spell: "+ spellList);
-        System.out.println("NPC: "+ generatedNPCFinished);
+        spellList = randGen.addRaceCantripsAndSpells(race,spellList,level);
+        System.out.println("spell: "+ spellList);
+        generatedNPCFinished.add(generatedNPCFinished.size(), (spellList));
+
         //features
         ArrayList<String> actionList = determineFeatures(race,"action");
         ArrayList<String> bonusActionList = determineFeatures(race, "bonus action");

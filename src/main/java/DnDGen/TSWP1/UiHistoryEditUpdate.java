@@ -55,13 +55,14 @@ public class UiHistoryEditUpdate {
     EditNPC editNPC = new EditNPC();
 
     /*
-    changes = {race, class}
+    changes = {race, class, alignment}
      */
     public ArrayList<Object> updateHistoryEdit (ArrayList<String> changes, Integer ID ){
         ArrayList<Object> validAndInvalidList = new ArrayList<>();
         ArrayList<Object> currentNPC = dbms.getHistory(); // Lucas ToDo
         String newRace = changes.get(0);
         String newCharClass = changes.get(1);
+        String newAlignment = changes.get(2);
 
 
         //Übergangs Variablen werden wahrscheinlich später entfernt oder geändert
@@ -86,7 +87,10 @@ public class UiHistoryEditUpdate {
             abilityScore = randNPC.addRaceModifierToAbilityScore(newRace, abilityScore);
 
         } else if ((changes.getFirst() != null) || (changes.getLast() != null )) {
-            //beides hat sich geändert
+            //alles hat sich geändert
+
+        } else if ((newAlignment!=null)){
+            //Deity
 
         }else {
             //nichts ändert sich
