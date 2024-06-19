@@ -130,14 +130,22 @@ public class ElementEdit {
         // Deity
         Label deityL     = new Label("Gottheit: ");
         GridPane.setConstraints(deityL,0,3);
-        TextField deityF = new TextField((String) npc.get(27));
-        GridPane.setConstraints(deityF,1,3);
+        final ComboBox cbDeity = new ComboBox<>();
+        list = dbms.onlyColumn("deity");
+        list.sort(String::compareTo);
+        cbDeity.getItems().addAll(list);
+        cbDeity.getSelectionModel().select(list.indexOf(npc.get(27)));
+        GridPane.setConstraints(cbDeity,1,3);
 
         // Alignment
         Label alignmentL = new Label("Alignment: ");
         GridPane.setConstraints(alignmentL,2,3);
-        TextField alignmentF = new TextField((String) npc.get(26));
-        GridPane.setConstraints(alignmentF,3,3);
+        final ComboBox cbAligmentL = new ComboBox();
+        list = dbms.onlyColumn("alignment");
+        list.sort(String::compareTo);
+        cbAligmentL.getItems().addAll(list);
+        cbAligmentL.getSelectionModel().select(list.indexOf(npc.get(26)));
+        GridPane.setConstraints(cbAligmentL,3,3);
 
         // Sex
         Label sexL       = new Label("Geschlecht: ");
@@ -165,8 +173,8 @@ public class ElementEdit {
         GridPane.setConstraints(hitPointsF,3,5);
 
         nameClassGrid.getChildren().addAll(nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL,
-                                           armorClassL, hitPointsL, nameF, cbClass, cbJob, cbRace, alignmentF, ageF,
-                                           cbGender, deityF, cbLevel, amorClassF, hitPointsF);
+                                           armorClassL, hitPointsL, nameF, cbClass, cbJob, cbRace, cbAligmentL, ageF,
+                                           cbGender, cbDeity, cbLevel, amorClassF, hitPointsF);
 
 
         //Armor class, Hit points, Speed, Language, Feature
@@ -179,15 +187,30 @@ public class ElementEdit {
 
         Label speedL      = new Label("Geschwindigkeit: ");
         GridPane.setConstraints(speedL,0,2);
+
+        // Sprachen
         Label languagesL   = new Label("Sprachen: ");
         GridPane.setConstraints(languagesL,0,4);
+        final ComboBox cbLanguages = new ComboBox();
+        list = dbms.onlyColumn("language");
+        list.sort(String::compareTo);
+        cbLanguages.getItems().addAll(list);
+        /*
+        cbLanguages.getSelectionModel().select(list.indexOf(npc.get(10)));
+        GridPane.setConstraints(cbLanguages,1,4);
+
+        */
+
+
+
+
 
         //AmorClass, HitPoints
         Label aCL = new Label(String.valueOf(npc.get(1)));
         GridPane.setConstraints(aCL,1,0);
         Label hPL = new Label(String.valueOf(npc.get(1)));
         GridPane.setConstraints(hPL,1,1);
-        acHpSpLangGrid.getChildren().addAll(speedL,aCL,hPL);
+        acHpSpLangGrid.getChildren().addAll(languagesL, cbLanguages,speedL,aCL,hPL);
 
 
 
