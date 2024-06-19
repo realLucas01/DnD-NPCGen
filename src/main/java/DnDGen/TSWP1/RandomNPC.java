@@ -249,14 +249,12 @@ public class RandomNPC {
 
 
         senses = randGen.getVision(race) + ", Passive Perception " + randGen.passivePerception(abilityModifier, skillList, profBonus);
-        System.out.println(senses);
         generatedNPCFinished.add(generatedNPCFinished.size(), senses);
 
         //spells
         ArrayList<Object> spellList = randGen.randSpellList(genClass,abilityModifier,level);
-        System.out.println("spell: "+ spellList);
         spellList = randGen.addRaceCantripsAndSpells(race,spellList,level);
-        System.out.println("spell: "+ spellList);
+        spellList = randGen.arrangeSpellListInTheRightOrder(spellList);
         generatedNPCFinished.add(generatedNPCFinished.size(), (spellList));
 
         //features
@@ -276,6 +274,7 @@ public class RandomNPC {
         spellAbility.add(String.valueOf(spellAttack));
         spellAbility.add(String.valueOf(spellSave)) ;
         generatedNPCFinished.add(generatedNPCFinished.size(), spellAbility);
+
 
         //dragonborn
         if(race.equals("Dragonborn")){

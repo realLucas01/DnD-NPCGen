@@ -656,17 +656,13 @@ public class RandomGenerator {
 				featureSpellList.add(features);
 			}
 		}
-		System.out.println("featurelist: " + featureList);
 		for (String spellFeature : featureSpellList){
-			System.out.println("spellFeature: " + spellFeature);
 			String kindOfFeature = dbms.getRow(nameDBFeatures,spellFeature).get(3);
 
 			if(kindOfFeature.startsWith("cantrip:")) {
-				System.out.println("cantrip " );
 
 				spellList=aufspaltungRaceCantrip(kindOfFeature,spellList,level);
 			} else if (kindOfFeature.startsWith("spell:")) {
-				System.out.println("spell");
 
 				spellList=aufspaltungRaceSpell(kindOfFeature,spellList,level);
 			}
@@ -678,11 +674,9 @@ public class RandomGenerator {
 	private ArrayList<Object> aufspaltungRaceCantrip(String spellFeature, ArrayList<Object> spellList, int level){
 		String inhalt = spellFeature.substring(8);
 		ArrayList<String> cantripListe = getSpellListFromSpellLevelToEditSpells(spellList,0);
-		System.out.println("inhalt: " + inhalt);
 		if(inhalt.contains("spell")) {//"cantrip"
 
 			String[] cantrip = inhalt.split(" spell");
-			System.out.println("cantrip: " + Arrays.toString(cantrip));
 
 			cantripListe.add(cantrip[0].trim());
 			spellList= aufspaltungRaceSpell("spell:" + cantrip[1].trim(), spellList, level);
@@ -737,7 +731,6 @@ public class RandomGenerator {
 			return new ArrayList<>();
 		}
 		int indexNumberKlammer = 12;
-		System.out.println("spellList: " + spellList);
 		spellList = new ArrayList<>();
 		spellList.add("placeholder");
 		spellList.add("placeholder");
@@ -789,7 +782,6 @@ public class RandomGenerator {
 		spellList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
 		spellList.remove("placeholder");
 		//String spellsFromList = (String) spellFromSpellLevel;
-		System.out.println("spellFromSpellLevel" + spellFromSpellLevel);
 		if (((String)spellFromSpellLevel).contains("placeholder")){
 			return new ArrayList<>();
 		}
@@ -832,20 +824,14 @@ public class RandomGenerator {
 			case 1:
 				stuffToPutIntoSpellList = "1st Level: " + singleSpellList  ;
 				spellList.set(1, stuffToPutIntoSpellList);
-				System.out.println("1th");
-				System.out.println("spell1th" + spellList);
 				break;
 			case 2:
 				stuffToPutIntoSpellList = "2nd Level: " + singleSpellList ;
 				spellList.set(2, stuffToPutIntoSpellList);
-				System.out.println("2th");
-				System.out.println("spell2th" + spellList);
 				break;
 			case 3:
 				stuffToPutIntoSpellList = "3th Level: " + singleSpellList ;
 				spellList.set(3, stuffToPutIntoSpellList);
-				System.out.println("3th");
-				System.out.println("spell3th" + spellList);
 				break;
 			case 4:
 				stuffToPutIntoSpellList = "4th Level: " + singleSpellList ;
@@ -896,19 +882,48 @@ public class RandomGenerator {
 		arrangedSpellList.add("Placeholder");
 
 		for (Object lists: spellList ){
-			String listName = (String)
+			String listName = ((String) lists).substring(0,1) ;
 
-
+			switch (listName) {
+				case "C":
+					arrangedSpellList.set(0,lists);
+					break;
+				case "1":
+					arrangedSpellList.set(1,lists);
+					break;
+				case "2":
+					arrangedSpellList.set(2,lists);
+					break;
+				case "3":
+					arrangedSpellList.set(3,lists);
+					break;
+				case "4":
+					arrangedSpellList.set(4,lists);
+					break;
+				case "5":
+					arrangedSpellList.set(5,lists);
+					break;
+				case "6":
+					arrangedSpellList.set(6,lists);
+					break;
+				case "7":
+					arrangedSpellList.set(7,lists);
+					break;
+				case "8":
+					arrangedSpellList.set(8,lists);
+					break;
+				case "9":
+					arrangedSpellList.set(9,lists);
+					break;
+			}
 		}
-
-
-
-
-
+		if ( arrangedSpellList.contains("Placeholder")){
+            arrangedSpellList.removeIf(ob -> ob.equals("Placeholder"));
+		}
+		return arrangedSpellList;
 	}
 
 	public String passivePerception(ArrayList<Integer> abilityModifier, ArrayList<String> skillList, int profBonus){
-		//System.out.println("Ability M.: " + abilityModifier.get(4));
 		int perception = 0;
 
 		if(skillList.contains("Perception")){
@@ -917,12 +932,10 @@ public class RandomGenerator {
 		else {
 			perception = 10 + abilityModifier.get(4);
 		}
-		//System.out.println("passive Perception: " + perception);
         return String.valueOf(perception);
 	}
 
 	public int spellAttackMod(ArrayList<Integer> abilityModifier, int profBonus, String genClass){
-		//System.out.println(profBonus);
 		int spellAttackMod = 0;
 
 		String spellMod = dbms.getRow("class", genClass).get(11);
@@ -949,7 +962,6 @@ public class RandomGenerator {
 			default :
 				break;
 		}
-		//System.out.println("Mod: " + spellAttackMod);
 		return spellAttackMod;
 	}
 
@@ -959,7 +971,6 @@ public class RandomGenerator {
 		if(spellAttackMod > 0){
 			 spellSaveDC = 8 + spellAttackMod;
 		}
-		//System.out.println("Spell Save: " + spellSaveDC);
 		return spellSaveDC;
 	}
 
