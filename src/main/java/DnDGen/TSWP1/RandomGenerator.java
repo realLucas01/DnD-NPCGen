@@ -398,19 +398,8 @@ public class RandomGenerator {
 	}
 
 	public String randAlignment() {
-		int rndNum = rand.nextInt(9);
-		ArrayList<String> alignments = new ArrayList<>();
-		alignments.add("Chaotic Good");
-		alignments.add("Chaotic Neutral");
-		alignments.add("Chaotic Evil");
-		alignments.add("Neutral Evil");
-		alignments.add("Lawful Neutral");
-		alignments.add("Lawful Good");
-		alignments.add("Lawful Neutral");
-		alignments.add("Neutral Good");
-		alignments.add("Neutral");
 
-		return alignments.get(rndNum);
+		return dbms.getRandomRow("alignment").get(2);
 	}
 	/*
 		Hier wird alles bestimmt was eine Klasse für Werte hat um Spells zu bestimmen
@@ -713,11 +702,15 @@ public class RandomGenerator {
 			} else {
 				newSpellsFromRace.add(spell);
 			}
+			System.out.println(spell);
 			spell = spell.substring(2).trim();
 			spellLevel = Integer.parseInt(dbms.getRow("spells", spell.trim()).get(2));
+
+			ArrayList<String> currentSpellList = getSpellListFromSpellLevelToEditSpells(spellList,spellLevel);
+			currentSpellList.add(spell);
+			spellList = putSingleSpellLevelListBackToBigSpellList(spellLevel,currentSpellList,spellList);
 		}
-		ArrayList<String> currentSpellList = getSpellListFromSpellLevelToEditSpells(spellList,spellLevel);
-		spellList = putSingleSpellLevelListBackToBigSpellList(spellLevel,currentSpellList,spellList);
+
 		return spellList;
 	}
 
@@ -815,7 +808,16 @@ public class RandomGenerator {
 			spellList.add("placeholder");
 			spellList.add("placeholder");
 		}
-
+		if(spellList.size()<=spellLevelName){
+			spellList.add("placeholder");
+			spellList.add("placeholder");
+			spellList.add("placeholder");
+			spellList.add("placeholder");
+			spellList.add("placeholder");
+			spellList.add("placeholder");
+			spellList.add("placeholder");
+			spellList.add("placeholder");
+		}
 		switch (spellLevelName){
 			case 0:
 				stuffToPutIntoSpellList = "Cantrip: " + singleSpellList ;
