@@ -32,7 +32,7 @@ public class EditNPC {
     ArrayList<Integer> abilityModifier;
     String armor;
     int armorClass;
-    ArrayList<String> generatedNPCFinished = new ArrayList<>();
+    List<String> generatedNPCFinished = new ArrayList<>();
     String race;
     String job;
     String genClass;
@@ -92,7 +92,7 @@ public class EditNPC {
  */
 
 
-    public ArrayList<Object> applyEdit(ArrayList<Object> newNPC, ArrayList<Object> oldNPC) {
+    public List<Object> applyEdit(List<Object> newNPC, List<Object> oldNPC) {
         /*
         Legende:
             ST: Saving Throws,
@@ -158,20 +158,20 @@ public class EditNPC {
 
          */
         ArrayList<Object> changedNPC = new ArrayList<>(newNPC);
-        ArrayList<String> changeList = findChanges(newNPC, oldNPC);
+        List<String> changeList = findChanges(newNPC, oldNPC);
         if (changeList == null) {
-            return null;
+            return new ArrayList<>();
         }
         defineVariables(oldNPC);
 
-        ArrayList<String> manuelleChangedSkills = manuellChanges(newNPC, oldNPC, 12);
-        ArrayList<String> manuelleChangedLanguage = manuellChanges(newNPC, oldNPC, 19);
+        List<String> manuelleChangedSkills = manuellChanges(newNPC, oldNPC, 12);
+        List<String> manuelleChangedLanguage = manuellChanges(newNPC, oldNPC, 19);
 
-        ArrayList<String> editedSkills = new ArrayList<>();
-        ArrayList<String> editedLanguages = new ArrayList<>();
-        ArrayList<String> editedSkillList = new ArrayList<>();
+        List<String> editedSkills = new ArrayList<>();
+        List<String> editedLanguages = new ArrayList<>();
+        List<String> editedSkillList = new ArrayList<>();
 
-        languages = manuelleChangedLanguage;
+        languages = (ArrayList<String>) manuelleChangedLanguage;
         for (String changes : changeList) {
 
             switch (changes) {
@@ -189,14 +189,14 @@ public class EditNPC {
                     // HP, Action, AS(HP,ST,Skills, Spells) , Spells, PB(-> Skills, SavingThrows)
 
                     lookAtAbilityScore(newNPC, oldNPC);
-                    abilityModifier = randNPC.determineAbilityModifier((ArrayList<Integer>) abilityScores);
+                    abilityModifier = (ArrayList<Integer>) randNPC.determineAbilityModifier( abilityScores);
 
                     healthPoints = randNPC.calculateHP(genClass, level, abilityModifier);
-                    actionList = randNPC.determineFeatures(race,"action");
-                    bonusActionList = randNPC.determineFeatures(race,"bonus action");
+                    actionList = (ArrayList<String>) randNPC.determineFeatures(race,"action");
+                    bonusActionList = (ArrayList<String>) randNPC.determineFeatures(race,"bonus action");
                     profBonus = randNPC.determineProfBonus(level);
-                    skillList = randNPC.addAbilityScoreToSkillList(abilityModifier,removePlusNumberInAStringList(skillList),profBonus);
-                    savingThrows = randNPC.determineSavingThrows(genClass,abilityModifier,profBonus);
+                    skillList = (ArrayList<String>) randNPC.addAbilityScoreToSkillList(abilityModifier,removePlusNumberInAStringList(skillList),profBonus);
+                    savingThrows = (ArrayList<String>) randNPC.determineSavingThrows(genClass,abilityModifier,profBonus);
                     spellAbility.set(0,String.valueOf(randGen.spellAttackMod(abilityModifier, profBonus, genClass)));
                     spellAbility.set(1,String.valueOf(randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass))));
 
@@ -205,7 +205,7 @@ public class EditNPC {
                 case "job":
                     //Skills, Language
                     String newJob = (String) newNPC.get(4);
-                    ArrayList<String> jobSkills = randGen.bigStringToDividedString(dbms.getRow("job", job).get(2));
+                    ArrayList<String> jobSkills = (ArrayList<String>) randGen.bigStringToDividedString(dbms.getRow("job", job).get(2));
                     skillList.remove(jobSkills);
                     skillList.addAll(randGen.bigStringToDividedString(dbms.getRow("job",newJob).get(2)));
                     break;
@@ -218,7 +218,7 @@ public class EditNPC {
                     break;
                 case "skills":
                     //neue Skills berechnen
-                    skillList = randNPC.addAbilityScoreToSkillList(abilityModifier, skillList, profBonus);
+                    skillList = (ArrayList<String>) randNPC.addAbilityScoreToSkillList(abilityModifier, skillList, profBonus);
                     break;
                 case "deity":
                     deity = (String) newNPC.get(18);
@@ -312,7 +312,7 @@ public class EditNPC {
     /*
         Diese Funktion vergleicht den alten und neuen NPC und gibt eine Liste mit den changes zurück
     */
-    public ArrayList<String> findChanges(ArrayList<Object> newNPC, ArrayList<Object> oldNPC) {
+    public List<String> findChanges(List<Object> newNPC, List<Object> oldNPC) {
         ArrayList<String> formatNPCWithNamesForIndex = new ArrayList<>();
         ArrayList<String> changeList = new ArrayList<>();
         formatNPCWithNamesForIndex.add("name");
@@ -353,7 +353,7 @@ public class EditNPC {
         return changeList;
     }
 
-    private ArrayList<Object> editJob(ArrayList<Object> oldNPc, ArrayList<String> manuelleChangedSkills, ArrayList<String> manuelleChangedLanguage) {
+    private List<Object> editJob(List<Object> oldNPc, List<String> manuelleChangedSkills, List<String> manuelleChangedLanguage) {
         ArrayList<Object> editedJobList = new ArrayList<>();
 
         languages.addAll(randNPC.determineLanguages(race, job));
@@ -362,7 +362,7 @@ public class EditNPC {
         return null;
     }
 
-    private ArrayList<String> manuellChanges(ArrayList<Object> newNPC, ArrayList<Object> oldNPC, int index) {
+    private List<String> manuellChanges(List<Object> newNPC, List<Object> oldNPC, int index) {
         ArrayList<String> changedSkills = new ArrayList<>();
         ArrayList<String> oldStats = (ArrayList<String>) oldNPC.get(index);
         ArrayList<String> newStats = (ArrayList<String>) newNPC.get(index);
@@ -388,7 +388,7 @@ public class EditNPC {
 
         ArrayList<String> armorDBEntry = dbms.getRow("armor", justArmor);
         int newAC = Integer.parseInt(armorDBEntry.get(3));
-        ArrayList<String> armorBoni = randGen.bigStringToDividedString(justArmor);
+        ArrayList<String> armorBoni = (ArrayList<String>) randGen.bigStringToDividedString(justArmor);
         String kindOfArmor = armorDBEntry.get(2);
         if ((kindOfArmor.equals("Natural Armor")) || (kindOfArmor.equals("Class Armor"))) {
             for (String s : armorBoni) {
@@ -421,7 +421,7 @@ public class EditNPC {
     }
 
 
-    private void lookAtAbilityScore(ArrayList<Object> newNpc, ArrayList<Object> oldNPC) {
+    private void lookAtAbilityScore(List<Object> newNpc, List<Object> oldNPC) {
         int newLevel = (int) newNpc.get(1);
         int oldLevel = (int) oldNPC.get(1);
         int levelDiff = 0;
@@ -475,7 +475,7 @@ public class EditNPC {
 
     private void newRaceAbilityScore(ArrayList<Object> newNPC, ArrayList<Object> oldNPC ) {
         String oldRace = (String) oldNPC.get(3);
-        ArrayList<String> oldRaceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", oldRace ).get(2));
+        ArrayList<String> oldRaceAbilityModifier = (ArrayList<String>) randGen.bigStringToDividedString(dbms.getRow("race", oldRace ).get(2));
         int raceModNumber;
         for (String s: oldRaceAbilityModifier) {
             raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
@@ -506,7 +506,7 @@ public class EditNPC {
         abilityScores = randNPC.addRaceModifierToAbilityScore(race, (ArrayList<Integer>) abilityScores);
         }
 
-    private void defineVariables(ArrayList<Object> oldNPC){
+    private void defineVariables(List<Object> oldNPC){
         race = (String) oldNPC.get(0);
         level = (int) oldNPC.get(1);
         job = (String) oldNPC.get(2);
@@ -545,15 +545,15 @@ public class EditNPC {
         return false;
     }
 
-    public ArrayList<Integer> removeRaceAbilityAddition(String race, ArrayList<Integer> abilityScore) {
-        ArrayList<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
+    public List<Integer> removeRaceAbilityAddition(String race, List<Integer> abilityScore) {
+        List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
         int raceModNumber;
         for (String s : raceAbilityModifier) {
             raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
             s = s.substring(0, 3);
             switch (s) {
                 case "Str":
-                    abilityScore.set(0, abilityScore.get(0) - raceModNumber);
+                    abilityScore.set(0, abilityScore.getFirst() - raceModNumber);
                     break;
                 case "Dex":
                     abilityScore.set(1, abilityScore.get(1) - raceModNumber);
@@ -578,8 +578,8 @@ public class EditNPC {
         return  abilityScore;
     }
 
-    public ArrayList<String> removePlusNumberInAStringList (ArrayList<String> stringList ){
-        ArrayList<String> stringListWithoutNumbers = new ArrayList<>();
+    public List<String> removePlusNumberInAStringList (List<String> stringList ){
+        List<String> stringListWithoutNumbers = new ArrayList<>();
         for(String skills:stringList){
             stringListWithoutNumbers.add(skills.substring(0,skills.indexOf("+")-1));
         }

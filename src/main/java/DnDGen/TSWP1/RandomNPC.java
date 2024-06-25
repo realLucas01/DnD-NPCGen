@@ -18,11 +18,12 @@ public class RandomNPC {
     RandomGenerator randGen = new RandomGenerator();
     /*
     nicht wundern, diese variablen die hier folgen dienen dazu sich wiederholende Strings bei DB aufrufen zu vermeiden
-    und um SonarCube zufrieden zu stellen
+    und um SonarCube zufriedenzustellen
      */
     String nameDBFeatures = "features";
     String nameDBCommoner = "Commoner";
     String nameDBClass = "class";
+    String searchTermBonusAction = "bonus action";
 
 
     /*
@@ -91,15 +92,15 @@ public class RandomNPC {
         26: bonusTextList ;
      */
 
-    public ArrayList<Object> createRandomNPC(String inputName,String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
-        ArrayList<String> weaponList;
-        ArrayList<String> languages;
-        ArrayList<String> savingThrows;
-        ArrayList<String> description;
-        ArrayList<String> skillList = new ArrayList<>();
-        ArrayList<Integer> abilityScores = new ArrayList<>();
-        ArrayList<Integer> abilityModifier;
-        ArrayList<Object> generatedNPCFinished = new ArrayList<>();
+    public List<Object> createRandomNPC(String inputName,String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
+        List<String> weaponList;
+        List<String> languages;
+        List<String> savingThrows;
+        List<String> description;
+        List<String> skillList = new ArrayList<>();
+        List<Integer> abilityScores = new ArrayList<>();
+        List<Integer> abilityModifier;
+        List<Object> generatedNPCFinished = new ArrayList<>();
         String race;
         String job;
         String genClass;
@@ -120,11 +121,7 @@ public class RandomNPC {
         }
         generatedNPCFinished.addFirst(race);
         //random Level
-        if (inputLevel == null) {
-            level = randGen.randLevel();
-        } else{
-            level = inputLevel;
-        }
+        level = Objects.requireNonNullElseGet(inputLevel, () -> randGen.randLevel());
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(level));
         //random Job
         if (inputJob == null) {
@@ -158,10 +155,10 @@ public class RandomNPC {
                 break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
-                ArrayList<String> abilityScoreNew = randGen.bigStringToDividedString(inputAbilityScore);
-                ArrayList<Integer> abilityScoreNewInteger = new ArrayList<>();
-                for (String abilistr : abilityScoreNew) {
-                    abilityScoreNewInteger.add(Integer.parseInt(abilistr));
+                List<String> abilityScoreNew = randGen.bigStringToDividedString(inputAbilityScore);
+                List<Integer> abilityScoreNewInteger = new ArrayList<>();
+                for (String abilityStr : abilityScoreNew) {
+                    abilityScoreNewInteger.add(Integer.parseInt(abilityStr));
                 }
                 abilityScores.addAll(abilityScoreNewInteger);
                 break;
@@ -169,19 +166,19 @@ public class RandomNPC {
 
         //distribute AbilityScore
         abilityScores = distributeAbilityScore(abilityScores, genClass);
-        abilityScores = addRaceModifierToAbilityScore(race,abilityScores);
-        abilityScores = (ArrayList<Integer>) addAbilityScoreImprovement(level, abilityScores);
+        abilityScores =  addRaceModifierToAbilityScore(race,abilityScores);
+        abilityScores =  addAbilityScoreImprovement(level, abilityScores);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
 
         //calc AbilityModifier
-        abilityModifier = determineAbilityModifier(abilityScores);
+        abilityModifier =  determineAbilityModifier(abilityScores);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityModifier));
 
         //calc HP
         healthPoints = calculateHP(genClass, level, abilityModifier);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(healthPoints));
 
-        ArrayList<String> armorList = determineArmorAndAC(genClass, race, abilityModifier);
+        List<String> armorList = determineArmorAndAC(genClass, race, abilityModifier);
         String armor = armorList.get(0);
         int armorClass = Integer.parseInt(armorList.get(1));
         generatedNPCFinished.add(generatedNPCFinished.size(), armorList.get(0));//armor
@@ -190,7 +187,7 @@ public class RandomNPC {
         weaponList = determineWeapons(genClass, race);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(weaponList));//waffenliste
 
-        ArrayList<String> movementSpeedList = determineMovementSpeed(race);
+        List<String> movementSpeedList = determineMovementSpeed(race);
         generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(movementSpeedList));//movement speed
 
         //Prof Bonus
@@ -227,8 +224,6 @@ public class RandomNPC {
             name = inputName;
         }
 
-
-
         generatedNPCFinished.add(generatedNPCFinished.size(), name);
 
         //random Alignment
@@ -236,7 +231,7 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), alignment);
         
         //random Description
-        description = randGen.randDescription(race, alignment);
+        description = randGen.randDescription(race);
         generatedNPCFinished.add(generatedNPCFinished.size(), description);
 
         //random Deity
@@ -252,15 +247,15 @@ public class RandomNPC {
         generatedNPCFinished.add(generatedNPCFinished.size(), senses);
 
         //spells
-        ArrayList<Object> spellList = randGen.randSpellList(genClass,abilityModifier,level);
+        List<Object> spellList =  randGen.randSpellList(genClass,abilityModifier,level);
         spellList = randGen.addRaceCantripsAndSpells(race,spellList,level);
         spellList = randGen.arrangeSpellListInTheRightOrder(spellList);
         generatedNPCFinished.add(generatedNPCFinished.size(), (spellList));
 
         //features
-        ArrayList<String> actionList = determineFeatures(race,"action");
-        ArrayList<String> bonusActionList = determineFeatures(race, "bonus action");
-        ArrayList<String> bonusTextList = determineFeatures(race, "bonus text");
+        List<String> actionList = determineFeatures(race,"action");
+        List<String> bonusActionList = determineFeatures(race, searchTermBonusAction);
+        List<String> bonusTextList = determineFeatures(race, "bonus text");
 
         generatedNPCFinished.add(generatedNPCFinished.size(), actionList);
         generatedNPCFinished.add(generatedNPCFinished.size(), bonusActionList);
@@ -269,21 +264,18 @@ public class RandomNPC {
        //Spell Ability = Spell Attack Mod und Spell Save DC
         int spellAttack = randGen.spellAttackMod(abilityModifier, profBonus, genClass);
         int spellSave = randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass));
-        ArrayList<String> spellAbility =new ArrayList<>();
+        List<String> spellAbility =new ArrayList<>();
 
         spellAbility.add(String.valueOf(spellAttack));
         spellAbility.add(String.valueOf(spellSave)) ;
         generatedNPCFinished.add(generatedNPCFinished.size(), spellAbility);
 
-
-        //dragonborn
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
             generatedNPCFinished.set(0, race);
         }
 
-
-        ArrayList<Object> history = new ArrayList<Object>();
+        ArrayList<Object> history = new ArrayList<>();
         
         history.add(name);
         history.add(level);
@@ -314,20 +306,17 @@ public class RandomNPC {
         history.add(deity);
         history.add(bonusTextList);
 
-
-
-
         dbms.saveEntry(history);
 
         return generatedNPCFinished;
     }
 
-    public ArrayList<Integer> distributeAbilityScore (ArrayList<Integer> rolledAbilityScore, String charClass) {
-    	ArrayList<Integer> rawAbilityScores ;
-    	ArrayList<String> arrayForClass;
-    	ArrayList<String> dividedAbilityScores ;
-    	ArrayList<String> finishedAbilityScores = new ArrayList<>();
-    	ArrayList<Integer> parsedAbilityScores = new ArrayList<>();
+    public List<Integer> distributeAbilityScore (List<Integer> rolledAbilityScore, String charClass) {
+    	List<Integer> rawAbilityScores ;
+    	List<String> arrayForClass;
+    	List<String> dividedAbilityScores ;
+    	List<String> finishedAbilityScores = new ArrayList<>();
+    	List<Integer> parsedAbilityScores = new ArrayList<>();
     	
     	rawAbilityScores = rolledAbilityScore;
 
@@ -347,7 +336,6 @@ public class RandomNPC {
     	int j = 0;
 
     	while(i <= 5 && j <= 5) {
-
 
             String aScore = dividedAbilityScores.get(i);
     		Integer value = rawAbilityScores.get(i);
@@ -374,8 +362,8 @@ public class RandomNPC {
     	}
     }
 
-    public ArrayList<Integer> determineAbilityModifier(ArrayList<Integer> abilityScore){
-        ArrayList<Integer> abilityModifier = new ArrayList<>();
+    public List<Integer> determineAbilityModifier(List<Integer> abilityScore){
+        List<Integer> abilityModifier = new ArrayList<>();
         float calcMod;
         for (Integer i: abilityScore){
             calcMod = (float) (i-10)/ 2 - 0.2f;
@@ -384,8 +372,8 @@ public class RandomNPC {
         return abilityModifier;
     }
 
-    public ArrayList<String> addAbilityScoreToSkillList(ArrayList<Integer> abilityModifier, ArrayList<String> skillList, int profBonus ){
-        ArrayList<String> skillListWithNumbers = new ArrayList<>();
+    public List<String> addAbilityScoreToSkillList(List<Integer> abilityModifier, List<String> skillList, int profBonus ){
+        List<String> skillListWithNumbers = new ArrayList<>();
         String dbAbilityScore ;
         for (String s : skillList){
             if((!Objects.equals(s, "null")) && (!s.equals("Any"))) {
@@ -404,7 +392,7 @@ public class RandomNPC {
 
                 switch (dbAbilityScore) {
                     case "Str":
-                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(0) + profBonus));
+                        skillListWithNumbers.add(s + " +" + (abilityModifier.getFirst() + profBonus));
                         break;
                     case "Dex":
                         skillListWithNumbers.add(s + " +" + (abilityModifier.get(1)+ profBonus));
@@ -432,10 +420,10 @@ public class RandomNPC {
     Diese Funktion wurde ausgelagert. Sie möchte, um glücklich zu sein, die klasse, rasse und die ability Modifier.
     Am Ende wird zurückgegeben eine ArrayList<> mit (Die ausgewählte Rüstung, die Armor Class vollständig berechnet)
      */
-    public ArrayList<String> determineArmorAndAC(String genClass, String race, ArrayList<Integer> abilityModifier){
-        ArrayList<String> armorProfList = randGen.figureOutProfList("armor", genClass, race);
-        ArrayList<String> armorBoni;
-        ArrayList<String> currentArmor;
+    public List<String> determineArmorAndAC(String genClass, String race, List<Integer> abilityModifier){
+        List<String> armorProfList = randGen.figureOutProfList("armor", genClass, race);
+        List<String> armorBoni;
+        List<String> currentArmor;
         String kindOfArmor;
         int armorClass;
         boolean isThereAShield =armorProfList.contains("Shield");
@@ -476,14 +464,14 @@ public class RandomNPC {
                 armorClass = armorClass +2;
             }
         }
-        ArrayList<String> armorAndArmorClass = new ArrayList<>();
+        List<String> armorAndArmorClass = new ArrayList<>();
         armorAndArmorClass.add(armorList);
         armorAndArmorClass.add(String.valueOf(armorClass));
         return armorAndArmorClass;
     }
-    public ArrayList<String> determineWeapons(String genClass, String race){
-        ArrayList<String> weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
-        ArrayList<String> weaponList = new ArrayList<>();
+    public List<String> determineWeapons(String genClass, String race){
+        List<String> weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
+        List<String> weaponList = new ArrayList<>();
         //randomWeapon
         int weaponCount = rndNumb.nextInt(4)+2;
         for(int i=0; i<weaponCount;i++){
@@ -494,10 +482,10 @@ public class RandomNPC {
         weaponList.addAll(removeDuplicateWeapons);
         return weaponList;
     }
-    public ArrayList<String> determineMovementSpeed(String race) {
+    public List<String> determineMovementSpeed(String race) {
         //creature Speed
-        ArrayList<String> movementSpeed = randGen.bigStringToDividedString(dbms.getRow("race", race).get(9));
-        ArrayList<String> movementSpeedList = new ArrayList<>();
+        List<String> movementSpeed = randGen.bigStringToDividedString(dbms.getRow("race", race).get(9));
+        List<String> movementSpeedList = new ArrayList<>();
         for (String s : movementSpeed) {
             switch (s.substring(s.length() - 1)) {
                 case "w":
@@ -518,10 +506,10 @@ public class RandomNPC {
     public int determineProfBonus(int level) {
        return Integer.parseInt(dbms.getRow("level", String.valueOf(level)).get(2));
     }
-    public ArrayList<String> determineSavingThrows(String genClass, ArrayList<Integer> abilityModifier, int profBonus){
-        ArrayList<String> savingThrows = new ArrayList<>();
+    public List<String> determineSavingThrows(String genClass, List<Integer> abilityModifier, int profBonus){
+        List<String> savingThrows = new ArrayList<>();
         if(!genClass.equals(nameDBCommoner)) {
-            ArrayList<String> savingThrowList =  randGen.bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(5));
+            List<String> savingThrowList = randGen.bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(5));
             for (String s : savingThrowList) {
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 switch (s) {
@@ -555,28 +543,28 @@ public class RandomNPC {
 
         return savingThrows;
     }
-    public int calculateHP(String genClass, int level, ArrayList<Integer> abilityModifier ){
+    public int calculateHP(String genClass, int level, List<Integer> abilityModifier ){
         if (level == 0){
             level = 1;
         }
         return randGen.diceThrower(level, Integer.parseInt(dbms.getRow(nameDBClass,genClass).get(2)))+ level*abilityModifier.get(2);
 
     }
-    public ArrayList<String> determineSkillList (String race, String job, String genClass){
+    public List<String> determineSkillList (String race, String job, String genClass){
         //Race Skills
         int numberSkill;
-        ArrayList<String> skillList =new ArrayList<>();
+        List<String> skillList =new ArrayList<>();
         String raceSkillList = dbms.getRow("race", race).get(6);
         if((raceSkillList != null)&&(!raceSkillList.contains("Any"))&&(raceSkillList.contains(":"))){ // nicht null, nicht Any, aber enthält":"
             numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
             raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":")+1, raceSkillList.length()-1);
-            skillList = (ArrayList<String>) randGen.randSkillProf(randGen.bigStringToDividedString(raceSkillList),numberSkill, skillList);
+            skillList = randGen.randSkillProf(randGen.bigStringToDividedString(raceSkillList),numberSkill, skillList);
 
         } else if ((raceSkillList !=null) && raceSkillList.contains("Any")) { //nicht null, enthält Any
             raceSkillList=raceSkillList.replace("Any","");
             numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
             raceSkillList= "Acrobatics, Animal Handling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, Sleight of Hand, Stealth, Survival";
-            skillList = (ArrayList<String>) randGen.randSkillProf(randGen.bigStringToDividedString(raceSkillList),numberSkill, skillList);
+            skillList = randGen.randSkillProf(randGen.bigStringToDividedString(raceSkillList),numberSkill, skillList);
 
         } else {
             skillList.add(raceSkillList);
@@ -585,7 +573,7 @@ public class RandomNPC {
         skillList.addAll(randGen.bigStringToDividedString(dbms.getRow("job", job).get(2))); //Skills durch Job
 
         //ClassSkills
-        ArrayList<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(6)); // Skills durch class
+        List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRow(nameDBClass, genClass).get(6)); // Skills durch class
         numberSkill = Integer.parseInt(dbms.getRow(nameDBClass, genClass).get(7)); // Commoner ClassSkillNumber auf 0 setzen
             if (possibleSkillList.contains("Any")) { // fall barde
                 possibleSkillList.add("Acrobatics");
@@ -607,16 +595,16 @@ public class RandomNPC {
                 possibleSkillList.add("Stealth");
                 possibleSkillList.add("Survival");    //alle skills hinzufügen
             }
-            skillList = (ArrayList<String>) randGen.randSkillProf(possibleSkillList, numberSkill, skillList);
+            skillList = randGen.randSkillProf(possibleSkillList, numberSkill, skillList);
             Set<String> removeDuplicate = new HashSet<>(skillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
             skillList.clear();
             skillList.addAll(removeDuplicate);
         return skillList;
     }
-    public ArrayList<String> determineLanguages(String race, String job){
+    public List<String> determineLanguages(String race, String job){
         String languagesRace = dbms.getRow("race", race).get(10);   // Sprachen der Rasse
         String languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
-        ArrayList<String> languages = randGen.bigStringToDividedString(languagesRace); //aufteilung des Strings
+        List<String> languages =  randGen.bigStringToDividedString(languagesRace); //aufteilung des Strings
 
         int count = Integer.parseInt(languages.getLast()) + Integer.parseInt(languagesJob); // Berechnung der Anzahl an Sprachen
 
@@ -630,9 +618,9 @@ public class RandomNPC {
         languages.addAll(removeDuplicatedLanguages);
         return languages;
     }
-    public ArrayList<String> determineFeatures(String race, String searchedFeature){
-        ArrayList<String> features = new ArrayList<>();
-        ArrayList<String> finalFeatures = new ArrayList<>();
+    public List<String> determineFeatures(String race, String searchedFeature){
+        List<String> features = new ArrayList<>();
+        List<String> finalFeatures = new ArrayList<>();
         String searchTermDB = null;
 
         if((!Objects.equals(dbms.getRow("race", race).get(3), "null"))){
@@ -646,7 +634,7 @@ public class RandomNPC {
                 searchTermDB = searchedFeature;
                 break;
             case "bonus action":
-                searchTermDB = "bonus action";
+                searchTermDB = searchTermBonusAction;
                 break;
             default:
                 break;
@@ -659,15 +647,15 @@ public class RandomNPC {
         }
         return finalFeatures;
     }
-    public ArrayList<Integer> addRaceModifierToAbilityScore(String race, ArrayList<Integer> abilityScore){
-        ArrayList<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
+    public List<Integer> addRaceModifierToAbilityScore(String race, List<Integer> abilityScore){
+        List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
         int raceModNumber;
         for (String s: raceAbilityModifier) {
             raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
             s = s.substring(0,3);
             switch (s){
                     case "Str":
-                        abilityScore.set(0, abilityScore.get(0) + raceModNumber);
+                        abilityScore.set(0, abilityScore.getFirst() + raceModNumber);
                         break;
                     case "Dex":
                         abilityScore.set(1,abilityScore.get(1) + raceModNumber);
@@ -733,7 +721,7 @@ public class RandomNPC {
         if (abilityScoreBelow20.isEmpty()) {  // wenn alle über 20 sind, dann gib die bekommene Ability Scores zurück
             return abilityScore;
         }
-        ArrayList<Integer> aSB20Sorted = new ArrayList<>(abilityScoreBelow20);
+        List<Integer> aSB20Sorted = new ArrayList<>(abilityScoreBelow20);
         aSB20Sorted.sort(Collections.reverseOrder());
         for (Integer abilities : aSB20Sorted) { // wenn es ungerade gibt werden diese erst einmal aufgefüllt
             if (abilities % 2 == 1) {   // check, ob ungerade

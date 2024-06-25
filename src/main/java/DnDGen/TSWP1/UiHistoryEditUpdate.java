@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 /*
   *   0: ID //muss auch wieder zurückgegeben werden
@@ -57,16 +58,16 @@ public class UiHistoryEditUpdate {
     /*
     changes = {race, class, alignment}
      */
-    public ArrayList<Object> updateHistoryEdit (ArrayList<String> changes, Integer ID ){
-        ArrayList<Object> validAndInvalidList = new ArrayList<>();
-        ArrayList<Object> currentNPC = dbms.getHistory(); // Lucas ToDo
+    public List<Object> updateHistoryEdit (List<String> changes, Integer iD ){
+        List<Object> validAndInvalidList = new ArrayList<>();
+        List<Object> currentNPC = dbms.getHistoryEntry(iD);
         String newRace = changes.get(0);
         String newCharClass = changes.get(1);
         String newAlignment = changes.get(2);
 
 
         //Übergangs Variablen werden wahrscheinlich später entfernt oder geändert
-        ArrayList<Integer> abilityScore = new ArrayList<>();
+        List<Integer> abilityScore = new ArrayList<>();
         String oldRace = null;
 
 
@@ -94,16 +95,16 @@ public class UiHistoryEditUpdate {
 
         }else {
             //nichts ändert sich
-            return null;
+            return new ArrayList<>();
         }
         //geänderten wird dem UI zurückgegeben
-        return null;
+        return validAndInvalidList;
     }
 
     /*
     Option um nicht die HP manuell ausrechnen zu müssen, kann die Option angeboten werden diese auch wieder zufällig generieren zu lassen
      */
-    private int newRolledHP(int level, String genClass, ArrayList<Integer> abilityModifier){
+    private int newRolledHP(int level, String genClass, List<Integer> abilityModifier){
         return randNPC.calculateHP(genClass, level, abilityModifier);
     }
 

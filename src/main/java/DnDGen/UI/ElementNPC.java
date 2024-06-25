@@ -38,7 +38,7 @@ public class ElementNPC {
     public void getDescriptionOld() {
         String name = (String) npc.get(15);
 
-        ArrayList<String> npcDescriptionArray = rGenerator.randDescription((String) npc.get(0), (String) npc.get(16));
+        ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription((String) npc.get(0));
         List listNpc = npcDescriptionArray;
         String sex = (String) npc.get(13);
         TextFlow descriptionText = new TextFlow();

@@ -238,13 +238,13 @@ public class DBMS implements ApplicationContextAware{
 		//-deity, -alignment, -languange, -Weapon, -Armor, -Spells, -actions
 		switch(dbname) {
 		case "weapon":
-			ArrayList<String> weaponprefs = randGen.bigStringToDividedString(classRepository.getWeaponPref(Clazz));
+			ArrayList<String> weaponprefs = (ArrayList<String>) randGen.bigStringToDividedString(classRepository.getWeaponPref(Clazz));
 			for(String weaponpref : weaponprefs) {
 				col.addAll(weaponRepository.getWeaponCol(weaponpref));
 			}
 			break;
 		case "armor":
-			ArrayList<String> armorprefs = randGen.bigStringToDividedString(classRepository.getArmorPref(Clazz));
+			ArrayList<String> armorprefs = (ArrayList<String>) randGen.bigStringToDividedString(classRepository.getArmorPref(Clazz));
 			for(String armorpref : armorprefs) {
 				col.addAll(armorRepository.getArmorCol(armorpref));
 			}
