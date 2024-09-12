@@ -21,6 +21,6 @@ public interface AlignmentRepository extends CrudRepository<AlignmentModel, Inte
 	ArrayList<AlignmentModel> findByAlignmentName(String name);
 	ArrayList<AlignmentModel> findByAlignmentShorted(String shorted);
 	Page<AlignmentModel> findAll(Pageable pageable);
-	@Query("SELECT s.alignmentName FROM AlignmentModel s")
+	@Query("SELECT s.alignmentShorted FROM AlignmentModel s")
 	ArrayList<String> getallAlignmentCol();
 }
