@@ -1,6 +1,7 @@
 package DnDGen.UI;
 
 
+import DnDGen.TSWP1.NPCClass;
 import DnDGen.TSWP1.RandomGenerator;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -258,7 +259,7 @@ public class UI extends Application {
 
 //    Button Klick
         buttonGenerate.setOnAction(e -> {
-            ArrayList<Object> npc = (ArrayList<Object>) rNPC.createRandomNPC(zufallName(nameField.getText()),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
+            NPCClass npc = rNPC.createRandomNPC(zufallName(nameField.getText()),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
                                     zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
 
             if(gridNpc.getChildren().size() > 2) {
