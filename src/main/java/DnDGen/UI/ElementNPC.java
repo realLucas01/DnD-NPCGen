@@ -1,5 +1,6 @@
 package DnDGen.UI;
 
+import DnDGen.TSWP1.NPCClass;
 import DnDGen.TSWP1.RandomGenerator;
 import DnDGen.TSWP1.RandomNPC;
 import javafx.geometry.Insets;
@@ -20,14 +21,20 @@ import java.util.List;
 
 public class ElementNPC {
     VBox npcStack, descriptionVBox;
-    ArrayList<Object> npc;
+    NPCClass npc;
     RandomNPC rNPC = new RandomNPC();
     RandomGenerator rGenerator = new RandomGenerator();
     ArrayList<Line> lineList;
 
-
     // Konstruktor
     ElementNPC(ArrayList<Object> npc){
+        //this.npc = npc;
+        npcStack = new VBox();
+        descriptionVBox = new VBox();
+        lineList = new ArrayList<>();
+    }
+
+    ElementNPC(NPCClass npc) {
         this.npc = npc;
         npcStack = new VBox();
         descriptionVBox = new VBox();
@@ -36,11 +43,11 @@ public class ElementNPC {
 
     // gibt Beschreibung als Fließtext
     public void getDescriptionOld() {
-        String name = (String) npc.get(15);
+        String name = npc.getName();
 
-        ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription((String) npc.get(0));
+        ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription(npc.getRace());
         List listNpc = npcDescriptionArray;
-        String sex = (String) npc.get(13);
+        String sex = npc.getGender();
         TextFlow descriptionText = new TextFlow();
         String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
                 name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
@@ -65,7 +72,7 @@ public class ElementNPC {
 
     // liefert die Beschreibung als einfache Zeilen
     public void getDescriptionFromNPC() {
-        ArrayList<String> descriptionList = (ArrayList<String>) npc.get(17);
+        List<String> descriptionList = npc.getDescription();
         GridPane descriptionGrid = new GridPane();
 
         //Spaltenbreite der Tabelle definieren
@@ -120,15 +127,15 @@ public class ElementNPC {
         nameClassGrid.setVgap(4);
         nameClassGrid.setHgap(25);
 
-        Label nameL      = new Label("Name: " + npc.get(15));
-        Label levelL     = new Label("Level: " + npc.get(1));
-        Label classL     = new Label("Klasse: " + npc.get(3));
-        Label jobL       = new Label("Job: " + npc.get(2));
-        Label raceL      = new Label("Rasse: " + npc.get(0));
-        Label alignmentL = new Label("Alignment: " + npc.get(16));
-        Label ageL       = new Label("Alter: " + npc.get(14));
-        Label sexL       = new Label("Geschlecht: " + npc.get(13));
-        Label deityL     = new Label("Gottheit: " + npc.get(18));
+        Label nameL      = new Label("Name: " + npc.getName());
+        Label levelL     = new Label("Level: " + npc.getLevel());
+        Label classL     = new Label("Klasse: " + npc.getGenClass());
+        Label jobL       = new Label("Job: " + npc.getJob());
+        Label raceL      = new Label("Rasse: " + npc.getRace());
+        Label alignmentL = new Label("Alignment: " + npc.getAlignment());
+        Label ageL       = new Label("Alter: " + npc.getAge());
+        Label sexL       = new Label("Geschlecht: " + npc.getGender());
+        Label deityL     = new Label("Gottheit: " + npc.getDeity());
 
         GridPane.setConstraints(nameL,0,0);
         GridPane.setConstraints(levelL,1,0);
@@ -159,14 +166,14 @@ public class ElementNPC {
         GridPane.setConstraints(languagesL,0,4);
 
         //AmorClass, HitPoints
-        Label aCL = new Label(String.valueOf(npc.get(8)));
+        Label aCL = new Label(String.valueOf(npc.getArmorClass()));
         GridPane.setConstraints(aCL,1,0);
-        Label hPL = new Label(String.valueOf(npc.get(6)));
+        Label hPL = new Label(String.valueOf(npc.getHealthPoints()));
         GridPane.setConstraints(hPL,1,1);
         acHpSpLangGrid.getChildren().addAll(armorClassL,hitPointsL,speedL,languagesL,aCL,hPL);
 
         //Geschwindigkeit
-        listNpc = stringToList((String) npc.get(10));
+        listNpc = npc.getMovementSpeedList();
         for(int i = 0; i < listNpc.size(); i++) {
             Label label = new Label(listNpc.get(i).toString());
             GridPane.setConstraints(label,1,i+2);
@@ -175,7 +182,7 @@ public class ElementNPC {
 
         //Sprachen
         listNpc.clear();
-        listNpc = stringToList((String) npc.get(19));
+        listNpc = npc.getLanguages();
         for(int i = 0; i < listNpc.size(); i++) {
             Label label = new Label(listNpc.get(i).toString());
             GridPane.setConstraints(label,1,i+4);
@@ -208,7 +215,9 @@ public class ElementNPC {
         featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
 
 
-        ArrayList<String> featureList = ((ArrayList<String>) npc.get(22));
+        // Features
+        /*
+        ArrayList<String> featureList = ((ArrayList<String>) npc.get);
         VBox actionBox = new VBox();
         actionBox.setSpacing(5);
         GridPane.setConstraints(actionBox,1,0);
@@ -242,6 +251,8 @@ public class ElementNPC {
         featuresGrid.getChildren().addAll(actionBox,bonusActionBox,bonusTextBox);
 
 
+         */
+
         //Stats
         GridPane statsGrid = new GridPane();
         statsGrid.setPadding(new Insets(5, 5, 5, 5));
@@ -268,7 +279,7 @@ public class ElementNPC {
             statsGrid.getChildren().add(label);
         }
         listNpc.clear();
-        listNpc = stringToList((String) npc.get(11));
+        listNpc = npc.getSavingThrows();
         for(int j = 0; j < listNpc.size(); j++) {
             String ability = listNpc.get(j).toString().substring(0,3);
             String score = listNpc.get(j).toString().substring(4);
@@ -302,13 +313,13 @@ public class ElementNPC {
 
         stringNpc = "";
         listNpc.clear();
-        listNpc = stringToList((String) npc.get(9));
+        listNpc = npc.getWeaponList();
         for(int i = 0; i < listNpc.size(); i++) {
             stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
         }
         weaponL.setText(stringNpc);
         weaponL.setWrapText(true);
-        armorL.setText("    - " + npc.get(7));
+        armorL.setText("    - " + npc.getArmor());
         armorL.setWrapText(true);
 
 
@@ -319,11 +330,11 @@ public class ElementNPC {
         Text text1=new Text("Skills:\n");
         text1.setStyle("-fx-font-weight: bold");
         skillTF.getChildren().addAll(text1);
-        if(npc.get(12) == "none") {
-            Text skill = new Text( (String) npc.get(12));
+        if(npc.getSkillList().getFirst() == "none") {
+            Text skill = new Text(npc.getSkillList().toString());
             skillTF.getChildren().add(skill);
         } else {
-            for(String skill : (ArrayList<String>) npc.get(12)) {
+            for(String skill : npc.getSkillList()) {
                 Text text = new Text(skill + "\n");
                 skillTF.getChildren().add(text);
             }
@@ -335,7 +346,7 @@ public class ElementNPC {
         text3.setStyle("-fx-font-weight: bold");
         senseTF.getChildren().addAll(text3);
 
-        Text sense = new Text( npc.get(20) + "\n");
+        Text sense = new Text( npc.getSenses() + "\n");
         senseTF.getChildren().add(sense);
 
 
@@ -347,10 +358,13 @@ public class ElementNPC {
         text1 = new Text("Zauber: ");
         text1.setStyle("-fx-font-weight: bold");
         spellTF.getChildren().addAll(text1);
-        for(String spell : (ArrayList<String>) npc.get(21)) {
+        /*
+        for(String spell : npc.getSpellList()) {
             Text text = new Text(spell + "\n");
             spellTF.getChildren().add(text);
         }
+
+         */
 
         skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
@@ -456,10 +470,10 @@ public class ElementNPC {
     }
 
     // gibt den AbilityScore mit Modifier zurück
-    public String abilityString(int index, ArrayList<Object> npc) {
+    public String abilityString(int index, NPCClass npc) {
         String string = "";
-        List listNpc = stringToList((String) npc.get(4));
-        List listAbilityModifier = stringToList((String) npc.get(5));
+        List listNpc = npc.getAbilityScores();
+        List listAbilityModifier = npc.getAbilityModifier();
 
         if(listAbilityModifier.get(index).toString().length() > 1) {
             string = listNpc.get(index) + listAbilityModifier.get(index).toString();
