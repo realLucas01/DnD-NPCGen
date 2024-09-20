@@ -32,6 +32,16 @@ public class NPCClass {
     private String alignment;
     private String deity;
     private List<String> bonusTextList;
+    private String cantrips;
+    private String firstLevelSpell;
+    private String secondLevelSpell;
+    private String thirdLevelSpell;
+    private String fourthLevelSpell;
+    private String fifthLevelSpell;
+    private String sixthLevelSpell;
+    private String seventhLevelSpell;
+    private String eightLevelSpell;
+    private String ninthLevelSpell;
 
     public String getName() {
         return name;
@@ -248,4 +258,88 @@ public class NPCClass {
     public void setBonusTextList(List<String> bonusTextList) {
         this.bonusTextList = bonusTextList;
     }
+
+    // Spells alle Level
+    // NPC zu List und vis versa
+
+    public void setSpellCantrips(String spells){
+        this.cantrips = spells;
+    }
+
+    public String getSpellCantrips(){
+        return cantrips;
+    }
+
+    public void setFirstLevelSpell(String spells){
+        this.firstLevelSpell = spells;
+    }
+
+    public String getFirstLevelSpell(){
+        return firstLevelSpell;
+    }
+
+    public void setSecondLevelSpell(String spells){
+        this.secondLevelSpell = spells;
+    }
+
+    public String getSecondLevelSpell(){
+        return secondLevelSpell;
+    }
+
+    public void setThirdLevelSpell(String spells){
+        this.thirdLevelSpell = spells;
+    }
+
+    public String getThirdLevelSpell(){
+        return thirdLevelSpell;
+    }
+
+    public void setFourthLevelSpell(String spells){
+        this.fourthLevelSpell = spells;
+    }
+
+    public String getFourthLevelSpell(){
+        return fourthLevelSpell;
+    }
+
+    public void setFifthSpellLevel(String spells){
+        this.fifthLevelSpell = spells;
+    }
+
+    public String getFifthLevelSpell(){
+        return fifthLevelSpell;
+    }
+
+    public void setSixthLevelSpell(String spells){
+        this.sixthLevelSpell = spells;
+    }
+
+    public String getSixthLevelSpell(){
+        return sixthLevelSpell;
+    }
+
+    public void setSeventhLevelSpell(String spells){
+        this.seventhLevelSpell = spells;
+    }
+
+    public String getSeventhLevelSpell(){
+        return seventhLevelSpell;
+    }
+
+    public void setEightLevelSpell(String spells){
+        this.eightLevelSpell = spells;
+    }
+
+    public String getEightLevelSpell(){
+        return eightLevelSpell;
+    }
+    public void setNinthLevelSpell(String spells){
+        this.ninthLevelSpell = spells;
+    }
+
+    public String getNinthLevelSpell(){
+        return ninthLevelSpell;
+    }
+
+
 }
