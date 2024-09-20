@@ -45,8 +45,8 @@ public class ElementNPC {
     public void getDescriptionOld() {
         String name = npc.getName();
 
-        ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription(npc.getRace());
-        List listNpc = npcDescriptionArray;
+        //ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription(npc.getRace());
+        List listNpc = rGenerator.randDescription(npc.getRace());
         String sex = npc.getGender();
         TextFlow descriptionText = new TextFlow();
         String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
@@ -83,7 +83,7 @@ public class ElementNPC {
         descriptionCol2Constraint.setPercentWidth(75);
         descriptionGrid.getColumnConstraints().addAll(descriptionCol1Constraint,descriptionCol2Constraint);
 
-        //Plothook nicht da Stelle nach attitute
+        //Plot hook nicht da Stelle nach attitude
         ArrayList<String> descriptionTitel = new ArrayList<>(Arrays.asList("Eyes: ","Hair color: ", "Hairstyle: ",
                 "Skin: ", "Trait: ", "Mannerism: ", "Bond: ", "Flaw: ",
                 "Ideal: ", "Voice: ", "Clothing: ", "Attitude: ",
@@ -358,13 +358,46 @@ public class ElementNPC {
         text1 = new Text("Zauber: ");
         text1.setStyle("-fx-font-weight: bold");
         spellTF.getChildren().addAll(text1);
+
+        // Cantrips
+        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text(npc.getSpellCantrips() + "\n"));
+
+        // 1
+        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getFirstLevelSpell() + "\n"));
+
+        // 2
+        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getSecondLevelSpell() + "\n"));
+
+        // 3
+        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getThirdLevelSpell() + "\n"));
+
+        // 4
+        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getFourthLevelSpell() + "\n"));
+
+        // 5
+        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getFifthLevelSpell() + "\n"));
+
+        // 6
+        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getSixthLevelSpell() + "\n"));
+
+        // 7
+        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getSeventhLevelSpell() + "\n"));
+
+        // 8
+        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getEightLevelSpell() + "\n"));
+
+        // 9
+        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getNinthLevelSpell() + "\n"));
+
         /*
-        for(String spell : npc.getSpellList()) {
+        for(String spell : npc.getSpell {
             Text text = new Text(spell + "\n");
             spellTF.getChildren().add(text);
         }
 
+
          */
+
 
         skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
@@ -413,7 +446,7 @@ public class ElementNPC {
 
     /* @author Marie
      *
-     * Teilt einen String der die Form eines Array hat in einzelne Elemente und gibt sie als Liste zurück
+     * Teilt einen String der die Form eines Arrays hat in einzelne Elemente und gibt sie als Liste zurück
      *
      * @param string: ein String der als Liste geschrieben werden soll.
      * @return Eine Liste mit dem Inhalt von dem string eingabe.
