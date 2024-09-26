@@ -242,10 +242,21 @@ public class RandomNPC {
         senses = randGen.getVision(race) + ", Passive Perception " + randGen.passivePerception(abilityModifier, skillList, profBonus);
         randNPC.setSenses(senses);
 
+        randNPC = randGen.randomSpellsForClass(randNPC);
+        System.out.println("Cantrips: " + randNPC.getSpellCantrips());
+        System.out.println("1st: " + randNPC.getFirstLevelSpell());
+        System.out.println("2: " + randNPC.getSecondLevelSpell());
+        System.out.println("3: " + randNPC.getThirdLevelSpell());
+        System.out.println("4: " + randNPC.getFourthLevelSpell());
+        System.out.println("5: " + randNPC.getFifthLevelSpell());
+        System.out.println("6: " + randNPC.getSixthLevelSpell());
+        System.out.println("7: " + randNPC.getSeventhLevelSpell());
+        System.out.println("8: " + randNPC.getEightLevelSpell());
+        System.out.println("9: " + randNPC.getNinthLevelSpell());
+        System.out.println("Spelllist " + randNPC.getSpellList());
         //spells
-        List<Object> spellList =  randGen.randSpellList(genClass,abilityModifier,level);
-        spellList = randGen.addRaceCantripsAndSpells(race,spellList,level);
-        spellList = randGen.arrangeSpellListInTheRightOrder(spellList);
+        List<Object> spellList =  randNPC.getSpellList();
+        //spellList = randGen.addRaceCantripsAndSpells(race,spellList,level);
         randNPC.setSpellList(spellList);
         //features
         List<String> actionList = determineFeatures(race,"action");
