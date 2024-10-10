@@ -28,7 +28,6 @@ public class RandomGenerator {
 	String nameDBSpells = "spells";
 	String nameDBFeatures = "features";
 	String nameDBSpellSlots = "spellslots";
-	String placeholderVariableForSonarCloud = "placeholder";
 	//Aufteilung eines großen String in kleinere
 	public List<String> bigStringToDividedString(String bigString) {
         String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
@@ -181,7 +180,6 @@ public class RandomGenerator {
 			dbData.clear();
 			i++;
 		}
-
 		desc.add(size);
 		desc.add(Double.toString(height));
 

@@ -309,6 +309,10 @@ public class NPCClass {
         return listOfTheNPC;
     }
 
+    public void convertListToNPC(List<Object> listOfTheNPC){
+
+    }
+
     public void setSpellCantrips(String spells){
         this.cantrips = spells;
     }
@@ -316,9 +320,11 @@ public class NPCClass {
     public String getSpellCantrips(){
         return cantrips;
     }
+
     public void addSpellCantrip(String spells){
         this.cantrips = this.cantrips + spells;
     }
+
     public void removeSpellCantrip(String spells){
         this.cantrips = this.cantrips.replace(spells, "");
     }
@@ -330,9 +336,11 @@ public class NPCClass {
     public String getFirstLevelSpell(){
         return firstLevelSpell;
     }
+
     public void addFirstLevelSpell(String spells){
         this.firstLevelSpell = this.firstLevelSpell + spells;
     }
+
     public void removeFirstLevelSpell(String spells){
         this.firstLevelSpell = this.firstLevelSpell.replace(spells, "");
     }
@@ -344,9 +352,11 @@ public class NPCClass {
     public String getSecondLevelSpell(){
         return secondLevelSpell;
     }
+
     public void addSecondLevelSpell(String spells){
         this.secondLevelSpell = this.secondLevelSpell + spells;
     }
+
     public void removeSecondLevelSpell(String spells){
         this.secondLevelSpell = this.secondLevelSpell.replace(spells, "");
     }
@@ -358,9 +368,11 @@ public class NPCClass {
     public String getThirdLevelSpell(){
         return thirdLevelSpell;
     }
+
     public void addThirdLevelSpell(String spells){
         this.thirdLevelSpell = this.thirdLevelSpell + spells;
     }
+
     public void removeThirdLevelSpell(String spells){
         this.thirdLevelSpell = this.thirdLevelSpell.replace(spells, "");
     }
@@ -372,9 +384,11 @@ public class NPCClass {
     public String getFourthLevelSpell(){
         return fourthLevelSpell;
     }
+
     public void addFourthLevelSpell(String spells){
         this.fourthLevelSpell = this.fourthLevelSpell + spells;
     }
+
     public void removeFourthLevelSpell(String spells){
         this.fourthLevelSpell = this.fourthLevelSpell.replace(spells, "");
     }
@@ -386,9 +400,11 @@ public class NPCClass {
     public String getFifthLevelSpell(){
         return fifthLevelSpell;
     }
+
     public void addFifthLevelSpell(String spells){
         this.fifthLevelSpell = this.fifthLevelSpell + spells;
     }
+
     public void removeFifthLevelSpell(String spells){
         this.fifthLevelSpell = this.fifthLevelSpell.replace(spells, "");
     }
@@ -400,9 +416,11 @@ public class NPCClass {
     public String getSixthLevelSpell(){
         return sixthLevelSpell;
     }
+
     public void addSixthLevelSpell(String spells){
         this.sixthLevelSpell = this.sixthLevelSpell + spells;
     }
+
     public void removeSixthLevelSpell(String spells){
         this.sixthLevelSpell = this.sixthLevelSpell.replace(spells, "");
     }
@@ -414,9 +432,11 @@ public class NPCClass {
     public String getSeventhLevelSpell(){
         return seventhLevelSpell;
     }
+
     public void addSeventhLevelSpell(String spells){
         this.seventhLevelSpell = this.seventhLevelSpell + spells;
     }
+
     public void removeSeventhLevelSpell(String spells){
         this.seventhLevelSpell = this.seventhLevelSpell.replace(spells, "");
     }
@@ -428,12 +448,15 @@ public class NPCClass {
     public String getEightLevelSpell(){
         return eightLevelSpell;
     }
+
     public void addEightLevelSpell(String spells){
         this.eightLevelSpell = this.eightLevelSpell + spells;
     }
+
     public void removeEightLevelSpells(String spells){
         this.eightLevelSpell = this.eightLevelSpell.replace(spells, "");
     }
+
     public void setNinthLevelSpell(String spells){
         this.ninthLevelSpell = spells;
     }
@@ -441,9 +464,11 @@ public class NPCClass {
     public String getNinthLevelSpell(){
         return ninthLevelSpell;
     }
+
     public void addNinthLevelSpell(String spells){
         this.ninthLevelSpell = this.ninthLevelSpell + spells;
     }
+
     public void removeNinthLevelSpell(String spells){
         this.ninthLevelSpell = this.ninthLevelSpell.replace(spells, "");
     }
