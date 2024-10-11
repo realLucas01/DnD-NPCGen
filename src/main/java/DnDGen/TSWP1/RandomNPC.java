@@ -629,8 +629,10 @@ public class RandomNPC {
         List<String> finalFeatures = new ArrayList<>();
         String searchTermDB = null;
 
-        if((!Objects.equals(dbms.getRow("race", race).get(3), "null"))){
-            features.addAll(randGen.bigStringToDividedString(dbms.getRow("race", race).get(3)));
+        //überprüfung, ob null
+        List<String> raceData = dbms.getRow("race", race);
+        if (raceData != null && !Objects.equals(raceData.get(3), "null")) {
+            features.addAll(randGen.bigStringToDividedString(raceData.get(3)));
         }
         switch (searchedFeature) {
             case "action":
@@ -645,11 +647,10 @@ public class RandomNPC {
             default:
                 break;
         }
-        for(String s: features) {
-            if (dbms.getRow(nameDBFeatures, s).get(3).equals(searchTermDB)){
-                finalFeatures.add(dbms.getRow(nameDBFeatures, s).get(1) + ": " + dbms.getRow(nameDBFeatures,s).get(2));
-            }
-
+        for(String feature: features) {
+            List<String> featureData = dbms.getRow(nameDBFeatures, feature);
+            if (featureData.get(3).equals(searchTermDB)){
+                finalFeatures.add(featureData.get(1) + ": " + featureData.get(2));            }
         }
         return finalFeatures;
     }
@@ -690,35 +691,16 @@ public class RandomNPC {
     Bitte nicht anfassen, ausser ihr versteht wie und warum diese Funktion funktioniert
      */
     public List<Integer> addAbilityScoreImprovement (int level, List<Integer> abilityScore ){
-        int improveCount = 0;
-
-        switch(level){
-            case 19,20:
-                improveCount = improveCount +5;
-                break;
-            case 16,17,18:
-                improveCount = improveCount +4;
-                break;
-            case 12,13,14,15:
-                improveCount = improveCount +3;
-                break;
-            case 8,9,10,11:
-                improveCount = improveCount +2;
-                break;
-            case 4,5,6,7:
-                improveCount = improveCount +1;
-                break;
-            default:
-                break;
-        }
-        for (int i=0;i < improveCount ; i++){
-           abilityScore = addImprovement(abilityScore);
+        // Berechnung der Verbesserungen basierend auf dem Level
+        int improveCount = Math.max(0, level / 4);  // 1 bei Level 4, 2 bei Level 8 usw.
+        for (int i = 0; i < improveCount; i++) {
+            abilityScore = addImprovement(abilityScore);
         }
         return abilityScore;
     }
     public List<Integer> addImprovement(List<Integer> abilityScore){
-        ArrayList<Integer> unevenAbSc  =new ArrayList<>();
-        ArrayList<Integer> abilityScoreBelow20  =new ArrayList<>();
+        List<Integer> unevenAbSc  =new ArrayList<>();
+        List<Integer> abilityScoreBelow20  =new ArrayList<>();
         for(Integer abilities : abilityScore ) {
             if (abilities < 20) {      // finde alle Ability Scores die kleiner als 20 sind
                 abilityScoreBelow20.add(abilities);
@@ -727,44 +709,44 @@ public class RandomNPC {
         if (abilityScoreBelow20.isEmpty()) {  // wenn alle über 20 sind, dann gib die bekommene Ability Scores zurück
             return abilityScore;
         }
-        List<Integer> aSB20Sorted = new ArrayList<>(abilityScoreBelow20);
-        aSB20Sorted.sort(Collections.reverseOrder());
-        for (Integer abilities : aSB20Sorted) { // wenn es ungerade gibt werden diese erst einmal aufgefüllt
+
+        abilityScoreBelow20.sort(Collections.reverseOrder());
+
+        for (Integer abilities : abilityScoreBelow20) { // wenn es ungerade gibt werden diese erst einmal aufgefüllt
             if (abilities % 2 == 1) {   // check, ob ungerade
                 unevenAbSc.add(abilities);
             }
         }
-        switch (unevenAbSc.size()){
-            case 2,3,4,5,6:
-                abilityScore.set(abilityScore.indexOf(unevenAbSc.getFirst()), unevenAbSc.getFirst() + 1);
-                abilityScore.set(abilityScore.indexOf(unevenAbSc.getLast()), unevenAbSc.getLast() + 1);
-                unevenAbSc.clear();
-                break;
-            case 1:
-                abilityScore.set(abilityScore.indexOf(unevenAbSc.getFirst()), unevenAbSc.getFirst() + 1);
-                try {
-                    abilityScore.set(abilityScore.indexOf(aSB20Sorted.getFirst()), (aSB20Sorted.getFirst() + 1));//breaks here
-                } catch (Exception ignored) {
-                    //ka warum hier manchmal ein Fehler entsteht, er wird jetzt einfach abgefangen :)
-                    unevenAbSc.clear();
-                }
-                break;
-            case 0:
-                for (Integer abSc : abilityScoreBelow20) {
-                    if (abSc + 2 <= 20) {
-                        abilityScore.set(abilityScoreBelow20.indexOf(aSB20Sorted.getFirst()), aSB20Sorted.getFirst() + 2);
-                        break;
-                    }
-                }
-                break;
-            default:
-                break;
+        // Priorisiere das Erhöhen von ungeraden Werten
+        if (!unevenAbSc.isEmpty()) {
+            increaseUnevenScores(abilityScore, unevenAbSc);
+        } else {
+            // Wenn keine ungeraden Werte vorhanden sind, füge +2 hinzu (maximal 20)
+            increaseEvenScores(abilityScore, abilityScoreBelow20);
         }
-            abilityScoreBelow20.clear();
-            aSB20Sorted.clear();
-            unevenAbSc.clear();
+         return abilityScore;
+        }
 
-            return abilityScore;
+    private void increaseEvenScores(List<Integer> abilityScore, List<Integer> abilityScoreBelow20) {
+        for (Integer abSc : abilityScoreBelow20) {
+            if (abSc + 2 <= 20) {
+                abilityScore.set(abilityScore.indexOf(abSc), abSc + 2);
+                break;
+            }
         }
     }
+
+    private void increaseUnevenScores(List<Integer> abilityScore, List<Integer> unevenAbSc) {
+        // Erhöht ungerade Scores priorisiert
+        if (!unevenAbSc.isEmpty()) {
+            Integer first = unevenAbSc.getFirst();
+            abilityScore.set(abilityScore.indexOf(first), first + 1);
+
+            if (unevenAbSc.size() > 1) {
+                Integer last = unevenAbSc.getLast();
+                abilityScore.set(abilityScore.indexOf(last), last + 1);
+            }
+        }
+    }
+}
 

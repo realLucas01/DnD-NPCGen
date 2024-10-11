@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.*;
 
+import ch.qos.logback.classic.Logger;
 import org.springframework.context.ApplicationContext;
 
 import DnDGen.DB.DBMS;
@@ -28,6 +29,7 @@ public class RandomGenerator {
 	String nameDBSpells = "spells";
 	String nameDBFeatures = "features";
 	String nameDBSpellSlots = "spellslots";
+	Logger logger;
 	//Aufteilung eines großen String in kleinere
 	public List<String> bigStringToDividedString(String bigString) {
         String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
@@ -192,22 +194,18 @@ public class RandomGenerator {
 	*/
 	/* @Luca */
 	public List<String> figureOutProfList(String neededProfList, String charClass, String race) {
-		List<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
-
+		Set<String> profSet = new HashSet<>();// Liste mit Ergebnissen die zurückgegeben wird
 		switch (neededProfList) {    // Entscheidung welche ProfListe man benötigt
 			case "armor":
-				profList.addAll(figureOutArmorProfList(charClass,race));
+				profSet.addAll(figureOutArmorProfList(charClass,race));
 				break;
 			case "weapon":    //siehe "armor" nur jetzt mit den waffen
-				profList.addAll(figureOutWeaponProfList(charClass,race));
+				profSet.addAll(figureOutWeaponProfList(charClass,race));
 				break;
 				default:
 					break;
 		}
-		Set<String> removeDuplicate = new HashSet<>(profList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-		profList.clear();
-		profList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
-		return profList;
+		return new ArrayList<>(profSet);
 	}
 	public List<String> figureOutArmorProfList(String charClass, String race){
 		List<String> profList; // Liste mit Ergebnissen die zurückgegeben wird
@@ -366,26 +364,26 @@ public class RandomGenerator {
 		return rand.nextInt(ageMax) + ageAdult;
 	}
 
-	//Schroedingers Funktion
+	//Schroedingers Funktion(ehemals)
 	/* @Luca */
-	public List<String> randSkillProf(List<String> possibleSkills, Integer numberSkill, List<String> knownSkillList) {
+	public List<String> randSkillProf(List<String> possibleSkills, int numberSkill, List<String> knownSkillList) {
 		if (possibleSkills.isEmpty()) {
 			return knownSkillList;
 		}
-		//es werden so lange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
-		for (int currentNumberOfNewSkills = 0; currentNumberOfNewSkills < numberSkill;currentNumberOfNewSkills++) {
-			int lengthListPossibleSkills = possibleSkills.size();
-			int skillIndex = rand.nextInt(lengthListPossibleSkills);
-			if(!knownSkillList.contains(possibleSkills.get(skillIndex))){
-				knownSkillList.add(possibleSkills.get(skillIndex));
-				possibleSkills.remove(skillIndex);
-			}
-		}
-		Set<String> removeDuplicate = new HashSet<>(knownSkillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-		knownSkillList.clear();
-		knownSkillList.addAll(removeDuplicate);
+		// Verwende ein Set, um von Anfang an Duplikate zu vermeiden
+		Set<String> uniqueSkills = new HashSet<>(knownSkillList);
 
-		return knownSkillList;
+		// Kopiere die Liste der möglichen Skills, um sie nicht zu verändern
+		List<String> remainingSkills = new ArrayList<>(possibleSkills);
+
+		// Mische die Liste, um zufällige Auswahl zu erleichtern
+		Collections.shuffle(remainingSkills);
+
+		// Füge zufällig ausgewählte Skills zur Menge hinzu, bis die Anzahl erreicht ist
+		for (int runtime=1;numberSkill>=runtime; runtime++) {
+                uniqueSkills.add(remainingSkills.get(runtime));  // Duplikate werden durch das Set verhindert
+		}
+		return new ArrayList<>(uniqueSkills);
 	}
 
 	/* TO DO @Lenard */
@@ -421,11 +419,13 @@ public class RandomGenerator {
 
 	public NPCClass randomSpellsForClass(NPCClass chosenNPC){
 		String classSpellKnownColDB = dbms.getRow(nameDBClass, chosenNPC.getGenClass()).get(9);
-		int spellCount;
-		int highestSpellLevel ;
-		int cantripNumber;
-		//boolean spezialCase = false ;
+		int spellCount = 0 ;
+		int highestSpellLevel= 0 ;
+		int cantripNumber= 0;
 		int numberOfRandomSpellsPerLevel = 0;
+		int bracketIndex = chosenNPC.getGenClass().indexOf("(");
+		String spellClass;
+
 
 		switch (classSpellKnownColDB){
 			case "null":
@@ -439,7 +439,6 @@ public class RandomGenerator {
 				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Spell Known").get(3)).get(chosenNPC.getLevel()-1));
 				highestSpellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Slot Level").get(3)).get(chosenNPC.getLevel()-1));
 				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Cantrips").get(3)).get(chosenNPC.getLevel()-1));
-				//spezialCase = true;
 				break;
 			default:
 				spellCount = determineNumberOfKnownSpell(chosenNPC);
@@ -447,45 +446,22 @@ public class RandomGenerator {
 				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNPC.getGenClass()).get(2)).get(chosenNPC.getLevel()-1));
 				break;
 		}
+		if(bracketIndex!=-1) { //wenn innerhalb der Klassen Namen eine Klammer steht, um Varianten dieser zu kennzeichen, muss sie entfernt werden, um spells zu finden
+			spellClass = chosenNPC.getGenClass().substring(0, bracketIndex);
+		}else {
+			spellClass = chosenNPC.getGenClass();
+		}
 
 		if (cantripNumber != 0 ){
-			chosenNPC.setSpellCantrips(determineSpellNames(determineCantrips(cantripNumber,chosenNPC.getGenClass())));
+			chosenNPC.setSpellCantrips(determineSpellNames(determineCantrips(cantripNumber,spellClass)));
 		}
 		if(spellCount != 0 ){
 			for (int currentSpellLevel=1;currentSpellLevel <= highestSpellLevel;currentSpellLevel++){
 				numberOfRandomSpellsPerLevel = rand.nextInt(spellCount)+1;
-				switch(currentSpellLevel){
-					case 1:
-						chosenNPC.setFirstLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(1), numberOfRandomSpellsPerLevel)));
-						break;
-					case 2:
-						chosenNPC.setSecondLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(2), numberOfRandomSpellsPerLevel)));
-						break;
-					case 3:
-						chosenNPC.setThirdLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(3), numberOfRandomSpellsPerLevel)));
-						break;
-					case 4:
-						chosenNPC.setFourthLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(4), numberOfRandomSpellsPerLevel)));
-						break;
-					case 5:
-						chosenNPC.setFifthLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(5), numberOfRandomSpellsPerLevel)));
-						break;
-					case 6:
-						chosenNPC.setSixthLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(6), numberOfRandomSpellsPerLevel)));
-						break;
-					case 7:
-						chosenNPC.setSeventhLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(7), numberOfRandomSpellsPerLevel)));
-						break;
-					case 8:
-						chosenNPC.setEightLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(8), numberOfRandomSpellsPerLevel)));
-						break;
-					case 9:
-						chosenNPC.setNinthLevelSpell(determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, chosenNPC.getGenClass(), Integer.toString(9), numberOfRandomSpellsPerLevel)));
-						break;
-					default:
-						System.out.println("Wenn ich erscheine, dann ist irgendetwas bei den Spells schiefgegangen.");
-				}
-				spellCount = spellCount - numberOfRandomSpellsPerLevel;
+				List<String> spellsForLevel = dbms.getMultRowMultPref(nameDBSpells, spellClass, Integer.toString(currentSpellLevel), numberOfRandomSpellsPerLevel);
+				assignSpellsToNPC(chosenNPC, currentSpellLevel, determineSpellNames(spellsForLevel));
+				spellCount -= numberOfRandomSpellsPerLevel;
+
 				if (spellCount == 0){
 					break;
 				}
@@ -493,13 +469,45 @@ public class RandomGenerator {
 		}
 		return chosenNPC;
 	}
-
+	private void assignSpellsToNPC(NPCClass chosenNPC, int spellLevel, String spellNames) {
+		switch (spellLevel) {
+			case 1:
+				chosenNPC.setFirstLevelSpell(spellNames);
+				break;
+			case 2:
+				chosenNPC.setSecondLevelSpell(spellNames);
+				break;
+			case 3:
+				chosenNPC.setThirdLevelSpell(spellNames);
+				break;
+			case 4:
+				chosenNPC.setFourthLevelSpell(spellNames);
+				break;
+			case 5:
+				chosenNPC.setFifthLevelSpell(spellNames);
+				break;
+			case 6:
+				chosenNPC.setSixthLevelSpell(spellNames);
+				break;
+			case 7:
+				chosenNPC.setSeventhLevelSpell(spellNames);
+				break;
+			case 8:
+				chosenNPC.setEightLevelSpell(spellNames);
+				break;
+			case 9:
+				chosenNPC.setNinthLevelSpell(spellNames);
+				break;
+			default:
+				logger.info("Zauber nicht verfügbar -> FEHLER");
+		}
+	}
 
 	/*
 	Anzahl der möglichen Spells für die Klasse
 	 */
-
 	private int determineNumberOfKnownSpell(NPCClass chosenNPC) {
+
 		String colClassForSpell = dbms.getRow(nameDBClass, chosenNPC.getGenClass()).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
@@ -540,18 +548,15 @@ public class RandomGenerator {
 
 	private String determineSpellNames (List<String> spells ){
 		StringBuilder spellNames = new StringBuilder(" ");
-		int lengthSpells;
-		int positionSpellName = 1;
-		lengthSpells = spells.size()/11;
-		for(int indexName=0;indexName<lengthSpells;indexName++ ){
-			spellNames.append(spells.get(positionSpellName)).append(", ");
-			positionSpellName= positionSpellName+11;
+
+		for (int i = 1; i < spells.size(); i += 11) {  // Annahme: Zaubername ist an jeder 11. Stelle
+			spellNames.append(spells.get(i)).append(", ");
 		}
 		return spellNames.toString();
 	}
 
 	private List<String> determineCantrips(int cantripsNumber, String finalGenClass ){
-        return new ArrayList<>(dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber));
+        return dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber);
 	}
 	/*
 
