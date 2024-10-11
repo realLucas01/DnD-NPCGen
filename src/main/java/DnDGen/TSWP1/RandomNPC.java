@@ -256,7 +256,7 @@ public class RandomNPC {
         System.out.println("Spelllist " + randNPC.getSpellList());
         //spells
         List<Object> spellList =  randNPC.getSpellList();
-        //spellList = randGen.addRaceCantripsAndSpells(race,spellList,level);
+        randGen.addRaceCantripsAndSpells(randNPC);
         randNPC.setSpellList(spellList);
         //features
         List<String> actionList = determineFeatures(race,"action");

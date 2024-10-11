@@ -469,7 +469,7 @@ public class RandomGenerator {
 		}
 		return chosenNPC;
 	}
-	private void assignSpellsToNPC(NPCClass chosenNPC, int spellLevel, String spellNames) {
+	public void assignSpellsToNPC(NPCClass chosenNPC, int spellLevel, String spellNames) {
 		switch (spellLevel) {
 			case 1:
 				chosenNPC.setFirstLevelSpell(spellNames);
@@ -558,17 +558,18 @@ public class RandomGenerator {
 	private List<String> determineCantrips(int cantripsNumber, String finalGenClass ){
         return dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber);
 	}
-	/*
 
-	public List<Object> addRaceCantripsAndSpells(String race, List<Object> spellList, int level){
-		List<String> featureList = bigStringToDividedString(dbms.getRow("race", race).get(3));
+
+	public void addRaceCantripsAndSpells(NPCClass chosenNPC){
+		List<String> featureList = bigStringToDividedString(dbms.getRow("race", chosenNPC.getRace()).get(3));
 		List<String> featureSpellList = new ArrayList<>();
 
 		for (String features : featureList){
 			if ((Objects.equals(features, "null")||(features==null))){
-				return new ArrayList<>();
+				return;
 			}
-			if ((dbms.getRow(nameDBFeatures,features).get(3).contains("cantrip")||(dbms.getRow(nameDBFeatures,features).get(3).contains("spell")))){
+			String possibleSpellFeature =  dbms.getRow(nameDBFeatures,features).get(3);
+			if ((possibleSpellFeature.contains("cantrip")||(possibleSpellFeature.contains("spell")))){
 				featureSpellList.add(features);
 			}
 		}
@@ -576,44 +577,35 @@ public class RandomGenerator {
 			String kindOfFeature = dbms.getRow(nameDBFeatures,spellFeature).get(3);
 
 			if(kindOfFeature.startsWith("cantrip:")) {
-
-				spellList=aufspaltungRaceCantrip(kindOfFeature, spellList,level);
+				aufspaltungRaceCantrip(kindOfFeature, chosenNPC);
 			} else if (kindOfFeature.startsWith("spell:")) {
-
-				spellList=aufspaltungRaceSpell(kindOfFeature, spellList,level);
+				aufspaltungRaceSpell(kindOfFeature, chosenNPC);
 			}
-
 		}
-
-		return spellList;
 	}
-	/*
-	private List<Object> aufspaltungRaceCantrip(String spellFeature, List<Object> spellList, int level){
+
+	private void aufspaltungRaceCantrip(String spellFeature, NPCClass chosenNPC){
 		String inhalt = spellFeature.substring(8);
-		List<String> cantripListe = getSpellListFromSpellLevelToEditSpells(spellList,0);
 		if(inhalt.contains("spell")) {//"cantrip"
 
 			String[] cantrip = inhalt.split(" spell");
 
-			cantripListe.add(cantrip[0].trim());
-			spellList= aufspaltungRaceSpell("spell:" + cantrip[1].trim(), spellList, level);
+			chosenNPC.addSpellCantrip(cantrip[0].trim());
+			aufspaltungRaceSpell("spell:" + cantrip[1].trim(), chosenNPC);
 		}else{
 			String[] featureSubStrings = spellFeature.split(":");
 				if(featureSubStrings.length==3){//cantrip: 1: Wizard
 					int numberCantrips = Integer.parseInt(featureSubStrings[1].trim());
 					String spellClass = featureSubStrings[2].trim();
-					//Cantrips zufällig auswählen zu der Klasse und hinzufügen
-					cantripListe.addAll(determineSpellNames(determineCantrips(numberCantrips,spellClass)));
+					//Cantrips zufällig auswählen und zu der Klasse und hinzufügen
+					chosenNPC.addSpellCantrip(determineSpellNames(determineCantrips(numberCantrips,spellClass)));
 				}else{
-					cantripListe.add(featureSubStrings[1].trim()); // ganz normaler Cantrip
+					chosenNPC.addSpellCantrip(featureSubStrings[1].trim()); // ganz normaler Cantrip
 				}
 		}
-		spellList =  putSingleSpellLevelListBackToBigSpellList(0, cantripListe, spellList);
-		return spellList;
-
 	}
 
-	private List<Object> aufspaltungRaceSpell(String spellFeature, List<Object> spellList, int level) {
+	private void aufspaltungRaceSpell(String spellFeature, NPCClass chosenNPC) {
 		String[] featureSpellAufgeteilt = spellFeature.substring(7).split(", ");
 
 		int spellLevel;
@@ -624,24 +616,19 @@ public class RandomGenerator {
 				spell = spell.replace("]","");
 
 				int levelFromSpell = Integer.parseInt(spell.substring(0,2).trim());
-					if (level >= levelFromSpell){
+					if (chosenNPC.getLevel() >= levelFromSpell){
 						spellName = spell.substring(2).trim();
 					}
 			} else {
 				spellName = spell.substring(2).trim();
 			}
 			if(spellName==null){
-				return spellList;
+				return;
 			}
 			spellLevel = Integer.parseInt(dbms.getRow("spells", spellName.trim()).get(2));
-			List<String> currentSpellList = getSpellListFromSpellLevelToEditSpells(spellList,spellLevel);
-				currentSpellList.add(spellName);
-			spellList = putSingleSpellLevelListBackToBigSpellList(spellLevel,currentSpellList,spellList);
+			assignSpellsToNPC(chosenNPC,spellLevel,spellName);
 		}
-
-		return spellList;
 	}
-	*/
 
 	public String passivePerception(List<Integer> abilityModifier, List<String> skillList, int profBonus){
 		int perception;
