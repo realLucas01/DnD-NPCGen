@@ -1,9 +1,19 @@
 package DnDGen.TSWP1;
 
+import DnDGen.DB.DBMS;
+import org.springframework.context.ApplicationContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NPCClass {
+    /* @author Lucas
+     *
+     * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
+     * neu-konstruktion von DBMS wäre sonst leer.
+     */
+    ApplicationContext appCtx = DBMS.getApplicationContext();
+    DBMS dbms = appCtx.getBean(DBMS.class);
 
     // Attributes
     private String name;
@@ -165,7 +175,6 @@ public class NPCClass {
     }
 
     public List<Object> getSpellList() {
-        if (spellList == null){
             spellList = new ArrayList<>();
             spellList.add(0,cantrips);
             spellList.add(1,firstLevelSpell);
@@ -177,7 +186,6 @@ public class NPCClass {
             spellList.add(7,seventhLevelSpell);
             spellList.add(8,eightLevelSpell);
             spellList.add(9,ninthLevelSpell);
-        }
         return spellList;
     }
     public void insertSpellLevelListIntoSpellList(List<Object> spellLevelList, int spellLevel){
@@ -310,8 +318,41 @@ public class NPCClass {
     }
 
     public void convertListToNPC(List<Object> listOfTheNPC){
-
+        setName((String) listOfTheNPC.get(2));
+        setLevel((Integer) listOfTheNPC.get(3));
+        setGenClass((String) listOfTheNPC.get(4));
+        setRace((String) listOfTheNPC.get(5));
+        setJob((String) listOfTheNPC.get(6));
+        setArmorClass((Integer) listOfTheNPC.get(7));
+        setHealthPoints((Integer) listOfTheNPC.get(8));
+        setMovementSpeedList((List<String>) listOfTheNPC.get(9));
+        setLanguages((List<String>) listOfTheNPC.get(10));
+        setAbilityScores((List<Integer>) listOfTheNPC.get(11));
+        setSavingThrows((List<String>) listOfTheNPC.get(12));
+        setArmor((String) listOfTheNPC.get(13));
+        setWeaponList((List<String>) listOfTheNPC.get(14));
+        setSkillList((List<String>) listOfTheNPC.get(15));
+        setSenses((String) listOfTheNPC.get(16));
+        setSpellList((List<Object>) listOfTheNPC.get(17));
+        setSpellAbility((List<String>) listOfTheNPC.get(18));
+        setDescription((List<String>) listOfTheNPC.get(19));
+        setActionList((List<String>) listOfTheNPC.get(20));
+        setActionList((List<String>) listOfTheNPC.get(21));
+        setBonusActionList((List<String>) listOfTheNPC.get(22));
+        setProfBonus((Integer) listOfTheNPC.get(23));
+        setAbilityModifier((List<Integer>) listOfTheNPC.get(24));
+        setGender((String) listOfTheNPC.get(25));
+        setAge((Integer) listOfTheNPC.get(26));
+        setAlignment((String) listOfTheNPC.get(27));
+        setDeity((String) listOfTheNPC.get(28));
+        setBonusTextList((List<String>) listOfTheNPC.get(29));
     }
+
+    public void historyEntryToNPC(int iD){
+        List<Object> currentNPC = dbms.getHistoryEntry(iD);
+        convertListToNPC(currentNPC);
+    }
+
 
     public void setSpellCantrips(String spells){
         this.cantrips = spells;
