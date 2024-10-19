@@ -5,7 +5,6 @@ import DnDGen.TSWP1.RandomGenerator;
 import DnDGen.TSWP1.RandomNPC;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -16,7 +15,6 @@ import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ElementNPC {
@@ -115,13 +113,12 @@ public class ElementNPC {
 
     }
 
-    // Füllt den NPC-Stack
-    public void makeFillNPCStack() {
-        List<String> listNpc = new ArrayList<>();
-        String stringNpc = "";
-
-
-        //Name, Klasse, Rasse, Alignment
+    /**
+     * Erstellt den Block mit Name, Klasse, Rasse, Alignment
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane nameClassBlock() {
         GridPane nameClassGrid = new GridPane();
         nameClassGrid.setPadding(new Insets(5, 10, 10, 10));
         nameClassGrid.setVgap(4);
@@ -149,13 +146,21 @@ public class ElementNPC {
 
         nameClassGrid.getChildren().addAll(nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL);
 
+        return nameClassGrid;
+    }
 
-        //Armor class, Hit points, Speed, Language, Feature
+    /**
+     * Erstellt den Block mit ArmorClass, Hit points, Speed, Languages
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane armorClassHitPointsBlock() {
+
         GridPane acHpSpLangGrid = new GridPane();
         acHpSpLangGrid.setPadding(new Insets(5, 5, 5, 5));
         acHpSpLangGrid.setVgap(4);
         acHpSpLangGrid.setHgap(5);
-        //acHpSpLangGrid.getChildren().remove(4,acHpSpLangGrid.getChildren().size());
+
         Label armorClassL = new Label("Rüstungsklasse: ");
         GridPane.setConstraints(armorClassL,0,0);
         Label hitPointsL  = new Label("Trefferpunkte: ");
@@ -173,9 +178,9 @@ public class ElementNPC {
         acHpSpLangGrid.getChildren().addAll(armorClassL,hitPointsL,speedL,languagesL,aCL,hPL);
 
         //Geschwindigkeit
-        listNpc = npc.getMovementSpeedList();
+        List<String> listNpc = npc.getMovementSpeedList();
         for(int i = 0; i < listNpc.size(); i++) {
-            Label label = new Label(listNpc.get(i).toString());
+            Label label = new Label(listNpc.get(i));
             GridPane.setConstraints(label,1,i+2);
             acHpSpLangGrid.getChildren().add(label);
         }
@@ -184,18 +189,24 @@ public class ElementNPC {
         listNpc.clear();
         listNpc = npc.getLanguages();
         for(int i = 0; i < listNpc.size(); i++) {
-            Label label = new Label(listNpc.get(i).toString());
+            Label label = new Label(listNpc.get(i));
             GridPane.setConstraints(label,1,i+4);
             acHpSpLangGrid.getChildren().add(label);
         }
 
+        return acHpSpLangGrid;
+    }
 
-        //Features
+    /**
+     * Erstellt den Block mit den Features. Den Aktionen
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane featuresBlock() {
         GridPane featuresGrid = new GridPane();
         featuresGrid.setPadding(new Insets(5,5,5,5));
         featuresGrid.setVgap(4);
         featuresGrid.setHgap(5);
-        //featuresGrid.getChildren().remove(3,featuresGrid.getChildren().size());
 
         Label actionL = new Label("Aktionen: ");
         GridPane.setConstraints(actionL,0,0);
@@ -207,13 +218,10 @@ public class ElementNPC {
         ColumnConstraints featureGridColCon1 = new ColumnConstraints();
         featureGridColCon1.setMinWidth(80);
         featureGridColCon1.setFillWidth(true);
-       // featureGridColCon1.setPercentWidth(30);
         ColumnConstraints featureGridColCon2 = new ColumnConstraints();
-        //featureGridColCon2.setPercentWidth(70);
         featuresGrid.getColumnConstraints().addAll(featureGridColCon1, featureGridColCon2);
 
         featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
-
 
         // Features
         /*
@@ -252,8 +260,15 @@ public class ElementNPC {
 
 
          */
+        return featuresGrid;
+    }
 
-        //Stats
+    /**
+     * Erstellt den Block mit den Stats. Mit Ability Score, Saving Throws
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane statsBlock() {
         GridPane statsGrid = new GridPane();
         statsGrid.setPadding(new Insets(5, 5, 5, 5));
         statsGrid.setVgap(4);
@@ -278,22 +293,28 @@ public class ElementNPC {
             GridPane.setConstraints(label,i,1);
             statsGrid.getChildren().add(label);
         }
-        listNpc.clear();
-        listNpc = npc.getSavingThrows();
-        for(int j = 0; j < listNpc.size(); j++) {
-            String ability = listNpc.get(j).toString().substring(0,3);
-            String score = listNpc.get(j).toString().substring(4);
-            for(int i = 1; i <= abilityString.size(); i++) {
-                if(abilityString.get(i-1).equals(ability)) {
+
+        List<String> listNpc = npc.getSavingThrows();
+        for (String s : listNpc) {
+            String ability = s.substring(0, 3);
+            String score = s.substring(4);
+            for (int i = 1; i <= abilityString.size(); i++) {
+                if (abilityString.get(i - 1).equals(ability)) {
                     Label label = new Label(score);
-                    GridPane.setConstraints(label,i,2);
+                    GridPane.setConstraints(label, i, 2);
                     statsGrid.getChildren().add(label);
                 }
             }
         }
+        return statsGrid;
+    }
 
-
-        //Inventar (Waffen & Rüstung)
+    /**
+     * Erstellt den Block mit dem Inventar. Mit Rüstung, Waffen
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane inventoryBlock() {
         GridPane inventoryGrid = new GridPane();
         inventoryGrid.setPadding(new Insets(5, 10, 10, 10));
         inventoryGrid.setVgap(1);
@@ -311,19 +332,25 @@ public class ElementNPC {
 
         inventoryGrid.getChildren().addAll(armorL, weaponL, armorTextL, weaponTextL);
 
-        stringNpc = "";
-        listNpc.clear();
-        listNpc = npc.getWeaponList();
-        for(int i = 0; i < listNpc.size(); i++) {
-            stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+        String stringNpc = "";
+        List<String> listNpc = npc.getWeaponList();
+        for (String s : listNpc) {
+            stringNpc = stringNpc.concat("    - " + s + "\n");
         }
         weaponL.setText(stringNpc);
         weaponL.setWrapText(true);
         armorL.setText("    - " + npc.getArmor());
         armorL.setWrapText(true);
 
+        return inventoryGrid;
+    }
 
-        //Skill, Senses
+    /**
+     * Erstellt den Block mit den skill und spells
+     * @return gibt den Block als HBox zurück
+     * @author Marie
+     */
+    private HBox skillsSpellsBlock() {
         HBox skillSensesBox = new HBox();
         skillSensesBox.setSpacing(15);
         TextFlow skillTF = new TextFlow();
@@ -340,7 +367,6 @@ public class ElementNPC {
             }
         }
 
-
         VBox senseTF = new VBox();
         Text text3=new Text("Sense:\n");
         text3.setStyle("-fx-font-weight: bold");
@@ -350,53 +376,41 @@ public class ElementNPC {
         senseTF.getChildren().add(sense);
 
 
-
         //Spell
-        VBox spellActionBox = new VBox();
-
         TextFlow spellTF = new TextFlow();
-        text1 = new Text("Zauber: ");
+        text1 = new Text("Spells: \n");
         text1.setStyle("-fx-font-weight: bold");
         spellTF.getChildren().addAll(text1);
 
         // Cantrips
-        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text(npc.getSpellCantrips() + "\n"));
+        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text("Cantrips:" + npc.getSpellCantrips() + "\n"));
 
         // 1
-        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getFirstLevelSpell() + "\n"));
+        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text("1st:" + npc.getFirstLevelSpell() + "\n"));
 
         // 2
-        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getSecondLevelSpell() + "\n"));
+        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text("2st:" + npc.getSecondLevelSpell() + "\n"));
 
         // 3
-        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getThirdLevelSpell() + "\n"));
+        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text("3st:" + npc.getThirdLevelSpell() + "\n"));
 
         // 4
-        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getFourthLevelSpell() + "\n"));
+        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text("4st:" + npc.getFourthLevelSpell() + "\n"));
 
         // 5
-        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getFifthLevelSpell() + "\n"));
+        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text("5st:" + npc.getFifthLevelSpell() + "\n"));
 
         // 6
-        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getSixthLevelSpell() + "\n"));
+        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text("6st:" + npc.getSixthLevelSpell() + "\n"));
 
         // 7
-        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getSeventhLevelSpell() + "\n"));
+        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text("7st:" + npc.getSeventhLevelSpell() + "\n"));
 
         // 8
-        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getEightLevelSpell() + "\n"));
+        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text("8st:" + npc.getEightLevelSpell() + "\n"));
 
         // 9
-        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text(npc.getNinthLevelSpell() + "\n"));
-
-        /*
-        for(String spell : npc.getSpell {
-            Text text = new Text(spell + "\n");
-            spellTF.getChildren().add(text);
-        }
-
-
-         */
+        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text("9st:" + npc.getNinthLevelSpell() + "\n"));
 
 
         skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);
@@ -420,8 +434,15 @@ public class ElementNPC {
         //System.out.println(spells);
         */
 
-        spellActionBox.setPadding(new Insets(10, 10, 10, 10));
+        return skillSensesBox;
+    }
 
+    /**
+     * Die Funktion erstellt und füllt die Ausgabe des NPCs nach der generation
+     * @author Marie
+     */
+    public void makeFillNPCStack() {
+        //Trennlinien
         Line line1 = new Line(0.0f,0.0f,100f,0.0f);
         lineList.add(line1);
         Line line2 = new Line(0.0f,0.0f,100f,0.0f);
@@ -433,22 +454,15 @@ public class ElementNPC {
         Line line5 = new Line(0.0f,0.0f,300.0f,0.0f);
         lineList.add(line5);
 
-
-        npcStack.getChildren().addAll(nameClassGrid,line1,acHpSpLangGrid,line2,statsGrid,line3, inventoryGrid, line5,skillSensesBox,line4,featuresGrid);
+        npcStack.getChildren().addAll(nameClassBlock(),line1, armorClassHitPointsBlock(),line2,statsBlock(),line3,
+                inventoryBlock(), line5,skillsSpellsBlock(),line4, featuresBlock());
     }
 
 
-
-
-
-
-
-
-    /* @author Marie
-     *
+    /**
      * Teilt einen String der die Form eines Arrays hat in einzelne Elemente und gibt sie als Liste zurück
-     *
-     * @param string: ein String der als Liste geschrieben werden soll.
+     * @author Marie
+     * @param string ein String der als Liste geschrieben werden soll.
      * @return Eine Liste mit dem Inhalt von dem string eingabe.
      */
     public List stringToList(String string) {
