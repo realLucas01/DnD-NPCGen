@@ -1,10 +1,14 @@
 package DnDGen.TSWP1;
 
 import DnDGen.DB.DBMS;
+import org.hibernate.annotations.NotFound;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NPCClass {
     /* @author Lucas
@@ -14,6 +18,8 @@ public class NPCClass {
      */
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
+    RandomGenerator randGen = new RandomGenerator();
+
 
     // Attributes
     private String name;
@@ -318,34 +324,38 @@ public class NPCClass {
     }
 
     public void convertListToNPC(List<Object> listOfTheNPC){
-        setName((String) listOfTheNPC.get(2));
-        setLevel((Integer) listOfTheNPC.get(3));
-        setGenClass((String) listOfTheNPC.get(4));
-        setRace((String) listOfTheNPC.get(5));
-        setJob((String) listOfTheNPC.get(6));
-        setArmorClass((Integer) listOfTheNPC.get(7));
-        setHealthPoints((Integer) listOfTheNPC.get(8));
-        setMovementSpeedList((List<String>) listOfTheNPC.get(9));
-        setLanguages((List<String>) listOfTheNPC.get(10));
-        setAbilityScores((List<Integer>) listOfTheNPC.get(11));
-        setSavingThrows((List<String>) listOfTheNPC.get(12));
-        setArmor((String) listOfTheNPC.get(13));
-        setWeaponList((List<String>) listOfTheNPC.get(14));
-        setSkillList((List<String>) listOfTheNPC.get(15));
-        setSenses((String) listOfTheNPC.get(16));
-        setSpellList((List<Object>) listOfTheNPC.get(17));
-        setSpellAbility((List<String>) listOfTheNPC.get(18));
-        setDescription((List<String>) listOfTheNPC.get(19));
-        setActionList((List<String>) listOfTheNPC.get(20));
-        setActionList((List<String>) listOfTheNPC.get(21));
-        setBonusActionList((List<String>) listOfTheNPC.get(22));
-        setProfBonus((Integer) listOfTheNPC.get(23));
-        setAbilityModifier((List<Integer>) listOfTheNPC.get(24));
-        setGender((String) listOfTheNPC.get(25));
-        setAge((Integer) listOfTheNPC.get(26));
-        setAlignment((String) listOfTheNPC.get(27));
-        setDeity((String) listOfTheNPC.get(28));
-        setBonusTextList((List<String>) listOfTheNPC.get(29));
+
+        setName(((String) listOfTheNPC.get(2)).replace("[","").replace("]",""));
+        setLevel(Integer.parseInt((String.valueOf(listOfTheNPC.get(3)))));
+        setGenClass(((String) listOfTheNPC.get(4)).replace("[","").replace("]",""));
+        setRace(((String) listOfTheNPC.get(5)).replace("[","").replace("]",""));
+        setJob(((String) listOfTheNPC.get(6)).replace("[","").replace("]",""));
+        setArmorClass(Integer.parseInt((String.valueOf( listOfTheNPC.get(7)))));
+        setHealthPoints(Integer.parseInt((String.valueOf( listOfTheNPC.get(8)))));
+        setMovementSpeedList(randGen.bigStringToDividedString(((String) listOfTheNPC.get(9)).replace("[","").replace("]","")));
+        setLanguages(Collections.singletonList((((String) listOfTheNPC.get(10)).replace("[","").replace("]",""))));
+        setAbilityScores((randGen.bigStringToDividedString(((String) listOfTheNPC.get(11)).replace("[","").replace("]",""))).stream()
+                .map(Integer::parseInt)
+                .collect(Collectors.toList()));
+        setSavingThrows(randGen.bigStringToDividedString((((String)  listOfTheNPC.get(12)).replace("[","").replace("]",""))));
+        setArmor(((String) listOfTheNPC.get(13)).replace("[","").replace("]",""));
+        setWeaponList(randGen.bigStringToDividedString((((String) listOfTheNPC.get(14)).replace("[","").replace("]",""))));
+        setSkillList(randGen.bigStringToDividedString((((String)  listOfTheNPC.get(15)).replace("[","").replace("]",""))));
+        setSenses(((String) listOfTheNPC.get(16)).replace("[","").replace("]",""));
+        setSpellList(Collections.singletonList(randGen.bigStringToDividedString((String) listOfTheNPC.get(17))));
+        setSpellAbility(randGen.bigStringToDividedString(((String)  listOfTheNPC.get(18))));
+        setDescription(randGen.bigStringToDividedString(((String)  listOfTheNPC.get(19))));
+        setActionList(randGen.bigStringToDividedString(((String)  listOfTheNPC.get(20))));
+        setBonusActionList(randGen.bigStringToDividedString(((String)  listOfTheNPC.get(21))));
+        setProfBonus(Integer.parseInt(String.valueOf(listOfTheNPC.get(22))));
+        setAbilityModifier((randGen.bigStringToDividedString(((String) listOfTheNPC.get(23)).replace("[","").replace("]",""))).stream()
+                .map(Integer::parseInt)
+                .collect(Collectors.toList()));
+        setGender(((String) listOfTheNPC.get(24)).replace("[","").replace("]",""));
+        setAge(Integer.parseInt((String.valueOf( listOfTheNPC.get(25)))));
+        setAlignment(((String) listOfTheNPC.get(26)).replace("[","").replace("]",""));
+        setDeity(((String) listOfTheNPC.get(27)).replace("[","").replace("]",""));
+        setBonusTextList(randGen.bigStringToDividedString(((String)  listOfTheNPC.get(28))));
     }
 
     public void historyEntryToNPC(int iD){

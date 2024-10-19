@@ -3,6 +3,7 @@ package DnDGen.TSWP1;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 //import java.util.Scanner;
 
 public class RandomFileSelector {
-    static Random random = new Random();
+    static Random random = new SecureRandom();
     static Logger logger = Logger.getLogger(RandomFileSelector.class.getName());
 
 

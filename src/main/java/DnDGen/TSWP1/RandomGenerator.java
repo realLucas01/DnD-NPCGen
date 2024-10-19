@@ -252,6 +252,7 @@ public class RandomGenerator {
 		String visions = ""; // Liste mit Ergebnissen die zurückgegeben wird
 		List<String> databaseReturn; // Liste die von der DB zurückkommt
 		String kindOfFeature; // letzte Spalte aus der DB um Festzustellen um was es sich hier handelt
+		StringBuilder visionStringBuilder = new StringBuilder();
 		for(String feature: bigStringToDividedString(dbms.getRow("race", race).get(3))){
 			if(feature.equals("null") ){
 				break;
@@ -259,8 +260,9 @@ public class RandomGenerator {
 			databaseReturn = dbms.getRow(nameDBFeatures, feature);
 			kindOfFeature = databaseReturn.get(3);
 			if(kindOfFeature.contains("vision")){
-				visions = visions + kindOfFeature;
+				visionStringBuilder.append(kindOfFeature);
 			}
+			visions = String.valueOf(visionStringBuilder);
 		}
 		if(visions.isEmpty()){
 			visions = "your blind in the dark... live with it";
