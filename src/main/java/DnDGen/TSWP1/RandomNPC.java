@@ -92,7 +92,8 @@ public class RandomNPC {
         26: bonusTextList ;
      */
 
-    public List<Object> createRandomNPC(String inputName,String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
+    public NPCClass createRandomNPC(String inputName, String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
+        NPCClass randNPC = new NPCClass();
         List<String> weaponList;
         List<String> languages;
         List<String> savingThrows;
@@ -100,7 +101,6 @@ public class RandomNPC {
         List<String> skillList = new ArrayList<>();
         List<Integer> abilityScores = new ArrayList<>();
         List<Integer> abilityModifier;
-        List<Object> generatedNPCFinished = new ArrayList<>();
         String race;
         String job;
         String genClass;
@@ -119,18 +119,18 @@ public class RandomNPC {
         } else {
             race = inputRace;
         }
-        generatedNPCFinished.addFirst(race);
+        randNPC.setRace(race);
         //random Level
         level = Objects.requireNonNullElseGet(inputLevel, () -> randGen.randLevel());
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(level));
+        randNPC.setLevel(level);
         //random Job
         if (inputJob == null) {
             job = randGen.randJob();
         } else {
             job = inputJob;
         }
-        generatedNPCFinished.add(generatedNPCFinished.size(), job);
-        //random Class
+        randNPC.setJob(job);
+    //random Class
         if ((inputClass == null) && (level != 0)) {
             genClass = randGen.randCharClass();
         } else if (level == 0) {
@@ -138,8 +138,7 @@ public class RandomNPC {
         } else {
             genClass = inputClass;
         }
-        generatedNPCFinished.add(generatedNPCFinished.size(), genClass);
-
+        randNPC.setGenClass((genClass));
         //random AbilityScore
         switch ((inputAbilityScore)) {
             case "3d6":
@@ -168,41 +167,41 @@ public class RandomNPC {
         abilityScores = distributeAbilityScore(abilityScores, genClass);
         abilityScores =  addRaceModifierToAbilityScore(race,abilityScores);
         abilityScores =  addAbilityScoreImprovement(level, abilityScores);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityScores));
-
+        randNPC.setAbilityScores(abilityScores);
         //calc AbilityModifier
         abilityModifier =  determineAbilityModifier(abilityScores);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(abilityModifier));
+        randNPC.setAbilityModifier(abilityModifier);
 
         //calc HP
         healthPoints = calculateHP(genClass, level, abilityModifier);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(healthPoints));
+        randNPC.setHealthPoints(healthPoints);
 
         List<String> armorList = determineArmorAndAC(genClass, race, abilityModifier);
         String armor = armorList.get(0);
         int armorClass = Integer.parseInt(armorList.get(1));
-        generatedNPCFinished.add(generatedNPCFinished.size(), armorList.get(0));//armor
-        generatedNPCFinished.add(generatedNPCFinished.size(), armorList.get(1));//AC
+        randNPC.setArmor(armor);//armor
+        randNPC.setArmorClass(armorClass);//AC
 
         weaponList = determineWeapons(genClass, race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(weaponList));//waffenliste
+        randNPC.setWeaponList(weaponList);//waffenliste
 
         List<String> movementSpeedList = determineMovementSpeed(race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(movementSpeedList));//movement speed
+        randNPC.setMovementSpeedList(movementSpeedList);//movement speed
 
         //Prof Bonus
         profBonus = determineProfBonus(level);
+        randNPC.setProfBonus(profBonus);
 
         //Saving Throws
         savingThrows = determineSavingThrows(genClass, abilityModifier, profBonus);// saving throws
 
         //SkillList
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(savingThrows));
+        randNPC.setSavingThrows(savingThrows);
         if (!genClass.equals(nameDBCommoner)) {     // Fall Commoner?
             skillList = determineSkillList(race, job, genClass);
-            generatedNPCFinished.add(generatedNPCFinished.size(), (addAbilityScoreToSkillList(abilityModifier,skillList, profBonus)));
+            randNPC.setSkillList(addAbilityScoreToSkillList(abilityModifier,skillList, profBonus));
         } else {
-            generatedNPCFinished.add(generatedNPCFinished.size(), "none");
+            randNPC.setSkillList(Collections.singletonList("none"));
         }
 
         //random Gender
@@ -211,11 +210,11 @@ public class RandomNPC {
         } else {
             gender = inputGender;
         }
-        generatedNPCFinished.add(generatedNPCFinished.size(), gender);
+        randNPC.setGender(gender);
 
         //random Age
         age = randGen.randAge(race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(age));
+        randNPC.setAge(age);
 
         //RandomName
         if (inputName ==null) {
@@ -223,43 +222,40 @@ public class RandomNPC {
         }else {
             name = inputName;
         }
-
-        generatedNPCFinished.add(generatedNPCFinished.size(), name);
+        randNPC.setName(name);
 
         //random Alignment
         alignment = randGen.randAlignment();
-        generatedNPCFinished.add(generatedNPCFinished.size(), alignment);
+        randNPC.setAlignment(alignment);
         
         //random Description
         description = randGen.randDescription(race);
-        generatedNPCFinished.add(generatedNPCFinished.size(), description);
+        randNPC.setDescription(description);
 
         //random Deity
         deity = randGen.randDeity(alignment);
-        generatedNPCFinished.add(generatedNPCFinished.size(), deity);
+        randNPC.setDeity(deity);
 
         //random Languages
         languages = determineLanguages(race,job);
-        generatedNPCFinished.add(generatedNPCFinished.size(), String.valueOf(languages));
-
+        randNPC.setLanguages(languages);
 
         senses = randGen.getVision(race) + ", Passive Perception " + randGen.passivePerception(abilityModifier, skillList, profBonus);
-        generatedNPCFinished.add(generatedNPCFinished.size(), senses);
+        randNPC.setSenses(senses);
 
+        randNPC = randGen.randomSpellsForClass(randNPC);
         //spells
-        List<Object> spellList =  randGen.randSpellList(genClass,abilityModifier,level);
-        spellList = randGen.addRaceCantripsAndSpells(race,spellList,level);
-        spellList = randGen.arrangeSpellListInTheRightOrder(spellList);
-        generatedNPCFinished.add(generatedNPCFinished.size(), (spellList));
-
+        List<Object> spellList =  randNPC.getSpellList();
+        randGen.addRaceCantripsAndSpells(randNPC);
+        randNPC.setSpellList(spellList);
         //features
         List<String> actionList = determineFeatures(race,"action");
         List<String> bonusActionList = determineFeatures(race, searchTermBonusAction);
         List<String> bonusTextList = determineFeatures(race, "bonus text");
 
-        generatedNPCFinished.add(generatedNPCFinished.size(), actionList);
-        generatedNPCFinished.add(generatedNPCFinished.size(), bonusActionList);
-        generatedNPCFinished.add(generatedNPCFinished.size(), bonusTextList);
+        randNPC.setActionList(actionList);
+        randNPC.setBonusActionList(bonusActionList);
+        randNPC.setBonusTextList(bonusTextList);
 
        //Spell Ability = Spell Attack Mod und Spell Save DC
         int spellAttack = randGen.spellAttackMod(abilityModifier, profBonus, genClass);
@@ -268,11 +264,11 @@ public class RandomNPC {
 
         spellAbility.add(String.valueOf(spellAttack));
         spellAbility.add(String.valueOf(spellSave)) ;
-        generatedNPCFinished.add(generatedNPCFinished.size(), spellAbility);
+        randNPC.setSpellAbility(spellAbility);
 
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
-            generatedNPCFinished.set(0, race);
+        randNPC.setRace(race);
         }
 
         ArrayList<Object> history = new ArrayList<>();
@@ -308,7 +304,7 @@ public class RandomNPC {
 
         dbms.saveEntry(history);
 
-        return generatedNPCFinished;
+        return randNPC;
     }
 
     public List<Integer> distributeAbilityScore (List<Integer> rolledAbilityScore, String charClass) {
@@ -623,8 +619,10 @@ public class RandomNPC {
         List<String> finalFeatures = new ArrayList<>();
         String searchTermDB = null;
 
-        if((!Objects.equals(dbms.getRow("race", race).get(3), "null"))){
-            features.addAll(randGen.bigStringToDividedString(dbms.getRow("race", race).get(3)));
+        //überprüfung, ob null
+        List<String> raceData = dbms.getRow("race", race);
+        if (raceData != null && !Objects.equals(raceData.get(3), "null")) {
+            features.addAll(randGen.bigStringToDividedString(raceData.get(3)));
         }
         switch (searchedFeature) {
             case "action":
@@ -639,11 +637,10 @@ public class RandomNPC {
             default:
                 break;
         }
-        for(String s: features) {
-            if (dbms.getRow(nameDBFeatures, s).get(3).equals(searchTermDB)){
-                finalFeatures.add(dbms.getRow(nameDBFeatures, s).get(1) + ": " + dbms.getRow(nameDBFeatures,s).get(2));
-            }
-
+        for(String feature: features) {
+            List<String> featureData = dbms.getRow(nameDBFeatures, feature);
+            if (featureData.get(3).equals(searchTermDB)){
+                finalFeatures.add(featureData.get(1) + ": " + featureData.get(2));            }
         }
         return finalFeatures;
     }
@@ -684,35 +681,16 @@ public class RandomNPC {
     Bitte nicht anfassen, ausser ihr versteht wie und warum diese Funktion funktioniert
      */
     public List<Integer> addAbilityScoreImprovement (int level, List<Integer> abilityScore ){
-        int improveCount = 0;
-
-        switch(level){
-            case 19,20:
-                improveCount = improveCount +5;
-                break;
-            case 16,17,18:
-                improveCount = improveCount +4;
-                break;
-            case 12,13,14,15:
-                improveCount = improveCount +3;
-                break;
-            case 8,9,10,11:
-                improveCount = improveCount +2;
-                break;
-            case 4,5,6,7:
-                improveCount = improveCount +1;
-                break;
-            default:
-                break;
-        }
-        for (int i=0;i < improveCount ; i++){
-           abilityScore = addImprovement(abilityScore);
+        // Berechnung der Verbesserungen basierend auf dem Level
+        int improveCount = Math.max(0, level / 4);  // 1 bei Level 4, 2 bei Level 8 usw.
+        for (int i = 0; i < improveCount; i++) {
+            abilityScore = addImprovement(abilityScore);
         }
         return abilityScore;
     }
     public List<Integer> addImprovement(List<Integer> abilityScore){
-        ArrayList<Integer> unevenAbSc  =new ArrayList<>();
-        ArrayList<Integer> abilityScoreBelow20  =new ArrayList<>();
+        List<Integer> unevenAbSc  =new ArrayList<>();
+        List<Integer> abilityScoreBelow20  =new ArrayList<>();
         for(Integer abilities : abilityScore ) {
             if (abilities < 20) {      // finde alle Ability Scores die kleiner als 20 sind
                 abilityScoreBelow20.add(abilities);
@@ -721,44 +699,44 @@ public class RandomNPC {
         if (abilityScoreBelow20.isEmpty()) {  // wenn alle über 20 sind, dann gib die bekommene Ability Scores zurück
             return abilityScore;
         }
-        List<Integer> aSB20Sorted = new ArrayList<>(abilityScoreBelow20);
-        aSB20Sorted.sort(Collections.reverseOrder());
-        for (Integer abilities : aSB20Sorted) { // wenn es ungerade gibt werden diese erst einmal aufgefüllt
+
+        abilityScoreBelow20.sort(Collections.reverseOrder());
+
+        for (Integer abilities : abilityScoreBelow20) { // wenn es ungerade gibt werden diese erst einmal aufgefüllt
             if (abilities % 2 == 1) {   // check, ob ungerade
                 unevenAbSc.add(abilities);
             }
         }
-        switch (unevenAbSc.size()){
-            case 2,3,4,5,6:
-                abilityScore.set(abilityScore.indexOf(unevenAbSc.getFirst()), unevenAbSc.getFirst() + 1);
-                abilityScore.set(abilityScore.indexOf(unevenAbSc.getLast()), unevenAbSc.getLast() + 1);
-                unevenAbSc.clear();
-                break;
-            case 1:
-                abilityScore.set(abilityScore.indexOf(unevenAbSc.getFirst()), unevenAbSc.getFirst() + 1);
-                try {
-                    abilityScore.set(abilityScore.indexOf(aSB20Sorted.getFirst()), (aSB20Sorted.getFirst() + 1));//breaks here
-                } catch (Exception ignored) {
-                    //ka warum hier manchmal ein Fehler entsteht, er wird jetzt einfach abgefangen :)
-                    unevenAbSc.clear();
-                }
-                break;
-            case 0:
-                for (Integer abSc : abilityScoreBelow20) {
-                    if (abSc + 2 <= 20) {
-                        abilityScore.set(abilityScoreBelow20.indexOf(aSB20Sorted.getFirst()), aSB20Sorted.getFirst() + 2);
-                        break;
-                    }
-                }
-                break;
-            default:
-                break;
+        // Priorisiere das Erhöhen von ungeraden Werten
+        if (!unevenAbSc.isEmpty()) {
+            increaseUnevenScores(abilityScore, unevenAbSc);
+        } else {
+            // Wenn keine ungeraden Werte vorhanden sind, füge +2 hinzu (maximal 20)
+            increaseEvenScores(abilityScore, abilityScoreBelow20);
         }
-            abilityScoreBelow20.clear();
-            aSB20Sorted.clear();
-            unevenAbSc.clear();
+         return abilityScore;
+        }
 
-            return abilityScore;
+    private void increaseEvenScores(List<Integer> abilityScore, List<Integer> abilityScoreBelow20) {
+        for (Integer abSc : abilityScoreBelow20) {
+            if (abSc + 2 <= 20) {
+                abilityScore.set(abilityScore.indexOf(abSc), abSc + 2);
+                break;
+            }
         }
     }
+
+    private void increaseUnevenScores(List<Integer> abilityScore, List<Integer> unevenAbSc) {
+        // Erhöht ungerade Scores priorisiert
+        if (!unevenAbSc.isEmpty()) {
+            Integer first = unevenAbSc.getFirst();
+            abilityScore.set(abilityScore.indexOf(first), first + 1);
+
+            if (unevenAbSc.size() > 1) {
+                Integer last = unevenAbSc.getLast();
+                abilityScore.set(abilityScore.indexOf(last), last + 1);
+            }
+        }
+    }
+}
 

@@ -1,10 +1,10 @@
 package DnDGen.UI;
 
+import DnDGen.TSWP1.NPCClass;
 import DnDGen.TSWP1.RandomGenerator;
 import DnDGen.TSWP1.RandomNPC;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -15,19 +15,24 @@ import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ElementNPC {
     VBox npcStack, descriptionVBox;
-    ArrayList<Object> npc;
+    NPCClass npc;
     RandomNPC rNPC = new RandomNPC();
     RandomGenerator rGenerator = new RandomGenerator();
     ArrayList<Line> lineList;
 
-
     // Konstruktor
     ElementNPC(ArrayList<Object> npc){
+        //this.npc = npc;
+        npcStack = new VBox();
+        descriptionVBox = new VBox();
+        lineList = new ArrayList<>();
+    }
+
+    ElementNPC(NPCClass npc) {
         this.npc = npc;
         npcStack = new VBox();
         descriptionVBox = new VBox();
@@ -36,11 +41,11 @@ public class ElementNPC {
 
     // gibt Beschreibung als Fließtext
     public void getDescriptionOld() {
-        String name = (String) npc.get(15);
+        String name = npc.getName();
 
-        ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription((String) npc.get(0));
-        List listNpc = npcDescriptionArray;
-        String sex = (String) npc.get(13);
+        //ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription(npc.getRace());
+        List listNpc = rGenerator.randDescription(npc.getRace());
+        String sex = npc.getGender();
         TextFlow descriptionText = new TextFlow();
         String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
                 name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
@@ -65,7 +70,7 @@ public class ElementNPC {
 
     // liefert die Beschreibung als einfache Zeilen
     public void getDescriptionFromNPC() {
-        ArrayList<String> descriptionList = (ArrayList<String>) npc.get(17);
+        List<String> descriptionList = npc.getDescription();
         GridPane descriptionGrid = new GridPane();
 
         //Spaltenbreite der Tabelle definieren
@@ -76,7 +81,7 @@ public class ElementNPC {
         descriptionCol2Constraint.setPercentWidth(75);
         descriptionGrid.getColumnConstraints().addAll(descriptionCol1Constraint,descriptionCol2Constraint);
 
-        //Plothook nicht da Stelle nach attitute
+        //Plot hook nicht da Stelle nach attitude
         ArrayList<String> descriptionTitel = new ArrayList<>(Arrays.asList("Eyes: ","Hair color: ", "Hairstyle: ",
                 "Skin: ", "Trait: ", "Mannerism: ", "Bond: ", "Flaw: ",
                 "Ideal: ", "Voice: ", "Clothing: ", "Attitude: ",
@@ -108,27 +113,26 @@ public class ElementNPC {
 
     }
 
-    // Füllt den NPC-Stack
-    public void makeFillNPCStack() {
-        List<String> listNpc = new ArrayList<>();
-        String stringNpc = "";
-
-
-        //Name, Klasse, Rasse, Alignment
+    /**
+     * Erstellt den Block mit Name, Klasse, Rasse, Alignment
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane nameClassBlock() {
         GridPane nameClassGrid = new GridPane();
         nameClassGrid.setPadding(new Insets(5, 10, 10, 10));
         nameClassGrid.setVgap(4);
         nameClassGrid.setHgap(25);
 
-        Label nameL      = new Label("Name: " + npc.get(15));
-        Label levelL     = new Label("Level: " + npc.get(1));
-        Label classL     = new Label("Klasse: " + npc.get(3));
-        Label jobL       = new Label("Job: " + npc.get(2));
-        Label raceL      = new Label("Rasse: " + npc.get(0));
-        Label alignmentL = new Label("Alignment: " + npc.get(16));
-        Label ageL       = new Label("Alter: " + npc.get(14));
-        Label sexL       = new Label("Geschlecht: " + npc.get(13));
-        Label deityL     = new Label("Gottheit: " + npc.get(18));
+        Label nameL      = new Label("Name: " + npc.getName());
+        Label levelL     = new Label("Level: " + npc.getLevel());
+        Label classL     = new Label("Klasse: " + npc.getGenClass());
+        Label jobL       = new Label("Job: " + npc.getJob());
+        Label raceL      = new Label("Rasse: " + npc.getRace());
+        Label alignmentL = new Label("Alignment: " + npc.getAlignment());
+        Label ageL       = new Label("Alter: " + npc.getAge());
+        Label sexL       = new Label("Geschlecht: " + npc.getGender());
+        Label deityL     = new Label("Gottheit: " + npc.getDeity());
 
         GridPane.setConstraints(nameL,0,0);
         GridPane.setConstraints(levelL,1,0);
@@ -142,13 +146,21 @@ public class ElementNPC {
 
         nameClassGrid.getChildren().addAll(nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL);
 
+        return nameClassGrid;
+    }
 
-        //Armor class, Hit points, Speed, Language, Feature
+    /**
+     * Erstellt den Block mit ArmorClass, Hit points, Speed, Languages
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane armorClassHitPointsBlock() {
+
         GridPane acHpSpLangGrid = new GridPane();
         acHpSpLangGrid.setPadding(new Insets(5, 5, 5, 5));
         acHpSpLangGrid.setVgap(4);
         acHpSpLangGrid.setHgap(5);
-        //acHpSpLangGrid.getChildren().remove(4,acHpSpLangGrid.getChildren().size());
+
         Label armorClassL = new Label("Rüstungsklasse: ");
         GridPane.setConstraints(armorClassL,0,0);
         Label hitPointsL  = new Label("Trefferpunkte: ");
@@ -159,36 +171,42 @@ public class ElementNPC {
         GridPane.setConstraints(languagesL,0,4);
 
         //AmorClass, HitPoints
-        Label aCL = new Label(String.valueOf(npc.get(8)));
+        Label aCL = new Label(String.valueOf(npc.getArmorClass()));
         GridPane.setConstraints(aCL,1,0);
-        Label hPL = new Label(String.valueOf(npc.get(6)));
+        Label hPL = new Label(String.valueOf(npc.getHealthPoints()));
         GridPane.setConstraints(hPL,1,1);
         acHpSpLangGrid.getChildren().addAll(armorClassL,hitPointsL,speedL,languagesL,aCL,hPL);
 
         //Geschwindigkeit
-        listNpc = stringToList((String) npc.get(10));
+        List<String> listNpc = npc.getMovementSpeedList();
         for(int i = 0; i < listNpc.size(); i++) {
-            Label label = new Label(listNpc.get(i).toString());
+            Label label = new Label(listNpc.get(i));
             GridPane.setConstraints(label,1,i+2);
             acHpSpLangGrid.getChildren().add(label);
         }
 
         //Sprachen
         listNpc.clear();
-        listNpc = stringToList((String) npc.get(19));
+        listNpc = npc.getLanguages();
         for(int i = 0; i < listNpc.size(); i++) {
-            Label label = new Label(listNpc.get(i).toString());
+            Label label = new Label(listNpc.get(i));
             GridPane.setConstraints(label,1,i+4);
             acHpSpLangGrid.getChildren().add(label);
         }
 
+        return acHpSpLangGrid;
+    }
 
-        //Features
+    /**
+     * Erstellt den Block mit den Features. Den Aktionen
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane featuresBlock() {
         GridPane featuresGrid = new GridPane();
         featuresGrid.setPadding(new Insets(5,5,5,5));
         featuresGrid.setVgap(4);
         featuresGrid.setHgap(5);
-        //featuresGrid.getChildren().remove(3,featuresGrid.getChildren().size());
 
         Label actionL = new Label("Aktionen: ");
         GridPane.setConstraints(actionL,0,0);
@@ -200,15 +218,14 @@ public class ElementNPC {
         ColumnConstraints featureGridColCon1 = new ColumnConstraints();
         featureGridColCon1.setMinWidth(80);
         featureGridColCon1.setFillWidth(true);
-       // featureGridColCon1.setPercentWidth(30);
         ColumnConstraints featureGridColCon2 = new ColumnConstraints();
-        //featureGridColCon2.setPercentWidth(70);
         featuresGrid.getColumnConstraints().addAll(featureGridColCon1, featureGridColCon2);
 
         featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
 
-
-        ArrayList<String> featureList = ((ArrayList<String>) npc.get(22));
+        // Features
+        /*
+        ArrayList<String> featureList = ((ArrayList<String>) npc.get);
         VBox actionBox = new VBox();
         actionBox.setSpacing(5);
         GridPane.setConstraints(actionBox,1,0);
@@ -242,7 +259,16 @@ public class ElementNPC {
         featuresGrid.getChildren().addAll(actionBox,bonusActionBox,bonusTextBox);
 
 
-        //Stats
+         */
+        return featuresGrid;
+    }
+
+    /**
+     * Erstellt den Block mit den Stats. Mit Ability Score, Saving Throws
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane statsBlock() {
         GridPane statsGrid = new GridPane();
         statsGrid.setPadding(new Insets(5, 5, 5, 5));
         statsGrid.setVgap(4);
@@ -267,22 +293,28 @@ public class ElementNPC {
             GridPane.setConstraints(label,i,1);
             statsGrid.getChildren().add(label);
         }
-        listNpc.clear();
-        listNpc = stringToList((String) npc.get(11));
-        for(int j = 0; j < listNpc.size(); j++) {
-            String ability = listNpc.get(j).toString().substring(0,3);
-            String score = listNpc.get(j).toString().substring(4);
-            for(int i = 1; i <= abilityString.size(); i++) {
-                if(abilityString.get(i-1).equals(ability)) {
+
+        List<String> listNpc = npc.getSavingThrows();
+        for (String s : listNpc) {
+            String ability = s.substring(0, 3);
+            String score = s.substring(4);
+            for (int i = 1; i <= abilityString.size(); i++) {
+                if (abilityString.get(i - 1).equals(ability)) {
                     Label label = new Label(score);
-                    GridPane.setConstraints(label,i,2);
+                    GridPane.setConstraints(label, i, 2);
                     statsGrid.getChildren().add(label);
                 }
             }
         }
+        return statsGrid;
+    }
 
-
-        //Inventar (Waffen & Rüstung)
+    /**
+     * Erstellt den Block mit dem Inventar. Mit Rüstung, Waffen
+     * @return gibt den Block als GridPane zurück
+     * @author Marie
+     */
+    private GridPane inventoryBlock() {
         GridPane inventoryGrid = new GridPane();
         inventoryGrid.setPadding(new Insets(5, 10, 10, 10));
         inventoryGrid.setVgap(1);
@@ -300,57 +332,86 @@ public class ElementNPC {
 
         inventoryGrid.getChildren().addAll(armorL, weaponL, armorTextL, weaponTextL);
 
-        stringNpc = "";
-        listNpc.clear();
-        listNpc = stringToList((String) npc.get(9));
-        for(int i = 0; i < listNpc.size(); i++) {
-            stringNpc = stringNpc.concat("    - " + listNpc.get(i) + "\n");
+        String stringNpc = "";
+        List<String> listNpc = npc.getWeaponList();
+        for (String s : listNpc) {
+            stringNpc = stringNpc.concat("    - " + s + "\n");
         }
         weaponL.setText(stringNpc);
         weaponL.setWrapText(true);
-        armorL.setText("    - " + npc.get(7));
+        armorL.setText("    - " + npc.getArmor());
         armorL.setWrapText(true);
 
+        return inventoryGrid;
+    }
 
-        //Skill, Senses
+    /**
+     * Erstellt den Block mit den skill und spells
+     * @return gibt den Block als HBox zurück
+     * @author Marie
+     */
+    private HBox skillsSpellsBlock() {
         HBox skillSensesBox = new HBox();
         skillSensesBox.setSpacing(15);
         TextFlow skillTF = new TextFlow();
         Text text1=new Text("Skills:\n");
         text1.setStyle("-fx-font-weight: bold");
         skillTF.getChildren().addAll(text1);
-        if(npc.get(12) == "none") {
-            Text skill = new Text( (String) npc.get(12));
+        if(npc.getSkillList().getFirst() == "none") {
+            Text skill = new Text(npc.getSkillList().toString());
             skillTF.getChildren().add(skill);
         } else {
-            for(String skill : (ArrayList<String>) npc.get(12)) {
+            for(String skill : npc.getSkillList()) {
                 Text text = new Text(skill + "\n");
                 skillTF.getChildren().add(text);
             }
         }
-
 
         VBox senseTF = new VBox();
         Text text3=new Text("Sense:\n");
         text3.setStyle("-fx-font-weight: bold");
         senseTF.getChildren().addAll(text3);
 
-        Text sense = new Text( npc.get(20) + "\n");
+        Text sense = new Text( npc.getSenses() + "\n");
         senseTF.getChildren().add(sense);
 
 
-
         //Spell
-        VBox spellActionBox = new VBox();
-
         TextFlow spellTF = new TextFlow();
-        text1 = new Text("Zauber: ");
+        text1 = new Text("Spells: \n");
         text1.setStyle("-fx-font-weight: bold");
         spellTF.getChildren().addAll(text1);
-        for(String spell : (ArrayList<String>) npc.get(21)) {
-            Text text = new Text(spell + "\n");
-            spellTF.getChildren().add(text);
-        }
+
+        // Cantrips
+        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text("Cantrips:" + npc.getSpellCantrips() + "\n"));
+
+        // 1
+        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text("1st:" + npc.getFirstLevelSpell() + "\n"));
+
+        // 2
+        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text("2st:" + npc.getSecondLevelSpell() + "\n"));
+
+        // 3
+        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text("3st:" + npc.getThirdLevelSpell() + "\n"));
+
+        // 4
+        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text("4st:" + npc.getFourthLevelSpell() + "\n"));
+
+        // 5
+        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text("5st:" + npc.getFifthLevelSpell() + "\n"));
+
+        // 6
+        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text("6st:" + npc.getSixthLevelSpell() + "\n"));
+
+        // 7
+        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text("7st:" + npc.getSeventhLevelSpell() + "\n"));
+
+        // 8
+        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text("8st:" + npc.getEightLevelSpell() + "\n"));
+
+        // 9
+        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text("9st:" + npc.getNinthLevelSpell() + "\n"));
+
 
         skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
@@ -373,8 +434,15 @@ public class ElementNPC {
         //System.out.println(spells);
         */
 
-        spellActionBox.setPadding(new Insets(10, 10, 10, 10));
+        return skillSensesBox;
+    }
 
+    /**
+     * Die Funktion erstellt und füllt die Ausgabe des NPCs nach der generation
+     * @author Marie
+     */
+    public void makeFillNPCStack() {
+        //Trennlinien
         Line line1 = new Line(0.0f,0.0f,100f,0.0f);
         lineList.add(line1);
         Line line2 = new Line(0.0f,0.0f,100f,0.0f);
@@ -386,22 +454,15 @@ public class ElementNPC {
         Line line5 = new Line(0.0f,0.0f,300.0f,0.0f);
         lineList.add(line5);
 
-
-        npcStack.getChildren().addAll(nameClassGrid,line1,acHpSpLangGrid,line2,statsGrid,line3, inventoryGrid, line5,skillSensesBox,line4,featuresGrid);
+        npcStack.getChildren().addAll(nameClassBlock(),line1, armorClassHitPointsBlock(),line2,statsBlock(),line3,
+                inventoryBlock(), line5,skillsSpellsBlock(),line4, featuresBlock());
     }
 
 
-
-
-
-
-
-
-    /* @author Marie
-     *
-     * Teilt einen String der die Form eines Array hat in einzelne Elemente und gibt sie als Liste zurück
-     *
-     * @param string: ein String der als Liste geschrieben werden soll.
+    /**
+     * Teilt einen String der die Form eines Arrays hat in einzelne Elemente und gibt sie als Liste zurück
+     * @author Marie
+     * @param string ein String der als Liste geschrieben werden soll.
      * @return Eine Liste mit dem Inhalt von dem string eingabe.
      */
     public List stringToList(String string) {
@@ -456,10 +517,10 @@ public class ElementNPC {
     }
 
     // gibt den AbilityScore mit Modifier zurück
-    public String abilityString(int index, ArrayList<Object> npc) {
+    public String abilityString(int index, NPCClass npc) {
         String string = "";
-        List listNpc = stringToList((String) npc.get(4));
-        List listAbilityModifier = stringToList((String) npc.get(5));
+        List listNpc = npc.getAbilityScores();
+        List listAbilityModifier = npc.getAbilityModifier();
 
         if(listAbilityModifier.get(index).toString().length() > 1) {
             string = listNpc.get(index) + listAbilityModifier.get(index).toString();

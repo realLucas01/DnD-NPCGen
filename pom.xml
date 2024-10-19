@@ -7,7 +7,14 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
+
 	</parent>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
 	<groupId>DnDGen</groupId>
 	<artifactId>TSWP1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -17,6 +24,11 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -131,6 +143,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

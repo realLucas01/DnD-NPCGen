@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.*;
 
+import ch.qos.logback.classic.Logger;
 import org.springframework.context.ApplicationContext;
 
 import DnDGen.DB.DBMS;
@@ -28,7 +29,7 @@ public class RandomGenerator {
 	String nameDBSpells = "spells";
 	String nameDBFeatures = "features";
 	String nameDBSpellSlots = "spellslots";
-	String placeholderVariableForSonarCloud = "placeholder";
+	Logger logger;
 	//Aufteilung eines großen String in kleinere
 	public List<String> bigStringToDividedString(String bigString) {
         String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
@@ -181,7 +182,6 @@ public class RandomGenerator {
 			dbData.clear();
 			i++;
 		}
-
 		desc.add(size);
 		desc.add(Double.toString(height));
 
@@ -194,22 +194,18 @@ public class RandomGenerator {
 	*/
 	/* @Luca */
 	public List<String> figureOutProfList(String neededProfList, String charClass, String race) {
-		List<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
-
+		Set<String> profSet = new HashSet<>();// Liste mit Ergebnissen die zurückgegeben wird
 		switch (neededProfList) {    // Entscheidung welche ProfListe man benötigt
 			case "armor":
-				profList.addAll(figureOutArmorProfList(charClass,race));
+				profSet.addAll(figureOutArmorProfList(charClass,race));
 				break;
 			case "weapon":    //siehe "armor" nur jetzt mit den waffen
-				profList.addAll(figureOutWeaponProfList(charClass,race));
+				profSet.addAll(figureOutWeaponProfList(charClass,race));
 				break;
 				default:
 					break;
 		}
-		Set<String> removeDuplicate = new HashSet<>(profList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-		profList.clear();
-		profList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
-		return profList;
+		return new ArrayList<>(profSet);
 	}
 	public List<String> figureOutArmorProfList(String charClass, String race){
 		List<String> profList; // Liste mit Ergebnissen die zurückgegeben wird
@@ -368,26 +364,26 @@ public class RandomGenerator {
 		return rand.nextInt(ageMax) + ageAdult;
 	}
 
-	//Schroedingers Funktion
+	//Schroedingers Funktion(ehemals)
 	/* @Luca */
-	public List<String> randSkillProf(List<String> possibleSkills, Integer numberSkill, List<String> knownSkillList) {
+	public List<String> randSkillProf(List<String> possibleSkills, int numberSkill, List<String> knownSkillList) {
 		if (possibleSkills.isEmpty()) {
 			return knownSkillList;
 		}
-		//es werden so lange skills zufällig ausgewählt und hinzugefügt, bis die richtige Anzahl an Skills hinzugefügt wurde
-		for (int currentNumberOfNewSkills = 0; currentNumberOfNewSkills < numberSkill;currentNumberOfNewSkills++) {
-			int lengthListPossibleSkills = possibleSkills.size();
-			int skillIndex = rand.nextInt(lengthListPossibleSkills);
-			if(!knownSkillList.contains(possibleSkills.get(skillIndex))){
-				knownSkillList.add(possibleSkills.get(skillIndex));
-				possibleSkills.remove(skillIndex);
-			}
-		}
-		Set<String> removeDuplicate = new HashSet<>(knownSkillList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-		knownSkillList.clear();
-		knownSkillList.addAll(removeDuplicate);
+		// Verwende ein Set, um von Anfang an Duplikate zu vermeiden
+		Set<String> uniqueSkills = new HashSet<>(knownSkillList);
 
-		return knownSkillList;
+		// Kopiere die Liste der möglichen Skills, um sie nicht zu verändern
+		List<String> remainingSkills = new ArrayList<>(possibleSkills);
+
+		// Mische die Liste, um zufällige Auswahl zu erleichtern
+		Collections.shuffle(remainingSkills);
+
+		// Füge zufällig ausgewählte Skills zur Menge hinzu, bis die Anzahl erreicht ist
+		for (int runtime=1;numberSkill>=runtime; runtime++) {
+                uniqueSkills.add(remainingSkills.get(runtime));  // Duplikate werden durch das Set verhindert
+		}
+		return new ArrayList<>(uniqueSkills);
 	}
 
 	/* TO DO @Lenard */
@@ -407,225 +403,173 @@ public class RandomGenerator {
 
 		return dbms.getRandomRow("alignment").get(2);
 	}
-	/*
-		Hier wird alles bestimmt was eine Klasse für Werte hat um Spells zu bestimmen
-		0 : spellSlots;
-		1: highestSpellSlot;
-		2: classSpellKnownNumber;
-		3: cantripsNumber;
-	 */
-	public List<Object> classSpellStuff (String genClass, int level, List<Integer> abilityModifier ){
-		String classSpellKnownCol = dbms.getRow(nameDBClass, genClass).get(9);
-		int classSpellKnownNumber;
-		int cantripsNumber;
-		int highestSpellSlot = 0;
-		boolean spezialCase = false;
-		List<Integer> spellSlots = new ArrayList<>();
-
-		if (Objects.equals(classSpellKnownCol, "null")){
-			return new ArrayList<>();
+	public int getHighestSpellLevel(NPCClass chosenNPC){
+		int dbCounter = 3;
+		int highestSpellLevel = 0 ;
+		for(int i=1; i<10;i++){
+			int spellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNPC.getGenClass()).get(dbCounter)).get(chosenNPC.getLevel()-1));
+			if(spellLevel == 0){
+				return highestSpellLevel;
+			}
+			highestSpellLevel++;
+			dbCounter++;
 		}
-		switch (classSpellKnownCol){
+		return highestSpellLevel;
+	}
+
+	public NPCClass randomSpellsForClass(NPCClass chosenNPC){
+		String classSpellKnownColDB = dbms.getRow(nameDBClass, chosenNPC.getGenClass()).get(9);
+		int spellCount = 0 ;
+		int highestSpellLevel= 0 ;
+		int cantripNumber= 0;
+		int numberOfRandomSpellsPerLevel = 0;
+		int bracketIndex = chosenNPC.getGenClass().indexOf("(");
+		String spellClass;
+
+
+		switch (classSpellKnownColDB){
 			case "null":
-				return new ArrayList<>();
+				return chosenNPC;
 			case "tabelle":
-				classSpellKnownNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown, genClass, "Spell Known").getLast()).get(level - 1));
-				spellSlots = determineSpellSlots(genClass,level);
-				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, genClass).get(2)).get(level-1));
+				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Spell Known").get(3)).get(chosenNPC.getLevel()-1));
+				highestSpellLevel = getHighestSpellLevel(chosenNPC);
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNPC.getGenClass()).get(2)).get(chosenNPC.getLevel()-1));
 				break;
 			case "spezial":
-				classSpellKnownNumber = Integer.parseInt((bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Spell Known").getLast()).get(level-1)));
-				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Cantrips" ).getLast()).get(level-1));
-				highestSpellSlot = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,genClass, "Slot Level").getLast()).get(level-1));
-				spezialCase = true;
+				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Spell Known").get(3)).get(chosenNPC.getLevel()-1));
+				highestSpellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Slot Level").get(3)).get(chosenNPC.getLevel()-1));
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Cantrips").get(3)).get(chosenNPC.getLevel()-1));
 				break;
 			default:
-				cantripsNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, genClass).get(2)).get(level-1));
-				spellSlots = determineSpellSlots(genClass,level);
-				classSpellKnownNumber = determineNumberOfKnownSpell(genClass,level, abilityModifier);
+				spellCount = determineNumberOfKnownSpell(chosenNPC);
+				highestSpellLevel = getHighestSpellLevel(chosenNPC);
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNPC.getGenClass()).get(2)).get(chosenNPC.getLevel()-1));
 				break;
-
 		}
-		if ((!spezialCase)) {
-			int lastLevelSpellSlot = 1;
-			for (int index : spellSlots) {
-				if(index == 0){
+		if(bracketIndex!=-1) { //wenn innerhalb der Klassen Namen eine Klammer steht, um Varianten dieser zu kennzeichen, muss sie entfernt werden, um spells zu finden
+			spellClass = chosenNPC.getGenClass().substring(0, bracketIndex);
+		}else {
+			spellClass = chosenNPC.getGenClass();
+		}
+
+		if (cantripNumber != 0 ){
+			chosenNPC.setSpellCantrips(determineSpellNames(determineCantrips(cantripNumber,spellClass)));
+		}
+		if(spellCount != 0 ){
+			for (int currentSpellLevel=1;currentSpellLevel <= highestSpellLevel;currentSpellLevel++){
+				numberOfRandomSpellsPerLevel = rand.nextInt(spellCount)+1;
+				List<String> spellsForLevel = dbms.getMultRowMultPref(nameDBSpells, spellClass, Integer.toString(currentSpellLevel), numberOfRandomSpellsPerLevel);
+				assignSpellsToNPC(chosenNPC, currentSpellLevel, determineSpellNames(spellsForLevel));
+				spellCount -= numberOfRandomSpellsPerLevel;
+
+				if (spellCount == 0){
 					break;
-				} else {
-					highestSpellSlot = lastLevelSpellSlot;
-					lastLevelSpellSlot++;
 				}
 			}
 		}
-
-		List<Object> spellStuff = new ArrayList<>();
-		spellStuff.add(spellSlots);
-		spellStuff.add(highestSpellSlot);
-		spellStuff.add(classSpellKnownNumber);
-		spellStuff.add(cantripsNumber);
-
-		return spellStuff;
+		return chosenNPC;
 	}
-	/*
-	Funktion die zufällige Zauber und eine zufällige Anzahl ausgibt. Da noch Spells fehlen, und aus Sicherheitsgründen wird jeder DB Aufruf überwacht und nach 3 sekunden automatisch abgebrochen.
-	Dies hat zur Folge, dass der abgebrochene DB Aufruf keinerlei Rückgaben/Ergebnisse produziert
-
-	Eine Beispiel Ausgabe:
-	[Cantrips: [Prestidigitation, Message, BladeWard], 1st Level: [TashasCausticBrew, FogCloud, FloatingDisk]]
-	 */
-	public List<Object> randSpellList (String genClass, List<Integer> abilityModifier, int level ){
-		List<Object> spellList = new ArrayList<>();
-		int classSpellKnownNumber ;
-		int cantripsNumber ;
-		int highestSpellSlot;
-
-		List<Object> spellStuff = classSpellStuff(genClass,level,abilityModifier);
-		if(spellStuff.isEmpty()){
-			return new ArrayList<>();
+	public void assignSpellsToNPC(NPCClass chosenNPC, int spellLevel, String spellNames) {
+		switch (spellLevel) {
+			case 1:
+				chosenNPC.setFirstLevelSpell(spellNames);
+				break;
+			case 2:
+				chosenNPC.setSecondLevelSpell(spellNames);
+				break;
+			case 3:
+				chosenNPC.setThirdLevelSpell(spellNames);
+				break;
+			case 4:
+				chosenNPC.setFourthLevelSpell(spellNames);
+				break;
+			case 5:
+				chosenNPC.setFifthLevelSpell(spellNames);
+				break;
+			case 6:
+				chosenNPC.setSixthLevelSpell(spellNames);
+				break;
+			case 7:
+				chosenNPC.setSeventhLevelSpell(spellNames);
+				break;
+			case 8:
+				chosenNPC.setEightLevelSpell(spellNames);
+				break;
+			case 9:
+				chosenNPC.setNinthLevelSpell(spellNames);
+				break;
+			default:
+				logger.info("Zauber nicht verfügbar -> FEHLER");
 		}
-		highestSpellSlot = (int) spellStuff.get(1);
-		classSpellKnownNumber = (int) spellStuff.get(2);
-		cantripsNumber = (int) spellStuff.get(3);
-
-		if(genClass.contains("(")){
-			genClass = genClass.substring(0, genClass.indexOf("("));
-		}
-		String finalGenClass = genClass;
-
-
-		spellList.add("Cantrips: " + determineSpellNames(determineCantrips(cantripsNumber,finalGenClass)));
-		spellList.addAll(determineSpells(finalGenClass,highestSpellSlot,classSpellKnownNumber));
-		return spellList;
 	}
-	/*
-	gibt ein Integer Liste wieder, mit den Spell Slots für das Level
-	 */
-	private List<Integer>determineSpellSlots(String genClass, int level){
-		List<Integer> spellSlots = new ArrayList<>();
-		List<String> dbSpellSlot = dbms.getRow(nameDBSpellSlots, genClass);
-		for(int index=0; index<9; index ++){
-			spellSlots.add(Integer.parseInt(bigStringToDividedString(dbSpellSlot.get(3+index)).get(level-1)));
-		}
-		return spellSlots;
-	}
+
 	/*
 	Anzahl der möglichen Spells für die Klasse
 	 */
-	private int determineNumberOfKnownSpell(String genClass, int level, List<Integer> abilityModifier) {
-		String colClassForSpell = dbms.getRow(nameDBClass, genClass).get(9);
+	private int determineNumberOfKnownSpell(NPCClass chosenNPC) {
+
+		String colClassForSpell = dbms.getRow(nameDBClass, chosenNPC.getGenClass()).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
 		int knownSpells;
 
 		switch (abilityModifierForSpells) {
 			case "Str":
-				spellModNumber = abilityModifier.getFirst();
+				spellModNumber = chosenNPC.getAbilityModifier().getFirst();
 				break;
 			case "Dex":
-				spellModNumber = abilityModifier.get(1);
+				spellModNumber = chosenNPC.getAbilityModifier().get(1);
 				break;
 			case "Con":
-				spellModNumber = abilityModifier.get(2);
+				spellModNumber = chosenNPC.getAbilityModifier().get(2);
 				break;
 			case "Int":
-				spellModNumber = abilityModifier.get(3);
+				spellModNumber = chosenNPC.getAbilityModifier().get(3);
 				break;
 			case "Wis":
-				spellModNumber = abilityModifier.get(4);
+				spellModNumber = chosenNPC.getAbilityModifier().get(4);
 				break;
 			case "Cha":
-				spellModNumber = abilityModifier.get(5);
+				spellModNumber = chosenNPC.getAbilityModifier().get(5);
 				break;
 			default:
 				break;
 		}
 		if (colClassForSpell.contains("1/2")){
-			knownSpells = (int) (spellModNumber +  level*0.5);
+			knownSpells = (int) (spellModNumber +  chosenNPC.getLevel()*0.5);
 		}else {
-			knownSpells = spellModNumber + level;
+			knownSpells = spellModNumber + chosenNPC.getLevel();
 		}
 		return knownSpells;
 	}
 	/*
 	Damit nicht die alles von den Spells ausgegeben wird, werden hier nur die Namen extrahiert
 	 */
-	private List<String> determineSpellNames (List<String> spells ){
-		List<String> spellNames = new ArrayList<>();
-		int lengthSpells;
-		int positionSpellName = 1;
-		lengthSpells = spells.size()/11;
-		for(int indexName=0;indexName<lengthSpells;indexName++ ){
-			spellNames.add(spells.get(positionSpellName));
-			positionSpellName= positionSpellName+11;
+
+	private String determineSpellNames (List<String> spells ){
+		StringBuilder spellNames = new StringBuilder(" ");
+
+		for (int i = 1; i < spells.size(); i += 11) {  // Annahme: Zaubername ist an jeder 11. Stelle
+			spellNames.append(spells.get(i)).append(", ");
 		}
-		return spellNames;
+		return spellNames.toString();
 	}
 
 	private List<String> determineCantrips(int cantripsNumber, String finalGenClass ){
-
-        return new ArrayList<>(dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber));
+        return dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber);
 	}
 
-	private List<String> determineSpells(String finalGenClass, int highestSpellSlot, int classSpellKnownNumber){
-		List<String> spellList = new ArrayList<>();
-		String spellLeveName = null;
 
-
-		for(int spellLevel=1; (spellLevel<=highestSpellSlot) && (classSpellKnownNumber>0); spellLevel++ ) {
-			int numberSpells  = rand.nextInt(classSpellKnownNumber)+1;
-
-			if (numberSpells > 10 ){
-				numberSpells = 10;
-			}
-
-			classSpellKnownNumber = classSpellKnownNumber - numberSpells;
-            switch (spellLevel){
-				case 1 :
-					spellLeveName = "1st Level";
-					break;
-				case 2 :
-					spellLeveName = "2nd Level";
-					break;
-				case 3 :
-					spellLeveName = "3th Level";
-					break;
-				case 4 :
-					spellLeveName = "4th Level";
-					break;
-				case 5 :
-					spellLeveName = "5th Level";
-					break;
-				case 6 :
-					spellLeveName = "6th Level";
-					break;
-				case 7 :
-					spellLeveName = "7th Level";
-					break;
-				case 8 :
-					spellLeveName = "8th Level";
-					break;
-				case 9:
-					spellLeveName = "9th Level";
-					break;
-				default:
-					break;
-
-			}
-			String finalSpellLeveName = spellLeveName;
-			int finalNumberSpells = numberSpells;
-				spellList.add(finalSpellLeveName + ": " + determineSpellNames(dbms.getMultRowMultPref(nameDBSpells, finalGenClass, Integer.toString(spellLevel), finalNumberSpells)));
-		}
-		return spellList;
-	}
-	public List<Object> addRaceCantripsAndSpells(String race, List<Object> spellList, int level){
-		List<String> featureList = bigStringToDividedString(dbms.getRow("race", race).get(3));
+	public void addRaceCantripsAndSpells(NPCClass chosenNPC){
+		List<String> featureList = bigStringToDividedString(dbms.getRow("race", chosenNPC.getRace()).get(3));
 		List<String> featureSpellList = new ArrayList<>();
 
 		for (String features : featureList){
 			if ((Objects.equals(features, "null")||(features==null))){
-				return new ArrayList<>();
+				return;
 			}
-			if ((dbms.getRow(nameDBFeatures,features).get(3).contains("cantrip")||(dbms.getRow(nameDBFeatures,features).get(3).contains("spell")))){
+			String possibleSpellFeature =  dbms.getRow(nameDBFeatures,features).get(3);
+			if ((possibleSpellFeature.contains("cantrip")||(possibleSpellFeature.contains("spell")))){
 				featureSpellList.add(features);
 			}
 		}
@@ -633,43 +577,35 @@ public class RandomGenerator {
 			String kindOfFeature = dbms.getRow(nameDBFeatures,spellFeature).get(3);
 
 			if(kindOfFeature.startsWith("cantrip:")) {
-
-				spellList=aufspaltungRaceCantrip(kindOfFeature, spellList,level);
+				aufspaltungRaceCantrip(kindOfFeature, chosenNPC);
 			} else if (kindOfFeature.startsWith("spell:")) {
-
-				spellList=aufspaltungRaceSpell(kindOfFeature, spellList,level);
+				aufspaltungRaceSpell(kindOfFeature, chosenNPC);
 			}
-
 		}
-
-		return spellList;
 	}
-	private List<Object> aufspaltungRaceCantrip(String spellFeature, List<Object> spellList, int level){
+
+	private void aufspaltungRaceCantrip(String spellFeature, NPCClass chosenNPC){
 		String inhalt = spellFeature.substring(8);
-		List<String> cantripListe = getSpellListFromSpellLevelToEditSpells(spellList,0);
 		if(inhalt.contains("spell")) {//"cantrip"
 
 			String[] cantrip = inhalt.split(" spell");
 
-			cantripListe.add(cantrip[0].trim());
-			spellList= aufspaltungRaceSpell("spell:" + cantrip[1].trim(), spellList, level);
+			chosenNPC.addSpellCantrip(cantrip[0].trim());
+			aufspaltungRaceSpell("spell:" + cantrip[1].trim(), chosenNPC);
 		}else{
 			String[] featureSubStrings = spellFeature.split(":");
 				if(featureSubStrings.length==3){//cantrip: 1: Wizard
 					int numberCantrips = Integer.parseInt(featureSubStrings[1].trim());
 					String spellClass = featureSubStrings[2].trim();
-					//Cantrips zufällig auswählen zu der Klasse und hinzufügen
-					cantripListe.addAll(determineSpellNames(determineCantrips(numberCantrips,spellClass)));
+					//Cantrips zufällig auswählen und zu der Klasse und hinzufügen
+					chosenNPC.addSpellCantrip(determineSpellNames(determineCantrips(numberCantrips,spellClass)));
 				}else{
-					cantripListe.add(featureSubStrings[1].trim()); // ganz normaler Cantrip
+					chosenNPC.addSpellCantrip(featureSubStrings[1].trim()); // ganz normaler Cantrip
 				}
 		}
-		spellList =  putSingleSpellLevelListBackToBigSpellList(0, cantripListe, spellList);
-		return spellList;
-
 	}
 
-	private List<Object> aufspaltungRaceSpell(String spellFeature, List<Object> spellList, int level) {
+	private void aufspaltungRaceSpell(String spellFeature, NPCClass chosenNPC) {
 		String[] featureSpellAufgeteilt = spellFeature.substring(7).split(", ");
 
 		int spellLevel;
@@ -680,234 +616,18 @@ public class RandomGenerator {
 				spell = spell.replace("]","");
 
 				int levelFromSpell = Integer.parseInt(spell.substring(0,2).trim());
-					if (level >= levelFromSpell){
+					if (chosenNPC.getLevel() >= levelFromSpell){
 						spellName = spell.substring(2).trim();
 					}
 			} else {
 				spellName = spell.substring(2).trim();
 			}
 			if(spellName==null){
-				return spellList;
+				return;
 			}
 			spellLevel = Integer.parseInt(dbms.getRow("spells", spellName.trim()).get(2));
-			List<String> currentSpellList = getSpellListFromSpellLevelToEditSpells(spellList,spellLevel);
-				currentSpellList.add(spellName);
-			spellList = putSingleSpellLevelListBackToBigSpellList(spellLevel,currentSpellList,spellList);
+			assignSpellsToNPC(chosenNPC,spellLevel,spellName);
 		}
-
-		return spellList;
-	}
-
-
-	/*
-	Aufteilung der großen Spell Liste in eine kleinere die nur die Spells enthält welche man nun bearbeiten möchte
-	 */
-	public List<String> getSpellListFromSpellLevelToEditSpells(List<Object> spellList, int spellLevel){
-		Object spellFromSpellLevel ;
-		if(spellList.isEmpty()) {
-			return new ArrayList<>();
-		}
-		int indexNumberKlammer = 12;
-		spellList = new ArrayList<>();
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		spellList.add(placeholderVariableForSonarCloud);
-		switch (spellLevel){
-			case 0:
-				spellFromSpellLevel = spellList.getFirst();
-				indexNumberKlammer = 10;
-				break;
-			case 1:
-				spellFromSpellLevel = spellList.get(1);
-				break;
-			case 2:
-				spellFromSpellLevel = spellList.get(2);
-				break;
-			case 3:
-				spellFromSpellLevel = spellList.get(3);
-				break;
-			case 4:
-				spellFromSpellLevel = spellList.get(4);
-				break;
-			case 5:
-				spellFromSpellLevel = spellList.get(5);
-				break;
-			case 6:
-				spellFromSpellLevel = spellList.get(6);
-				break;
-			case 7:
-				spellFromSpellLevel = spellList.get(7);
-				break;
-			case 8:
-				spellFromSpellLevel = spellList.get(8);
-				break;
-			case 9:
-				spellFromSpellLevel = spellList.get(9);
-				break;
-			default:
-				return new ArrayList<>();
-		}
-		Set<Object> removeDuplicate = new HashSet<>(spellList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-		spellList.clear();
-		spellList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
-		spellList.remove(placeholderVariableForSonarCloud);
-		if (((String)spellFromSpellLevel).contains(placeholderVariableForSonarCloud)){
-			return new ArrayList<>();
-		}
-
-		String spells = ((String) spellFromSpellLevel).substring(indexNumberKlammer,((String) spellFromSpellLevel).length()-1);
-        return new ArrayList<>(bigStringToDividedString(spells));
-	}
-	/*
-		Wenn ein SpellLevel abgearbeitet wurde, kann diese Funktion dazu genutzt werden damit diese veränderte Liste in die SpellList eingefügt werden kann um den alten Datensatz
-		zu ersetzen
-		Parameter:
-		int spellLevelName: LEvel welches der Spell besitzt: 0 = Cantrip, 1= Lvl1,....
-		ArrayList<String> die einzelne veränderte Spell Liste
-		ArrayList<Object> die gesamte generierte Spell Liste
-
-	 */
-	public List<Object> putSingleSpellLevelListBackToBigSpellList(int spellLevelName, List<String> singleSpellList, List<Object> spellList){
-		String stuffToPutIntoSpellList;
-		if(singleSpellList.isEmpty()){
-			return spellList;
-		} else if (spellList.isEmpty()) {
-			spellList = new ArrayList<>();
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-		}
-		if(spellList.size()<=spellLevelName){
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-			spellList.add(placeholderVariableForSonarCloud);
-		}
-		switch (spellLevelName){
-			case 0:
-				stuffToPutIntoSpellList = "Cantrip: " + singleSpellList ;
-				spellList.set(0, stuffToPutIntoSpellList);
-				break;
-			case 1:
-				stuffToPutIntoSpellList = "1st Level: " + singleSpellList  ;
-				spellList.set(1, stuffToPutIntoSpellList);
-				break;
-			case 2:
-				stuffToPutIntoSpellList = "2nd Level: " + singleSpellList ;
-				spellList.set(2, stuffToPutIntoSpellList);
-				break;
-			case 3:
-				stuffToPutIntoSpellList = "3th Level: " + singleSpellList ;
-				spellList.set(3, stuffToPutIntoSpellList);
-				break;
-			case 4:
-				stuffToPutIntoSpellList = "4th Level: " + singleSpellList ;
-				spellList.set(4, stuffToPutIntoSpellList);
-				break;
-			case 5:
-				stuffToPutIntoSpellList = "5th Level: " + singleSpellList ;
-				spellList.set(5, stuffToPutIntoSpellList);
-				break;
-			case 6:
-				stuffToPutIntoSpellList = "6th Level: " + singleSpellList ;
-				spellList.set(6, stuffToPutIntoSpellList);
-				break;
-			case 7:
-				stuffToPutIntoSpellList = "Cantrip: " + singleSpellList ;
-				spellList.set(7, stuffToPutIntoSpellList);
-				break;
-			case 8:
-				stuffToPutIntoSpellList = "8th Level: " + singleSpellList ;
-				spellList.set(8, stuffToPutIntoSpellList);
-				break;
-			case 9:
-				stuffToPutIntoSpellList = "9th Level: " + singleSpellList ;
-				spellList.set(9, stuffToPutIntoSpellList);
-				break;
-			default:
-				break;
-		}
-		Set<Object> removeDuplicate = new HashSet<>(spellList); // die ArrayList wird in ein Set gestopft, um Duplicate innerhalb, zu entfernen
-		spellList.clear();
-		spellList.addAll(removeDuplicate); // diese wird hier wieder zu einer ArrayList
-		spellList.remove(placeholderVariableForSonarCloud);
-		return spellList;
-	}
-
-
-	public List<Object> arrangeSpellListInTheRightOrder (List<Object> spellList){
-		List<Object> arrangedSpellList = new ArrayList<>();
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-		arrangedSpellList.add(placeholderVariableForSonarCloud);
-
-		for (Object lists: spellList ){
-			String listName = ((String) lists).substring(0,1) ;
-
-			switch (listName) {
-				case "C":
-					arrangedSpellList.set(0,lists);
-					break;
-				case "1":
-					arrangedSpellList.set(1,lists);
-					break;
-				case "2":
-					arrangedSpellList.set(2,lists);
-					break;
-				case "3":
-					arrangedSpellList.set(3,lists);
-					break;
-				case "4":
-					arrangedSpellList.set(4,lists);
-					break;
-				case "5":
-					arrangedSpellList.set(5,lists);
-					break;
-				case "6":
-					arrangedSpellList.set(6,lists);
-					break;
-				case "7":
-					arrangedSpellList.set(7,lists);
-					break;
-				case "8":
-					arrangedSpellList.set(8,lists);
-					break;
-				case "9":
-					arrangedSpellList.set(9,lists);
-					break;
-				default:
-					break;
-			}
-		}
-		if ( arrangedSpellList.contains(placeholderVariableForSonarCloud)){
-            arrangedSpellList.removeIf(ob -> ob.equals(placeholderVariableForSonarCloud));
-		}
-		return arrangedSpellList;
 	}
 
 	public String passivePerception(List<Integer> abilityModifier, List<String> skillList, int profBonus){

@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 /*
   *   0: ID //muss auch wieder zurückgegeben werden
@@ -58,17 +59,15 @@ public class UiHistoryEditUpdate {
     /*
     changes = {race, class, alignment}
      */
-    public List<Object> updateHistoryEdit (List<String> changes, Integer iD ){
-        List<Object> validAndInvalidList = new ArrayList<>();
-        List<Object> currentNPC = dbms.getHistoryEntry(iD);
+    public NPCClass updateHistoryEdit (List<String> changes, NPCClass oldNPC ){
         String newRace = changes.get(0);
         String newCharClass = changes.get(1);
         String newAlignment = changes.get(2);
 
 
         //Übergangs Variablen werden wahrscheinlich später entfernt oder geändert
-        List<Integer> abilityScore = new ArrayList<>();
-        String oldRace = null;
+        List<Integer> abilityScore =oldNPC.getAbilityScores();
+        String oldRace = oldNPC.getRace();
 
 
 
@@ -92,13 +91,17 @@ public class UiHistoryEditUpdate {
 
         } else if ((newAlignment!=null)){
             //Deity
+            String deity = oldNPC.getDeity();
+            if(!Objects.equals(dbms.getRow("deity", deity).get(2), newAlignment)){
+                oldNPC.setDeity("---");
+            }
 
         }else {
             //nichts ändert sich
-            return new ArrayList<>();
+            return oldNPC;
         }
         //geänderten wird dem UI zurückgegeben
-        return validAndInvalidList;
+        return oldNPC;
     }
 
     /*

@@ -1,7 +1,10 @@
 package DnDGen.UI;
 
 import DnDGen.DB.DBMS;
+import DnDGen.TSWP1.NPCClass;
+import DnDGen.TSWP1.UiHistoryEditUpdate;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,12 +29,16 @@ public class ElementEdit {
     private VBox npcDate;
     private MenuBar menuBar;
     private DBMS dbms;
+    private GridPane nameClassGrid;
+    private UiHistoryEditUpdate editUpdate = new UiHistoryEditUpdate();
+    private NPCClass cNPC;
 
     ElementEdit(Stage window, ArrayList<Object> npc, DBMS dbms) {
         this.window = window;
         this.npc = npc;
         npcDate = new VBox();
         this.dbms = dbms;
+        //this.cNPC
 
         makeEditLayout();
 
@@ -76,7 +83,7 @@ public class ElementEdit {
         String stringNpc = "";
 
         //Name, Klasse, Rasse, Alignment
-        GridPane nameClassGrid = new GridPane();
+        nameClassGrid = new GridPane();
         nameClassGrid.setPadding(new Insets(5, 10, 10, 10));
         nameClassGrid.setVgap(4);
         nameClassGrid.setHgap(25);
@@ -89,12 +96,14 @@ public class ElementEdit {
 
         // Level
         Label levelL     = new Label("Level: ");
-        GridPane.setConstraints(levelL,2,0);
+        GridPane.setConstraints(levelL,2,3);
         final ComboBox cbLevel = new ComboBox();
-        GridPane.setConstraints(cbLevel, 1, 4,2,1);
+        GridPane.setConstraints(cbLevel, 3, 4,4,1);
         for(int i = 1; i <= 20; i++) {cbLevel.getItems().add(i);}
         cbLevel.getSelectionModel().select(cbLevel.getItems().indexOf(npc.get(3)));
-        GridPane.setConstraints(cbLevel,3,0);
+        GridPane.setConstraints(cbLevel,3,3);
+        levelL.setVisible(false);
+        cbLevel.setVisible(false);
 
         // Klasse
         Label classL     = new Label("Klasse: ");
@@ -126,6 +135,8 @@ public class ElementEdit {
         cbJob.getItems().addAll(list);
         cbJob.getSelectionModel().select(list.indexOf(npc.get(6)));
         GridPane.setConstraints(cbJob,1,2);
+        jobL.setVisible(false);
+        cbJob.setVisible(false);
 
         // Deity
         Label deityL     = new Label("Gottheit: ");
@@ -136,6 +147,8 @@ public class ElementEdit {
         cbDeity.getItems().addAll(list);
         cbDeity.getSelectionModel().select(list.indexOf(npc.get(27)));
         GridPane.setConstraints(cbDeity,1,3);
+        deityL.setVisible(false);
+        cbDeity.setVisible(false);
 
         // Alignment
         Label alignmentL = new Label("Alignment: ");
@@ -146,6 +159,8 @@ public class ElementEdit {
         cbAligmentL.getItems().addAll(list);
         cbAligmentL.getSelectionModel().select(list.indexOf(npc.get(26)));
         GridPane.setConstraints(cbAligmentL,3,3);
+        alignmentL.setVisible(false);
+        cbAligmentL.setVisible(false);
 
         // Sex
         Label sexL       = new Label("Geschlecht: ");
@@ -153,28 +168,36 @@ public class ElementEdit {
         final ComboBox cbGender = new ComboBox<>(FXCollections.observableArrayList("female","male"));
         cbGender.getSelectionModel().select(cbGender.getItems().indexOf(npc.get(24)));
         GridPane.setConstraints(cbGender,1,4);
+        sexL.setVisible(false);
+        cbGender.setVisible(false);
 
         // Age
         Label ageL       = new Label("Alter: ");
         GridPane.setConstraints(ageL,2,4);
         TextField ageF = new TextField(String.valueOf(npc.get(25)));
         GridPane.setConstraints(ageF,3,4);
+        ageL.setVisible(false);
+        ageF.setVisible(false);
 
         // AmorClass
         Label armorClassL = new Label("Rüstungsklasse: ");
         GridPane.setConstraints(armorClassL,0,5);
         TextField amorClassF = new TextField(String.valueOf(npc.get(7)));
         GridPane.setConstraints(amorClassF,1,5);
+        armorClassL.setVisible(false);
+        amorClassF.setVisible(false);
 
         // HitPoints
         Label hitPointsL  = new Label("Trefferpunkte: ");
         GridPane.setConstraints(hitPointsL,2,5);
         TextField hitPointsF = new TextField(String.valueOf(npc.get(8)));
         GridPane.setConstraints(hitPointsF,3,5);
+        hitPointsL.setVisible(false);
+        hitPointsF.setVisible(false);
 
-        nameClassGrid.getChildren().addAll(nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL,
-                                           armorClassL, hitPointsL, nameF, cbClass, cbJob, cbRace, cbAligmentL, ageF,
-                                           cbGender, cbDeity, cbLevel, amorClassF, hitPointsF);
+        nameClassGrid.getChildren().addAll(cbRace, cbClass, cbAligmentL, nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL,
+                                           armorClassL, hitPointsL, nameF, cbJob, ageF,
+                                           cbGender, cbDeity, cbLevel, amorClassF, hitPointsF, classRaceEditButton());
 
 
         //Armor class, Hit points, Speed, Language, Feature
@@ -187,6 +210,7 @@ public class ElementEdit {
 
         Label speedL      = new Label("Geschwindigkeit: ");
         GridPane.setConstraints(speedL,0,2);
+        speedL.setVisible(false);
 
         // Sprachen
         Label languagesL   = new Label("Sprachen: ");
@@ -195,6 +219,8 @@ public class ElementEdit {
         list = dbms.onlyColumn("language");
         list.sort(String::compareTo);
         cbLanguages.getItems().addAll(list);
+        languagesL.setVisible(false);
+        cbLanguages.setVisible(false);
         /*
         cbLanguages.getSelectionModel().select(list.indexOf(npc.get(10)));
         GridPane.setConstraints(cbLanguages,1,4);
@@ -210,6 +236,8 @@ public class ElementEdit {
         GridPane.setConstraints(aCL,1,0);
         Label hPL = new Label(String.valueOf(npc.get(1)));
         GridPane.setConstraints(hPL,1,1);
+        aCL.setVisible(false);
+        hPL.setVisible(false);
         acHpSpLangGrid.getChildren().addAll(languagesL, cbLanguages,speedL,aCL,hPL);
 
 
@@ -221,7 +249,35 @@ public class ElementEdit {
 
     }
 
+    private Button classRaceEditButton() {
+        Button cRButton = new Button("weiter");
+        GridPane.setConstraints(cRButton,0,2,4,2);
 
+        cRButton.addEventHandler(ActionEvent.ACTION, e -> {
+            // Hier kommt der Code hin, der beim Klicken auf den Button ausgeführt werden soll.
+            List<String> changes = new ArrayList<>(3);
+
+
+            System.out.println((String) ((ComboBox) nameClassGrid.getChildren().get(0)).getValue());
+            System.out.println((String) ((ComboBox) nameClassGrid.getChildren().get(1)).getValue());
+            System.out.println((String) ((ComboBox) nameClassGrid.getChildren().get(2)).getValue());
+            System.out.println(npc.get(0));
+            /*
+
+            changes.add((String) ((ComboBox) nameClassGrid.getChildren().get(0)).getValue());
+            changes.add ((String) ((ComboBox) nameClassGrid.getChildren().get(1)).getValue());
+           // changes.add( (String) ((ComboBox) nameClassGrid.getChildren().get(2)).getValue());
+            changes.add((String) npc.get(26));
+
+            List<Object> updateNPC = editUpdate.updateHistoryEdit(changes,(Integer) npc.get(0));
+            System.out.println(updateNPC.toString());
+*/
+            //geänderte Rest einblenden
+            //updateNPCData();
+        });
+
+        return cRButton;
+    }
 
 
     // gibt die Scene zurück
