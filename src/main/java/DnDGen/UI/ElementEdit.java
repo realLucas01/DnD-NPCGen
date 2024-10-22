@@ -25,7 +25,7 @@ import java.util.List;
 public class ElementEdit {
     private Stage window;
     private Scene scene;
-    private ArrayList<Object> npc;
+    //private ArrayList<Object> npc;
     private VBox npcDate;
     private MenuBar menuBar;
     private DBMS dbms;
@@ -35,18 +35,23 @@ public class ElementEdit {
 
     ElementEdit(Stage window, ArrayList<Object> npc, DBMS dbms) {
         this.window = window;
-        this.npc = npc;
         npcDate = new VBox();
         this.dbms = dbms;
-        //this.cNPC
+        this.cNPC = new NPCClass();
+        this.cNPC.historyEntryToNPC((Integer) npc.getFirst());
 
         makeEditLayout();
+        setDatenNPC(cNPC);
 
         scene = new Scene(npcDate);
-
     }
 
-    // Erzeugt und steuert die menuBar
+    /**
+     * Erzeugt und steuert die menuBar
+     * @param generatePage Scene für die Rückführung auf die Seite zum Generieren
+     * @param elementHistory Scene für die Rückführung auf die HistorySeite
+     * @author Marie
+     */
     public void menuBar(Scene generatePage, Scene elementHistory) {
         Menu menu = new Menu("Navigation");
         this.menuBar = new MenuBar();
@@ -77,11 +82,11 @@ public class ElementEdit {
 
     }
 
-
-    public void makeEditLayout() {
-        List<String> listNpc = new ArrayList<>();
-        String stringNpc = "";
-
+    /**
+     * Erstellt das Layout der Elemente, aber setzte noch keinen Inhalt
+     * @author Marie
+     */
+    private void makeEditLayout() {
         //Name, Klasse, Rasse, Alignment
         nameClassGrid = new GridPane();
         nameClassGrid.setPadding(new Insets(5, 10, 10, 10));
@@ -91,7 +96,8 @@ public class ElementEdit {
         // Name
         Label nameL      = new Label("Name: ");
         GridPane.setConstraints(nameL,0,0);
-        TextField nameF = new TextField((String) npc.get(2));
+        TextField nameF = new TextField();
+        nameF.setDisable(true);
         GridPane.setConstraints(nameF,1,0);
 
         // Level
@@ -100,7 +106,6 @@ public class ElementEdit {
         final ComboBox cbLevel = new ComboBox();
         GridPane.setConstraints(cbLevel, 3, 4,4,1);
         for(int i = 1; i <= 20; i++) {cbLevel.getItems().add(i);}
-        cbLevel.getSelectionModel().select(cbLevel.getItems().indexOf(npc.get(3)));
         GridPane.setConstraints(cbLevel,3,3);
         levelL.setVisible(false);
         cbLevel.setVisible(false);
@@ -112,8 +117,6 @@ public class ElementEdit {
         ArrayList<String> list = dbms.onlyColumn("class");
         Collections.sort(list);
         cbClass.getItems().addAll(list);
-        System.out.println(npc.get(list.indexOf(npc.get(4))));
-        cbClass.getSelectionModel().select(list.indexOf(npc.get(4)));
         GridPane.setConstraints(cbClass,1,1);
 
         // Rasse
@@ -123,7 +126,6 @@ public class ElementEdit {
         list = dbms.onlyColumn("race");
         Collections.sort(list);
         cbRace.getItems().addAll(list);
-        cbRace.getSelectionModel().select(list.indexOf(npc.get(5)));
         GridPane.setConstraints(cbRace,3,1);
 
         // Job
@@ -133,7 +135,6 @@ public class ElementEdit {
         list = dbms.onlyColumn("job");
         Collections.sort(list);
         cbJob.getItems().addAll(list);
-        cbJob.getSelectionModel().select(list.indexOf(npc.get(6)));
         GridPane.setConstraints(cbJob,1,2);
         jobL.setVisible(false);
         cbJob.setVisible(false);
@@ -145,28 +146,23 @@ public class ElementEdit {
         list = dbms.onlyColumn("deity");
         list.sort(String::compareTo);
         cbDeity.getItems().addAll(list);
-        cbDeity.getSelectionModel().select(list.indexOf(npc.get(27)));
         GridPane.setConstraints(cbDeity,1,3);
         deityL.setVisible(false);
         cbDeity.setVisible(false);
 
         // Alignment
         Label alignmentL = new Label("Alignment: ");
-        GridPane.setConstraints(alignmentL,2,3);
+        GridPane.setConstraints(alignmentL,2,0);
         final ComboBox cbAligmentL = new ComboBox();
         list = dbms.onlyColumn("alignment");
         list.sort(String::compareTo);
         cbAligmentL.getItems().addAll(list);
-        cbAligmentL.getSelectionModel().select(list.indexOf(npc.get(26)));
-        GridPane.setConstraints(cbAligmentL,3,3);
-        alignmentL.setVisible(false);
-        cbAligmentL.setVisible(false);
+        GridPane.setConstraints(cbAligmentL,3,0);
 
         // Sex
         Label sexL       = new Label("Geschlecht: ");
         GridPane.setConstraints(sexL,0,4);
         final ComboBox cbGender = new ComboBox<>(FXCollections.observableArrayList("female","male"));
-        cbGender.getSelectionModel().select(cbGender.getItems().indexOf(npc.get(24)));
         GridPane.setConstraints(cbGender,1,4);
         sexL.setVisible(false);
         cbGender.setVisible(false);
@@ -174,7 +170,7 @@ public class ElementEdit {
         // Age
         Label ageL       = new Label("Alter: ");
         GridPane.setConstraints(ageL,2,4);
-        TextField ageF = new TextField(String.valueOf(npc.get(25)));
+        TextField ageF = new TextField();
         GridPane.setConstraints(ageF,3,4);
         ageL.setVisible(false);
         ageF.setVisible(false);
@@ -182,7 +178,7 @@ public class ElementEdit {
         // AmorClass
         Label armorClassL = new Label("Rüstungsklasse: ");
         GridPane.setConstraints(armorClassL,0,5);
-        TextField amorClassF = new TextField(String.valueOf(npc.get(7)));
+        TextField amorClassF = new TextField();
         GridPane.setConstraints(amorClassF,1,5);
         armorClassL.setVisible(false);
         amorClassF.setVisible(false);
@@ -190,14 +186,17 @@ public class ElementEdit {
         // HitPoints
         Label hitPointsL  = new Label("Trefferpunkte: ");
         GridPane.setConstraints(hitPointsL,2,5);
-        TextField hitPointsF = new TextField(String.valueOf(npc.get(8)));
+        TextField hitPointsF = new TextField();
         GridPane.setConstraints(hitPointsF,3,5);
         hitPointsL.setVisible(false);
         hitPointsF.setVisible(false);
 
-        nameClassGrid.getChildren().addAll(cbRace, cbClass, cbAligmentL, nameL, classL, jobL, raceL, alignmentL, ageL, sexL, deityL, levelL,
-                                           armorClassL, hitPointsL, nameF, cbJob, ageF,
-                                           cbGender, cbDeity, cbLevel, amorClassF, hitPointsF, classRaceEditButton());
+        // Elemente dem Layout hinzufügen, zum leichtem Zählen in 5er-Zeilen
+        nameClassGrid.getChildren().addAll(cbRace, cbClass, cbAligmentL, nameL, classL,
+                                           jobL, raceL, alignmentL, ageL, sexL,
+                                           deityL, levelL, armorClassL, hitPointsL, nameF,
+                                           cbJob, ageF, cbGender, cbDeity, cbLevel,
+                                           amorClassF, hitPointsF, classRaceEditButton());
 
 
         //Armor class, Hit points, Speed, Language, Feature
@@ -232,9 +231,9 @@ public class ElementEdit {
 
 
         //AmorClass, HitPoints
-        Label aCL = new Label(String.valueOf(npc.get(1)));
+        Label aCL = new Label(String.valueOf(cNPC.getArmorClass()));
         GridPane.setConstraints(aCL,1,0);
-        Label hPL = new Label(String.valueOf(npc.get(1)));
+        Label hPL = new Label(String.valueOf(cNPC.getHealthPoints()));
         GridPane.setConstraints(hPL,1,1);
         aCL.setVisible(false);
         hPL.setVisible(false);
@@ -249,6 +248,11 @@ public class ElementEdit {
 
     }
 
+    /**
+     * Implementiert den Button für die erste Phase der NPC Änderung
+     * @return gibt das Button-Objekt zurück
+     * @author Marie
+     */
     private Button classRaceEditButton() {
         Button cRButton = new Button("weiter");
         GridPane.setConstraints(cRButton,0,2,4,2);
@@ -257,26 +261,86 @@ public class ElementEdit {
             // Hier kommt der Code hin, der beim Klicken auf den Button ausgeführt werden soll.
             List<String> changes = new ArrayList<>(3);
 
-
-            System.out.println((String) ((ComboBox) nameClassGrid.getChildren().get(0)).getValue());
-            System.out.println((String) ((ComboBox) nameClassGrid.getChildren().get(1)).getValue());
-            System.out.println((String) ((ComboBox) nameClassGrid.getChildren().get(2)).getValue());
-            System.out.println(npc.get(0));
-            /*
-
             changes.add((String) ((ComboBox) nameClassGrid.getChildren().get(0)).getValue());
             changes.add ((String) ((ComboBox) nameClassGrid.getChildren().get(1)).getValue());
-           // changes.add( (String) ((ComboBox) nameClassGrid.getChildren().get(2)).getValue());
-            changes.add((String) npc.get(26));
+            changes.add((String) ((ComboBox) nameClassGrid.getChildren().get(2)).getValue());
 
-            List<Object> updateNPC = editUpdate.updateHistoryEdit(changes,(Integer) npc.get(0));
-            System.out.println(updateNPC.toString());
-*/
-            //geänderte Rest einblenden
-            //updateNPCData();
+            NPCClass updateNPC = editUpdate.updateHistoryEdit(changes,cNPC);
+
+            setDatenNPC(updateNPC);
+            VisibleElements();
         });
 
         return cRButton;
+    }
+
+    /**
+     * Füllt die Elemente mit den Daten vom NPC
+     * @param npc Ist der NPC dessen Daten angezeigt werden sollen
+     * @author Marie
+     */
+    private void setDatenNPC(NPCClass npc) {
+        // Name
+        ((TextField) nameClassGrid.getChildren().get(14)).setText(npc.getName());
+
+        // Level
+        ComboBox cbLevel = (ComboBox) nameClassGrid.getChildren().get(19);
+        cbLevel.getSelectionModel().select(cbLevel.getItems().indexOf(npc.getLevel()));
+
+        // Rasse
+        ComboBox cbRace = (ComboBox) nameClassGrid.getChildren().get(0);
+        cbRace.getSelectionModel().select(cbRace.getItems().indexOf(npc.getRace()));
+
+        // Class
+        ComboBox cbClass = (ComboBox) nameClassGrid.getChildren().get(1);
+        cbClass.getSelectionModel().select(cbClass.getItems().indexOf(npc.getGenClass()));
+
+        // Job
+        ComboBox cbJob = (ComboBox) nameClassGrid.getChildren().get(15);
+        cbJob.getSelectionModel().select(cbJob.getItems().indexOf(npc.getJob()));
+
+        // Deity
+        ComboBox cbDeity = (ComboBox) nameClassGrid.getChildren().get(18);
+        cbDeity.getSelectionModel().select(cbDeity.getItems().indexOf(npc.getDeity()));
+
+        // Alignment
+        ComboBox cbAlignment = (ComboBox) nameClassGrid.getChildren().get(2);
+        cbAlignment.getSelectionModel().select(cbAlignment.getItems().indexOf(npc.getAlignment()));
+
+        // Sex
+        ComboBox cbSex = (ComboBox) nameClassGrid.getChildren().get(17);
+        cbSex.getSelectionModel().select(cbSex.getItems().indexOf(npc.getGender()));
+
+        // Age
+        ((TextField) nameClassGrid.getChildren().get(16)).setText(String.valueOf(npc.getAge()));
+
+        // ArmorClass
+        ((TextField) nameClassGrid.getChildren().get(20)).setText(String.valueOf(npc.getArmorClass()));
+
+        // HitPoints
+        ((TextField) nameClassGrid.getChildren().get(21)).setText(String.valueOf(npc.getHealthPoints()));
+    }
+
+    /**
+     * Macht die Elemente sichtbar
+     * @author Marie
+     */
+    private void VisibleElements() {
+        boolean show = !(nameClassGrid.getChildren().get(21).isVisible());
+        nameClassGrid.getChildren().get(5).setVisible(show);
+        nameClassGrid.getChildren().get(8).setVisible(show);
+        nameClassGrid.getChildren().get(9).setVisible(show);
+        nameClassGrid.getChildren().get(10).setVisible(show);
+        nameClassGrid.getChildren().get(11).setVisible(show);
+        nameClassGrid.getChildren().get(12).setVisible(show);
+        nameClassGrid.getChildren().get(13).setVisible(show);
+        nameClassGrid.getChildren().get(15).setVisible(show);
+        nameClassGrid.getChildren().get(16).setVisible(show);
+        nameClassGrid.getChildren().get(17).setVisible(show);
+        nameClassGrid.getChildren().get(18).setVisible(show);
+        nameClassGrid.getChildren().get(19).setVisible(show);
+        nameClassGrid.getChildren().get(21).setVisible(show);
+        nameClassGrid.getChildren().get(22).setVisible(!show);
     }
 
 
