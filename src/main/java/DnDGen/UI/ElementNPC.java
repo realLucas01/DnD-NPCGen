@@ -1,8 +1,6 @@
 package DnDGen.UI;
 
 import DnDGen.TSWP1.NPCClass;
-import DnDGen.TSWP1.RandomGenerator;
-import DnDGen.TSWP1.RandomNPC;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
@@ -16,56 +14,23 @@ import javafx.scene.text.TextFlow;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ElementNPC {
     VBox npcStack, descriptionVBox;
     NPCClass npc;
-    RandomNPC rNPC = new RandomNPC();
-    RandomGenerator rGenerator = new RandomGenerator();
     ArrayList<Line> lineList;
 
-    // Konstruktor
-    ElementNPC(ArrayList<Object> npc){
-        //this.npc = npc;
-        npcStack = new VBox();
-        descriptionVBox = new VBox();
-        lineList = new ArrayList<>();
-    }
-
+    /**
+     * Der Konstruktor
+     * @param npc der erstellte NPC
+     * @author Marie
+     */
     ElementNPC(NPCClass npc) {
         this.npc = npc;
         npcStack = new VBox();
         descriptionVBox = new VBox();
         lineList = new ArrayList<>();
-    }
-
-    // gibt Beschreibung als Fließtext
-    public void getDescriptionOld() {
-        String name = npc.getName();
-
-        //ArrayList<String> npcDescriptionArray = (ArrayList<String>) rGenerator.randDescription(npc.getRace());
-        List listNpc = rGenerator.randDescription(npc.getRace());
-        String sex = npc.getGender();
-        TextFlow descriptionText = new TextFlow();
-        String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
-                name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
-                firstLetterBig(getPossessivePronoun(sex)) + " wears " + getPronoun(sex) + " hair as " + listNpc.get(2) +
-                ". They have the color " + listNpc.get(3) + ". " + firstLetterBig(getPossessivePronoun(sex)) +
-                " is " + listNpc.get(4) + " and " + firstLetterSmall(listNpc.get(5).toString() + ". ");
-        for(int i = 6; i < listNpc.size()-4; i++) {
-            description = description.concat(" " + listNpc.get(i).toString());
-        }
-
-        description = description.concat(" " + firstLetterBig(getPossessivePronoun(sex)) + " is driven by " +
-                listNpc.get(listNpc.size()-4) + ". " + firstLetterBig(getPronoun(sex)) + " voice is " +
-                listNpc.get(listNpc.size()-3) + " " + name + " is wearing a " + listNpc.get(listNpc.size()-2) +
-                " and " + getPossessivePronoun(sex) + " is " + listNpc.get(listNpc.size()-1));
-
-        Text text = new Text(description);
-        text.wrappingWidthProperty().bind(descriptionVBox.widthProperty());
-        descriptionText.getChildren().add(text);
-
-        descriptionVBox.getChildren().add(descriptionText);
     }
 
     // liefert die Beschreibung als einfache Zeilen
@@ -96,7 +61,7 @@ public class ElementNPC {
             descriptionGrid.getChildren().add(descriptionTextNew);
 
             descriptionTextNew = new TextFlow();
-            description = descriptionList.get(i).toString();
+            description = descriptionList.get(i);
             text = new Text(description);
             descriptionTextNew.getChildren().add(text);
             GridPane.setConstraints(descriptionTextNew,1,i);
@@ -223,43 +188,6 @@ public class ElementNPC {
 
         featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
 
-        // Features
-        /*
-        ArrayList<String> featureList = ((ArrayList<String>) npc.get);
-        VBox actionBox = new VBox();
-        actionBox.setSpacing(5);
-        GridPane.setConstraints(actionBox,1,0);
-        for(int i = 0; i < featureList.size(); i++) {
-            Label label = new Label(featureList.get(i));
-            label.setWrapText(true);
-            actionBox.getChildren().add(label);
-        }
-
-        featureList.clear();
-        featureList = ((ArrayList<String>) npc.get(23));
-        VBox bonusActionBox = new VBox();
-        bonusActionBox.setSpacing(5);
-        GridPane.setConstraints(bonusActionBox,1,1);
-        for(int i = 0; i < featureList.size(); i++) {
-            Label label = new Label(featureList.get(i));
-            label.setWrapText(true);
-            bonusActionBox.getChildren().add(label);
-        }
-
-        featureList.clear();
-        featureList = ((ArrayList<String>) npc.get(24));
-        VBox bonusTextBox = new VBox();
-        bonusTextBox.setSpacing(5);
-        GridPane.setConstraints(bonusTextBox,1,2);
-        for(int i = 0; i < featureList.size(); i++) {
-            Label label = new Label(featureList.get(i));
-            label.setWrapText(true);
-            bonusTextBox.getChildren().add(label);
-        }
-        featuresGrid.getChildren().addAll(actionBox,bonusActionBox,bonusTextBox);
-
-
-         */
         return featuresGrid;
     }
 
@@ -357,7 +285,7 @@ public class ElementNPC {
         Text text1=new Text("Skills:\n");
         text1.setStyle("-fx-font-weight: bold");
         skillTF.getChildren().addAll(text1);
-        if(npc.getSkillList().getFirst() == "none") {
+        if(Objects.equals(npc.getSkillList().getFirst(), "none")) {
             Text skill = new Text(npc.getSkillList().toString());
             skillTF.getChildren().add(skill);
         } else {
@@ -416,24 +344,6 @@ public class ElementNPC {
         skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
 
-        //Spells
-        /*spellTF.getChildren().remove(1, spellTF.getChildren().size());
-
-        List<String> abilityModifierList = stringToList(npc.get(5));
-        List<String> spells = rGenerator.randSpellList(npc.get(3),abilityModifierList,Integer.parseInt(npc.get(1)));
-
-
-        for(int i = 0; i < spells.size(); i++) {
-            String spell = spells.get(i).replace('[',' ');
-            spell = spell.replace(']',' ');
-            Label spellText = new Label("    - " + spell);
-            spellText.setWrapText(true);
-            spellTF.getChildren().add(spellText);
-        }
-
-        //System.out.println(spells);
-        */
-
         return skillSensesBox;
     }
 
@@ -459,31 +369,23 @@ public class ElementNPC {
     }
 
 
-    /**
-     * Teilt einen String der die Form eines Arrays hat in einzelne Elemente und gibt sie als Liste zurück
-     * @author Marie
-     * @param string ein String der als Liste geschrieben werden soll.
-     * @return Eine Liste mit dem Inhalt von dem string eingabe.
-     */
-    public List stringToList(String string) {
-        List list = new ArrayList<>();
-        if(string.contains("[")) {
-            string = string.substring(1,string.length()-1);
-        }
-        string = string.trim();
-
-        if(string.isEmpty()) {return list;}
-
-        string = string.concat(",");
-
-        while(string.contains(",")) {
-            list.add(string.substring(0,string.indexOf(",")).trim());
-            string = string.substring(string.indexOf(",")+1);
-        }
-
-        return list;
+    // Ausgabe der Behälter
+    public VBox getNpcVBox(){
+        return npcStack;
     }
 
+    public VBox getDescriptionVBox(){
+        return descriptionVBox;
+    }
+
+    public ArrayList<Line> getLineList() { return lineList;}
+
+    /* ----------------------
+     *                      -
+     * Veraltete Funktionen -
+     *                      -
+     * ----------------------
+     */
     // Gibt das richtige Pronoun(his, her) zum sex wieder
     public String getPronoun(String sex) {
         if(sex.equals("male")) {
@@ -518,9 +420,9 @@ public class ElementNPC {
 
     // gibt den AbilityScore mit Modifier zurück
     public String abilityString(int index, NPCClass npc) {
-        String string = "";
-        List listNpc = npc.getAbilityScores();
-        List listAbilityModifier = npc.getAbilityModifier();
+        String string;
+        List<Integer> listNpc = npc.getAbilityScores();
+        List<Integer> listAbilityModifier = npc.getAbilityModifier();
 
         if(listAbilityModifier.get(index).toString().length() > 1) {
             string = listNpc.get(index) + listAbilityModifier.get(index).toString();
@@ -529,14 +431,56 @@ public class ElementNPC {
         return string;
     }
 
-    // Ausgabe der Behälter
-    public VBox getNpcVBox(){
-        return npcStack;
+    // gibt Beschreibung als Fließtext
+    public void getDescriptionOld() {
+        String name = npc.getName();
+
+        List<String> listNpc = npc.getDescription();
+        String sex = npc.getGender();
+        TextFlow descriptionText = new TextFlow();
+        String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
+                name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
+                firstLetterBig(getPossessivePronoun(sex)) + " wears " + getPronoun(sex) + " hair as " + listNpc.get(2) +
+                ". They have the color " + listNpc.get(3) + ". " + firstLetterBig(getPossessivePronoun(sex)) +
+                " is " + listNpc.get(4) + " and " + firstLetterSmall(listNpc.get(5) + ". ");
+        for(int i = 6; i < listNpc.size()-4; i++) {
+            description = description.concat(" " + listNpc.get(i));
+        }
+
+        description = description.concat(" " + firstLetterBig(getPossessivePronoun(sex)) + " is driven by " +
+                listNpc.get(listNpc.size()-4) + ". " + firstLetterBig(getPronoun(sex)) + " voice is " +
+                listNpc.get(listNpc.size()-3) + " " + name + " is wearing a " + listNpc.get(listNpc.size()-2) +
+                " and " + getPossessivePronoun(sex) + " is " + listNpc.getLast());
+
+        Text text = new Text(description);
+        text.wrappingWidthProperty().bind(descriptionVBox.widthProperty());
+        descriptionText.getChildren().add(text);
+
+        descriptionVBox.getChildren().add(descriptionText);
     }
 
-    public VBox getDescriptionVBox(){
-        return descriptionVBox;
-    }
+    /**
+     * Teilt einen String der die Form eines Arrays hat in einzelne Elemente und gibt sie als Liste zurück
+     * @author Marie
+     * @param string ein String der als Liste geschrieben werden soll.
+     * @return Eine Liste mit dem Inhalt von dem string eingabe.
+     */
+    public List<?> stringToList(String string) {
+        List<String> list = new ArrayList<>();
+        if(string.contains("[")) {
+            string = string.substring(1,string.length()-1);
+        }
+        string = string.trim();
 
-    public ArrayList<Line> getLineList() { return lineList;}
+        if(string.isEmpty()) {return list;}
+
+        string = string.concat(",");
+
+        while(string.contains(",")) {
+            list.add(string.substring(0,string.indexOf(",")).trim());
+            string = string.substring(string.indexOf(",")+1);
+        }
+
+        return list;
+    }
 }
