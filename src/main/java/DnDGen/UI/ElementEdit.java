@@ -25,12 +25,11 @@ public class ElementEdit {
     private final UiHistoryEditUpdate editUpdate = new UiHistoryEditUpdate();
     private final NPCClass cNPC;
 
-    ElementEdit(Stage window, ArrayList<Object> npc, DBMS dbms) {
+    ElementEdit(Stage window, NPCClass npc, DBMS dbms) {
         this.window = window;
         npcDate = new VBox();
         this.dbms = dbms;
-        this.cNPC = new NPCClass();
-        this.cNPC.historyEntryToNPC((Integer) npc.getFirst());
+        this.cNPC = npc;
 
         makeEditLayout();
         setDatenNPC(cNPC);

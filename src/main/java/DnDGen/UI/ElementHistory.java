@@ -1,6 +1,7 @@
 package DnDGen.UI;
 
 import DnDGen.DB.DBMS;
+import DnDGen.TSWP1.NPCClass;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -13,16 +14,15 @@ import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ElementHistory {
-    private VBox historyPage;
-    private Scene scene, generatePage;
-    private MenuBar menuBar;
-    private Stage window;
-    private DBMS dbms;
-    private GridPane npcGrid;
+    private final VBox historyPage;
+    private final Scene scene;
+    private Scene generatePage;
+    private final Stage window;
+    private final DBMS dbms;
+    private final GridPane npcGrid;
 
     ElementHistory(Stage window, DBMS dbms) {
         this.window = window;
@@ -35,41 +35,41 @@ public class ElementHistory {
         scene = new Scene(historyPage);
     }
 
-    // Erzeugt und steuert die menuBar
+    /**
+     * Erzeugt und steuert die menuBar
+     * @param generatePage Scene von der Seite für die NPC generation, für die Rückführung auf diese Seite
+     * @author Marie
+     */
     public void menuBar(Scene generatePage) {
         Menu menu = new Menu("Navigation");
-        this.menuBar = new MenuBar();
+        MenuBar menuBar = new MenuBar();
         this.generatePage = generatePage;
 
+        // Items der MenuBar hinzufügen
         MenuItem menuItemHistory = new MenuItem("History");
         MenuItem menuItemGenerator = new MenuItem("Generator");
-
-        /*
-        menuItemHistory.setOnAction(e -> {
-            e.consume();
-            window.setScene(elementHistory.getScene());
-            menuItemGenerator.setVisible(true);
-            menuItemHistory.setVisible(false);
-        });
-        */
 
         menu.getItems().addAll(menuItemHistory,menuItemGenerator);
         menuBar.getMenus().add(menu);
 
-
-        // Zusatz für die MenuBar
+        // Funktion für die MenuBar Items
         menuItemGenerator.setOnAction(e -> {
             e.consume();
             npcGrid.getChildren().removeAll();
             window.setScene(generatePage);
         });
 
+        // Die MenuBar dem Seitenlayout hinzufügen
         this.historyPage.getChildren().addFirst(menuBar);
-
     }
 
-    // Grid für die NPC Informationen
-    private VBox makeGridNPC(ArrayList<Object> npc){
+    /**
+     * GridPane für die NPC Informationen eines NPC für die Darstellung als Kachel
+     * @param npc der NPC der in die Kachel gepackt wird
+     * @return gibt die Daten als VBox (in Kachel form) zurück
+     * @author Marie
+     */
+    private VBox makeGridNPC(NPCClass npc){
         VBox npcVBox = new VBox();
         GridPane npcGrid = new GridPane();
         npcGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -77,23 +77,23 @@ public class ElementHistory {
         npcGrid.setHgap(10);
 
         // Name
-        Label name = new Label("Name: " + npc.get(2));
+        Label name = new Label("Name: " + npc.getName());
         GridPane.setConstraints(name,0,0);
 
         // Level
-        Label level = new Label("Level: " + String.valueOf(npc.get(3)));
+        Label level = new Label("Level: " + npc.getLevel());
         GridPane.setConstraints(level,0,3);
 
         // Rasse
-        Label race = new Label("Rasse: " + npc.get(5));
+        Label race = new Label("Rasse: " + npc.getRace());
         GridPane.setConstraints(race,0,1);
 
         // Klasse
-        Label clas = new Label("Klasse: " + npc.get(4));
+        Label clas = new Label("Klasse: " + npc.getGenClass());
         GridPane.setConstraints(clas,0,4);
 
         // Job
-        Label job = new Label("Beruf: " + npc.get(6));
+        Label job = new Label("Beruf: " + npc.getJob());
         GridPane.setConstraints(job,0,2 );
 
         npcGrid.getChildren().addAll(name,level,race,clas,job);
@@ -105,15 +105,16 @@ public class ElementHistory {
         abilityGrid.setVgap(7);
         abilityGrid.setHgap(10);
 
+
         ArrayList<String> abilityString = new ArrayList<>(Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
-        //System.out.println(npc);
-        ArrayList<Integer> ability = (ArrayList<Integer>) npc.get(11);
-        ArrayList<Integer> abilityMod = (ArrayList<Integer>) npc.get(23);
-        System.out.println(abilityMod);
+        ArrayList<Integer> ability = (ArrayList<Integer>) npc.getAbilityScores();
+        ArrayList<Integer> abilityMod = (ArrayList<Integer>) npc.getAbilityModifier();
+
+        // geht jede Ability durch
         for(int i = 0; i < abilityString.size(); i++) {
             Label label = new Label(abilityString.get(i));
             GridPane.setConstraints(label,i,0);
-            String string = "";
+            String string;
 
             if(ability.size() > i) {
                 if(abilityMod.get(i) < 0) {
@@ -126,18 +127,15 @@ public class ElementHistory {
                 abilityGrid.getChildren().add(abilityL);
             }
 
-
             abilityGrid.getChildren().addAll(label);
         }
 
         npcVBox.getChildren().addAll(npcGrid,abilityGrid);
         npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
 
-        // Event-Handler für Klick-Ereignis
+        // Event-Handler für Klick-Ereignis. Wenn die Box gedrückt wird, passiert das:
         npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             event.consume();
-            //System.out.println("GridPane clicked!");
-            // Hier können Sie zusätzliche Logik für den Klick einfügen
             ElementEdit elementEdit = new ElementEdit(window,npc,dbms);
             elementEdit.menuBar(generatePage,scene);
             window.setTitle("Edit");
@@ -145,24 +143,26 @@ public class ElementHistory {
         });
 
         // Event-Handler für Hover-Ereignis
-        npcVBox.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-            npcVBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;");
-        });
+        npcVBox.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> npcVBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;"));
 
-        npcGrid.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-            npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
-        });
+        npcGrid.addEventHandler(MouseEvent.MOUSE_EXITED, event -> npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;"));
 
         return npcVBox;
     }
 
-    // Ausgabe von der Scene
+    /**
+     * Ausgabe von der Scene und erstellung des Layouts
+     * @return gibt die Scene zurück
+     * @author Marie
+     */
     public Scene getScene(){
         int pos = 0, row = 0;
 
         // fügt für jeden NPC eine VBox hinzu und ordnet sie an
-        for(Object npcc :  sortList(this.dbms.getHistory())) {
-            VBox grid = makeGridNPC((ArrayList<Object>) npcc);
+        NPCClass npc = new NPCClass();
+        for(Object npcList :  sortList(this.dbms.getHistory())) {
+            npc.historyEntryToNPC((int) ((ArrayList<?>) npcList).getFirst());
+            VBox grid = makeGridNPC(npc);
             GridPane.setConstraints(grid, pos,row);
             pos++;
             if(pos > 4) {
@@ -176,26 +176,26 @@ public class ElementHistory {
         return scene;
     }
 
-    // sortieren der NPC's nach Datum
-    public List<Object> sortList(List<Object> npcc) {
-
-        // Define a date formatter to parse the datetime strings
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    /**
+     * Sortiert die Liste aller Historyeinträge nach Datum/Zeit
+     * @param npc Liste aller NPCs
+     * @return gibt die sortierte Liste zurück
+     * @author Marie (ChatGPT)
+     */
+    public List<Object> sortList(List<Object> npc) {
 
         // Sort the list based on the last element which is a datetime string
-        npcc.sort((o1, o2) -> {
-            ArrayList<Object> list1 = (ArrayList<Object>) o1;
-            ArrayList<Object> list2 = (ArrayList<Object>) o2;
+        npc.sort((o1, o2) -> {
+            ArrayList<?> list1 = (ArrayList<?>) o1;
+            ArrayList<?> list2 = (ArrayList<?>) o2;
 
-            LocalDateTime dateTime1 = (LocalDateTime) list1.get(list1.size() - 1);
-            LocalDateTime dateTime2 = (LocalDateTime) list2.get(list2.size() - 1);
+            LocalDateTime dateTime1 = (LocalDateTime) list1.getLast();
+            LocalDateTime dateTime2 = (LocalDateTime) list2.getLast();
 
             return dateTime2.compareTo(dateTime1);
         });
 
-        return npcc;
-
-
+        return npc;
     }
 
 }
