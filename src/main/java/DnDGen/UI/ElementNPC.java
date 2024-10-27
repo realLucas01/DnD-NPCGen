@@ -311,34 +311,34 @@ public class ElementNPC {
         spellTF.getChildren().addAll(text1);
 
         // Cantrips
-        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text("Cantrips:" + npc.getSpellCantrips() + "\n"));
+        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text("Cantrips: " + npc.getSpellCantrips() + "\n"));
 
         // 1
-        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text("1st:" + npc.getFirstLevelSpell() + "\n"));
+        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text("1st: " + npc.getFirstLevelSpell() + "\n"));
 
         // 2
-        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text("2st:" + npc.getSecondLevelSpell() + "\n"));
+        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text("2st: " + npc.getSecondLevelSpell() + "\n"));
 
         // 3
-        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text("3st:" + npc.getThirdLevelSpell() + "\n"));
+        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text("3st: " + npc.getThirdLevelSpell() + "\n"));
 
         // 4
-        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text("4st:" + npc.getFourthLevelSpell() + "\n"));
+        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text("4st: " + npc.getFourthLevelSpell() + "\n"));
 
         // 5
-        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text("5st:" + npc.getFifthLevelSpell() + "\n"));
+        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text("5st: " + npc.getFifthLevelSpell() + "\n"));
 
         // 6
-        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text("6st:" + npc.getSixthLevelSpell() + "\n"));
+        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text("6st: " + npc.getSixthLevelSpell() + "\n"));
 
         // 7
-        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text("7st:" + npc.getSeventhLevelSpell() + "\n"));
+        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text("7st: " + npc.getSeventhLevelSpell() + "\n"));
 
         // 8
-        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text("8st:" + npc.getEightLevelSpell() + "\n"));
+        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text("8st: " + npc.getEightLevelSpell() + "\n"));
 
         // 9
-        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text("9st:" + npc.getNinthLevelSpell() + "\n"));
+        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text("9st: " + npc.getNinthLevelSpell() + "\n"));
 
 
         skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);

@@ -4,6 +4,8 @@ package DnDGen.UI;
 import DnDGen.TSWP1.NPCClass;
 import DnDGen.TSWP1.RandomGenerator;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -45,103 +47,170 @@ public class UI extends Application {
     Scene generatePage;
     String name;
     VBox descriptionVBox;
+    GridPane layoutGenerateGrid;
+    RandomNPC rNPC;
+    ToggleGroup groupSex;
+    HBox gridNpc;
+    ScrollPane npcScrollPane;
 
 	/* @author Lucas
-	 * 
+	 *
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
 	 * neu-konstruktion von DBMS wäre sonst leer
 	 */
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
 
-    
+
     public static void main(String[] args) {
         launch(args);
     }
 
 
-    //Stage -> Ist ein Fenster
-    //Scene -> Ist der Inhalt des Fensters
-    /* @author Marie
-     *
+    //Stage → Ist ein Fenster
+    //Scene → Ist der Inhalt des Fensters
+    /**
      * Funktion die als erste ausgeführt wird. In ihr werden alle anderen Methoden aufgerufen.
-     *
-     * @param primaryStage: das Fenster das verwendet wird.
+     * @param primaryStage das Fenster das verwendet wird.
+     * @throws Exception
+     * @author Marie
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
     	window = primaryStage;
         window.setTitle("DnD NPC Generator");
         window.getIcons().add(new Image("ui-image/window_Icon_selfish.png"));
-        RandomNPC rNPC = new RandomNPC();
+        rNPC = new RandomNPC();
         RandomGenerator rGenerator = new RandomGenerator();
 
         ElementHistory elementHistory = new ElementHistory(window, dbms);
 
-        GridPane layoutGenerateGrid = new GridPane();
+        layoutGenerateGrid = new GridPane();
         layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
         layoutGenerateGrid.setVgap(7);
         layoutGenerateGrid.setHgap(10);
         layoutGenerateGrid.setMinWidth(300);
 
 
+        //Spaltenbreite der Tabelle definieren
+        ColumnConstraints col1Constraints = new ColumnConstraints();
+        col1Constraints.setPercentWidth(33);
+        ColumnConstraints col2Constraints = new ColumnConstraints();
+        col2Constraints.setPercentWidth(33);
+        ColumnConstraints col3Constraints = new ColumnConstraints();
+        col3Constraints.setPercentWidth(33);
+        layoutGenerateGrid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
 
-        //Menü
-        Menu menu = new Menu("Menu 1");
+        npcScrollPane = new ScrollPane();
+        npcScrollPane.setMinWidth(350);
+
+        npcScrollPane.setVisible(false);
+
+        gridNpc = new HBox();
+
+        //Layout der Seite
+
+        nameRasseBlock();
+        klasseJobLevelBlock();
+        levelAbilityBlock();
+        sexBlock();
+
+        layoutGenerateGrid.getChildren().add(makeGenerierenButton());
+        VBox layoutGenerateVBox = new VBox(20);
+
+
+        gridNpc.getChildren().addAll(layoutGenerateGrid, npcScrollPane);
+        layoutGenerateVBox.getChildren().addAll(makeMenuBar(elementHistory),gridNpc);
+
+        generatePage = new Scene(layoutGenerateVBox, 1000, 600);
+
+        //Es startet auf der generieren Seite
+        //window.setScene(npcPage);
+        generatePage.getStylesheets().add("/styles.css");
+        window.setScene(generatePage);
+        window.show();
+
+        elementHistory.menuBar(generatePage);
+
+        window.widthProperty().addListener((obs, oldVal, newVal) -> {
+            /*
+            layoutGenerateGrid.setPrefWidth(generatePage.getWidth()/4);
+            npcStack.setPrefWidth(generatePage.getWidth()/2);
+            descriptionStack.setPrefWidth(generatePage.getWidth()/4);
+            */
+           // descriptionVBox.setMinWidth(generatePage.getWidth()/3);
+            layoutGenerateGrid.setMinWidth(generatePage.getWidth()/3);
+            npcScrollPane.setMinWidth(generatePage.getWidth()/3);
+            npcScrollPane.setFitToWidth(true);
+           // featuresGrid.setPrefWidth(npcScrollPane.getWidth()-20);
+            /*
+            line1.setEndX(npcScrollPane.getWidth()-20);
+            line2.setEndX(npcScrollPane.getWidth()-20);
+            line3.setEndX(npcScrollPane.getWidth()-20);
+            line4.setEndX(npcScrollPane.getWidth()-20);
+            line5.setEndX(npcScrollPane.getWidth()-20);
+            */
+
+        });
+
+    }
+
+    /**
+     * Erzeugt eine MenuBar für die Seite auf der, der NPC generiert wird
+     * @param elementHistory Ist vom Typ ElementHistory, ist benötigt für die Weiterleitung auf diese Seite
+     * @return gibt das Objekt der MenuBar zurück
+     * @author Marie
+     */
+    private MenuBar makeMenuBar(ElementHistory elementHistory) {
+        // Die MenuBar selber
         MenuBar menuBar = new MenuBar();
 
+        // Ein Element, ein Menü in der MenuBar
+        Menu menu = new Menu("Navigation");
+
+        // Items die unter dem Element/Menü erscheinen
         MenuItem menuItem1 = new MenuItem("Item 1");
         MenuItem menuItem2 = new MenuItem("Item 2");
         MenuItem menuItemHistory = new MenuItem("History");
 
+        // Funktionen die passieren, wenn das Item gedrückt wird
+        menuItem1.setOnAction(Event::consume);
 
-        menuItem1.setOnAction(e -> {
-            e.consume();
-            layoutGenerateGrid.setVisible(false);
-        });
-
-        menuItem2.setOnAction(e -> {
-            e.consume();
-            layoutGenerateGrid.setVisible(true);
-        });
-
+        menuItem2.setOnAction(Event::consume);
 
         menuItemHistory.setOnAction(e -> {
             e.consume();
             window.setScene(elementHistory.getScene());
         });
 
-
-
-
+        // Items dem Element/Menü zuweisen
         menu.getItems().add(menuItem1);
         menu.getItems().add(menuItem2);
         menu.getItems().add(menuItemHistory);
 
+        // Das Element/Menü der MenuBar zuweisen
         menuBar.getMenus().add(menu);
 
+        return menuBar;
+    }
 
-
-        //Seite generatePage
-        //Name
+    /**
+     * Erzeugt die Elemente für Name, Rasse und fügt diese dem Layout hinzu
+     * @author Marie
+     */
+    private void nameRasseBlock() {
+        // Name
         Label labelName = new Label("Name:");
         GridPane.setConstraints(labelName, 0, 0);
         TextField nameField = new TextField();
         nameField.setPromptText("Name");
         GridPane.setConstraints(nameField,1,0,2,1);
 
-/*
-          0 1 2
-        0 - --- Name   00 1021
-        1 - --- Rasse  01 1121
-        2 - --- Klasse 02 1221
-        3 - --- Job    03 1321
-        */
-        //Rasse
+        // Rasse
         Label labelRace = new Label("Rasse:");
         GridPane.setConstraints(labelRace, 0, 1);
 
-        final ComboBox cbRace = new ComboBox(FXCollections.observableArrayList("zufall"));
+        final ComboBox<String> cbRace = new ComboBox<>(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbRace, 1, 1,2,1);
         ArrayList<String> list = dbms.onlyColumn("race");
         Collections.sort(list);
@@ -149,27 +218,31 @@ public class UI extends Application {
         cbRace.setMaxWidth(300);
         cbRace.getSelectionModel().selectFirst();
 
+        layoutGenerateGrid.getChildren().addAll(labelName,nameField,labelRace,cbRace);
+    }
 
-
+    /**
+     * Erzeugt die Elemente für Klasse, Job und fügt diese dem Layout hinzu
+     * @author Marie
+     */
+    private void klasseJobLevelBlock() {
         //Klasse
         Label labelClass = new Label("Klasse:");
         GridPane.setConstraints(labelClass, 0, 2);
 
-        final ComboBox cbClass = new ComboBox(FXCollections.observableArrayList("zufall"));
+        final ComboBox<String> cbClass = new ComboBox<>(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbClass, 1, 2,2,1);
-        list.clear();
-        list = dbms.onlyColumn("class");
+        ArrayList<String> list = dbms.onlyColumn("class");
         Collections.sort(list);
         cbClass.getItems().addAll(list);
         cbClass.setMaxWidth(300);
         cbClass.getSelectionModel().selectFirst();
 
-
         //Job
         Label labelJob = new Label("Beruf:");
         GridPane.setConstraints(labelJob, 0, 3);
 
-        final ComboBox cbJob = new ComboBox(FXCollections.observableArrayList("zufall"));
+        final ComboBox<String> cbJob = new ComboBox<>(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbJob, 1, 3,2,1);
         list.clear();
         list = dbms.onlyColumn("job");
@@ -178,14 +251,21 @@ public class UI extends Application {
         cbJob.setMaxWidth(300);
         cbJob.getSelectionModel().selectFirst();
 
+        layoutGenerateGrid.getChildren().addAll(labelClass,cbClass,labelJob,cbJob);
+    }
 
+    /**
+     * Erzeugt die Elemente für Level, Ability und fügt diesem dem Layout hinzu
+     * @author Marie
+     */
+    private void levelAbilityBlock() {
         //Level
         Label labelLevel = new Label("Level:");
         GridPane.setConstraints(labelLevel, 0, 4);
 
-        final ComboBox cbLevel = new ComboBox(FXCollections.observableArrayList("zufall"));
+        final ComboBox<String> cbLevel = new ComboBox<>(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbLevel, 1, 4,2,1);
-        for(int i = 1; i <= 20; i++) {cbLevel.getItems().add(i);}
+        for(int i = 1; i <= 20; i++) {cbLevel.getItems().add(String.valueOf(i));}
         cbLevel.setMaxWidth(300);
         cbLevel.getSelectionModel().selectFirst();
 
@@ -193,14 +273,21 @@ public class UI extends Application {
         Label labelAbSc = new Label("Ability Score:");
         GridPane.setConstraints(labelAbSc, 0, 5);
 
-        final ComboBox cbAbSc = new ComboBox(FXCollections.observableArrayList("zufall"));
+        final ComboBox<String> cbAbSc = new ComboBox<>(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbAbSc, 1, 5,2,1);
         cbAbSc.getItems().addAll(dbms.onlyColumn("abilisc"));
         cbAbSc.setMaxWidth(300);
         cbAbSc.getSelectionModel().selectFirst();
 
-        //Geschlecht
-        final ToggleGroup groupSex = new ToggleGroup();
+        layoutGenerateGrid.getChildren().addAll(labelLevel,cbLevel,labelAbSc,cbAbSc);
+    }
+
+    /**
+     * Erzeugt den RadioButton für die Geschlechtswahl und fügt diesem dem Layout hinzu
+     * @author Marie
+     */
+    private void sexBlock() {
+        groupSex = new ToggleGroup();
         Image img = new Image("ui-image/male-and-female.png");
         RadioButton rbRandom = new RadioButton("Zufall");
         rbRandom.setUserData("zufall");
@@ -232,40 +319,44 @@ public class UI extends Application {
         imgVFemale.setFitHeight(32);
         rbFemale.setGraphic(imgVFemale);
 
+        layoutGenerateGrid.getChildren().addAll(rbFemale,rbMale,rbRandom);
+    }
 
-        //Spaltenbreite der Tabelle definieren
-        ColumnConstraints col1Constraints = new ColumnConstraints();
-        col1Constraints.setPercentWidth(33);
-        ColumnConstraints col2Constraints = new ColumnConstraints();
-        col2Constraints.setPercentWidth(33);
-        ColumnConstraints col3Constraints = new ColumnConstraints();
-        col3Constraints.setPercentWidth(33);
-        layoutGenerateGrid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
+    /**
+     * Erstellt ein Button-Objekt für das Generieren des NPCs
+     * @return gibt den konfigurieren Button zurück
+     * @author Marie
+     */
+    private Button makeGenerierenButton() {
+        Button button = new Button("Generieren");
+        GridPane.setConstraints(button, 0, 13,2,3);
+        button.setStyle("-fx-font: bold italic 20pt \"Arial\"; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
 
-        ScrollPane npcScrollPane = new ScrollPane();
-        npcScrollPane.setMinWidth(350);
+        button.setOnAction(new ButtonGenerieren());
 
-        npcScrollPane.setVisible(false);
+        return button;
+    }
 
+    /**
+     * Separate Event-Handler-Klasse für den Button für das Generieren
+     * @author Marie
+     */
+    private class ButtonGenerieren implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent event) {
+            String name = zufallString(((TextField) layoutGenerateGrid.getChildren().get(1)).getText());
+            String race = zufall((ComboBox<?>) layoutGenerateGrid.getChildren().get(3));
+            String klasse = zufall((ComboBox<?>) layoutGenerateGrid.getChildren().get(5));
+            String job = zufall((ComboBox<?>) layoutGenerateGrid.getChildren().get(7));
+            Integer level = zufallLevel((ComboBox<?>) layoutGenerateGrid.getChildren().get(9));
+            String ability = zufall((ComboBox<?>) layoutGenerateGrid.getChildren().get(11));
+            String sex = zufallString(groupSex.getSelectedToggle().getUserData().toString());
 
-        //Button
-        Button buttonGenerate = new Button("Generieren");
-        GridPane.setConstraints(buttonGenerate, 0, 13,2,3);
-
-        buttonGenerate.setStyle("-fx-font: bold italic 20pt \"Arial\"; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
-
-        HBox gridNpc = new HBox();
-
-
-//    Button Klick
-        buttonGenerate.setOnAction(e -> {
-            NPCClass npc = rNPC.createRandomNPC(zufallName(nameField.getText()),zufall(cbRace),zufall(cbClass),zufall(cbJob), zufallLevel(cbLevel),
-                                    zufall(cbAbSc),getSex(groupSex.getSelectedToggle().getUserData().toString()));
+            NPCClass npc = rNPC.createRandomNPC(name,race,klasse,job,level,ability,sex);
 
             if(gridNpc.getChildren().size() > 2) {
                 gridNpc.getChildren().remove(2);
             }
-
 
             ElementNPC elementNPC = new ElementNPC(npc);
 
@@ -279,87 +370,27 @@ public class UI extends Application {
 
             layoutGenerateGrid.getChildren().add(npcStack);
             npcScrollPane.setContent(npcStack);
-            
-            //Liste mit Positionen vom NPC
-            /*
-            System.out.println(npc);
-            for(int i = 0; i < npc.size(); i++) {
-                System.out.println(i + " - " + npc.get(i));
-            }
-            */
 
-            //Trennlinien auf breite anpassen
+            // Trennlinien auf breite anpassen
             for(Line line: elementNPC.getLineList()) {
                 line.setEndX(npcScrollPane.getWidth()-20);
             }
 
-            //Den Generireten Inhalt sichtbar machen
+            // Den generierten Inhalt sichtbar machen
             descriptionVBox.setVisible(true);
             npcStack.setVisible(true);
             npcScrollPane.setVisible(true);
             gridNpc.getChildren().add(descriptionVBox);
-        });
-
-
-
-        //Layout der Seite
-
-        layoutGenerateGrid.getChildren().addAll(nameField, labelRace, labelClass, labelJob, labelLevel, labelAbSc, cbRace, cbClass,
-                                                cbJob, cbLevel, cbAbSc,buttonGenerate, rbMale, rbFemale, rbRandom, labelName);
-        VBox layoutGenerateVBox = new VBox(20);
-
-
-        gridNpc.getChildren().addAll(layoutGenerateGrid, npcScrollPane);
-        layoutGenerateVBox.getChildren().addAll(menuBar,gridNpc);
-
-        generatePage = new Scene(layoutGenerateVBox, 1000, 600);
-
-
-
-
-        //Es startet auf der generieren Seite
-        //window.setScene(npcPage);
-        generatePage.getStylesheets().add("/styles.css");
-        window.setScene(generatePage);
-        window.show();
-
-        elementHistory.menuBar(generatePage);
-
-        window.widthProperty().addListener((obs, oldVal, newVal) -> {
-            /*
-            layoutGenerateGrid.setPrefWidth(generatePage.getWidth()/4);
-            npcStack.setPrefWidth(generatePage.getWidth()/2);
-            descriptionStack.setPrefWidth(generatePage.getWidth()/4);
-            */
-           // descriptionVBox.setMinWidth(generatePage.getWidth()/3);
-            layoutGenerateGrid.setMinWidth(generatePage.getWidth()/3);
-            npcScrollPane.setMinWidth(generatePage.getWidth()/3);
-            npcScrollPane.setFitToWidth(true);
-           // featuresGrid.setPrefWidth(npcScrollPane.getWidth()-20);
-            /*
-            line1.setEndX(npcScrollPane.getWidth()-20);
-            line2.setEndX(npcScrollPane.getWidth()-20);
-            line3.setEndX(npcScrollPane.getWidth()-20);
-            line4.setEndX(npcScrollPane.getWidth()-20);
-            line5.setEndX(npcScrollPane.getWidth()-20);
-            */
-
-        });
-
-
-
+        }
     }
 
-
-    /* @author Marie
-     *
-     * Überprüft eine ComboBox, ob das Item "zufall" ausgewählt ist,
-     * wenn, dann wird null zurückgegeben.
-     *
-     * @param cb: die ComboBox die geprüft wird.
+    /**
+     * Überprüft eine ComboBox, ob das Item "zufall" ausgewählt ist, wenn, dann wird null zurückgegeben.
+     * @param cb die ComboBox die geprüft wird.
      * @return Beim Item "zufall" kommt null zurück, sonst das Item.
+     * @author Marie
      */
-    public String zufall(ComboBox cb) {
+    public String zufall(ComboBox<?> cb) {
         if(cb.getValue() == "zufall") {
             return null;
         } else {
@@ -367,8 +398,13 @@ public class UI extends Application {
         }
     }
 
-    //TIP wie Zufall nur speziell für das Level
-    public Integer zufallLevel(ComboBox cb) {
+    /**
+     * (Speziell für Integer) überprüft eine ComboBox, ob das Item "zufall" ausgewählt ist, wenn, dann wird null zurückgegeben.
+     * @param cb die ComboBox die geprüft wird.
+     * @return Beim Item "zufall" kommt null zurück, sonst das Item.
+     * @author Marie
+     */
+    public Integer zufallLevel(ComboBox<?> cb) {
         if(cb.getValue() == "zufall") {
             return null;
         } else {
@@ -376,12 +412,23 @@ public class UI extends Application {
         }
     }
 
-    public String zufallName(String string) {
-        if((string.equals("zufall")) || (string.equals(""))) {
+    /**
+     * Überprüft, ob ein String leer ist, wenn, dann wird null zurückgegeben
+     * @param string Der String der überprüft wird
+     * @return gibt null zurück, wenn der String leer ist. Sonst den String
+     * @author Marie
+     */
+    public String zufallString(String string) {
+        if((string.equals("zufall")) || (string.isEmpty())) {
             return null;
         }
         else return string;
     }
+
+
+    //---------------
+    //- Alter Stuff -
+    //---------------
 
     /* @author Marie
      *
@@ -429,13 +476,7 @@ public class UI extends Application {
         return string;
     }
 
-    // Gibt den Inhalt von vom String zurück, außer wenn Zufall, dann null
-    public String getSex(String sex) {
-        if(sex.equals("zufall")) {
-            return null;
-        }
-        return sex;
-    }
+
 
     // Gibt das richtige Pronoun(his, her) zum sex wieder
     public String getPronoun(String sex) {
