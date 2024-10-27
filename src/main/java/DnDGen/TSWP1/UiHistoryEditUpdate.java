@@ -4,6 +4,7 @@ import DnDGen.DB.DBMS;
 import org.springframework.context.ApplicationContext;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -50,6 +51,7 @@ public class UiHistoryEditUpdate {
      */
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
+    
     Random rndNumb = new SecureRandom();
     RandomGenerator randGen = new RandomGenerator();
     RandomNPC randNPC = new RandomNPC();
@@ -59,48 +61,44 @@ public class UiHistoryEditUpdate {
     changes = {race, class, alignment}
      */
     public NPCClass updateHistoryEdit (List<String> changes, NPCClass oldNPC ){
+        NPCClass currentNPC = oldNPC;
+        NPCClass newNPC = currentNPC;
         String newRace = changes.get(0);
         String newCharClass = changes.get(1);
         String newAlignment = changes.get(2);
 
 
         //Übergangs Variablen werden wahrscheinlich später entfernt oder geändert
-        List<Integer> abilityScore =oldNPC.getAbilityScores();
+        ArrayList<Integer> abilityScore =(ArrayList<Integer>) oldNPC.getAbilityScores();
         String oldRace = oldNPC.getRace();
 
-
-
-        if((changes.getFirst() == null) || (changes.getLast() != null )){
-            // class geändert
-            // Änderungen: HP, profWeapon, profArmor(+AC), SavingThrows(ersetzen mit den neuen, nicht durch striche), Skills(überprüfen welche bleiben können, welche nicht), AbilityScoreDistripution(bedenken race Score improvement), Spells(überprüfen welche bleiben können, welche nicht), features(class features entfernen)
-
-            abilityScore = editNPC.removeRaceAbilityAddition(oldRace, abilityScore);
-            abilityScore = randNPC.distributeAbilityScore(abilityScore,newCharClass);
-            abilityScore = randNPC.addRaceModifierToAbilityScore(oldRace,abilityScore);
-
-        } else if ((changes.getFirst() != null) || (changes.getLast() == null )) {
-            //race geändert
+        //race change
+        if(newRace == null){
+        	//race geändert
             // Änderungen: RaceAbilityScoreAddierung, Features, Skills, Language, Speed, Description:(Age, height, size, creature Type), Senses
 
-            abilityScore = editNPC.removeRaceAbilityAddition(oldRace, abilityScore);
-            abilityScore = randNPC.addRaceModifierToAbilityScore(newRace, abilityScore);
+            abilityScore = (ArrayList<Integer>) editNPC.removeRaceAbilityAddition(oldRace, abilityScore);
+            abilityScore = (ArrayList<Integer>) randNPC.addRaceModifierToAbilityScore(newRace, abilityScore);
+
+            //class change
+        } else if (newCharClass == null) {
+            // class geändert
+            // Änderungen: HP, (profWeapon,profArmor(+AC): nur Löschen wenn nicht mehr geht.), Skills(überprüfen welche bleiben können, welche nicht), AbilityScoreDistribution(von Luca holen), Spells(nuke), features(class features ersetzen, siehe funktion zum überprüfen welche egligable sind)
+        	newNPC = classChange(newNPC,newCharClass,currentNPC);
 
         } else if ((changes.getFirst() != null) || (changes.getLast() != null )) {
             //alles hat sich geändert
+        	newNPC = classChange(newNPC,newCharClass,currentNPC);
 
         } else if ((newAlignment!=null)){
             //Deity
             String deity = oldNPC.getDeity();
             if(!Objects.equals(dbms.getRow("deity", deity).get(2), newAlignment)){
                 oldNPC.setDeity("---");
-            }
-
-        }else {
-            //nichts ändert sich
-            return oldNPC;
+        }
         }
         //geänderten wird dem UI zurückgegeben
-        return oldNPC;
+        return newNPC;
     }
 
     /*
@@ -110,7 +108,76 @@ public class UiHistoryEditUpdate {
         return randNPC.calculateHP(genClass, level, abilityModifier);
     }
 
-
+    private NPCClass classChange(NPCClass newNPC,String newClass,NPCClass currentNPC){
+    	newNPC = currentNPC;
+    	//Hp änderung
+    	newNPC.setHealthPoints(randNPC.calculateHP(newClass, newNPC.getLevel(), newNPC.getAbilityModifier()));;
+    	
+    	//AbiliSc
+    	ArrayList<Integer> abilityScore = new ArrayList<>();
+        abilityScore = (ArrayList<Integer>) editNPC.removeRaceAbilityAddition(newNPC.getRace(), abilityScore);//Race, ABiliSc
+        abilityScore = (ArrayList<Integer>) randNPC.distributeAbilityScore(abilityScore,newClass);
+        abilityScore = (ArrayList<Integer>) randNPC.addRaceModifierToAbilityScore(newNPC.getRace(),abilityScore);
+    	newNPC.setAbilityScores(abilityScore);
+    	
+    	//Armor+AC
+    	List<String> newArmorPossibi = randGen.figureOutProfList("armor", newClass, newNPC.getRace());
+    	String oldArmor = currentNPC.getArmor();
+    		for (String newArmor : newArmorPossibi) {
+    			if (newArmor == oldArmor) {
+    				break;
+    			}else if (newArmor == newArmorPossibi.getLast()){
+    				oldArmor = null;
+    			}
+    		}
+    	newNPC.setArmor(oldArmor);
+    	if (oldArmor == null) {
+    		newNPC.setArmorClass((Integer) null);
+    	}
+    	
+    	//Weapons
+    	List<String> newWeaponPossibi = randGen.figureOutProfList("weapon", newClass, newNPC.getRace());
+    	List<String> oldWeapons = currentNPC.getWeaponList();
+    	for (String oldWeapon : oldWeapons) {
+    		for (String newWeapon : newWeaponPossibi) {
+    			if (newWeapon == oldWeapon) {
+    				break;
+    			}else if (newWeapon == newWeaponPossibi.getLast()){
+    				oldWeapons.remove(oldWeapon);
+    			}
+    		}
+    	}
+    	//direkt neu befüllen? Oder (potentiell) leer lassen?
+    	int weaponCount = rndNumb.nextInt(4)+2;
+    	while (oldWeapons.size() < weaponCount) {
+    		int newRandWeap = rndNumb.nextInt(newWeaponPossibi.size());
+    		oldWeapons.add(newWeaponPossibi.get(newRandWeap));
+    		newWeaponPossibi.remove(newRandWeap);
+    	}
+    	newNPC.setWeaponList(oldWeapons);
+    	
+    	//Spells
+    	newNPC.setSpellAbility(null);
+    	newNPC.setSpellList(null);
+    	
+    	//Skills
+    	List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRow("class", newClass).get(6));
+    	List<String> oldSkills = currentNPC.getSkillList();
+    	for (String oldSkill : oldSkills) {
+    		for (String possibSkill : possibleSkillList) {
+    			if (possibSkill == oldSkill) {
+    				break;
+    			}else if (possibSkill == possibleSkillList.getLast()){
+    				oldSkills.remove(oldSkill);
+    			}
+    		}
+    	}
+    	newNPC.setSkillList(oldSkills);;
+    	
+    	//Features
+    	
+    	return newNPC;
+    }
 
 
 

@@ -25,12 +25,12 @@ public class NPCClass {
 
     // Attributes
     private String name;
-    private int level;
+    private Integer level;
     private String genClass;
     private String race;
     private String job;
-    private int armorClass;
-    private int healthPoints;
+    private Integer armorClass;
+    private Integer healthPoints;
     private List<String> movementSpeedList;
     private List<String> languages;
     private List<Integer> abilityScores;
@@ -44,10 +44,10 @@ public class NPCClass {
     private List<String> description;
     private List<String> actionList;
     private List<String> bonusActionList;
-    private int profBonus;
+    private Integer profBonus;
     private List <Integer> abilityModifier;
     private String gender;
-    private int age;
+    private Integer age;
     private String alignment;
     private String deity;
     private List<String> bonusTextList;

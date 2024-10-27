@@ -545,7 +545,7 @@ public class EditNPC {
         return false;
     }
 
-    public List<Integer> removeRaceAbilityAddition(String race, List<Integer> abilityScore) {
+    public List<Integer> removeRaceAbilityAddition(String race, ArrayList<Integer> abilityScore) {
         List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
         int raceModNumber;
         for (String s : raceAbilityModifier) {
