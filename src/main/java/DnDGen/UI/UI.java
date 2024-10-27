@@ -61,18 +61,14 @@ public class UI extends Application {
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
 
-
-    public static void main(String[] args) {
+    public static void launchUI(String[] args) {
         launch(args);
     }
 
-
-    //Stage → Ist ein Fenster
-    //Scene → Ist der Inhalt des Fensters
     /**
      * Funktion die als erste ausgeführt wird. In ihr werden alle anderen Methoden aufgerufen.
      * @param primaryStage das Fenster das verwendet wird.
-     * @throws Exception
+     * @throws Exception kann exceptions werfen
      * @author Marie
      */
     @Override
@@ -81,7 +77,6 @@ public class UI extends Application {
         window.setTitle("DnD NPC Generator");
         window.getIcons().add(new Image("ui-image/window_Icon_selfish.png"));
         rNPC = new RandomNPC();
-        RandomGenerator rGenerator = new RandomGenerator();
 
         ElementHistory elementHistory = new ElementHistory(window, dbms);
 
@@ -103,13 +98,11 @@ public class UI extends Application {
 
         npcScrollPane = new ScrollPane();
         npcScrollPane.setMinWidth(350);
-
         npcScrollPane.setVisible(false);
 
         gridNpc = new HBox();
 
         //Layout der Seite
-
         nameRasseBlock();
         klasseJobLevelBlock();
         levelAbilityBlock();
@@ -117,40 +110,25 @@ public class UI extends Application {
 
         layoutGenerateGrid.getChildren().add(makeGenerierenButton());
         VBox layoutGenerateVBox = new VBox(20);
-
-
         gridNpc.getChildren().addAll(layoutGenerateGrid, npcScrollPane);
         layoutGenerateVBox.getChildren().addAll(makeMenuBar(elementHistory),gridNpc);
 
+        // Erstellt die Scene der generieren Seite
         generatePage = new Scene(layoutGenerateVBox, 1000, 600);
-
-        //Es startet auf der generieren Seite
-        //window.setScene(npcPage);
         generatePage.getStylesheets().add("/styles.css");
+
+        // Setzte die Scene und zeigt das Fenster
         window.setScene(generatePage);
         window.show();
 
+        // erstellt die MenuBar auf der History Seite
         elementHistory.menuBar(generatePage);
 
+        // Wenn die Fensterbreite geändert wird passiert das hier
         window.widthProperty().addListener((obs, oldVal, newVal) -> {
-            /*
-            layoutGenerateGrid.setPrefWidth(generatePage.getWidth()/4);
-            npcStack.setPrefWidth(generatePage.getWidth()/2);
-            descriptionStack.setPrefWidth(generatePage.getWidth()/4);
-            */
-           // descriptionVBox.setMinWidth(generatePage.getWidth()/3);
             layoutGenerateGrid.setMinWidth(generatePage.getWidth()/3);
             npcScrollPane.setMinWidth(generatePage.getWidth()/3);
             npcScrollPane.setFitToWidth(true);
-           // featuresGrid.setPrefWidth(npcScrollPane.getWidth()-20);
-            /*
-            line1.setEndX(npcScrollPane.getWidth()-20);
-            line2.setEndX(npcScrollPane.getWidth()-20);
-            line3.setEndX(npcScrollPane.getWidth()-20);
-            line4.setEndX(npcScrollPane.getWidth()-20);
-            line5.setEndX(npcScrollPane.getWidth()-20);
-            */
-
         });
 
     }

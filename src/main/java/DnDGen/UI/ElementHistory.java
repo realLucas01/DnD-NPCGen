@@ -65,11 +65,12 @@ public class ElementHistory {
 
     /**
      * GridPane für die NPC Informationen eines NPC für die Darstellung als Kachel
-     * @param npc der NPC der in die Kachel gepackt wird
+     * @param npcE der NPC der in die Kachel gepackt wird
      * @return gibt die Daten als VBox (in Kachel form) zurück
      * @author Marie
      */
-    private VBox makeGridNPC(NPCClass npc){
+    private VBox makeGridNPC(NPCClass npcE, Integer id){
+        final NPCClass npc = npcE;
         VBox npcVBox = new VBox();
         GridPane npcGrid = new GridPane();
         npcGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -134,20 +135,35 @@ public class ElementHistory {
         npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
 
         // Event-Handler für Klick-Ereignis. Wenn die Box gedrückt wird, passiert das:
-        npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> handleNpcClick(event, npc, id));
+
+
+        /*{
             event.consume();
-            ElementEdit elementEdit = new ElementEdit(window,npc,dbms);
-            elementEdit.menuBar(generatePage,scene);
+            ElementEdit elementEdit = new ElementEdit(window, npc, dbms);
+            System.out.println(npc.getName());
+            elementEdit.menuBar(generatePage, scene);
             window.setTitle("Edit");
             window.setScene(elementEdit.getScene());
         });
 
+
+         */
         // Event-Handler für Hover-Ereignis
         npcVBox.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> npcVBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;"));
 
         npcGrid.addEventHandler(MouseEvent.MOUSE_EXITED, event -> npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;"));
 
         return npcVBox;
+    }
+
+    private void handleNpcClick(MouseEvent event, NPCClass npc, Integer id) {
+        event.consume();
+        ElementEdit elementEdit = new ElementEdit(window, npc, id,dbms);
+        System.out.println(npc.getName());
+        elementEdit.menuBar(generatePage, scene);
+        window.setTitle("Edit");
+        window.setScene(elementEdit.getScene());
     }
 
     /**
@@ -162,7 +178,7 @@ public class ElementHistory {
         NPCClass npc = new NPCClass();
         for(Object npcList :  sortList(this.dbms.getHistory())) {
             npc.historyEntryToNPC((int) ((ArrayList<?>) npcList).getFirst());
-            VBox grid = makeGridNPC(npc);
+            VBox grid = makeGridNPC(npc, ((int) ((ArrayList<?>) npcList).getFirst()));
             GridPane.setConstraints(grid, pos,row);
             pos++;
             if(pos > 4) {
