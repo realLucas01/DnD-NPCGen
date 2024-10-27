@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 
 public class NPCClass {
@@ -337,7 +338,7 @@ public class NPCClass {
         setLanguages(Collections.singletonList((((String) listOfTheNPC.get(10)).replace("[","").replace("]",""))));
         setAbilityScores((randGen.bigStringToDividedString(((String) listOfTheNPC.get(11)).replace("[","").replace("]",""))).stream()
                 .map(Integer::parseInt)
-                .toList());
+                .collect(Collectors.toList()));
         setSavingThrows(randGen.bigStringToDividedString((((String)  listOfTheNPC.get(12)).replace("[","").replace("]",""))));
         setArmor(((String) listOfTheNPC.get(13)).replace("[","").replace("]",""));
         setWeaponList(randGen.bigStringToDividedString((((String) listOfTheNPC.get(14)).replace("[","").replace("]",""))));
@@ -351,7 +352,7 @@ public class NPCClass {
         setProfBonus(Integer.parseInt(String.valueOf(listOfTheNPC.get(22))));
         setAbilityModifier((randGen.bigStringToDividedString(((String) listOfTheNPC.get(23)).replace("[","").replace("]",""))).stream()
                 .map(Integer::parseInt)
-                .toList());
+                .collect(Collectors.toList()));
         setGender(((String) listOfTheNPC.get(24)).replace("[","").replace("]",""));
         setAge(Integer.parseInt((String.valueOf( listOfTheNPC.get(25)))));
         setAlignment(((String) listOfTheNPC.get(26)).replace("[","").replace("]",""));
