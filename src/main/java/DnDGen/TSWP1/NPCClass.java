@@ -1,14 +1,13 @@
 package DnDGen.TSWP1;
 
 import DnDGen.DB.DBMS;
-import org.hibernate.annotations.NotFound;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.logging.Logger;
+
 
 public class NPCClass {
     /* @author Lucas
@@ -19,6 +18,8 @@ public class NPCClass {
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
     RandomGenerator randGen = new RandomGenerator();
+    static Logger logger = Logger.getLogger(NPCClass.class.getName());
+
 
 
     // Attributes
@@ -336,7 +337,7 @@ public class NPCClass {
         setLanguages(Collections.singletonList((((String) listOfTheNPC.get(10)).replace("[","").replace("]",""))));
         setAbilityScores((randGen.bigStringToDividedString(((String) listOfTheNPC.get(11)).replace("[","").replace("]",""))).stream()
                 .map(Integer::parseInt)
-                .collect(Collectors.toList()));
+                .toList());
         setSavingThrows(randGen.bigStringToDividedString((((String)  listOfTheNPC.get(12)).replace("[","").replace("]",""))));
         setArmor(((String) listOfTheNPC.get(13)).replace("[","").replace("]",""));
         setWeaponList(randGen.bigStringToDividedString((((String) listOfTheNPC.get(14)).replace("[","").replace("]",""))));
@@ -350,7 +351,7 @@ public class NPCClass {
         setProfBonus(Integer.parseInt(String.valueOf(listOfTheNPC.get(22))));
         setAbilityModifier((randGen.bigStringToDividedString(((String) listOfTheNPC.get(23)).replace("[","").replace("]",""))).stream()
                 .map(Integer::parseInt)
-                .collect(Collectors.toList()));
+                .toList());
         setGender(((String) listOfTheNPC.get(24)).replace("[","").replace("]",""));
         setAge(Integer.parseInt((String.valueOf( listOfTheNPC.get(25)))));
         setAlignment(((String) listOfTheNPC.get(26)).replace("[","").replace("]",""));
@@ -523,6 +524,43 @@ public class NPCClass {
     public void removeNinthLevelSpell(String spells){
         this.ninthLevelSpell = this.ninthLevelSpell.replace(spells, "");
     }
-
-
+    public void printNPC(){
+        logger.info( "name: " + name);
+        logger.info( "level: " + level);
+        logger.info(  "class: " + genClass);
+        logger.info(  "race: " + race);
+        logger.info(  "job: " +job);
+        logger.info( "AC: " + armorClass);
+        logger.info( "HP: " +healthPoints);
+        logger.info( "Movement: " +  movementSpeedList);
+        logger.info( "languages: " + languages);
+        logger.info( "AbilityScore: " + abilityScores);
+        logger.info( "SavingThrows: " + savingThrows);
+        logger.info(  "Armor: " +armor);
+        logger.info("weaponList: " + weaponList);
+        logger.info( "Skills: " +  skillList);
+        logger.info(  "senses: " + senses);
+        logger.info( "Spelllist: " + spellList);
+        logger.info( "SpellAbility: " + spellAbility);
+        logger.info( "Description: " +  description);
+        logger.info( "ActionList: "+ actionList);
+        logger.info( "bonusActionList: " + bonusActionList);
+        logger.info( "ProfBonus: " +  profBonus);
+        logger.info( "AbilityModifier: " + abilityModifier);
+        logger.info(  "Gender: " + gender);
+        logger.info( "Age: " +  age);
+        logger.info(  "Alignment: " + alignment);
+        logger.info(  "Deity: " +deity);
+        logger.info( "BonusTextList: " +  bonusTextList);
+        logger.info(  "Cantrips: " +cantrips);
+        logger.info(  "firstLevelSpell: " + firstLevelSpell);
+        logger.info(  "secondLevelSpell: " + secondLevelSpell);
+        logger.info(  "thirdLevelSpell: " + thirdLevelSpell);
+        logger.info(  "fourthLevelSpell: " +fourthLevelSpell);
+        logger.info(  "fifthLevelSpell: " +fifthLevelSpell);
+        logger.info(  "sixthLevelSpell: " + sixthLevelSpell);
+        logger.info(  "seventhLevelSpell: " + seventhLevelSpell);
+        logger.info(  "eightLevelSpell: " +eightLevelSpell);
+        logger.info(  "ninthLevelSpell: "+ ninthLevelSpell);
+    }
 }
