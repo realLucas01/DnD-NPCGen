@@ -124,9 +124,9 @@ public class UiHistoryEditUpdate {
     	List<String> newArmorPossibi = randGen.figureOutProfList("armor", newClass, newNPC.getRace());
     	String oldArmor = currentNPC.getArmor();
     		for (String newArmor : newArmorPossibi) {
-    			if (newArmor == oldArmor) {
+    			if (newArmor.equals(oldArmor)) {
     				break;
-    			}else if (newArmor == newArmorPossibi.getLast()){
+    			}else if (newArmor.equals(newArmorPossibi.getLast())){
     				oldArmor = null;
     			}
     		}
@@ -140,9 +140,9 @@ public class UiHistoryEditUpdate {
     	List<String> oldWeapons = currentNPC.getWeaponList();
     	for (String oldWeapon : oldWeapons) {
     		for (String newWeapon : newWeaponPossibi) {
-    			if (newWeapon == oldWeapon) {
+    			if (newWeapon.equals(oldWeapon)) {
     				break;
-    			}else if (newWeapon == newWeaponPossibi.getLast()){
+    			}else if (newWeapon.equals(newWeaponPossibi.getLast())){
     				oldWeapons.remove(oldWeapon);
     			}
     		}
@@ -165,14 +165,14 @@ public class UiHistoryEditUpdate {
     	List<String> oldSkills = currentNPC.getSkillList();
     	for (String oldSkill : oldSkills) {
     		for (String possibSkill : possibleSkillList) {
-    			if (possibSkill == oldSkill) {
+    			if (possibSkill.equals(oldSkill)) {
     				break;
-    			}else if (possibSkill == possibleSkillList.getLast()){
+    			}else if (possibSkill.equals(possibleSkillList.getLast())){
     				oldSkills.remove(oldSkill);
     			}
     		}
     	}
-    	newNPC.setSkillList(oldSkills);;
+    	newNPC.setSkillList(oldSkills);
     	
     	//Features
     	
