@@ -180,6 +180,25 @@ public class ElementEdit {
         hitPointsL.setVisible(false);
         hitPointsF.setVisible(false);
 
+        // Geschwindigkeit
+
+
+        // Sprachen
+
+
+        // Ability Score
+
+        // Inventar
+
+        // Skills
+
+        // Senses
+
+        // Spells
+
+
+
+
         // Elemente dem Layout hinzufügen, zum leichtem Zählen in 5er-Zeilen
         nameClassGrid.getChildren().addAll(cbRace, cbClass, cbAlignmentL, nameL, classL,
                                            jobL, raceL, alignmentL, ageL, sexL,
@@ -288,6 +307,9 @@ public class ElementEdit {
         nameClassGrid.getChildren().get(21).setVisible(show);
         nameClassGrid.getChildren().get(22).setVisible(!show);
     }
+
+
+
 
 
     // gibt die Scene zurück

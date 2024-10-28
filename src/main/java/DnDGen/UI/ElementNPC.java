@@ -69,13 +69,8 @@ public class ElementNPC {
         }
         descriptionVBox.getChildren().add(descriptionGrid);
 
-
-        TextFlow descriptionTextNew = new TextFlow();
-        String description = "\n\n";
-        Text text = new Text(description);
-        descriptionTextNew.getChildren().add(text);
-        descriptionVBox.getChildren().add(descriptionTextNew);
-
+        // Beschreibung als fließtext
+        getDescriptionOld();
     }
 
     /**
@@ -186,7 +181,45 @@ public class ElementNPC {
         ColumnConstraints featureGridColCon2 = new ColumnConstraints();
         featuresGrid.getColumnConstraints().addAll(featureGridColCon1, featureGridColCon2);
 
-        featuresGrid.getChildren().addAll(actionL, bonusActionL, bonusTextL);
+        //Spell
+        TextFlow spellTF = new TextFlow();
+        Text text1 = new Text("Spells: \n");
+        text1.setStyle("-fx-font-weight: bold");
+        spellTF.getChildren().addAll(text1);
+
+        // Cantrips
+        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text("Cantrips: \n" + getPartLevelString(npc.getSpellCantrips()) + "\n"));
+
+        // 1
+        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text("1st: \n" + getPartLevelString(npc.getFirstLevelSpell() + "\n")));
+
+        // 2
+        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text("2st: \n" + getPartLevelString(npc.getSecondLevelSpell() + "\n")));
+
+        // 3
+        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text("3st: \n" + getPartLevelString(npc.getThirdLevelSpell() + "\n")));
+
+        // 4
+        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text("4st: \n" + getPartLevelString(npc.getFourthLevelSpell() + "\n")));
+
+        // 5
+        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text("5st: \n" + getPartLevelString(npc.getFifthLevelSpell() + "\n")));
+
+        // 6
+        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text("6st: \n" + getPartLevelString(npc.getSixthLevelSpell() + "\n")));
+
+        // 7
+        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text("7st: \n" + getPartLevelString(npc.getSeventhLevelSpell() + "\n")));
+
+        // 8
+        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text("8st: \n" + getPartLevelString(npc.getEightLevelSpell() + "\n")));
+
+        // 9
+        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text("9st: \n" + getPartLevelString(npc.getNinthLevelSpell() + "\n")));
+
+
+
+        featuresGrid.getChildren().addAll(spellTF);
 
         return featuresGrid;
     }
@@ -300,48 +333,13 @@ public class ElementNPC {
         text3.setStyle("-fx-font-weight: bold");
         senseTF.getChildren().addAll(text3);
 
-        Text sense = new Text( npc.getSenses() + "\n");
-        senseTF.getChildren().add(sense);
+        List<?> senses = stringToList(npc.getSenses());
+        for (Object sens : senses) {
+            Text sense = new Text( sens + "\n");
+            senseTF.getChildren().add(sense);
+        }
 
-
-        //Spell
-        TextFlow spellTF = new TextFlow();
-        text1 = new Text("Spells: \n");
-        text1.setStyle("-fx-font-weight: bold");
-        spellTF.getChildren().addAll(text1);
-
-        // Cantrips
-        if(npc.getSpellCantrips() != null) spellTF.getChildren().add(new Text("Cantrips: " + npc.getSpellCantrips() + "\n"));
-
-        // 1
-        if(npc.getFirstLevelSpell() != null) spellTF.getChildren().add(new Text("1st: " + npc.getFirstLevelSpell() + "\n"));
-
-        // 2
-        if(npc.getSecondLevelSpell() != null) spellTF.getChildren().add(new Text("2st: " + npc.getSecondLevelSpell() + "\n"));
-
-        // 3
-        if(npc.getThirdLevelSpell() != null) spellTF.getChildren().add(new Text("3st: " + npc.getThirdLevelSpell() + "\n"));
-
-        // 4
-        if(npc.getFourthLevelSpell() != null) spellTF.getChildren().add(new Text("4st: " + npc.getFourthLevelSpell() + "\n"));
-
-        // 5
-        if(npc.getFifthLevelSpell() != null) spellTF.getChildren().add(new Text("5st: " + npc.getFifthLevelSpell() + "\n"));
-
-        // 6
-        if(npc.getSixthLevelSpell() != null) spellTF.getChildren().add(new Text("6st: " + npc.getSixthLevelSpell() + "\n"));
-
-        // 7
-        if(npc.getSeventhLevelSpell() != null) spellTF.getChildren().add(new Text("7st: " + npc.getSeventhLevelSpell() + "\n"));
-
-        // 8
-        if(npc.getEightLevelSpell() != null) spellTF.getChildren().add(new Text("8st: " + npc.getEightLevelSpell() + "\n"));
-
-        // 9
-        if(npc.getNinthLevelSpell() != null) spellTF.getChildren().add(new Text("9st: " + npc.getNinthLevelSpell() + "\n"));
-
-
-        skillSensesBox.getChildren().addAll(skillTF,senseTF, spellTF);
+        skillSensesBox.getChildren().addAll(skillTF,senseTF);
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
 
         return skillSensesBox;
@@ -368,6 +366,21 @@ public class ElementNPC {
                 inventoryBlock(), line5,skillsSpellsBlock(),line4, featuresBlock());
     }
 
+    /**
+     * Für die spells, gibt für jedes spell level die einzelnen spells untereinander und eingerückt wieder
+     * @param spells der String aller spells des levels
+     * @return ein String mit den spells getrennt, untereinander und eingerückt
+     * @author Marie
+     */
+    private String getPartLevelString(String spells) {
+        String part = "";
+        List<?> spell = stringToList(spells);
+
+        for (Object o : spell) {
+           part = part.concat("    - " + o + "\n");
+        }
+        return part;
+    }
 
     // Ausgabe der Behälter
     public VBox getNpcVBox(){
@@ -387,8 +400,8 @@ public class ElementNPC {
      * ----------------------
      */
     // Gibt das richtige Pronoun(his, her) zum sex wieder
-    public String getPronoun(String sex) {
-        if(sex.equals("male")) {
+    public String getPronoun() {
+        if(npc.getGender().equals("male")) {
             return "his";
         } else {
             return "her";
@@ -396,8 +409,8 @@ public class ElementNPC {
     }
 
     // Gibt das richtige possessiv Pronoun(he, she) zum sex wieder
-    public String getPossessivePronoun(String sex) {
-        if(sex.equals("male")) {
+    public String getPossessivePronoun() {
+        if(npc.getGender().equals("male")) {
             return "he";
         } else {
             return "she";
@@ -434,23 +447,23 @@ public class ElementNPC {
     // gibt Beschreibung als Fließtext
     public void getDescriptionOld() {
         String name = npc.getName();
-
         List<String> listNpc = npc.getDescription();
-        String sex = npc.getGender();
-        TextFlow descriptionText = new TextFlow();
-        String description = "The skin color of " + name + " is " + listNpc.get(0) + ". " +
-                name + "'s eyes appear to be in a " + listNpc.get(1) + " shade. " +
-                firstLetterBig(getPossessivePronoun(sex)) + " wears " + getPronoun(sex) + " hair as " + listNpc.get(2) +
-                ". They have the color " + listNpc.get(3) + ". " + firstLetterBig(getPossessivePronoun(sex)) +
-                " is " + listNpc.get(4) + " and " + firstLetterSmall(listNpc.get(5) + ". ");
-        for(int i = 6; i < listNpc.size()-4; i++) {
-            description = description.concat(" " + listNpc.get(i));
-        }
+        String feet = listNpc.get(13).substring(0,listNpc.get(13).indexOf("."));
+        String inch = listNpc.get(13).substring(listNpc.get(13).indexOf(".")+1);
 
-        description = description.concat(" " + firstLetterBig(getPossessivePronoun(sex)) + " is driven by " +
-                listNpc.get(listNpc.size()-4) + ". " + firstLetterBig(getPronoun(sex)) + " voice is " +
-                listNpc.get(listNpc.size()-3) + " " + name + " is wearing a " + listNpc.get(listNpc.size()-2) +
-                " and " + getPossessivePronoun(sex) + " is " + listNpc.getLast());
+        TextFlow descriptionText = new TextFlow();
+        String description = "\n" +name + "'s eyes are " + listNpc.getFirst() + ". " +
+                             firstLetterBig(getPronoun()) + " hair is " + listNpc.get(1) + " in the Style of " + listNpc.get(2) + ". " +
+                             name + "'s skin appear to be " + listNpc.get(3) + ". " +
+                             firstLetterBig(getPossessivePronoun()) + " behaves " + listNpc.get(4) + ". " +
+                             firstLetterBig(listNpc.get(5)) + " is " + getPronoun() + " mannerism. " +
+                             firstLetterBig(getPossessivePronoun()) + " has a bond, it is that: \"" + listNpc.get(6) + "\". " +
+                             name + "'s flaw is \"" + listNpc.get(7) + "\", " + getPronoun() + " ideal is " + listNpc.get(8) + ". When " +
+                             getPossessivePronoun() + " speaks, " + getPronoun() + " voice sounds like " + listNpc.get(9) + ". On " +
+                             getPronoun() + " body " + getPossessivePronoun() + " wears " + listNpc.get(10) + ". " +
+                             firstLetterBig(getPronoun()) + " attitude is " + listNpc.get(11) + ". " +
+                             name + "'s size is " + listNpc.get(12) + " with a exact height of " + feet + "'" + inch + "\".";
+
 
         Text text = new Text(description);
         text.wrappingWidthProperty().bind(descriptionVBox.widthProperty());

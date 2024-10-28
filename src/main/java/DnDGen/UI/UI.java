@@ -78,14 +78,15 @@ public class UI extends Application {
         window.getIcons().add(new Image("ui-image/window_Icon_selfish.png"));
         rNPC = new RandomNPC();
 
+        // erzeugt history Seite
         ElementHistory elementHistory = new ElementHistory(window, dbms);
 
+        // erstellt das Layout für die Platzierung der 3 Teile der generierenSeite
         layoutGenerateGrid = new GridPane();
         layoutGenerateGrid.setPadding(new Insets(10, 10, 10, 10));
         layoutGenerateGrid.setVgap(7);
         layoutGenerateGrid.setHgap(10);
         layoutGenerateGrid.setMinWidth(300);
-
 
         //Spaltenbreite der Tabelle definieren
         ColumnConstraints col1Constraints = new ColumnConstraints();
@@ -96,6 +97,7 @@ public class UI extends Application {
         col3Constraints.setPercentWidth(33);
         layoutGenerateGrid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
 
+        // der Teil in der Mitte Scrollbar machen mit ScrollPane
         npcScrollPane = new ScrollPane();
         npcScrollPane.setMinWidth(350);
         npcScrollPane.setVisible(false);
@@ -453,8 +455,6 @@ public class UI extends Application {
 
         return string;
     }
-
-
 
     // Gibt das richtige Pronoun(his, her) zum sex wieder
     public String getPronoun(String sex) {
