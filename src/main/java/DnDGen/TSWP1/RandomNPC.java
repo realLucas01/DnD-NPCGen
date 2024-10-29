@@ -130,7 +130,7 @@ public class RandomNPC {
             job = inputJob;
         }
         randNPC.setJob(job);
-    //random Class
+        //random Class
         if ((inputClass == null) && (level != 0)) {
             genClass = randGen.randCharClass();
         } else if (level == 0) {
@@ -536,7 +536,6 @@ public class RandomNPC {
         }else{
             savingThrows.add("none");
         }
-
         return savingThrows;
     }
     public int calculateHP(String genClass, int level, List<Integer> abilityModifier ){
