@@ -19,10 +19,17 @@ public class NPCClass {
      */
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
+    //--------------------------------------------------------------------------------//
+    /* @author Lucas
+    *
+    * Temporärer fix für die Persistence der zugegriffenen Daten, sollte eigentlich in der Form so nicht fehlerfrei funktionieren, tut es aber.
+    * Hinterfragen wir einfach mal nicht so lange es geht und bis ein korrekter fix fertig ist.
+    */
+    HistoryRepository historyRepository = appCtx.getBean(HistoryRepository.class);
+    //--------------------------------------------------------------------------------//
+    
     RandomGenerator randGen = new RandomGenerator();
     static Logger logger = Logger.getLogger(NPCClass.class.getName());
-
-    HistoryRepository historyRepository;
 
     // Attributes
     private String name;
