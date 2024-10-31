@@ -368,7 +368,7 @@ public class NPCClass {
         setBonusTextList(randGen.bigStringToDividedString(((String)  listOfTheNPC.get(28))));
     }
 
-    public void historyEntryToNPC(int iD){
+    public void historyEntryToNPC(Integer iD){
         setRace(historyRepository.findByHistoryId(iD).getHistoryRace());
         setGenClass(historyRepository.findByHistoryId(iD).getHistoryClass());
         setAlignment(historyRepository.findByHistoryId(iD).getHistoryAlignment());
@@ -394,13 +394,8 @@ public class NPCClass {
         setGender(historyRepository.findByHistoryId(iD).getHistoryGender());
         setAge(historyRepository.findByHistoryId(iD).getHistoryAge());
         setBonusTextList(historyRepository.findByHistoryId(iD).getHistoryBonusTextList());
-        /*
-        historyRepository.findByHistoryId(iD).getHistoryJob();
-        convertListToNPC(currentNPC);
-        */
     }
-
-
+    
     public void setSpellCantrips(String spells){
         this.cantrips = spells;
     }
