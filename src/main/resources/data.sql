@@ -393,7 +393,6 @@ INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (4,'Pelor','
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (5,'Asmodeus','Lawful Evil');
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (6,'Bane','Lawful Evil');
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (7,'Lolth','Chaotic Evil');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (8,'Tiamat','Chaotic Evil');
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (9,'Vecna','Neutral Evil');
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (10,'Gruumsh','Chaotic Evil');
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (11,'Kelemvor','Lawful Neutral');
@@ -411,14 +410,14 @@ INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (22,'Lathand
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (23,'Mielikki','Neutral Good');
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (24,'Silvanus','Neutral Good');
 INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (25,'Talos','Chaotic Evil');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (26,'Tiamat','Lawful Evil');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (27,'Mask','Neutral Evil');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (28,'Loviatar','Lawful Evil');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (29,'Bhaal','Neutral Evil');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (30,'Auril','Neutral Evil');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (31,'Azuth','Lawful Neutral');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (32,'Waukeen','Neutral');
-INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (33,'Ilmater','Lawful Good');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (8,'Tiamat','Lawful Evil');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (26,'Mask','Neutral Evil');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (27,'Loviatar','Lawful Evil');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (28,'Bhaal','Neutral Evil');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (29,'Auril','Neutral Evil');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (30,'Azuth','Lawful Neutral');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (31,'Waukeen','Neutral');
+INSERT INTO deity_model(deity_Id,deity_name,deity_Alignment) VALUES (32,'Ilmater','Lawful Good');
 
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (1,'Club','Simple','Bludgeoning','1d4','Simple Weapon');
 INSERT INTO weapon_model(weapon_Id,weapon_Name,weapon_Property,weapon_Damage_Type,weapon_Damage_Dice,weapon_Kind) VALUES (2,'Dagger','Finesse, Light, Thrown','Piercing','1d4','Simple Weapon');

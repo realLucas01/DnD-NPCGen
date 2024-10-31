@@ -380,6 +380,15 @@ public class DBMS implements ApplicationContextAware{
 			    		}
 			    	}
 				break;
+			case "deity":
+		    	DeityModel Entrydeity = deityRepository.findByDeityName(searchstring);
+		    	for (Method m : ordner(Entrydeity.getClass())) {
+		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
+		    			 sneaky(() -> r = m.invoke(Entrydeity));
+		    			 CD.add(String.valueOf(r));
+		    		}
+		    	}
+			break;
 			default:
 				CD = null;
 			}
