@@ -255,6 +255,9 @@ public class DBMS implements ApplicationContextAware{
 		case "actions":
 			col = actionRepository.getActionsCol(Clazz);
 			break;
+		case "deity":
+			col = deityRepository.getDeityByAlignmentCol(Clazz);
+			break;
 		default:
 			col = null;
 			break;

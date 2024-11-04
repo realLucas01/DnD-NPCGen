@@ -24,4 +24,6 @@ public interface DeityRepository extends CrudRepository<DeityModel, Integer>{
 	Page<DeityModel> getDeityPref(String deityAlignment,Pageable pageable2);
 	@Query("SELECT s.deityName FROM DeityModel s")
 	ArrayList<String> getallDeityCol();
+	@Query("SELECT l.deityName FROM DeityModel l WHERE l.deityAlignment = ?1")
+	ArrayList<String> getDeityByAlignmentCol(String deityAlignment);
 }
