@@ -86,15 +86,15 @@ public class ElementHistory {
         GridPane.setConstraints(level,0,3);
 
         // Rasse
-        Label race = new Label("Rasse: " + npc.getRace());
+        Label race = new Label("Race: " + npc.getRace());
         GridPane.setConstraints(race,0,1);
 
         // Klasse
-        Label clas = new Label("Klasse: " + npc.getGenClass());
+        Label clas = new Label("Class: " + npc.getGenClass());
         GridPane.setConstraints(clas,0,4);
 
         // Job
-        Label job = new Label("Beruf: " + npc.getJob());
+        Label job = new Label("Job: " + npc.getJob());
         GridPane.setConstraints(job,0,2 );
 
         npcGrid.getChildren().addAll(name,level,race,clas,job);
@@ -119,7 +119,7 @@ public class ElementHistory {
 
             if(ability.size() > i) {
                 if(abilityMod.get(i) < 0) {
-                    string = String.valueOf(ability.get(i) + abilityMod.get(i));
+                    string = (ability.get(i) + "" + abilityMod.get(i));
                 } else {string = ability.get(i) + "+" + abilityMod.get(i);}
 
                 Label abilityL = new Label(string);
@@ -157,10 +157,17 @@ public class ElementHistory {
         return npcVBox;
     }
 
+    /**
+     * MouseEvent für die VBox der History Seite
+     * @param event was für ein MouseEvent, → Click
+     * @param npc ein NPC-Object
+     * @param id die Id des NPC
+     * @author Marie
+     */
     private void handleNpcClick(MouseEvent event, NPCClass npc, Integer id) {
         event.consume();
         ElementEdit elementEdit = new ElementEdit(window, npc, id,dbms);
-        System.out.println(npc.getName());
+       // System.out.println(npc.getName());
         elementEdit.menuBar(generatePage, scene);
         window.setTitle("Edit");
         window.setScene(elementEdit.getScene());

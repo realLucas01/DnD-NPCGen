@@ -86,13 +86,13 @@ public class ElementNPC {
 
         Label nameL      = new Label("Name: " + npc.getName());
         Label levelL     = new Label("Level: " + npc.getLevel());
-        Label classL     = new Label("Klasse: " + npc.getGenClass());
+        Label classL     = new Label("Class: " + npc.getGenClass());
         Label jobL       = new Label("Job: " + npc.getJob());
-        Label raceL      = new Label("Rasse: " + npc.getRace());
+        Label raceL      = new Label("Race: " + npc.getRace());
         Label alignmentL = new Label("Alignment: " + npc.getAlignment());
-        Label ageL       = new Label("Alter: " + npc.getAge());
-        Label sexL       = new Label("Geschlecht: " + npc.getGender());
-        Label deityL     = new Label("Gottheit: " + npc.getDeity());
+        Label ageL       = new Label("Age: " + npc.getAge());
+        Label sexL       = new Label("Sex: " + npc.getGender());
+        Label deityL     = new Label("Deity: " + npc.getDeity());
 
         GridPane.setConstraints(nameL,0,0);
         GridPane.setConstraints(levelL,1,0);
@@ -121,13 +121,13 @@ public class ElementNPC {
         acHpSpLangGrid.setVgap(4);
         acHpSpLangGrid.setHgap(5);
 
-        Label armorClassL = new Label("Rüstungsklasse: ");
+        Label armorClassL = new Label("Armor Class: ");
         GridPane.setConstraints(armorClassL,0,0);
-        Label hitPointsL  = new Label("Trefferpunkte: ");
+        Label hitPointsL  = new Label("Hit Points: ");
         GridPane.setConstraints(hitPointsL,0,1);
-        Label speedL      = new Label("Geschwindigkeit: ");
+        Label speedL      = new Label("Movement Speed: ");
         GridPane.setConstraints(speedL,0,2);
-        Label languagesL   = new Label("Sprachen: ");
+        Label languagesL   = new Label("Languages: ");
         GridPane.setConstraints(languagesL,0,4);
 
         //AmorClass, HitPoints
@@ -281,10 +281,10 @@ public class ElementNPC {
         inventoryGrid.setVgap(1);
         inventoryGrid.setHgap(25);
 
-        Label armorTextL      = new Label("Rüstung: ");
-        Label weaponTextL     = new Label("Waffen: ");
-        Label armorL      = new Label("Rüstung: ");
-        Label weaponL     = new Label("Waffen: ");
+        Label armorTextL      = new Label("Armor: ");
+        Label weaponTextL     = new Label("Weapon: ");
+        Label armorL      = new Label("Armor: ");
+        Label weaponL     = new Label("Weapon: ");
 
         GridPane.setConstraints(armorTextL,0,0);
         GridPane.setConstraints(weaponTextL,1,0);

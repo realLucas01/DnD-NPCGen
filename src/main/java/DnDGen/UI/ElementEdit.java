@@ -100,7 +100,7 @@ public class ElementEdit {
         cbLevel.setVisible(false);
 
         // Klasse
-        Label classL     = new Label("Klasse: ");
+        Label classL     = new Label("Class: ");
         GridPane.setConstraints(classL,0,1);
         final ComboBox<String> cbClass = new ComboBox<>();
         ArrayList<String> list = dbms.onlyColumn("class");
@@ -109,7 +109,7 @@ public class ElementEdit {
         GridPane.setConstraints(cbClass,1,1);
 
         // Rasse
-        Label raceL      = new Label("Rasse: ");
+        Label raceL      = new Label("Race: ");
         GridPane.setConstraints(raceL,2,1);
         final ComboBox<String> cbRace = new ComboBox<>();
         list = dbms.onlyColumn("race");
@@ -129,7 +129,7 @@ public class ElementEdit {
         cbJob.setVisible(false);
 
         // Deity
-        Label deityL     = new Label("Gottheit: ");
+        Label deityL     = new Label("Deity: ");
         GridPane.setConstraints(deityL,0,3);
         final ComboBox<String> cbDeity = new ComboBox<>();
         list = dbms.onlyColumn("deity");
@@ -149,7 +149,7 @@ public class ElementEdit {
         GridPane.setConstraints(cbAlignmentL,3,0);
 
         // Sex
-        Label sexL       = new Label("Geschlecht: ");
+        Label sexL       = new Label("Sex: ");
         GridPane.setConstraints(sexL,0,4);
         final ComboBox<String> cbGender = new ComboBox<>(FXCollections.observableArrayList("female","male"));
         GridPane.setConstraints(cbGender,1,4);
@@ -157,7 +157,7 @@ public class ElementEdit {
         cbGender.setVisible(false);
 
         // Age
-        Label ageL       = new Label("Alter: ");
+        Label ageL       = new Label("Age: ");
         GridPane.setConstraints(ageL,2,4);
         TextField ageF = new TextField();
         GridPane.setConstraints(ageF,3,4);
@@ -165,7 +165,7 @@ public class ElementEdit {
         ageF.setVisible(false);
 
         // AmorClass
-        Label armorClassL = new Label("Rüstungsklasse: ");
+        Label armorClassL = new Label("Armor Class: ");
         GridPane.setConstraints(armorClassL,0,5);
         TextField amorClassF = new TextField();
         GridPane.setConstraints(amorClassF,1,5);
@@ -173,14 +173,43 @@ public class ElementEdit {
         amorClassF.setVisible(false);
 
         // HitPoints
-        Label hitPointsL  = new Label("Trefferpunkte: ");
+        Label hitPointsL  = new Label("Hit Points: ");
         GridPane.setConstraints(hitPointsL,2,5);
         TextField hitPointsF = new TextField();
         GridPane.setConstraints(hitPointsF,3,5);
         hitPointsL.setVisible(false);
         hitPointsF.setVisible(false);
 
+
         // Geschwindigkeit
+        GridPane speedGrid = new GridPane();
+        GridPane.setConstraints(speedGrid,0,6,4,6);
+        speedGrid.setVgap(5);
+        speedGrid.setHgap(20);
+
+        Label speedL = new Label("Movement speed: ");
+        GridPane.setConstraints(speedL,0,1);
+        Label feetSpeedL = new Label("walking Speed: ");
+        GridPane.setConstraints(feetSpeedL,1,0);
+        Label wingSpeedL = new Label("flying Speed: ");
+        GridPane.setConstraints(wingSpeedL,2,0);
+
+        // Erstelle einen Spinner (Textfeld mit PfeilTasten) für Integer-Werte
+        Spinner<Integer> feetSpeedSpinner = new Spinner<>();
+        Spinner<Integer> wingSpeedSpinner = new Spinner<>();
+
+        // Setze den Bereich des Spinners (z.B. von 0 bis 100)
+        SpinnerValueFactory<Integer> valueFactoryFeet = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0); // Min, Max, Initial
+        SpinnerValueFactory<Integer> valueFactoryWing = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
+        feetSpeedSpinner.setValueFactory(valueFactoryFeet);
+        wingSpeedSpinner.setValueFactory(valueFactoryWing);
+
+        GridPane.setConstraints(feetSpeedSpinner,1,1);
+        GridPane.setConstraints(wingSpeedSpinner,2,1);
+
+
+        speedGrid.getChildren().addAll(speedL,feetSpeedL,wingSpeedL,feetSpeedSpinner,wingSpeedSpinner);
+        speedGrid.setVisible(false);
 
 
         // Sprachen
@@ -204,7 +233,7 @@ public class ElementEdit {
                                            jobL, raceL, alignmentL, ageL, sexL,
                                            deityL, levelL, armorClassL, hitPointsL, nameF,
                                            cbJob, ageF, cbGender, cbDeity, cbLevel,
-                                           amorClassF, hitPointsF, classRaceEditButton());
+                                           amorClassF, hitPointsF, classRaceEditButton(), speedGrid);
 
         npcDate.getChildren().addAll(nameClassGrid);
     }
@@ -283,6 +312,17 @@ public class ElementEdit {
 
         // HitPoints
         ((TextField) nameClassGrid.getChildren().get(21)).setText(String.valueOf(npc.getHealthPoints()));
+
+        // Movement Speed (wenn weitere arten da sind, hier ändern)
+        Integer walking = Integer.parseInt(npc.getMovementSpeedList().getFirst().substring(0,2));
+        Integer flying = Integer.parseInt(npc.getMovementSpeedList().getLast().substring(0,2));
+        if(npc.getMovementSpeedList().size() == 1) {
+            ((Spinner<Integer>) ((GridPane) nameClassGrid.getChildren().get(23)).getChildren().get(3)).getValueFactory().setValue(walking);
+        } else {
+            ((Spinner<Integer>) ((GridPane) nameClassGrid.getChildren().get(23)).getChildren().get(3)).getValueFactory().setValue(walking);
+            ((Spinner<Integer>) ((GridPane) nameClassGrid.getChildren().get(23)).getChildren().get(4)).getValueFactory().setValue(flying);
+        }
+
     }
 
     /**
@@ -306,6 +346,7 @@ public class ElementEdit {
         nameClassGrid.getChildren().get(20).setVisible(show);
         nameClassGrid.getChildren().get(21).setVisible(show);
         nameClassGrid.getChildren().get(22).setVisible(!show);
+        nameClassGrid.getChildren().get(23).setVisible(show);
     }
 
 
