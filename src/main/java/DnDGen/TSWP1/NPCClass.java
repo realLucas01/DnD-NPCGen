@@ -1,6 +1,7 @@
 package DnDGen.TSWP1;
 
 import DnDGen.DB.DBMS;
+import DnDGen.DB.HistoryModel;
 import DnDGen.DB.HistoryRepository;
 import org.springframework.context.ApplicationContext;
 
@@ -368,32 +369,37 @@ public class NPCClass {
         setBonusTextList(randGen.bigStringToDividedString(((String)  listOfTheNPC.get(28))));
     }
 
-    public void historyEntryToNPC(Integer iD){
-        setRace(historyRepository.findByHistoryId(iD).getHistoryRace());
-        setGenClass(historyRepository.findByHistoryId(iD).getHistoryClass());
-        setAlignment(historyRepository.findByHistoryId(iD).getHistoryAlignment());
-        setDeity(historyRepository.findByHistoryId(iD).getHistoryDeity());
-        setName(historyRepository.findByHistoryId(iD).getHistoryName());
-        setLevel(historyRepository.findByHistoryId(iD).getHistoryLevel());
-        setJob(historyRepository.findByHistoryId(iD).getHistoryJob());
-        setArmorClass(historyRepository.findByHistoryId(iD).getHistoryAc());
-        setHealthPoints(historyRepository.findByHistoryId(iD).getHistoryHp());
-        setMovementSpeedList(historyRepository.findByHistoryId(iD).getHistorySpeed());
-        setLanguages(historyRepository.findByHistoryId(iD).getHistoryLanguages());
-        setAbilityScores(historyRepository.findByHistoryId(iD).getHistoryAbiliSc());
-        setAbilityModifier(historyRepository.findByHistoryId(iD).getHistoryAbiliMod());
-        setSavingThrows(historyRepository.findByHistoryId(iD).getHistorySavingTh());
-        setArmor(historyRepository.findByHistoryId(iD).getHistoryArmor());
-        setWeaponList(historyRepository.findByHistoryId(iD).getHistoryWeapon());
-        setSkillList(historyRepository.findByHistoryId(iD).getHistorySkills());
-        setSpellAbility(historyRepository.findByHistoryId(iD).getHistorySpellAb());
-        setDescription(historyRepository.findByHistoryId(iD).getHistoryDesc());
-        setActionList(historyRepository.findByHistoryId(iD).getHistoryActions());
-        setBonusActionList(historyRepository.findByHistoryId(iD).getHistoryBonusTextList());
-        setProfBonus(historyRepository.findByHistoryId(iD).getHistoryProfBonus());
-        setGender(historyRepository.findByHistoryId(iD).getHistoryGender());
-        setAge(historyRepository.findByHistoryId(iD).getHistoryAge());
-        setBonusTextList(historyRepository.findByHistoryId(iD).getHistoryBonusTextList());
+    public void historyEntryToNPC(HistoryModel entry){
+        setRace(entry.getHistoryRace());
+        setGenClass(entry.getHistoryClass());
+        setAlignment(entry.getHistoryAlignment());
+        setDeity(entry.getHistoryDeity());
+        setName(entry.getHistoryName());
+        setLevel(entry.getHistoryLevel());
+        setJob(entry.getHistoryJob());
+        setArmorClass(entry.getHistoryAc());
+        setHealthPoints(entry.getHistoryHp());
+        setMovementSpeedList(entry.getHistorySpeed());
+        setLanguages(entry.getHistoryLanguages());
+        setAbilityScores(entry.getHistoryAbiliSc());
+        setAbilityModifier(entry.getHistoryAbiliMod());
+        setSavingThrows(entry.getHistorySavingTh());
+        setArmor(entry.getHistoryArmor());
+        setWeaponList(entry.getHistoryWeapon());
+        setSkillList(entry.getHistorySkills());
+        setSpellAbility(entry.getHistorySpellAb());
+        setDescription(entry.getHistoryDesc());
+        setActionList(entry.getHistoryActions());
+        setBonusActionList(entry.getHistoryBonusTextList());
+        setProfBonus(entry.getHistoryProfBonus());
+        setGender(entry.getHistoryGender());
+        setAge(entry.getHistoryAge());
+        setBonusTextList(entry.getHistoryBonusTextList());
+        //Wofür ist das?? @Luca
+        /*
+        historyRepository.findByHistoryId(iD).getHistoryJob();
+        convertListToNPC(currentNPC);
+        */
     }
     
     public void setSpellCantrips(String spells){

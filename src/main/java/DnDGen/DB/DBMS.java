@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -755,21 +756,20 @@ public class DBMS implements ApplicationContextAware{
 	/* @author Lucas
 	 *
 	 * Gibt den Inhalt der HistoryDB als ArrayList aus. Jeder Index
-	 * in der ArrayList ist ein NPC, gespeichert als eigene ArrayList.
+	 * in der ArrayList ist ein NPC, gespeichert als "HistoryModel". 
+	 * Der genaue Aufbau ist der Datei "HistoryModel.java" zu entnehmen, alle Attribute besitzen getter und setter.
 	 */
-	public ArrayList<Object> getHistory() {
-		ArrayList<Object> historycontent = new ArrayList<Object>();
-		//ArrayList<Object> historysingle = new ArrayList<Object>();
+	public ArrayList<HistoryModel> getHistory() {
+		ArrayList<HistoryModel> historycontent = new ArrayList<HistoryModel>();
 		for(HistoryModel i : historyRepository.findEverythingExceptCounter()) {
-			ArrayList<Object> historysingle = new ArrayList<Object>();
-			for (Method m : ordner(i.getClass())) {
-	    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-	    			 sneaky(() -> r = m.invoke(i));
-	    			 historysingle.add(r);
-	    		}
-	    	}
-			historycontent.add(historysingle);
+			historycontent.add(i);
 		}
+		Collections.sort(historycontent, new Comparator<HistoryModel>() {
+		    @Override
+		    public int compare(HistoryModel o1, HistoryModel o2) {
+		        return o1.getHistoryEntryAge().compareTo(o2.getHistoryEntryAge());
+		    }
+		});
 		return historycontent;
 	 }
 	
@@ -778,19 +778,18 @@ public class DBMS implements ApplicationContextAware{
 	 * Gibt eine bestimmte Zeile der History DB anhand der ID aus.
 	 * 
 	 * @param ID: ID der Zeile die Ausgegeben werden soll.
-	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Objekten, 
-	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
+	 * @return als "HistoryModel". 
+	 * Der genaue Aufbau ist der Datei "HistoryModel.java" zu entnehmen, alle Attribute besitzen getter und setter.
 	 */
-	public ArrayList<Object> getHistoryEntry(Integer ID){
-		ArrayList<Object> FinalEntry = new ArrayList<Object>(); 
+	public HistoryModel getHistoryEntry(Integer ID){
 		HistoryModel Entry = historyRepository.findByHistoryId(ID);
-		for (Method m : ordner(Entry.getClass())) {
+		/*for (Method m : ordner(Entry.getClass())) {
     		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
     			 sneaky(() -> r = m.invoke(Entry));
     			 FinalEntry.add(String.valueOf(r));
     		}
-    	}
-		return FinalEntry;
+    	}*/
+		return Entry;
 	}
 	
 	

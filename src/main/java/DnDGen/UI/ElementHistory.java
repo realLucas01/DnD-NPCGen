@@ -1,6 +1,7 @@
 package DnDGen.UI;
 
 import DnDGen.DB.DBMS;
+import DnDGen.DB.HistoryModel;
 import DnDGen.TSWP1.NPCClass;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -183,9 +184,9 @@ public class ElementHistory {
 
         // fügt für jeden NPC eine VBox hinzu und ordnet sie an
         NPCClass npc = new NPCClass();
-        for(Object npcList :  sortList(this.dbms.getHistory())) {
-            npc.historyEntryToNPC((int) ((ArrayList<?>) npcList).getFirst());
-            VBox grid = makeGridNPC(npc, ((int) ((ArrayList<?>) npcList).getFirst()));
+        for(HistoryModel npcList :  this.dbms.getHistory()) {
+            npc.historyEntryToNPC(npcList);
+            VBox grid = makeGridNPC(npc,npcList.getHistoryId() );
             GridPane.setConstraints(grid, pos,row);
             pos++;
             if(pos > 4) {

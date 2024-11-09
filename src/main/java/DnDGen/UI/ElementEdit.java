@@ -31,7 +31,7 @@ public class ElementEdit {
         this.dbms = dbms;
         //this.cNPC = npc;
         this.cNPC = new NPCClass();
-        cNPC.historyEntryToNPC(id);
+        cNPC.historyEntryToNPC(dbms.getHistoryEntry(id));
 
         makeEditLayout();
         setDatenNPC(cNPC);
