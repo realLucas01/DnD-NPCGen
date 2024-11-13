@@ -767,7 +767,7 @@ public class DBMS implements ApplicationContextAware{
 		Collections.sort(historycontent, new Comparator<HistoryModel>() {
 		    @Override
 		    public int compare(HistoryModel o1, HistoryModel o2) {
-		        return o1.getHistoryEntryAge().compareTo(o2.getHistoryEntryAge());
+		        return o2.getHistoryEntryAge().compareTo(o1.getHistoryEntryAge());
 		    }
 		});
 		return historycontent;
