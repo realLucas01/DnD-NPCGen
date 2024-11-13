@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 
-public class RandomNPC {
+public class RandomNpc {
 	/* @author Lucas
 	 * 
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
@@ -92,8 +92,8 @@ public class RandomNPC {
         26: bonusTextList ;
      */
 
-    public NPCClass createRandomNPC(String inputName, String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
-        NPCClass randNPC = new NPCClass();
+    public NpcClass createRandomNPC(String inputName, String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
+        NpcClass randNpc = new NpcClass();
         List<String> weaponList;
         List<String> languages;
         List<String> savingThrows;
@@ -119,17 +119,17 @@ public class RandomNPC {
         } else {
             race = inputRace;
         }
-        randNPC.setRace(race);
+        randNpc.setRace(race);
         //random Level
         level = Objects.requireNonNullElseGet(inputLevel, () -> randGen.randLevel());
-        randNPC.setLevel(level);
+        randNpc.setLevel(level);
         //random Job
         if (inputJob == null) {
             job = randGen.randJob();
         } else {
             job = inputJob;
         }
-        randNPC.setJob(job);
+        randNpc.setJob(job);
         //random Class
         if ((inputClass == null) && (level != 0)) {
             genClass = randGen.randCharClass();
@@ -137,8 +137,9 @@ public class RandomNPC {
             genClass = nameDBCommoner;
         } else {
             genClass = inputClass;
+            if(inputClass.equals(nameDBCommoner)){level=0;}
         }
-        randNPC.setGenClass((genClass));
+        randNpc.setGenClass((genClass));
         //random AbilityScore
         switch ((inputAbilityScore)) {
             case "3d6":
@@ -167,41 +168,42 @@ public class RandomNPC {
         abilityScores = distributeAbilityScore(abilityScores, genClass);
         abilityScores =  addRaceModifierToAbilityScore(race,abilityScores);
         abilityScores =  addAbilityScoreImprovement(level, abilityScores);
-        randNPC.setAbilityScores(abilityScores);
+        randNpc.setAbilityScores(abilityScores);
         //calc AbilityModifier
         abilityModifier =  determineAbilityModifier(abilityScores);
-        randNPC.setAbilityModifier(abilityModifier);
+        randNpc.setAbilityModifier(abilityModifier);
 
         //calc HP
         healthPoints = calculateHP(genClass, level, abilityModifier);
-        randNPC.setHealthPoints(healthPoints);
+        randNpc.setHealthPoints(healthPoints);
 
         List<String> armorList = determineArmorAndAC(genClass, race, abilityModifier);
         String armor = armorList.get(0);
         int armorClass = Integer.parseInt(armorList.get(1));
-        randNPC.setArmor(armor);//armor
-        randNPC.setArmorClass(armorClass);//AC
+        randNpc.setArmor(armor);//armor
+        randNpc.setArmorClass(armorClass);//AC
 
         weaponList = determineWeapons(genClass, race);
-        randNPC.setWeaponList(weaponList);//waffenliste
+        randNpc.setWeaponList(weaponList);//waffenliste
 
         List<String> movementSpeedList = determineMovementSpeed(race);
-        randNPC.setMovementSpeedList(movementSpeedList);//movement speed
+        randNpc.setMovementSpeedList(movementSpeedList);//movement speed
 
         //Prof Bonus
         profBonus = determineProfBonus(level);
-        randNPC.setProfBonus(profBonus);
+        randNpc.setProfBonus(profBonus);
 
         //Saving Throws
         savingThrows = determineSavingThrows(genClass, abilityModifier, profBonus);// saving throws
 
         //SkillList
-        randNPC.setSavingThrows(savingThrows);
+        randNpc.setSavingThrows(savingThrows);
         if (!genClass.equals(nameDBCommoner)) {     // Fall Commoner?
             skillList = determineSkillList(race, job, genClass);
-            randNPC.setSkillList(addAbilityScoreToSkillList(abilityModifier,skillList, profBonus));
+            randNpc.setSkillList(addAbilityScoreToSkillList(abilityModifier,skillList, profBonus));
         } else {
-            randNPC.setSkillList(Collections.singletonList("none"));
+            skillList.add("none");
+            randNpc.setSkillList(skillList);
         }
 
         //random Gender
@@ -210,11 +212,11 @@ public class RandomNPC {
         } else {
             gender = inputGender;
         }
-        randNPC.setGender(gender);
+        randNpc.setGender(gender);
 
         //random Age
         age = randGen.randAge(race);
-        randNPC.setAge(age);
+        randNpc.setAge(age);
 
         //RandomName
         if (inputName ==null) {
@@ -222,40 +224,40 @@ public class RandomNPC {
         }else {
             name = inputName;
         }
-        randNPC.setName(name);
+        randNpc.setName(name);
 
         //random Alignment
         alignment = randGen.randAlignment();
-        randNPC.setAlignment(alignment);
+        randNpc.setAlignment(alignment);
         
         //random Description
         description = randGen.randDescription(race);
-        randNPC.setDescription(description);
+        randNpc.setDescription(description);
 
         //random Deity
         deity = randGen.randDeity(alignment);
-        randNPC.setDeity(deity);
+        randNpc.setDeity(deity);
 
         //random Languages
         languages = determineLanguages(race,job);
-        randNPC.setLanguages(languages);
+        randNpc.setLanguages(languages);
 
         senses = randGen.getVision(race) + ", Passive Perception " + randGen.passivePerception(abilityModifier, skillList, profBonus);
-        randNPC.setSenses(senses);
+        randNpc.setSenses(senses);
 
-        randNPC = randGen.randomSpellsForClass(randNPC);
+        randNpc = randGen.randomSpellsForClass(randNpc);
         //spells
-        List<Object> spellList =  randNPC.getSpellList();
-        randGen.addRaceCantripsAndSpells(randNPC);
-        randNPC.setSpellList(spellList);
+        List<Object> spellList =  randNpc.getSpellList();
+        randGen.addRaceCantripsAndSpells(randNpc);
+        randNpc.setSpellList(spellList);
         //features
         List<String> actionList = determineFeatures(race,"action");
         List<String> bonusActionList = determineFeatures(race, searchTermBonusAction);
         List<String> bonusTextList = determineFeatures(race, "bonus text");
 
-        randNPC.setActionList(actionList);
-        randNPC.setBonusActionList(bonusActionList);
-        randNPC.setBonusTextList(bonusTextList);
+        randNpc.setActionList(actionList);
+        randNpc.setBonusActionList(bonusActionList);
+        randNpc.setBonusTextList(bonusTextList);
 
        //Spell Ability = Spell Attack Mod und Spell Save DC
         int spellAttack = randGen.spellAttackMod(abilityModifier, profBonus, genClass);
@@ -264,47 +266,17 @@ public class RandomNPC {
 
         spellAbility.add(String.valueOf(spellAttack));
         spellAbility.add(String.valueOf(spellSave)) ;
-        randNPC.setSpellAbility(spellAbility);
-
+        randNpc.setSpellAbility(spellAbility);
+        /*voererst ausser betrieb genommen, noch fraglich ob sie wieder in betrieb genommen wird
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
-        randNPC.setRace(race);
+        randNpc.setRace(race);
         }
 
-        ArrayList<Object> history = new ArrayList<>();
-        
-        history.add(name);
-        history.add(level);
-        history.add(genClass);
-        history.add(race);
-        history.add(job);
-        history.add(armorClass);
-        history.add(healthPoints);
-        history.add(movementSpeedList);
-        history.add(languages);
-        history.add(abilityScores);
-        history.add(savingThrows);
-        history.add(armor);
-        history.add(weaponList);
-        history.add(skillList);
-        history.add(senses);
-        history.add(spellList);
-        history.add(spellAbility);
-        history.add(description);
-        history.add(actionList);
-        history.add(bonusActionList);
-        history.add(profBonus);
+         */
+        randNpc.saveNpcInHistory(); // speichern in der History
 
-        history.add(abilityModifier);
-        history.add(gender);
-        history.add(age);
-        history.add(alignment);
-        history.add(deity);
-        history.add(bonusTextList);
-
-        dbms.saveEntry(history);
-
-        return randNPC;
+        return randNpc;
     }
 
     public List<Integer> distributeAbilityScore (List<Integer> rolledAbilityScore, String charClass) {

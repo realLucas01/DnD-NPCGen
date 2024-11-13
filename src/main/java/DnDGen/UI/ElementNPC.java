@@ -1,6 +1,6 @@
 package DnDGen.UI;
 
-import DnDGen.TSWP1.NPCClass;
+import DnDGen.TSWP1.NpcClass;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class ElementNPC {
     VBox npcStack, descriptionVBox;
-    NPCClass npc;
+    NpcClass npc;
     ArrayList<Line> lineList;
 
     /**
@@ -26,7 +26,7 @@ public class ElementNPC {
      * @param npc der erstellte NPC
      * @author Marie
      */
-    ElementNPC(NPCClass npc) {
+    ElementNPC(NpcClass npc) {
         this.npc = npc;
         npcStack = new VBox();
         descriptionVBox = new VBox();
@@ -432,7 +432,7 @@ public class ElementNPC {
     }
 
     // gibt den AbilityScore mit Modifier zurück
-    public String abilityString(int index, NPCClass npc) {
+    public String abilityString(int index, NpcClass npc) {
         String string;
         List<Integer> listNpc = npc.getAbilityScores();
         List<Integer> listAbilityModifier = npc.getAbilityModifier();

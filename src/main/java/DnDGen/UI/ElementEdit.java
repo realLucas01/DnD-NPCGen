@@ -1,7 +1,7 @@
 package DnDGen.UI;
 
 import DnDGen.DB.DBMS;
-import DnDGen.TSWP1.NPCClass;
+import DnDGen.TSWP1.NpcClass;
 import DnDGen.TSWP1.UiHistoryEditUpdate;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,15 +23,15 @@ public class ElementEdit {
     private final DBMS dbms;
     private GridPane nameClassGrid;
     private final UiHistoryEditUpdate editUpdate = new UiHistoryEditUpdate();
-    private final NPCClass cNPC;
+    private final NpcClass cNPC;
 
-    ElementEdit(Stage window, NPCClass npc, Integer id,DBMS dbms) {
+    ElementEdit(Stage window, NpcClass npc, Integer id, DBMS dbms) {
         this.window = window;
         npcDate = new VBox();
         this.dbms = dbms;
         //this.cNPC = npc;
-        this.cNPC = new NPCClass();
-        cNPC.historyEntryToNPC(dbms.getHistoryEntry(id));
+        this.cNPC = new NpcClass();
+        cNPC.historyEntryToNpc(dbms.getHistoryEntry(id));
 
         makeEditLayout();
         setDatenNPC(cNPC);
@@ -257,7 +257,7 @@ public class ElementEdit {
             }
 
             // NPC bearbeiten
-            NPCClass updateNPC = editUpdate.updateHistoryEdit(changes,cNPC);
+            NpcClass updateNPC = editUpdate.updateHistoryEdit(changes,cNPC);
 
             // Geänderte Daten anzeigen lassen
             setDatenNPC(updateNPC);
@@ -272,7 +272,7 @@ public class ElementEdit {
      * @param npc Ist der NPC dessen Daten angezeigt werden sollen
      * @author Marie
      */
-    private void setDatenNPC(NPCClass npc) {
+    private void setDatenNPC(NpcClass npc) {
         // Name
         ((TextField) nameClassGrid.getChildren().get(14)).setText(npc.getName());
 

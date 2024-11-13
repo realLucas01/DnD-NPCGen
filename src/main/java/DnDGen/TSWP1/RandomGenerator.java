@@ -336,16 +336,11 @@ public class RandomGenerator {
 		}
 		String newRaceString = splitRaceArray.getLast();
 		List<String> newName;
-		newName = dbms.getRowPref("name", newRaceString);
 
-		firstName = newName.get(1);
-
-		while (!(gender.equals(newName.get(4)))) {
-
-			newName = dbms.getRowPref("name", newRaceString);
-			firstName = newName.get(1);
-
-		}
+        do {
+            newName = dbms.getRowPref("name", newRaceString);
+            firstName = newName.get(1);
+        } while (!(gender.equals(newName.get(4))));
 
 		newName = dbms.getRowPref("name", newRaceString);
 		secondName = newName.get(2);
@@ -405,11 +400,11 @@ public class RandomGenerator {
 
 		return dbms.getRandomRow("alignment").get(2);
 	}
-	public int getHighestSpellLevel(NPCClass chosenNPC){
+	public int getHighestSpellLevel(NpcClass chosenNpc){
 		int dbCounter = 3;
 		int highestSpellLevel = 0 ;
 		for(int i=1; i<10;i++){
-			int spellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNPC.getGenClass()).get(dbCounter)).get(chosenNPC.getLevel()-1));
+			int spellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNpc.getGenClass()).get(dbCounter)).get(chosenNpc.getLevel()-1));
 			if(spellLevel == 0){
 				return highestSpellLevel;
 			}
@@ -419,49 +414,48 @@ public class RandomGenerator {
 		return highestSpellLevel;
 	}
 
-	public NPCClass randomSpellsForClass(NPCClass chosenNPC){
-		String classSpellKnownColDB = dbms.getRow(nameDBClass, chosenNPC.getGenClass()).get(9);
-		int spellCount = 0 ;
-		int highestSpellLevel= 0 ;
-		int cantripNumber= 0;
-		int numberOfRandomSpellsPerLevel = 0;
-		int bracketIndex = chosenNPC.getGenClass().indexOf("(");
+	public NpcClass randomSpellsForClass(NpcClass chosenNpc){
+		String classSpellKnownColDB = dbms.getRow(nameDBClass, chosenNpc.getGenClass()).get(9);
+		int spellCount ;
+		int highestSpellLevel;
+		int cantripNumber;
+		int numberOfRandomSpellsPerLevel;
+		int bracketIndex = chosenNpc.getGenClass().indexOf("("); // sollte in einem Klassennamen eine Klammer stehen, um Variationen zu kennzeichnen
 		String spellClass;
 
 
 		switch (classSpellKnownColDB){
 			case "null":
-				return chosenNPC;
+				return chosenNpc;
 			case "tabelle":
-				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Spell Known").get(3)).get(chosenNPC.getLevel()-1));
-				highestSpellLevel = getHighestSpellLevel(chosenNPC);
-				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNPC.getGenClass()).get(2)).get(chosenNPC.getLevel()-1));
+				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Spell Known").get(3)).get(chosenNpc.getLevel()-1));
+				highestSpellLevel = getHighestSpellLevel(chosenNpc);
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNpc.getGenClass()).get(2)).get(chosenNpc.getLevel()-1));
 				break;
 			case "spezial":
-				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Spell Known").get(3)).get(chosenNPC.getLevel()-1));
-				highestSpellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Slot Level").get(3)).get(chosenNPC.getLevel()-1));
-				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNPC.getGenClass(),"Cantrips").get(3)).get(chosenNPC.getLevel()-1));
+				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Spell Known").get(3)).get(chosenNpc.getLevel()-1));
+				highestSpellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Slot Level").get(3)).get(chosenNpc.getLevel()-1));
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Cantrips").get(3)).get(chosenNpc.getLevel()-1));
 				break;
 			default:
-				spellCount = determineNumberOfKnownSpell(chosenNPC);
-				highestSpellLevel = getHighestSpellLevel(chosenNPC);
-				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNPC.getGenClass()).get(2)).get(chosenNPC.getLevel()-1));
+				spellCount = determineNumberOfKnownSpell(chosenNpc);
+				highestSpellLevel = getHighestSpellLevel(chosenNpc);
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNpc.getGenClass()).get(2)).get(chosenNpc.getLevel()-1));
 				break;
 		}
 		if(bracketIndex!=-1) { //wenn innerhalb der Klassen Namen eine Klammer steht, um Varianten dieser zu kennzeichen, muss sie entfernt werden, um spells zu finden
-			spellClass = chosenNPC.getGenClass().substring(0, bracketIndex);
+			spellClass = chosenNpc.getGenClass().substring(0, bracketIndex);
 		}else {
-			spellClass = chosenNPC.getGenClass();
+			spellClass = chosenNpc.getGenClass();
 		}
-
 		if (cantripNumber != 0 ){
-			chosenNPC.setSpellCantrips(determineSpellNames(determineCantrips(cantripNumber,spellClass)));
+			chosenNpc.setSpellCantrips(determineSpellNames(determineCantrips(cantripNumber,spellClass)));
 		}
 		if(spellCount != 0 ){
 			for (int currentSpellLevel=1;currentSpellLevel <= highestSpellLevel;currentSpellLevel++){
 				numberOfRandomSpellsPerLevel = rand.nextInt(spellCount)+1;
 				List<String> spellsForLevel = dbms.getMultRowMultPref(nameDBSpells, spellClass, Integer.toString(currentSpellLevel), numberOfRandomSpellsPerLevel);
-				assignSpellsToNPC(chosenNPC, currentSpellLevel, determineSpellNames(spellsForLevel));
+				assignSpellsToNpc(chosenNpc, currentSpellLevel, determineSpellNames(spellsForLevel));
 				spellCount -= numberOfRandomSpellsPerLevel;
 
 				if (spellCount == 0){
@@ -469,36 +463,36 @@ public class RandomGenerator {
 				}
 			}
 		}
-		return chosenNPC;
+		return chosenNpc;
 	}
-	public void assignSpellsToNPC(NPCClass chosenNPC, int spellLevel, String spellNames) {
+	public void assignSpellsToNpc(NpcClass chosenNpc, int spellLevel, String spellNames) {
 		switch (spellLevel) {
 			case 1:
-				chosenNPC.setFirstLevelSpell(spellNames);
+				chosenNpc.setFirstLevelSpell(spellNames);
 				break;
 			case 2:
-				chosenNPC.setSecondLevelSpell(spellNames);
+				chosenNpc.setSecondLevelSpell(spellNames);
 				break;
 			case 3:
-				chosenNPC.setThirdLevelSpell(spellNames);
+				chosenNpc.setThirdLevelSpell(spellNames);
 				break;
 			case 4:
-				chosenNPC.setFourthLevelSpell(spellNames);
+				chosenNpc.setFourthLevelSpell(spellNames);
 				break;
 			case 5:
-				chosenNPC.setFifthLevelSpell(spellNames);
+				chosenNpc.setFifthLevelSpell(spellNames);
 				break;
 			case 6:
-				chosenNPC.setSixthLevelSpell(spellNames);
+				chosenNpc.setSixthLevelSpell(spellNames);
 				break;
 			case 7:
-				chosenNPC.setSeventhLevelSpell(spellNames);
+				chosenNpc.setSeventhLevelSpell(spellNames);
 				break;
 			case 8:
-				chosenNPC.setEightLevelSpell(spellNames);
+				chosenNpc.setEightLevelSpell(spellNames);
 				break;
 			case 9:
-				chosenNPC.setNinthLevelSpell(spellNames);
+				chosenNpc.setNinthLevelSpell(spellNames);
 				break;
 			default:
 				logger.info("Zauber nicht verfügbar -> FEHLER");
@@ -508,39 +502,39 @@ public class RandomGenerator {
 	/*
 	Anzahl der möglichen Spells für die Klasse
 	 */
-	private int determineNumberOfKnownSpell(NPCClass chosenNPC) {
+	private int determineNumberOfKnownSpell(NpcClass chosenNpc) {
 
-		String colClassForSpell = dbms.getRow(nameDBClass, chosenNPC.getGenClass()).get(9);
+		String colClassForSpell = dbms.getRow(nameDBClass, chosenNpc.getGenClass()).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
 		int knownSpells;
 
 		switch (abilityModifierForSpells) {
 			case "Str":
-				spellModNumber = chosenNPC.getAbilityModifier().getFirst();
+				spellModNumber = chosenNpc.getAbilityModifier().getFirst();
 				break;
 			case "Dex":
-				spellModNumber = chosenNPC.getAbilityModifier().get(1);
+				spellModNumber = chosenNpc.getAbilityModifier().get(1);
 				break;
 			case "Con":
-				spellModNumber = chosenNPC.getAbilityModifier().get(2);
+				spellModNumber = chosenNpc.getAbilityModifier().get(2);
 				break;
 			case "Int":
-				spellModNumber = chosenNPC.getAbilityModifier().get(3);
+				spellModNumber = chosenNpc.getAbilityModifier().get(3);
 				break;
 			case "Wis":
-				spellModNumber = chosenNPC.getAbilityModifier().get(4);
+				spellModNumber = chosenNpc.getAbilityModifier().get(4);
 				break;
 			case "Cha":
-				spellModNumber = chosenNPC.getAbilityModifier().get(5);
+				spellModNumber = chosenNpc.getAbilityModifier().get(5);
 				break;
 			default:
 				break;
 		}
 		if (colClassForSpell.contains("1/2")){
-			knownSpells = (int) (spellModNumber +  chosenNPC.getLevel()*0.5);
+			knownSpells = (int) (spellModNumber +  chosenNpc.getLevel()*0.5);
 		}else {
-			knownSpells = spellModNumber + chosenNPC.getLevel();
+			knownSpells = spellModNumber + chosenNpc.getLevel();
 		}
 		return knownSpells;
 	}
@@ -561,9 +555,8 @@ public class RandomGenerator {
         return dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber);
 	}
 
-
-	public void addRaceCantripsAndSpells(NPCClass chosenNPC){
-		List<String> featureList = bigStringToDividedString(dbms.getRow("race", chosenNPC.getRace()).get(3));
+	public void addRaceCantripsAndSpells(NpcClass chosenNpc){
+		List<String> featureList = bigStringToDividedString(dbms.getRow("race", chosenNpc.getRace()).get(3));
 		List<String> featureSpellList = new ArrayList<>();
 
 		for (String features : featureList){
@@ -579,35 +572,35 @@ public class RandomGenerator {
 			String kindOfFeature = dbms.getRow(nameDBFeatures,spellFeature).get(3);
 
 			if(kindOfFeature.startsWith("cantrip:")) {
-				aufspaltungRaceCantrip(kindOfFeature, chosenNPC);
+				aufspaltungRaceCantrip(kindOfFeature, chosenNpc);
 			} else if (kindOfFeature.startsWith("spell:")) {
-				aufspaltungRaceSpell(kindOfFeature, chosenNPC);
+				aufspaltungRaceSpell(kindOfFeature, chosenNpc);
 			}
 		}
 	}
 
-	private void aufspaltungRaceCantrip(String spellFeature, NPCClass chosenNPC){
+	private void aufspaltungRaceCantrip(String spellFeature, NpcClass chosenNpc){
 		String inhalt = spellFeature.substring(8);
 		if(inhalt.contains("spell")) {//"cantrip"
 
 			String[] cantrip = inhalt.split(" spell");
 
-			chosenNPC.addSpellCantrip(cantrip[0].trim());
-			aufspaltungRaceSpell("spell:" + cantrip[1].trim(), chosenNPC);
+			chosenNpc.addSpellCantrip(cantrip[0].trim());
+			aufspaltungRaceSpell("spell:" + cantrip[1].trim(), chosenNpc);
 		}else{
 			String[] featureSubStrings = spellFeature.split(":");
 				if(featureSubStrings.length==3){//cantrip: 1: Wizard
 					int numberCantrips = Integer.parseInt(featureSubStrings[1].trim());
 					String spellClass = featureSubStrings[2].trim();
 					//Cantrips zufällig auswählen und zu der Klasse und hinzufügen
-					chosenNPC.addSpellCantrip(determineSpellNames(determineCantrips(numberCantrips,spellClass)));
+					chosenNpc.addSpellCantrip(determineSpellNames(determineCantrips(numberCantrips,spellClass)));
 				}else{
-					chosenNPC.addSpellCantrip(featureSubStrings[1].trim()); // ganz normaler Cantrip
+					chosenNpc.addSpellCantrip(featureSubStrings[1].trim()); // ganz normaler Cantrip
 				}
 		}
 	}
 
-	private void aufspaltungRaceSpell(String spellFeature, NPCClass chosenNPC) {
+	private void aufspaltungRaceSpell(String spellFeature, NpcClass chosenNpc) {
 		String[] featureSpellAufgeteilt = spellFeature.substring(7).split(", ");
 
 		int spellLevel;
@@ -618,7 +611,7 @@ public class RandomGenerator {
 				spell = spell.replace("]","");
 
 				int levelFromSpell = Integer.parseInt(spell.substring(0,2).trim());
-					if (chosenNPC.getLevel() >= levelFromSpell){
+					if (chosenNpc.getLevel() >= levelFromSpell){
 						spellName = spell.substring(2).trim();
 					}
 			} else {
@@ -628,7 +621,7 @@ public class RandomGenerator {
 				return;
 			}
 			spellLevel = Integer.parseInt(dbms.getRow("spells", spellName.trim()).get(2));
-			assignSpellsToNPC(chosenNPC,spellLevel,spellName);
+			assignSpellsToNpc(chosenNpc,spellLevel,spellName);
 		}
 	}
 

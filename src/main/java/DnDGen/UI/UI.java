@@ -1,7 +1,7 @@
 package DnDGen.UI;
 
 
-import DnDGen.TSWP1.NPCClass;
+import DnDGen.TSWP1.NpcClass;
 import DnDGen.TSWP1.RandomGenerator;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +16,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.ColumnConstraints;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
-import DnDGen.TSWP1.RandomNPC;
+import DnDGen.TSWP1.RandomNpc;
 import DnDGen.TSWP1.RandomGenerator;
 
 
@@ -48,7 +48,7 @@ public class UI extends Application {
     String name;
     VBox descriptionVBox;
     GridPane layoutGenerateGrid;
-    RandomNPC rNPC;
+    RandomNpc rNPC;
     ToggleGroup groupSex;
     HBox gridNpc;
     ScrollPane npcScrollPane;
@@ -76,7 +76,7 @@ public class UI extends Application {
     	window = primaryStage;
         window.setTitle("DnD NPC Generator");
         window.getIcons().add(new Image("ui-image/window_Icon_selfish.png"));
-        rNPC = new RandomNPC();
+        rNPC = new RandomNpc();
 
         // erzeugt history Seite
         ElementHistory elementHistory = new ElementHistory(window, dbms);
@@ -332,7 +332,7 @@ public class UI extends Application {
             String ability = zufall((ComboBox<?>) layoutGenerateGrid.getChildren().get(11));
             String sex = zufallString(groupSex.getSelectedToggle().getUserData().toString());
 
-            NPCClass npc = rNPC.createRandomNPC(name,race,klasse,job,level,ability,sex);
+            NpcClass npc = rNPC.createRandomNPC(name,race,klasse,job,level,ability,sex);
 
             if(gridNpc.getChildren().size() > 2) {
                 gridNpc.getChildren().remove(2);

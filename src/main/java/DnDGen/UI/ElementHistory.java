@@ -2,7 +2,7 @@ package DnDGen.UI;
 
 import DnDGen.DB.DBMS;
 import DnDGen.DB.HistoryModel;
-import DnDGen.TSWP1.NPCClass;
+import DnDGen.TSWP1.NpcClass;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -70,8 +70,8 @@ public class ElementHistory {
      * @return gibt die Daten als VBox (in Kachel form) zurück
      * @author Marie
      */
-    private VBox makeGridNPC(NPCClass npcE, Integer id){
-        final NPCClass npc = npcE;
+    private VBox makeGridNPC(NpcClass npcE, Integer id){
+        final NpcClass npc = npcE;
         VBox npcVBox = new VBox();
         GridPane npcGrid = new GridPane();
         npcGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -165,7 +165,7 @@ public class ElementHistory {
      * @param id die Id des NPC
      * @author Marie
      */
-    private void handleNpcClick(MouseEvent event, NPCClass npc, Integer id) {
+    private void handleNpcClick(MouseEvent event, NpcClass npc, Integer id) {
         event.consume();
         ElementEdit elementEdit = new ElementEdit(window, npc, id,dbms);
        // System.out.println(npc.getName());
@@ -183,9 +183,9 @@ public class ElementHistory {
         int pos = 0, row = 0;
 
         // fügt für jeden NPC eine VBox hinzu und ordnet sie an
-        NPCClass npc = new NPCClass();
+        NpcClass npc = new NpcClass();
         for(HistoryModel npcList :  this.dbms.getHistory()) {
-            npc.historyEntryToNPC(npcList);
+            npc.historyEntryToNpc(npcList);
             VBox grid = makeGridNPC(npc,npcList.getHistoryId() );
             GridPane.setConstraints(grid, pos,row);
             pos++;

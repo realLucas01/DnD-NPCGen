@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class EditNPC {
+public class EditNpc {
     /* @author Lucas
      *
      * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
@@ -20,7 +20,7 @@ public class EditNPC {
 
     Random rndNumb = new SecureRandom();
     RandomGenerator randGen = new RandomGenerator();
-    RandomNPC randNPC = new RandomNPC();
+    RandomNpc randNpc = new RandomNpc();
 
 
     ArrayList<String> weaponList;
@@ -32,7 +32,7 @@ public class EditNPC {
     ArrayList<Integer> abilityModifier;
     String armor;
     int armorClass;
-    List<String> generatedNPCFinished = new ArrayList<>();
+    List<String> generatedNpcFinished = new ArrayList<>();
     String race;
     String job;
     String genClass;
@@ -92,7 +92,7 @@ public class EditNPC {
  */
 
 
-    public List<Object> applyEdit(List<Object> newNPC, List<Object> oldNPC) {
+    public List<Object> applyEdit(List<Object> newNpc, List<Object> oldNpc) {
         /*
         Legende:
             ST: Saving Throws,
@@ -157,15 +157,15 @@ public class EditNPC {
 
 
          */
-        ArrayList<Object> changedNPC = new ArrayList<>(newNPC);
-        List<String> changeList = findChanges(newNPC, oldNPC);
+        ArrayList<Object> changedNpc = new ArrayList<>(newNpc);
+        List<String> changeList = findChanges(newNpc, oldNpc);
         if (changeList == null) {
             return new ArrayList<>();
         }
-        defineVariables(oldNPC);
+        defineVariables(oldNpc);
 
-        List<String> manuelleChangedSkills = manuellChanges(newNPC, oldNPC, 12);
-        List<String> manuelleChangedLanguage = manuellChanges(newNPC, oldNPC, 19);
+        List<String> manuelleChangedSkills = manuellChanges(newNpc, oldNpc, 12);
+        List<String> manuelleChangedLanguage = manuellChanges(newNpc, oldNpc, 19);
 
         List<String> editedSkills = new ArrayList<>();
         List<String> editedLanguages = new ArrayList<>();
@@ -177,26 +177,26 @@ public class EditNPC {
             switch (changes) {
                 case "class":
                     //wird in UIHistoryEditUpdate übernommen
-                     genClass = (String) newNPC.get(4);
+                     genClass = (String) newNpc.get(4);
 
 
                     break;
                 case "race":
                     //wird in UIHIstoryEditUpdate übernommen
-                    race = (String) newNPC.get(5);
+                    race = (String) newNpc.get(5);
                     break;
                 case "level":
                     // HP, Action, AS(HP,ST,Skills, Spells) , Spells, PB(-> Skills, SavingThrows)
 
-                    lookAtAbilityScore(newNPC, oldNPC);
-                    abilityModifier = (ArrayList<Integer>) randNPC.determineAbilityModifier( abilityScores);
+                    lookAtAbilityScore(newNpc, oldNpc);
+                    abilityModifier = (ArrayList<Integer>) randNpc.determineAbilityModifier( abilityScores);
 
-                    healthPoints = randNPC.calculateHP(genClass, level, abilityModifier);
-                    actionList = (ArrayList<String>) randNPC.determineFeatures(race,"action");
-                    bonusActionList = (ArrayList<String>) randNPC.determineFeatures(race,"bonus action");
-                    profBonus = randNPC.determineProfBonus(level);
-                    skillList = (ArrayList<String>) randNPC.addAbilityScoreToSkillList(abilityModifier,removePlusNumberInAStringList(skillList),profBonus);
-                    savingThrows = (ArrayList<String>) randNPC.determineSavingThrows(genClass,abilityModifier,profBonus);
+                    healthPoints = randNpc.calculateHP(genClass, level, abilityModifier);
+                    actionList = (ArrayList<String>) randNpc.determineFeatures(race,"action");
+                    bonusActionList = (ArrayList<String>) randNpc.determineFeatures(race,"bonus action");
+                    profBonus = randNpc.determineProfBonus(level);
+                    skillList = (ArrayList<String>) randNpc.addAbilityScoreToSkillList(abilityModifier,removePlusNumberInAStringList(skillList),profBonus);
+                    savingThrows = (ArrayList<String>) randNpc.determineSavingThrows(genClass,abilityModifier,profBonus);
                     spellAbility.set(0,String.valueOf(randGen.spellAttackMod(abilityModifier, profBonus, genClass)));
                     spellAbility.set(1,String.valueOf(randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass))));
 
@@ -204,7 +204,7 @@ public class EditNPC {
                     break;
                 case "job":
                     //Skills, Language
-                    String newJob = (String) newNPC.get(4);
+                    String newJob = (String) newNpc.get(4);
                     ArrayList<String> jobSkills = (ArrayList<String>) randGen.bigStringToDividedString(dbms.getRow("job", job).get(2));
                     skillList.remove(jobSkills);
                     skillList.addAll(randGen.bigStringToDividedString(dbms.getRow("job",newJob).get(2)));
@@ -218,86 +218,86 @@ public class EditNPC {
                     break;
                 case "skills":
                     //neue Skills berechnen
-                    skillList = (ArrayList<String>) randNPC.addAbilityScoreToSkillList(abilityModifier, skillList, profBonus);
+                    skillList = (ArrayList<String>) randNpc.addAbilityScoreToSkillList(abilityModifier, skillList, profBonus);
                     break;
                 case "deity":
-                    deity = (String) newNPC.get(18);
+                    deity = (String) newNpc.get(18);
                     break;
 
                 case "name":
-                    name = (String) newNPC.get(2);
+                    name = (String) newNpc.get(2);
                     break;
 
                 case "armorClass":
-                    armorClass = (int) newNPC.get(7);
+                    armorClass = (int) newNpc.get(7);
                     break;
 
                 case "healthPoints":
-                    healthPoints = (int) newNPC.get(8);
+                    healthPoints = (int) newNpc.get(8);
                     break;
 
                 case "movementSpeedList":
-                    movementSpeedList = (ArrayList<String>) newNPC.get(9);
+                    movementSpeedList = (ArrayList<String>) newNpc.get(9);
                     break;
 
                 case "languages":
-                    languages = (ArrayList<String>) newNPC.get(10);
+                    languages = (ArrayList<String>) newNpc.get(10);
                     break;
 
                 case "savingThrows":
-                    savingThrows = (ArrayList<String>) newNPC.get(12);
+                    savingThrows = (ArrayList<String>) newNpc.get(12);
                     break;
 
                 case "weaponList":
-                    weaponList = (ArrayList<String>) newNPC.get(14);
+                    weaponList = (ArrayList<String>) newNpc.get(14);
                     break;
 
                 case "senses":
-                    senses = (String) newNPC.get(16);
+                    senses = (String) newNpc.get(16);
                     break;
 
                 case "spellList":
-                    spellList = (ArrayList<String>) newNPC.get(17);
+                    spellList = (ArrayList<String>) newNpc.get(17);
                     break;
 
                 case "spellAbility":
-                    spellAbility = (ArrayList<String>) newNPC.get(18);
+                    spellAbility = (ArrayList<String>) newNpc.get(18);
                     break;
 
                 case "description":
-                    description = (ArrayList<String>) newNPC.get(19);
+                    description = (ArrayList<String>) newNpc.get(19);
                     break;
 
                 case "actionList":
-                    actionList = (ArrayList<String>) newNPC.get(20);
+                    actionList = (ArrayList<String>) newNpc.get(20);
                     break;
 
                 case "bonusActionList":
-                    bonusActionList = (ArrayList<String>) newNPC.get(21);
+                    bonusActionList = (ArrayList<String>) newNpc.get(21);
                     break;
 
                 case "profBonus":
-                    profBonus = (int) newNPC.get(22);
+                    profBonus = (int) newNpc.get(22);
                     break;
 
                 case "abilityModifier":
-                    abilityModifier = (ArrayList<Integer>) newNPC.get(23);
+                    abilityModifier = (ArrayList<Integer>) newNpc.get(23);
                     break;
 
                 case "gender":
-                    gender = (String) newNPC.get(24);
+                    gender = (String) newNpc.get(24);
                     break;
 
                 case "age":
-                    age = (int) newNPC.get(25);
+                    age = (int) newNpc.get(25);
                     break;
 
                 case "alignment":
-                    alignment = (String) newNPC.get(26);
+                    alignment = (String) newNpc.get(26);
                     break;
 
                 case "bonusTextList":
-                    bonusTextList = (ArrayList<String>) newNPC.get(28);
+                    bonusTextList = (ArrayList<String>) newNpc.get(28);
                     break;
 
                 default:
@@ -306,66 +306,66 @@ public class EditNPC {
         }
 
 
-        return changedNPC;
+        return changedNpc;
     }
 
     /*
-        Diese Funktion vergleicht den alten und neuen NPC und gibt eine Liste mit den changes zurück
+        Diese Funktion vergleicht den alten und neuen Npc und gibt eine Liste mit den changes zurück
     */
-    public List<String> findChanges(List<Object> newNPC, List<Object> oldNPC) {
-        ArrayList<String> formatNPCWithNamesForIndex = new ArrayList<>();
+    public List<String> findChanges(List<Object> newNpc, List<Object> oldNpc) {
+        ArrayList<String> formatNpcWithNamesForIndex = new ArrayList<>();
         ArrayList<String> changeList = new ArrayList<>();
-        formatNPCWithNamesForIndex.add("name");
-        formatNPCWithNamesForIndex.add("level");
-        formatNPCWithNamesForIndex.add("class");
-        formatNPCWithNamesForIndex.add("race");
-        formatNPCWithNamesForIndex.add("job");
-        formatNPCWithNamesForIndex.add("armorClass");
-        formatNPCWithNamesForIndex.add("healthPoints");
-        formatNPCWithNamesForIndex.add("movementSpeedList");
-        formatNPCWithNamesForIndex.add("languages");
-        formatNPCWithNamesForIndex.add("abilityScores");
-        formatNPCWithNamesForIndex.add("savingThrows");
-        formatNPCWithNamesForIndex.add("armor");
-        formatNPCWithNamesForIndex.add("weaponList");
-        formatNPCWithNamesForIndex.add("skillList");
-        formatNPCWithNamesForIndex.add("senses");
-        formatNPCWithNamesForIndex.add("spellList");
-        formatNPCWithNamesForIndex.add("spellAbility");
-        formatNPCWithNamesForIndex.add("description");
-        formatNPCWithNamesForIndex.add("actionList");
-        formatNPCWithNamesForIndex.add("bonusActionList");
-        formatNPCWithNamesForIndex.add("profBonus");
-        formatNPCWithNamesForIndex.add("abilityModifier");
-        formatNPCWithNamesForIndex.add("gender");
-        formatNPCWithNamesForIndex.add("age");
-        formatNPCWithNamesForIndex.add("alignment");
-        formatNPCWithNamesForIndex.add("deity");
-        formatNPCWithNamesForIndex.add("bonusTextList");
+        formatNpcWithNamesForIndex.add("name");
+        formatNpcWithNamesForIndex.add("level");
+        formatNpcWithNamesForIndex.add("class");
+        formatNpcWithNamesForIndex.add("race");
+        formatNpcWithNamesForIndex.add("job");
+        formatNpcWithNamesForIndex.add("armorClass");
+        formatNpcWithNamesForIndex.add("healthPoints");
+        formatNpcWithNamesForIndex.add("movementSpeedList");
+        formatNpcWithNamesForIndex.add("languages");
+        formatNpcWithNamesForIndex.add("abilityScores");
+        formatNpcWithNamesForIndex.add("savingThrows");
+        formatNpcWithNamesForIndex.add("armor");
+        formatNpcWithNamesForIndex.add("weaponList");
+        formatNpcWithNamesForIndex.add("skillList");
+        formatNpcWithNamesForIndex.add("senses");
+        formatNpcWithNamesForIndex.add("spellList");
+        formatNpcWithNamesForIndex.add("spellAbility");
+        formatNpcWithNamesForIndex.add("description");
+        formatNpcWithNamesForIndex.add("actionList");
+        formatNpcWithNamesForIndex.add("bonusActionList");
+        formatNpcWithNamesForIndex.add("profBonus");
+        formatNpcWithNamesForIndex.add("abilityModifier");
+        formatNpcWithNamesForIndex.add("gender");
+        formatNpcWithNamesForIndex.add("age");
+        formatNpcWithNamesForIndex.add("alignment");
+        formatNpcWithNamesForIndex.add("deity");
+        formatNpcWithNamesForIndex.add("bonusTextList");
 
         //finde die Changes
-        for (Object s : newNPC) {
-            int indexOfS = newNPC.indexOf(s);
-            if (!newNPC.get(indexOfS).equals(oldNPC.get(indexOfS))) {
-                changeList.add(formatNPCWithNamesForIndex.get(indexOfS));
+        for (Object s : newNpc) {
+            int indexOfS = newNpc.indexOf(s);
+            if (!newNpc.get(indexOfS).equals(oldNpc.get(indexOfS))) {
+                changeList.add(formatNpcWithNamesForIndex.get(indexOfS));
             }
         }
         return changeList;
     }
 
-    private List<Object> editJob(List<Object> oldNPc, List<String> manuelleChangedSkills, List<String> manuelleChangedLanguage) {
+    private List<Object> editJob(List<Object> oldNpc, List<String> manuelleChangedSkills, List<String> manuelleChangedLanguage) {
         ArrayList<Object> editedJobList = new ArrayList<>();
 
-        languages.addAll(randNPC.determineLanguages(race, job));
+        languages.addAll(randNpc.determineLanguages(race, job));
 
 
         return null;
     }
 
-    private List<String> manuellChanges(List<Object> newNPC, List<Object> oldNPC, int index) {
+    private List<String> manuellChanges(List<Object> newNpc, List<Object> oldNpc, int index) {
         ArrayList<String> changedSkills = new ArrayList<>();
-        ArrayList<String> oldStats = (ArrayList<String>) oldNPC.get(index);
-        ArrayList<String> newStats = (ArrayList<String>) newNPC.get(index);
+        ArrayList<String> oldStats = (ArrayList<String>) oldNpc.get(index);
+        ArrayList<String> newStats = (ArrayList<String>) newNpc.get(index);
 
         for (String skill : newStats) {
             if (!oldStats.contains(skill)) {
@@ -421,16 +421,16 @@ public class EditNPC {
     }
 
 
-    private void lookAtAbilityScore(List<Object> newNpc, List<Object> oldNPC) {
+    private void lookAtAbilityScore(List<Object> newNpc, List<Object> oldNpc) {
         int newLevel = (int) newNpc.get(1);
-        int oldLevel = (int) oldNPC.get(1);
+        int oldLevel = (int) oldNpc.get(1);
         int levelDiff = 0;
         int deproveCount = 0;
         List<Integer> sortedAS = abilityScores;
 
         if (oldLevel < newLevel) {
             levelDiff = newLevel - oldLevel;
-            abilityScores = randNPC.addAbilityScoreImprovement(levelDiff - 4, abilityScores);
+            abilityScores = randNpc.addAbilityScoreImprovement(levelDiff - 4, abilityScores);
             return;
         } else if (oldLevel > newLevel) {
             levelDiff = oldLevel - newLevel;
@@ -473,8 +473,8 @@ public class EditNPC {
     }
 
 
-    private void newRaceAbilityScore(ArrayList<Object> newNPC, ArrayList<Object> oldNPC ) {
-        String oldRace = (String) oldNPC.get(3);
+    private void newRaceAbilityScore(ArrayList<Object> newNpc, ArrayList<Object> oldNpc ) {
+        String oldRace = (String) oldNpc.get(3);
         ArrayList<String> oldRaceAbilityModifier = (ArrayList<String>) randGen.bigStringToDividedString(dbms.getRow("race", oldRace ).get(2));
         int raceModNumber;
         for (String s: oldRaceAbilityModifier) {
@@ -503,36 +503,36 @@ public class EditNPC {
                     break;
             }
         }
-        abilityScores = randNPC.addRaceModifierToAbilityScore(race, (ArrayList<Integer>) abilityScores);
+        abilityScores = randNpc.addRaceModifierToAbilityScore(race, (ArrayList<Integer>) abilityScores);
         }
 
-    private void defineVariables(List<Object> oldNPC){
-        race = (String) oldNPC.get(0);
-        level = (int) oldNPC.get(1);
-        job = (String) oldNPC.get(2);
-        genClass = (String) oldNPC.get(3);
-        abilityScores = (List<Integer>) oldNPC.get(4);
-        abilityModifier = (ArrayList<Integer>) oldNPC.get(5);
-        healthPoints = (int) oldNPC.get(6);
-        armor = (String) oldNPC.get(7);
-        armorClass = (int) oldNPC.get(8);
-        weaponList = (ArrayList<String>) oldNPC.get(9);
-        movementSpeedList = (ArrayList<String>) oldNPC.get(10);
-        savingThrows = (ArrayList<String>) oldNPC.get(11);
-        skillList = (ArrayList<String>) oldNPC.get(12);
-        gender = (String) oldNPC.get(13);
-        age = (int) oldNPC.get(14);
-        name = (String) oldNPC.get(15);
-        alignment = (String) oldNPC.get(16);
-        description = (ArrayList<String>) oldNPC.get(17);
-        deity = (String) oldNPC.get(18);
-        languages = (ArrayList<String>) oldNPC.get(19);
-        senses = (String) oldNPC.get(20);
-        spellList = (ArrayList<String>) oldNPC.get(21);
-        actionList = (ArrayList<String>) oldNPC.get(22);
-        bonusActionList = (ArrayList<String>) oldNPC.get(23);
-        bonusTextList = (ArrayList<String>) oldNPC.get(24);
-        spellAbility = (ArrayList<String>) oldNPC.get(25);
+    private void defineVariables(List<Object> oldNpc){
+        race = (String) oldNpc.get(0);
+        level = (int) oldNpc.get(1);
+        job = (String) oldNpc.get(2);
+        genClass = (String) oldNpc.get(3);
+        abilityScores = (List<Integer>) oldNpc.get(4);
+        abilityModifier = (ArrayList<Integer>) oldNpc.get(5);
+        healthPoints = (int) oldNpc.get(6);
+        armor = (String) oldNpc.get(7);
+        armorClass = (int) oldNpc.get(8);
+        weaponList = (ArrayList<String>) oldNpc.get(9);
+        movementSpeedList = (ArrayList<String>) oldNpc.get(10);
+        savingThrows = (ArrayList<String>) oldNpc.get(11);
+        skillList = (ArrayList<String>) oldNpc.get(12);
+        gender = (String) oldNpc.get(13);
+        age = (int) oldNpc.get(14);
+        name = (String) oldNpc.get(15);
+        alignment = (String) oldNpc.get(16);
+        description = (ArrayList<String>) oldNpc.get(17);
+        deity = (String) oldNpc.get(18);
+        languages = (ArrayList<String>) oldNpc.get(19);
+        senses = (String) oldNpc.get(20);
+        spellList = (ArrayList<String>) oldNpc.get(21);
+        actionList = (ArrayList<String>) oldNpc.get(22);
+        bonusActionList = (ArrayList<String>) oldNpc.get(23);
+        bonusTextList = (ArrayList<String>) oldNpc.get(24);
+        spellAbility = (ArrayList<String>) oldNpc.get(25);
     }
 
     private boolean isThisManuelleChanged(ArrayList<String> changedList, String changedParameter ){

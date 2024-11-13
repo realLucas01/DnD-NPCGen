@@ -5,11 +5,12 @@ import DnDGen.DB.HistoryModel;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
 
-public class NPCClass {
+public class NpcClass {
     /* @author Lucas
      *
      * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
@@ -18,8 +19,7 @@ public class NPCClass {
     ApplicationContext appCtx = DBMS.getApplicationContext();
     DBMS dbms = appCtx.getBean(DBMS.class);
     
-    RandomGenerator randGen = new RandomGenerator();
-    static Logger logger = Logger.getLogger(NPCClass.class.getName());
+    static Logger logger = Logger.getLogger(NpcClass.class.getName());
 
     // Attributes
     private String name;
@@ -291,39 +291,39 @@ public class NPCClass {
     }
 
     // NPC zu List und vis versa
-    public List<Object> convertNPCToList(){
-        List<Object> listOfTheNPC = new ArrayList<>();
-        listOfTheNPC.add(getRace());
-        listOfTheNPC.add(getLevel());
-        listOfTheNPC.add(getJob());
-        listOfTheNPC.add(getGenClass());
-        listOfTheNPC.add(getAbilityScores());
-        listOfTheNPC.add(getAbilityModifier());
-        listOfTheNPC.add(getHealthPoints());
-        listOfTheNPC.add(getArmor());
-        listOfTheNPC.add(getArmorClass());
-        listOfTheNPC.add(getWeaponList());
-        listOfTheNPC.add(getMovementSpeedList());
-        listOfTheNPC.add(getSavingThrows());
-        listOfTheNPC.add(getSkillList());
-        listOfTheNPC.add(getGender());
-        listOfTheNPC.add(getAge());
-        listOfTheNPC.add(getName());
-        listOfTheNPC.add(getAlignment());
-        listOfTheNPC.add(getDescription());
-        listOfTheNPC.add(getDeity());
-        listOfTheNPC.add(getLanguages());
-        listOfTheNPC.add(getSenses());
-        listOfTheNPC.add(getSpellList());
-        listOfTheNPC.add(getActionList());
-        listOfTheNPC.add(getBonusActionList());
-        listOfTheNPC.add(getBonusTextList());
-        listOfTheNPC.add(getSpellAbility());
+    public List<Object> convertNpcToList(){
+        List<Object> listOfTheNpc = new ArrayList<>();
+        listOfTheNpc.add(getRace());
+        listOfTheNpc.add(getLevel());
+        listOfTheNpc.add(getJob());
+        listOfTheNpc.add(getGenClass());
+        listOfTheNpc.add(getAbilityScores());
+        listOfTheNpc.add(getAbilityModifier());
+        listOfTheNpc.add(getHealthPoints());
+        listOfTheNpc.add(getArmor());
+        listOfTheNpc.add(getArmorClass());
+        listOfTheNpc.add(getWeaponList());
+        listOfTheNpc.add(getMovementSpeedList());
+        listOfTheNpc.add(getSavingThrows());
+        listOfTheNpc.add(getSkillList());
+        listOfTheNpc.add(getGender());
+        listOfTheNpc.add(getAge());
+        listOfTheNpc.add(getName());
+        listOfTheNpc.add(getAlignment());
+        listOfTheNpc.add(getDescription());
+        listOfTheNpc.add(getDeity());
+        listOfTheNpc.add(getLanguages());
+        listOfTheNpc.add(getSenses());
+        listOfTheNpc.add(getSpellList());
+        listOfTheNpc.add(getActionList());
+        listOfTheNpc.add(getBonusActionList());
+        listOfTheNpc.add(getBonusTextList());
+        listOfTheNpc.add(getSpellAbility());
 
-        return listOfTheNPC;
+        return listOfTheNpc;
     }
 
-    public void historyEntryToNPC(HistoryModel entry){
+    public void historyEntryToNpc(HistoryModel entry){
         setRace(entry.getHistoryRace());
         setGenClass(entry.getHistoryClass());
         setAlignment(entry.getHistoryAlignment());
@@ -510,43 +510,57 @@ public class NPCClass {
     public void removeNinthLevelSpell(String spells){
         this.ninthLevelSpell = this.ninthLevelSpell.replace(spells, "");
     }
-    public void printNPC(){
-        logger.info( "name: " + name);
-        logger.info( "level: " + level);
-        logger.info(  "class: " + genClass);
-        logger.info(  "race: " + race);
-        logger.info(  "job: " +job);
-        logger.info( "AC: " + armorClass);
-        logger.info( "HP: " +healthPoints);
-        logger.info( "Movement: " +  movementSpeedList);
-        logger.info( "languages: " + languages);
-        logger.info( "AbilityScore: " + abilityScores);
-        logger.info( "SavingThrows: " + savingThrows);
-        logger.info(  "Armor: " +armor);
-        logger.info("weaponList: " + weaponList);
-        logger.info( "Skills: " +  skillList);
-        logger.info(  "senses: " + senses);
-        logger.info( "Spelllist: " + spellList);
-        logger.info( "SpellAbility: " + spellAbility);
-        logger.info( "Description: " +  description);
-        logger.info( "ActionList: "+ actionList);
-        logger.info( "bonusActionList: " + bonusActionList);
-        logger.info( "ProfBonus: " +  profBonus);
-        logger.info( "AbilityModifier: " + abilityModifier);
-        logger.info(  "Gender: " + gender);
-        logger.info( "Age: " +  age);
-        logger.info(  "Alignment: " + alignment);
-        logger.info(  "Deity: " +deity);
-        logger.info( "BonusTextList: " +  bonusTextList);
-        logger.info(  "Cantrips: " +cantrips);
-        logger.info(  "firstLevelSpell: " + firstLevelSpell);
-        logger.info(  "secondLevelSpell: " + secondLevelSpell);
-        logger.info(  "thirdLevelSpell: " + thirdLevelSpell);
-        logger.info(  "fourthLevelSpell: " +fourthLevelSpell);
-        logger.info(  "fifthLevelSpell: " +fifthLevelSpell);
-        logger.info(  "sixthLevelSpell: " + sixthLevelSpell);
-        logger.info(  "seventhLevelSpell: " + seventhLevelSpell);
-        logger.info(  "eightLevelSpell: " +eightLevelSpell);
-        logger.info(  "ninthLevelSpell: "+ ninthLevelSpell);
+
+    /**
+     * Funktion wird verwendet um für Testzwecke den NPC vollständig zu printen
+     */
+    public void printNpc(){
+        for (String s : Arrays.asList("name: " + name, "level: " + level, "class: " + genClass, "race: " + race, "job: " + job, "AC: " + armorClass,
+                "HP: " + healthPoints, "Movement: " + movementSpeedList, "languages: " + languages, "AbilityScore: " + abilityScores, "SavingThrows: "
+                        + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "Spelllist: " +
+                        spellList, "SpellAbility: " + spellAbility, "Description: " + description, "ActionList: " + actionList, "bonusActionList: " +
+                        bonusActionList, "ProfBonus: " + profBonus, "AbilityModifier: " + abilityModifier, "Gender: " + gender, "Age: " + age, "Alignment: "
+                        + alignment, "Deity: " + deity, "BonusTextList: " + bonusTextList, "Cantrips: " + cantrips, "firstLevelSpell: " + firstLevelSpell,
+                        "secondLevelSpell: " + secondLevelSpell, "thirdLevelSpell: " + thirdLevelSpell, "fourthLevelSpell: " + fourthLevelSpell, "fifthLevelSpell: "
+                        + fifthLevelSpell, "sixthLevelSpell: " + sixthLevelSpell, "seventhLevelSpell: " + seventhLevelSpell, "eightLevelSpell: " + eightLevelSpell,
+                        "ninthLevelSpell: " + ninthLevelSpell)) {
+            logger.info(s);
+        }
+    }
+
+    public void saveNpcInHistory() {
+        ArrayList<Object> history = new ArrayList<>();
+
+        history.add(name);
+        history.add(level);
+        history.add(genClass);
+        history.add(race);
+        history.add(job);
+        history.add(armorClass);
+        history.add(healthPoints);
+        history.add(movementSpeedList);
+        history.add(languages);
+        history.add(abilityScores);
+        history.add(savingThrows);
+        history.add(armor);
+        history.add(weaponList);
+        history.add(skillList);
+        history.add(senses);
+        history.add(spellList);
+        history.add(spellAbility);
+        history.add(description);
+        history.add(actionList);
+        history.add(bonusActionList);
+        history.add(profBonus);
+
+        history.add(abilityModifier);
+        history.add(gender);
+        history.add(age);
+        history.add(alignment);
+        history.add(deity);
+        history.add(bonusTextList);
+
+        dbms.saveEntry(history);
+
     }
 }
