@@ -267,7 +267,7 @@ public class RandomNpc {
         spellAbility.add(String.valueOf(spellAttack));
         spellAbility.add(String.valueOf(spellSave)) ;
         randNpc.setSpellAbility(spellAbility);
-        /*voererst ausser betrieb genommen, noch fraglich ob sie wieder in betrieb genommen wird
+        /*vorerst ausser betrieb genommen, noch fraglich ob sie wieder in betrieb genommen wird
         if(race.equals("Dragonborn")){
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
         randNpc.setRace(race);
@@ -347,38 +347,23 @@ public class RandomNpc {
             if((!Objects.equals(s, "null")) && (!s.equals("Any"))) {
                 s= s.replaceAll("\\s+","");
                 dbAbilityScore = dbms.getRow("skills", s).get(2);
-                switch (s){
-                    case "SleightofHand":
-                        s= "Sleight of Hand";
-                        break;
-                    case "AnimalHandling":
-                        s="Animal Handling";
-                        break;
-                    default:
-                        break;
+                switch (s) {
+                    case "SleightofHand" -> s = "Sleight of Hand";
+                    case "AnimalHandling" -> s = "Animal Handling";
+                    default -> {
+                        //hi
+                    }
                 }
-
                 switch (dbAbilityScore) {
-                    case "Str":
-                        skillListWithNumbers.add(s + " +" + (abilityModifier.getFirst() + profBonus));
-                        break;
-                    case "Dex":
-                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(1)+ profBonus));
-                        break;
-                    case "Con":
-                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(2)+ profBonus));
-                        break;
-                    case "Int":
-                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(3)+ profBonus));
-                        break;
-                    case "Wis":
-                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(4)+ profBonus));
-                        break;
-                    case "Cha":
-                        skillListWithNumbers.add(s + " +" + (abilityModifier.get(5)+ profBonus));
-                        break;
-                    default:
-                        break;
+                    case "Str" -> skillListWithNumbers.add(s + " +" + (abilityModifier.getFirst() + profBonus));
+                    case "Dex" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(1) + profBonus));
+                    case "Con" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(2) + profBonus));
+                    case "Int" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(3) + profBonus));
+                    case "Wis" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(4) + profBonus));
+                    case "Cha" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(5) + profBonus));
+                    default -> {
+                            //hi
+                        }
                 }
             }
         }
@@ -456,17 +441,14 @@ public class RandomNpc {
         List<String> movementSpeedList = new ArrayList<>();
         for (String s : movementSpeed) {
             switch (s.substring(s.length() - 1)) {
-                case "w":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " walking Speed");
-                    break;
-                case "f":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " flying Speed");
-                    break;
-                case "b":
-                    movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " burrowing Speed");
-                    break;
-                default:
-                    break;
+                case "w" ->
+                        movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " walking Speed");
+                case "f" ->
+                        movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " flying Speed");
+                case "b" ->
+                        movementSpeedList.add(movementSpeed.get(movementSpeed.indexOf(s)).substring(0, 2) + " ft" + " burrowing Speed");
+                default -> { //hi
+                }
             }
         }
         return movementSpeedList;
@@ -481,27 +463,13 @@ public class RandomNpc {
             for (String s : savingThrowList) {
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 switch (s) {
-                    case "Str":
-                        savingThrows.add("Str " + "+" +(abilityModifier.getFirst() + profBonus));
-                        break;
-                    case "Dex":
-                        savingThrows.add("Dex " + "+" +(abilityModifier.get(1) + profBonus));
-                        break;
-                    case "Con":
-                        savingThrows.add("Con " + "+" +(abilityModifier.get(2) + profBonus));
-                        break;
-                    case "Int":
-                        savingThrows.add("Int " + "+" +(abilityModifier.get(3) + profBonus));
-                        break;
-                    case "Wis":
-                        savingThrows.add("Wis " + "+" +(abilityModifier.get(4) + profBonus));
-                        break;
-                    case "Cha":
-                        savingThrows.add("Cha " + "+" +(abilityModifier.get(5) + profBonus));
-                        break;
-                    default:
-                        savingThrows.add("none");
-                        break;
+                    case "Str" -> savingThrows.add("Str " + "+" + (abilityModifier.getFirst() + profBonus));
+                    case "Dex" -> savingThrows.add("Dex " + "+" + (abilityModifier.get(1) + profBonus));
+                    case "Con" -> savingThrows.add("Con " + "+" + (abilityModifier.get(2) + profBonus));
+                    case "Int" -> savingThrows.add("Int " + "+" + (abilityModifier.get(3) + profBonus));
+                    case "Wis" -> savingThrows.add("Wis " + "+" + (abilityModifier.get(4) + profBonus));
+                    case "Cha" -> savingThrows.add("Cha " + "+" + (abilityModifier.get(5) + profBonus));
+                    default -> savingThrows.add("none");
                 }
             }
             savingThrows.remove("none");
@@ -596,17 +564,12 @@ public class RandomNpc {
             features.addAll(randGen.bigStringToDividedString(raceData.get(3)));
         }
         switch (searchedFeature) {
-            case "action":
-                searchTermDB = "natural attack";
-                break;
-            case "bonus text":
-                searchTermDB = searchedFeature;
-                break;
-            case "bonus action":
-                searchTermDB = searchTermBonusAction;
-                break;
-            default:
-                break;
+            case "action" -> searchTermDB = "natural attack";
+            case "bonus text" -> searchTermDB = searchedFeature;
+            case "bonus action" -> searchTermDB = searchTermBonusAction;
+            default ->{ //hi
+                 }
+
         }
         for(String feature: features) {
             List<String> featureData = dbms.getRow(nameDBFeatures, feature);
@@ -621,27 +584,15 @@ public class RandomNpc {
         for (String s: raceAbilityModifier) {
             raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
             s = s.substring(0,3);
-            switch (s){
-                    case "Str":
-                        abilityScore.set(0, abilityScore.getFirst() + raceModNumber);
-                        break;
-                    case "Dex":
-                        abilityScore.set(1,abilityScore.get(1) + raceModNumber);
-                        break;
-                    case "Con":
-                        abilityScore.set(2,abilityScore.get(2) + raceModNumber);
-                        break;
-                    case "Int":
-                        abilityScore.set(3,abilityScore.get(3) + raceModNumber);
-                        break;
-                    case "Wis":
-                        abilityScore.set(4,abilityScore.get(4) + raceModNumber);
-                        break;
-                    case "Cha":
-                        abilityScore.set(5,abilityScore.get(5) + raceModNumber);
-                        break;
-                default:
-                    break;
+            switch (s) {
+                case "Str" -> abilityScore.set(0, abilityScore.getFirst() + raceModNumber);
+                case "Dex" -> abilityScore.set(1, abilityScore.get(1) + raceModNumber);
+                case "Con" -> abilityScore.set(2, abilityScore.get(2) + raceModNumber);
+                case "Int" -> abilityScore.set(3, abilityScore.get(3) + raceModNumber);
+                case "Wis" -> abilityScore.set(4, abilityScore.get(4) + raceModNumber);
+                case "Cha" -> abilityScore.set(5, abilityScore.get(5) + raceModNumber);
+                default -> { //hi
+                }
             }
         }
         return abilityScore;

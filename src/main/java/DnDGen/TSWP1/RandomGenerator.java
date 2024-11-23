@@ -453,50 +453,29 @@ public class RandomGenerator {
 		}
 		if(spellCount != 0 ){
 			for (int currentSpellLevel=1;currentSpellLevel <= highestSpellLevel;currentSpellLevel++){
-				numberOfRandomSpellsPerLevel = rand.nextInt(spellCount)+1;
+				numberOfRandomSpellsPerLevel = rand.nextInt(6-3)+3;
 				List<String> spellsForLevel = dbms.getMultRowMultPref(nameDBSpells, spellClass, Integer.toString(currentSpellLevel), numberOfRandomSpellsPerLevel);
 				assignSpellsToNpc(chosenNpc, currentSpellLevel, determineSpellNames(spellsForLevel));
 				spellCount -= numberOfRandomSpellsPerLevel;
 
-				if (spellCount == 0){
-					break;
-				}
+				if (spellCount == 0) break;
 			}
 		}
 		return chosenNpc;
 	}
 	public void assignSpellsToNpc(NpcClass chosenNpc, int spellLevel, String spellNames) {
-		switch (spellLevel) {
-			case 1:
-				chosenNpc.setFirstLevelSpell(spellNames);
-				break;
-			case 2:
-				chosenNpc.setSecondLevelSpell(spellNames);
-				break;
-			case 3:
-				chosenNpc.setThirdLevelSpell(spellNames);
-				break;
-			case 4:
-				chosenNpc.setFourthLevelSpell(spellNames);
-				break;
-			case 5:
-				chosenNpc.setFifthLevelSpell(spellNames);
-				break;
-			case 6:
-				chosenNpc.setSixthLevelSpell(spellNames);
-				break;
-			case 7:
-				chosenNpc.setSeventhLevelSpell(spellNames);
-				break;
-			case 8:
-				chosenNpc.setEightLevelSpell(spellNames);
-				break;
-			case 9:
-				chosenNpc.setNinthLevelSpell(spellNames);
-				break;
-			default:
-				logger.info("Zauber nicht verfügbar -> FEHLER");
-		}
+        switch (spellLevel) {
+            case 1 -> chosenNpc.setFirstLevelSpell(spellNames);
+            case 2 -> chosenNpc.setSecondLevelSpell(spellNames);
+            case 3 -> chosenNpc.setThirdLevelSpell(spellNames);
+            case 4 -> chosenNpc.setFourthLevelSpell(spellNames);
+            case 5 -> chosenNpc.setFifthLevelSpell(spellNames);
+            case 6 -> chosenNpc.setSixthLevelSpell(spellNames);
+            case 7 -> chosenNpc.setSeventhLevelSpell(spellNames);
+            case 8 -> chosenNpc.setEightLevelSpell(spellNames);
+            case 9 -> chosenNpc.setNinthLevelSpell(spellNames);
+            default -> logger.info("Zauber nicht verfügbar -> FEHLER");
+        }
 	}
 
 	/*
@@ -509,28 +488,16 @@ public class RandomGenerator {
 		int spellModNumber = 0;
 		int knownSpells;
 
-		switch (abilityModifierForSpells) {
-			case "Str":
-				spellModNumber = chosenNpc.getAbilityModifier().getFirst();
-				break;
-			case "Dex":
-				spellModNumber = chosenNpc.getAbilityModifier().get(1);
-				break;
-			case "Con":
-				spellModNumber = chosenNpc.getAbilityModifier().get(2);
-				break;
-			case "Int":
-				spellModNumber = chosenNpc.getAbilityModifier().get(3);
-				break;
-			case "Wis":
-				spellModNumber = chosenNpc.getAbilityModifier().get(4);
-				break;
-			case "Cha":
-				spellModNumber = chosenNpc.getAbilityModifier().get(5);
-				break;
-			default:
-				break;
-		}
+        switch (abilityModifierForSpells) {
+            case "Str" -> spellModNumber = chosenNpc.getAbilityModifier().getFirst();
+            case "Dex" -> spellModNumber = chosenNpc.getAbilityModifier().get(1);
+            case "Con" -> spellModNumber = chosenNpc.getAbilityModifier().get(2);
+            case "Int" -> spellModNumber = chosenNpc.getAbilityModifier().get(3);
+            case "Wis" -> spellModNumber = chosenNpc.getAbilityModifier().get(4);
+            case "Cha" -> spellModNumber = chosenNpc.getAbilityModifier().get(5);
+            default -> {//hi
+            }
+        }
 		if (colClassForSpell.contains("1/2")){
 			knownSpells = (int) (spellModNumber +  chosenNpc.getLevel()*0.5);
 		}else {
@@ -641,29 +608,22 @@ public class RandomGenerator {
 		int spellAttackMod = 0;
 
 		String spellMod = dbms.getRow("class", genClass).get(11);
-		switch(spellMod){
-			case "Cha":
-				 spellAttackMod = abilityModifier.get(5) + profBonus;
-				 break;
-			case "Wis":
-				spellAttackMod = abilityModifier.get(4) + profBonus;
-				break;
-			case "Int":
-				spellAttackMod = abilityModifier.get(3) + profBonus;
-				break;
-			case "Int, Wis":
-				int intelligence = abilityModifier.get(3);
-				int wisdom = abilityModifier.get(4);
-				if(intelligence > wisdom){
-					spellAttackMod = intelligence + profBonus;
-				}
-				else{
-					spellAttackMod = wisdom + profBonus;
-				}
-				break;
-			default :
-				break;
-		}
+        switch (spellMod) {
+            case "Cha" -> spellAttackMod = abilityModifier.get(5) + profBonus;
+            case "Wis" -> spellAttackMod = abilityModifier.get(4) + profBonus;
+            case "Int" -> spellAttackMod = abilityModifier.get(3) + profBonus;
+            case "Int, Wis" -> {
+                int intelligence = abilityModifier.get(3);
+                int wisdom = abilityModifier.get(4);
+                if (intelligence > wisdom) {
+                    spellAttackMod = intelligence + profBonus;
+                } else {
+                    spellAttackMod = wisdom + profBonus;
+                }
+            }
+            default -> {//hi
+            }
+        }
 		return spellAttackMod;
 	}
 

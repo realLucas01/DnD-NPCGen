@@ -161,17 +161,6 @@ public class UiHistoryEditUpdate {
     	List<String> newWeaponPossibi = randGen.figureOutProfList("weapon", newClass, newNpc.getRace());
     	List<String> oldWeapons = currentNpc.getWeaponList();
 		oldWeapons.removeIf(oldSkill -> !newWeaponPossibi.contains(oldSkill));
-		/*
-    	for (String oldWeapon : oldWeapons) {
-    		for (String newWeapon : newWeaponPossibi) {
-    			if (newWeapon.equals(oldWeapon)) {
-    				break;
-    			}else if (newWeapon.equals(newWeaponPossibi.getLast())){
-    				oldWeapons.remove(oldWeapon);
-    			}
-    		}
-    	}
-    	*/
 
     	//direkt neu befüllen? Oder (potentiell) leer lassen?
     	int weaponCount = rndNumb.nextInt(4)+2;
@@ -189,15 +178,7 @@ public class UiHistoryEditUpdate {
     	//Skills
     	List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRow("class", newClass).get(6));
     	List<String> oldSkills = currentNpc.getSkillList();
-    	/*
-    		for (String possibSkill : possibleSkillList) {
-    			if (possibSkill.equals(oldSkill)) {
-    				break;
-    			}else if (possibSkill.equals(possibleSkillList.getLast())){
-    				oldSkills.remove(oldSkill);
-    			}
-    		}
-    		*/
+
         oldSkills.removeIf(oldSkill -> !possibleSkillList.contains(oldSkill));
     	newNpc.setSkillList(oldSkills);
     	

@@ -290,39 +290,6 @@ public class NpcClass {
         this.bonusTextList = bonusTextList;
     }
 
-    // NPC zu List und vis versa
-    public List<Object> convertNpcToList(){
-        List<Object> listOfTheNpc = new ArrayList<>();
-        listOfTheNpc.add(getRace());
-        listOfTheNpc.add(getLevel());
-        listOfTheNpc.add(getJob());
-        listOfTheNpc.add(getGenClass());
-        listOfTheNpc.add(getAbilityScores());
-        listOfTheNpc.add(getAbilityModifier());
-        listOfTheNpc.add(getHealthPoints());
-        listOfTheNpc.add(getArmor());
-        listOfTheNpc.add(getArmorClass());
-        listOfTheNpc.add(getWeaponList());
-        listOfTheNpc.add(getMovementSpeedList());
-        listOfTheNpc.add(getSavingThrows());
-        listOfTheNpc.add(getSkillList());
-        listOfTheNpc.add(getGender());
-        listOfTheNpc.add(getAge());
-        listOfTheNpc.add(getName());
-        listOfTheNpc.add(getAlignment());
-        listOfTheNpc.add(getDescription());
-        listOfTheNpc.add(getDeity());
-        listOfTheNpc.add(getLanguages());
-        listOfTheNpc.add(getSenses());
-        listOfTheNpc.add(getSpellList());
-        listOfTheNpc.add(getActionList());
-        listOfTheNpc.add(getBonusActionList());
-        listOfTheNpc.add(getBonusTextList());
-        listOfTheNpc.add(getSpellAbility());
-
-        return listOfTheNpc;
-    }
-
     public void historyEntryToNpc(HistoryModel entry){
         setRace(entry.getHistoryRace());
         setGenClass(entry.getHistoryClass());
@@ -561,6 +528,5 @@ public class NpcClass {
         history.add(bonusTextList);
 
         dbms.saveEntry(history);
-
     }
 }
