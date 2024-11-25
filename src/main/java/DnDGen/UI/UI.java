@@ -245,7 +245,7 @@ public class UI extends Application {
 
         final ComboBox<String> cbLevel = new ComboBox<>(FXCollections.observableArrayList("zufall"));
         GridPane.setConstraints(cbLevel, 1, 4,2,1);
-        for(int i = 1; i <= 20; i++) {cbLevel.getItems().add(String.valueOf(i));}
+        for(int i = 0; i <= 20; i++) {cbLevel.getItems().add(String.valueOf(i));}
         cbLevel.setMaxWidth(300);
         cbLevel.getSelectionModel().selectFirst();
 

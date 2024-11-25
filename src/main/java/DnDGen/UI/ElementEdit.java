@@ -6,10 +6,15 @@ import DnDGen.TSWP1.UiHistoryEditUpdate;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -24,6 +29,9 @@ public class ElementEdit {
     private GridPane nameClassGrid;
     private final UiHistoryEditUpdate editUpdate = new UiHistoryEditUpdate();
     private final NpcClass cNPC;
+
+    // Liste, um die ausgewählten Kacheln zu speichern
+    private List<String> selectedTiles = new ArrayList<>();
 
     ElementEdit(Stage window, NpcClass npc, Integer id, DBMS dbms) {
         this.window = window;
@@ -94,7 +102,7 @@ public class ElementEdit {
         GridPane.setConstraints(levelL,2,3);
         final ComboBox<Integer> cbLevel = new ComboBox<>();
         GridPane.setConstraints(cbLevel, 3, 4,4,1);
-        for(int i = 1; i <= 20; i++) {cbLevel.getItems().add(i);}
+        for(int i = 0; i <= 20; i++) {cbLevel.getItems().add(i);}
         GridPane.setConstraints(cbLevel,3,3);
         levelL.setVisible(false);
         cbLevel.setVisible(false);
@@ -132,7 +140,7 @@ public class ElementEdit {
         Label deityL     = new Label("Deity: ");
         GridPane.setConstraints(deityL,0,3);
         final ComboBox<String> cbDeity = new ComboBox<>();
-        list = dbms.onlyColumn("deity");
+        list = dbms.getColWithPref("deity", cNPC.getAlignment());
         list.sort(String::compareTo);
         cbDeity.getItems().addAll(list);
         GridPane.setConstraints(cbDeity,1,3);
@@ -212,8 +220,32 @@ public class ElementEdit {
         speedGrid.setVisible(false);
 
 
-        // Sprachen
+        // Languages
+        Label languagesL = new Label("Languages: ");
+        GridPane.setConstraints(languagesL,0,0);
 
+        Label languagesFeld = new Label();
+        GridPane.setConstraints(languagesFeld,1,0, 2,1);
+
+            // Bild für den Button
+        Image image = new Image("ui-image/edit.png"); // Beispielbild-URL
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(20);
+        imageView.setFitHeight(20);
+
+            // Button mit Bild
+        Button languagesButton = new Button("Öffne PopUp", imageView);
+        GridPane.setConstraints(languagesButton,3,0);
+
+            // Button Aktion
+        languagesButton.setOnAction(e -> openPopup(window));
+
+        GridPane languagesGrid = new GridPane();
+        languagesGrid.getChildren().addAll(languagesL, languagesFeld, languagesButton);
+        //languagesGrid.setVisible(false);
+        for(Node elm: languagesGrid.getChildren()) {
+            elm.setVisible(false);
+        }
 
         // Ability Score
 
@@ -235,7 +267,7 @@ public class ElementEdit {
                                            cbJob, ageF, cbGender, cbDeity, cbLevel,
                                            amorClassF, hitPointsF, classRaceEditButton(), speedGrid);
 
-        npcDate.getChildren().addAll(nameClassGrid);
+        npcDate.getChildren().addAll(nameClassGrid, languagesGrid);
     }
 
     /**
@@ -260,6 +292,7 @@ public class ElementEdit {
             NpcClass updateNPC = editUpdate.updateHistoryEdit(changes,cNPC);
 
             // Geänderte Daten anzeigen lassen
+            selectedTiles = updateNPC.getLanguages();
             setDatenNPC(updateNPC);
             VisibleElements();
         });
@@ -293,8 +326,15 @@ public class ElementEdit {
         cbJob.getSelectionModel().select(cbJob.getItems().indexOf(npc.getJob()));
 
         // Deity
-        ComboBox<?> cbDeity = (ComboBox<?>) nameClassGrid.getChildren().get(18);
-        cbDeity.getSelectionModel().select(cbDeity.getItems().indexOf(npc.getDeity()));
+        ComboBox<String> cbDeity = (ComboBox<String>) nameClassGrid.getChildren().get(18);
+        ArrayList<String> list = dbms.getColWithPref("deity", npc.getAlignment());
+        list.sort(String::compareTo);
+        cbDeity.getItems().clear();
+
+        cbDeity.getItems().addAll(list);
+            // wählt den Gott den der Npc hat aus
+        //cbDeity.getSelectionModel().select(cbDeity.getItems().indexOf(npc.getDeity()));
+        cbDeity.getSelectionModel().select(0);
 
         // Alignment
         ComboBox<?> cbAlignment = (ComboBox<?>) nameClassGrid.getChildren().get(2);
@@ -323,6 +363,24 @@ public class ElementEdit {
             ((Spinner<Integer>) ((GridPane) nameClassGrid.getChildren().get(23)).getChildren().get(4)).getValueFactory().setValue(flying);
         }
 
+        // Languages
+            // Index des GridPane bestimmen (abhängig davon, ob MenuBar existiert) (krasse if-Bedingung)
+        int gridIndex = (npcDate.getChildren().get(0) instanceof MenuBar) ? 2 : 1;
+
+            // Zugriff auf das GridPane, das die Sprachen enthält
+        GridPane languagesGrid = (GridPane) npcDate.getChildren().get(gridIndex);
+
+            // Erstellen eines Strings, der alle ausgewählten Sprachen enthält
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String lang : selectedTiles) {
+            stringBuilder.append(lang).append("\n");
+        }
+
+            // Aktualisieren des Texts im entsprechenden Label
+        ((Label) languagesGrid.getChildren().get(1)).setText(stringBuilder.toString());
+
+
+
     }
 
     /**
@@ -347,9 +405,103 @@ public class ElementEdit {
         nameClassGrid.getChildren().get(21).setVisible(show);
         nameClassGrid.getChildren().get(22).setVisible(!show);
         nameClassGrid.getChildren().get(23).setVisible(show);
+
+        //npcDate.getChildren().get(2).setVisible(show);
+
+        GridPane grid = (GridPane) npcDate.getChildren().get(2);
+        for (Node node: grid.getChildren()) {
+            node.setVisible(show);
+        }
+
+
+
     }
 
+    /**
+     * Öffnet für Languages ein Pop-up-Fenster für die auswahl der Sprachen
+     * @param owner die Stage die offen ist, also die Haupt-Stage
+     * @author chatGPT
+     * @author Marie
+     */
+    private void openPopup(Stage owner) {
+        // Neues Fenster erstellen
+        Stage popup = new Stage();
+        popup.setTitle("Popup-Fenster");
+        popup.initModality(Modality.WINDOW_MODAL); // Sperrt Interaktion mit dem Hauptfenster
+        popup.initOwner(owner);
 
+        // Inhalt des Pop-up-Fensters
+        VBox layout = new VBox(10);
+        layout.setStyle("-fx-padding: 10px; -fx-alignment: center;");
+
+        // Dummy-Daten für die Kacheln
+
+        List<String> items = dbms.onlyColumn("language");
+
+        // TilePane für die Kacheln
+        TilePane tilePane = new TilePane();
+        tilePane.setHgap(10); // Horizontaler Abstand zwischen Kacheln
+        tilePane.setVgap(10); // Vertikaler Abstand zwischen Kacheln
+        tilePane.setPrefColumns(3); // Anzahl der Spalten
+
+        // Für jedes Element in der Liste eine Kachel hinzufügen
+        for (String item : items) {
+            Button tile = new Button(item);
+            tile.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+            tile.setPrefSize(100, 50); // Größe der Kachel
+
+            // Setzen der anfänglichen Kachelmarkierung basierend auf selectedTiles
+            if (selectedTiles.contains(item)) {
+                tile.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;"); // Als ausgewählt markieren
+            } else {
+                tile.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;"); // Als nicht ausgewählt setzen
+            }
+
+            // Hinzufügen des EventHandlers für die Benutzerinteraktion
+            tile.setOnAction(e -> {
+                if (selectedTiles.contains(item)) {
+                    // Entfernen, wenn bereits ausgewählt
+                    selectedTiles.remove(item);
+                    tile.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+                } else {
+                    // Hinzufügen, wenn nicht ausgewählt
+                    selectedTiles.add(item);
+                    tile.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;");
+                }
+            });
+
+            tilePane.getChildren().add(tile);
+        }
+
+        // Button für die Bestätigung
+        Button confirmButton = new Button("Bestätigen");
+        confirmButton.setOnAction(e -> {
+            // Liste der ausgewählten Kacheln ausgeben oder weiterreichen
+            // Index des GridPane bestimmen (abhängig davon, ob MenuBar existiert) (krasse if-Bedingung)
+            int gridIndex = (npcDate.getChildren().get(0) instanceof MenuBar) ? 2 : 1;
+
+            // Zugriff auf das GridPane, das die Sprachen enthält
+            GridPane languagesGrid = (GridPane) npcDate.getChildren().get(gridIndex);
+
+            // Erstellen eines Strings, der alle ausgewählten Sprachen enthält
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String lang : selectedTiles) {
+                stringBuilder.append(lang).append("\n");
+            }
+
+            // Aktualisieren des Texts im entsprechenden Label
+            ((Label) languagesGrid.getChildren().get(1)).setText(stringBuilder.toString());
+            popup.close();
+        });
+
+        // Layout zusammenstellen
+        layout.getChildren().addAll(tilePane, confirmButton);
+        layout.setStyle("-fx-padding: 20px; -fx-alignment: center;");
+
+        Scene popupScene = new Scene(layout, 450, 430);
+        popup.setScene(popupScene);
+        popup.show();
+    }
 
 
 
