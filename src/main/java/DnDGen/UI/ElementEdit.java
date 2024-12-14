@@ -5,22 +5,25 @@ import DnDGen.TSWP1.NpcClass;
 import DnDGen.TSWP1.UiHistoryEditUpdate;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class ElementEdit {
     private final Stage window;
     private final Scene scene;
@@ -29,15 +32,15 @@ public class ElementEdit {
     private GridPane nameClassGrid;
     private final UiHistoryEditUpdate editUpdate = new UiHistoryEditUpdate();
     private final NpcClass cNPC;
+    private GridPane abilityGrid;
 
     // Liste, um die ausgewählten Kacheln zu speichern
     private List<String> selectedTiles = new ArrayList<>();
 
-    ElementEdit(Stage window, NpcClass npc, Integer id, DBMS dbms) {
+    ElementEdit(Stage window, Integer id, DBMS dbms) {
         this.window = window;
         npcDate = new VBox();
         this.dbms = dbms;
-        //this.cNPC = npc;
         this.cNPC = new NpcClass();
         cNPC.historyEntryToNpc(dbms.getHistoryEntry(id));
 
@@ -224,8 +227,15 @@ public class ElementEdit {
         Label languagesL = new Label("Languages: ");
         GridPane.setConstraints(languagesL,0,0);
 
+        /*
         Label languagesFeld = new Label();
         GridPane.setConstraints(languagesFeld,1,0, 2,1);
+         */
+
+        // Text statt Label für mehrzeiligen Text
+        Text languagesFeld = new Text();
+        languagesFeld.setWrappingWidth(50); // Optional: Breite setzen, damit Text umbrechen kann
+        GridPane.setConstraints(languagesFeld, 1, 0, 2, 1);
 
             // Bild für den Button
         Image image = new Image("ui-image/edit.png"); // Beispielbild-URL
@@ -247,7 +257,60 @@ public class ElementEdit {
             elm.setVisible(false);
         }
 
-        // Ability Score
+
+        // Ability-scores: Optimiertes Layout
+        abilityGrid = new GridPane();
+        abilityGrid.setHgap(5); // Reduzierter horizontaler Abstand
+        abilityGrid.setVgap(5); // Reduzierter vertikaler Abstand
+        abilityGrid.setPadding(new Insets(5, 5, 5, 5)); // Weniger Padding
+        abilityGrid.setAlignment(Pos.CENTER); // Zentriert das gesamte GridPane
+
+            // Spaltenkonfiguration: Platz sparen durch relative Größen
+        for (int i = 0; i < 3; i++) {
+            ColumnConstraints colConstraints = new ColumnConstraints();
+            colConstraints.setHgrow(Priority.ALWAYS); // Spalten können wachsen
+            colConstraints.setPercentWidth(10); // Jede Spalte nimmt ca. 33% ein
+            abilityGrid.getColumnConstraints().add(colConstraints);
+        }
+
+            // Liste der Ability Scores (Str, Dex, Con, etc.)
+        ArrayList<String> abilityString = new ArrayList<>(Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
+
+            // Gehe durch jede Fähigkeit und platziere die entsprechenden Felder
+        for (int i = 0; i < abilityString.size(); i++) {
+            // Label für die Fähigkeit
+            Label label = new Label(abilityString.get(i));
+            label.setStyle("-fx-font-weight: normal; -fx-font-size: 12px;"); // Kleine Schriftgröße
+            GridPane.setConstraints(label, 0, i);
+
+            // TextField für den Ability Score
+            TextField fieldAb = new TextField();
+            fieldAb.setPrefWidth(10); // Kleineres Textfeld
+            GridPane.setConstraints(fieldAb, 1, i);
+
+            // Plus-Symbol als Label
+            Label labelPlus = new Label("+");
+            labelPlus.setStyle("-fx-font-size: 12px;"); // Kleine Schriftgröße
+            GridPane.setHalignment(labelPlus, HPos.CENTER); // Zentriert das Plus-Symbol
+            GridPane.setConstraints(labelPlus, 2, i);
+
+            // TextField für den Modifier
+            TextField fieldMod = new TextField();
+            fieldMod.setPrefWidth(40); // Kleineres Textfeld
+            GridPane.setConstraints(fieldMod, 3, i);
+
+            // Füge alle Elemente der GridPane hinzu
+            abilityGrid.getChildren().addAll(label, fieldAb, labelPlus, fieldMod);
+        }
+
+
+
+        abilityGrid.setVisible(false);
+
+
+
+
+
 
         // Inventar
 
@@ -267,7 +330,7 @@ public class ElementEdit {
                                            cbJob, ageF, cbGender, cbDeity, cbLevel,
                                            amorClassF, hitPointsF, classRaceEditButton(), speedGrid);
 
-        npcDate.getChildren().addAll(nameClassGrid, languagesGrid);
+        npcDate.getChildren().addAll(nameClassGrid, languagesGrid, abilityGrid);
     }
 
     /**
@@ -377,11 +440,67 @@ public class ElementEdit {
         }
 
             // Aktualisieren des Texts im entsprechenden Label
-        ((Label) languagesGrid.getChildren().get(1)).setText(stringBuilder.toString());
+        ((Text) languagesGrid.getChildren().get(1)).setText(stringBuilder.toString());
 
 
+        /*
+        // Ability Scores
+        List<Integer> abilityString = npc.getAbilityScores();
+        List<Integer> abilityMod = npc.getAbilityModifier();
+        int j = 0;
 
+        for(int i = 7; i < 23; i+=3) {
+            // Ability
+            TextField fieldAb = (TextField) abilityGrid.getChildren().get(i-1);
+            fieldAb.setText(abilityString.get(j).toString());
+
+            // Modifierer
+            TextField fieldMod = (TextField) abilityGrid.getChildren().get(i+1);
+            fieldMod.setText(abilityMod.get(j).toString());
+
+            j++;
+        }
+         */
+
+        // Ability Scores aus NPC
+        List<Integer> abilityScores = npc.getAbilityScores(); // Werte der Fähigkeiten
+        List<Integer> abilityModifiers = npc.getAbilityModifier(); // Modifikatoren der Fähigkeiten
+
+        // Sicherstellen, dass die Listen gleich groß sind
+        if (abilityScores.size() != abilityModifiers.size()) {
+            throw new IllegalStateException("Ability Scores und Modifikatoren haben unterschiedliche Größen!");
+        }
+
+        // Fülle die Felder in der GridPane
+        for (int i = 0; i < abilityScores.size(); i++) {
+            // Hole die TextField-Elemente aus der GridPane
+            TextField fieldAb = (TextField) getNodeByRowColumnIndex(i, 1, abilityGrid); // Ability Score
+            TextField fieldMod = (TextField) getNodeByRowColumnIndex(i, 3, abilityGrid); // Modifier
+
+            // Setze die Werte in die entsprechenden Felder
+            if (fieldAb != null) {
+                fieldAb.setText(abilityScores.get(i).toString());
+            }
+
+            if (fieldMod != null) {
+                fieldMod.setText(abilityModifiers.get(i).toString());
+            }
+        }
     }
+
+    // Hilfsmethode: Knoten aus GridPane anhand von Zeile und Spalte holen
+    private Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
+                if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                    return node;
+                }
+            }
+        }
+        return null; // Kein passender Knoten gefunden
+    }
+
+
 
     /**
      * Macht die Elemente sichtbar
@@ -406,6 +525,7 @@ public class ElementEdit {
         nameClassGrid.getChildren().get(22).setVisible(!show);
         nameClassGrid.getChildren().get(23).setVisible(show);
 
+        abilityGrid.setVisible(show);
         //npcDate.getChildren().get(2).setVisible(show);
 
         GridPane grid = (GridPane) npcDate.getChildren().get(2);
@@ -478,7 +598,7 @@ public class ElementEdit {
         confirmButton.setOnAction(e -> {
             // Liste der ausgewählten Kacheln ausgeben oder weiterreichen
             // Index des GridPane bestimmen (abhängig davon, ob MenuBar existiert) (krasse if-Bedingung)
-            int gridIndex = (npcDate.getChildren().get(0) instanceof MenuBar) ? 2 : 1;
+            int gridIndex = (npcDate.getChildren().getFirst() instanceof MenuBar) ? 2 : 1;
 
             // Zugriff auf das GridPane, das die Sprachen enthält
             GridPane languagesGrid = (GridPane) npcDate.getChildren().get(gridIndex);
@@ -490,7 +610,7 @@ public class ElementEdit {
             }
 
             // Aktualisieren des Texts im entsprechenden Label
-            ((Label) languagesGrid.getChildren().get(1)).setText(stringBuilder.toString());
+            ((Text) languagesGrid.getChildren().get(1)).setText(stringBuilder.toString());
             popup.close();
         });
 
@@ -502,7 +622,6 @@ public class ElementEdit {
         popup.setScene(popupScene);
         popup.show();
     }
-
 
 
     // gibt die Scene zurück

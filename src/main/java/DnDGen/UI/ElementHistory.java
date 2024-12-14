@@ -13,8 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
-
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class ElementHistory {
@@ -71,7 +69,6 @@ public class ElementHistory {
      * @author Marie
      */
     private VBox makeGridNPC(NpcClass npcE, Integer id){
-        final NpcClass npc = npcE;
         VBox npcVBox = new VBox();
         GridPane npcGrid = new GridPane();
         npcGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -79,23 +76,23 @@ public class ElementHistory {
         npcGrid.setHgap(10);
 
         // Name
-        Label name = new Label("Name: " + npc.getName());
+        Label name = new Label("Name: " + npcE.getName());
         GridPane.setConstraints(name,0,0);
 
         // Level
-        Label level = new Label("Level: " + npc.getLevel());
+        Label level = new Label("Level: " + npcE.getLevel());
         GridPane.setConstraints(level,0,3);
 
         // Rasse
-        Label race = new Label("Race: " + npc.getRace());
+        Label race = new Label("Race: " + npcE.getRace());
         GridPane.setConstraints(race,0,1);
 
         // Klasse
-        Label clas = new Label("Class: " + npc.getGenClass());
+        Label clas = new Label("Class: " + npcE.getGenClass());
         GridPane.setConstraints(clas,0,4);
 
         // Job
-        Label job = new Label("Job: " + npc.getJob());
+        Label job = new Label("Job: " + npcE.getJob());
         GridPane.setConstraints(job,0,2 );
 
         npcGrid.getChildren().addAll(name,level,race,clas,job);
@@ -109,8 +106,8 @@ public class ElementHistory {
 
 
         ArrayList<String> abilityString = new ArrayList<>(Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
-        ArrayList<Integer> ability = (ArrayList<Integer>) npc.getAbilityScores();
-        ArrayList<Integer> abilityMod = (ArrayList<Integer>) npc.getAbilityModifier();
+        ArrayList<Integer> ability = (ArrayList<Integer>) npcE.getAbilityScores();
+        ArrayList<Integer> abilityMod = (ArrayList<Integer>) npcE.getAbilityModifier();
 
         // geht jede Ability durch
         for(int i = 0; i < abilityString.size(); i++) {
@@ -136,7 +133,7 @@ public class ElementHistory {
         npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
 
         // Event-Handler für Klick-Ereignis. Wenn die Box gedrückt wird, passiert das:
-        npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> handleNpcClick(event, npc, id));
+        npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> handleNpcClick(event, id));
 
 
         /*{
@@ -161,13 +158,12 @@ public class ElementHistory {
     /**
      * MouseEvent für die VBox der History Seite
      * @param event was für ein MouseEvent, → Click
-     * @param npc ein NPC-Object
      * @param id die Id des NPC
      * @author Marie
      */
-    private void handleNpcClick(MouseEvent event, NpcClass npc, Integer id) {
+    private void handleNpcClick(MouseEvent event, Integer id) {
         event.consume();
-        ElementEdit elementEdit = new ElementEdit(window, npc, id,dbms);
+        ElementEdit elementEdit = new ElementEdit(window, id,dbms);
        // System.out.println(npc.getName());
         elementEdit.menuBar(generatePage, scene);
         window.setTitle("Edit");
@@ -199,27 +195,4 @@ public class ElementHistory {
 
         return scene;
     }
-
-    /**
-     * Sortiert die Liste aller Historyeinträge nach Datum/Zeit
-     * @param npc Liste aller NPCs
-     * @return gibt die sortierte Liste zurück
-     * @author Marie (ChatGPT)
-     */
-    public List<Object> sortList(List<Object> npc) {
-
-        // Sort the list based on the last element which is a datetime string
-        npc.sort((o1, o2) -> {
-            ArrayList<?> list1 = (ArrayList<?>) o1;
-            ArrayList<?> list2 = (ArrayList<?>) o2;
-
-            LocalDateTime dateTime1 = (LocalDateTime) list1.getLast();
-            LocalDateTime dateTime2 = (LocalDateTime) list2.getLast();
-
-            return dateTime2.compareTo(dateTime1);
-        });
-
-        return npc;
-    }
-
 }
