@@ -174,7 +174,8 @@ public class ElementHistory {
         elementDetail.menuBar(generatePage, scene);
 */
         window.setTitle("Edit");
- //       window.setScene(elementDetail.getScene());
+        window.setScene(elementEdit.getScene());
+        // window.setScene(elementDetail.getScene());
     }
 
     /**

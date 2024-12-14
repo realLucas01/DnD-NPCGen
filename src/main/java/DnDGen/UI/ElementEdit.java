@@ -33,6 +33,7 @@ public class ElementEdit {
     private final UiHistoryEditUpdate editUpdate = new UiHistoryEditUpdate();
     private final NpcClass cNPC;
     private GridPane abilityGrid;
+    private HBox inventoryBox;
 
     // Liste, um die ausgewählten Kacheln zu speichern
     private List<String> selectedTiles = new ArrayList<>();
@@ -48,6 +49,7 @@ public class ElementEdit {
         setDatenNPC(cNPC);
 
         scene = new Scene(npcDate);
+        scene.getStylesheets().add("styles.css");
     }
 
     /**
@@ -227,10 +229,6 @@ public class ElementEdit {
         Label languagesL = new Label("Languages: ");
         GridPane.setConstraints(languagesL,0,0);
 
-        /*
-        Label languagesFeld = new Label();
-        GridPane.setConstraints(languagesFeld,1,0, 2,1);
-         */
 
         // Text statt Label für mehrzeiligen Text
         Text languagesFeld = new Text();
@@ -248,7 +246,7 @@ public class ElementEdit {
         GridPane.setConstraints(languagesButton,3,0);
 
             // Button Aktion
-        languagesButton.setOnAction(e -> openPopup(window));
+        languagesButton.setOnAction(e -> openPopup(window, "language"));
 
         GridPane languagesGrid = new GridPane();
         languagesGrid.getChildren().addAll(languagesL, languagesFeld, languagesButton);
@@ -303,16 +301,54 @@ public class ElementEdit {
             abilityGrid.getChildren().addAll(label, fieldAb, labelPlus, fieldMod);
         }
 
-
-
         abilityGrid.setVisible(false);
 
 
 
-
-
-
         // Inventar
+        inventoryBox = new HBox();
+        Label inventoryL = new Label("Inventory");
+
+          // Armor
+        VBox armorBox = new VBox();
+        Label armorL = new Label("Armor:");
+        armorL.getStyleClass().add("bold-label");
+        Text armorText = new Text();
+
+        armorBox.getChildren().addAll(armorL,armorText);
+
+
+          // weapon
+        VBox weaponBox = new VBox();
+        Label weaponL = new Label("Weapon:");
+        weaponL.getStyleClass().add("bold-label");
+        Text weaponText = new Text();
+
+        weaponBox.getChildren().addAll(weaponL,weaponText);
+
+
+          // Knöpfe für Rüstung und Waffe wählen
+        VBox buttonBox = new VBox();
+
+          // Button mit Bild
+        ImageView armorImageView = new ImageView(image);
+        armorImageView.setFitWidth(20);
+        armorImageView.setFitHeight(20);
+        Button armorButton = new Button("Choose Armor", armorImageView);
+        ImageView weaponImageView = new ImageView(image);
+        weaponImageView.setFitWidth(20);
+        weaponImageView.setFitHeight(20);
+        Button weaponButton = new Button("Choose Weapon", weaponImageView);
+
+          // Button Aktion
+        armorButton.setOnAction(e -> openPopup(window,"armor"));
+        weaponButton.setOnAction(e -> openPopup(window,"weapon"));
+
+        buttonBox.getChildren().addAll(armorButton, weaponButton);
+
+
+        inventoryBox.getChildren().addAll(inventoryL, armorBox, weaponBox, buttonBox);
+
 
         // Skills
 
@@ -330,7 +366,7 @@ public class ElementEdit {
                                            cbJob, ageF, cbGender, cbDeity, cbLevel,
                                            amorClassF, hitPointsF, classRaceEditButton(), speedGrid);
 
-        npcDate.getChildren().addAll(nameClassGrid, languagesGrid, abilityGrid);
+        npcDate.getChildren().addAll(nameClassGrid, languagesGrid, abilityGrid, inventoryBox);
     }
 
     /**
@@ -543,7 +579,7 @@ public class ElementEdit {
      * @author chatGPT
      * @author Marie
      */
-    private void openPopup(Stage owner) {
+    private void openPopup(Stage owner, String searchString) {
         // Neues Fenster erstellen
         Stage popup = new Stage();
         popup.setTitle("Popup-Fenster");
@@ -554,9 +590,21 @@ public class ElementEdit {
         VBox layout = new VBox(10);
         layout.setStyle("-fx-padding: 10px; -fx-alignment: center;");
 
-        // Dummy-Daten für die Kacheln
+        // Daten für die Kacheln
+        List<String> items = new ArrayList<>();
+        switch (searchString) {
+            case "language":
+                items = dbms.onlyColumn("language");
+                break;
 
-        List<String> items = dbms.onlyColumn("language");
+            case "armor":
+                items = dbms.onlyColumn("armor");
+                break;
+            case "weapon":
+                items = dbms.onlyColumn("weapon");
+                break;
+        }
+
 
         // TilePane für die Kacheln
         TilePane tilePane = new TilePane();
