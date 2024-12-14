@@ -29,4 +29,6 @@ public interface ArmorRepository extends CrudRepository<ArmorModel, Integer>{
 	Page<ArmorModel> getArmorPref(String armorKind,Pageable pageable);
 	@Query("SELECT l.armorName FROM ArmorModel l WHERE l.armorKind Like %?1%")
 	ArrayList<String> getArmorCol(String weaponKind);
+	@Query("SELECT s.armorName FROM ArmorModel s")
+	ArrayList<String> getallArmCol();
 }

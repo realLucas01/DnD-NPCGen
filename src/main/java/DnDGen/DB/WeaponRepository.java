@@ -27,4 +27,6 @@ public interface WeaponRepository extends CrudRepository<WeaponModel, Integer>{
 	Page<WeaponModel> getWeaponPref(String weaponKind,Pageable pageable);
 	@Query("SELECT l.weaponName FROM WeaponModel l WHERE l.weaponKind Like %?1%")
 	ArrayList<String> getWeaponCol(String weaponKind);
+	@Query("SELECT s.weaponName FROM WeaponModel s")
+	ArrayList<String> getallWeapCol();
 }
