@@ -133,6 +133,7 @@ public class ElementHistory {
         npcVBox.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
 
         // Event-Handler für Klick-Ereignis. Wenn die Box gedrückt wird, passiert das:
+
         npcVBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> handleNpcClick(event, id));
 
 
@@ -147,6 +148,7 @@ public class ElementHistory {
 
 
          */
+
         // Event-Handler für Hover-Ereignis
         npcVBox.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> npcVBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;"));
 
@@ -163,11 +165,16 @@ public class ElementHistory {
      */
     private void handleNpcClick(MouseEvent event, Integer id) {
         event.consume();
+
         ElementEdit elementEdit = new ElementEdit(window, id,dbms);
-       // System.out.println(npc.getName());
+
         elementEdit.menuBar(generatePage, scene);
+/*
+        ElementDetail elementDetail = new ElementDetail(window, npc, id, dbms);
+        elementDetail.menuBar(generatePage, scene);
+*/
         window.setTitle("Edit");
-        window.setScene(elementEdit.getScene());
+ //       window.setScene(elementDetail.getScene());
     }
 
     /**

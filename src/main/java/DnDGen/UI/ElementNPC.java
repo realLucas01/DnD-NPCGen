@@ -91,7 +91,9 @@ public class ElementNPC {
         Label raceL      = new Label("Race: " + npc.getRace());
         Label alignmentL = new Label("Alignment: " + npc.getAlignment());
         Label ageL       = new Label("Age: " + npc.getAge());
+
         Label sexL       = new Label("Sex: " + npc.getGender());
+
         Label deityL     = new Label("Deity: " + npc.getDeity());
 
         GridPane.setConstraints(nameL,0,0);
@@ -123,9 +125,11 @@ public class ElementNPC {
 
         Label armorClassL = new Label("Armor Class: ");
         GridPane.setConstraints(armorClassL,0,0);
+
         Label hitPointsL  = new Label("Hit Points: ");
         GridPane.setConstraints(hitPointsL,0,1);
-        Label speedL      = new Label("Movement Speed: ");
+        Label speedL      = new Label("Movement Speed pls: ");
+
         GridPane.setConstraints(speedL,0,2);
         Label languagesL   = new Label("Languages: ");
         GridPane.setConstraints(languagesL,0,4);
@@ -168,9 +172,9 @@ public class ElementNPC {
         featuresGrid.setVgap(4);
         featuresGrid.setHgap(5);
 
-        Label actionL = new Label("Aktionen: ");
+        Label actionL = new Label("Actions: ");
         GridPane.setConstraints(actionL,0,0);
-        Label bonusActionL = new Label("Bonus Aktion: ");
+        Label bonusActionL = new Label("Bonus Actions: ");
         GridPane.setConstraints(bonusActionL,0,1);
         Label bonusTextL = new Label("Bonus Text: ");
         GridPane.setConstraints(bonusTextL,0,2);
@@ -282,9 +286,10 @@ public class ElementNPC {
         inventoryGrid.setHgap(25);
 
         Label armorTextL      = new Label("Armor: ");
-        Label weaponTextL     = new Label("Weapon: ");
+
+        Label weaponTextL     = new Label("Weapons: ");
         Label armorL      = new Label("Armor: ");
-        Label weaponL     = new Label("Weapon: ");
+        Label weaponL     = new Label("Weapons: ");
 
         GridPane.setConstraints(armorTextL,0,0);
         GridPane.setConstraints(weaponTextL,1,0);
@@ -339,7 +344,9 @@ public class ElementNPC {
             senseTF.getChildren().add(sense);
         }
 
+
         skillSensesBox.getChildren().addAll(skillTF,senseTF);
+
         skillSensesBox.setPadding(new Insets(10, 10, 10, 10));
 
         return skillSensesBox;
