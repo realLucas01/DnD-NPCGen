@@ -107,7 +107,6 @@ public class DBMS implements ApplicationContextAware{
 	 * Finden und setzen des ApplicationContextes damit andere Klassen in der
 	 * Lage sind genau diese Version der Klasse DBMS aufzurufen um auch wirklich Daten zu erhalten.
 	 */
-    @Override
     public void setApplicationContext(@NonNull ApplicationContext appContext) {
       atx = appContext;
     }
@@ -122,8 +121,6 @@ public class DBMS implements ApplicationContextAware{
 	 */
 	public static void dbmsStarter(String[] args) {
 		ctx = SpringApplication.run(DBMS.class, args);
-        //System.out.println(ctx);
-		return;
 	}
 	
 	/* @author Lucas
@@ -131,7 +128,7 @@ public class DBMS implements ApplicationContextAware{
 	 * Fährt das DBMS herunter und schließt damit auch die Verbidung
 	 * zur MySQL DB.
 	 */
-	public static void dbmsClose(String[] args,ConfigurableApplicationContext ctx) {
+	public static void dbmsClose(ConfigurableApplicationContext ctx) {
 		ctx.close();
 	}
 	
@@ -273,15 +270,15 @@ public class DBMS implements ApplicationContextAware{
 		return col;
 	}
 	
-	public ArrayList<String> bobMakesSortedList(Object Model){
-		ArrayList<String> CD = new ArrayList<String>();
-		for (Method m : ordner(Model.getClass())) {
+	public ArrayList<String> bobMakesSortedList(Object model){
+		ArrayList<String> sl = new ArrayList<String>();
+		for (Method m : ordner(model.getClass())) {
 			if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {
-				sneaky(() -> r = m.invoke(Model)); 
-    			CD.add(String.valueOf(r));
+				sneaky(() -> r = m.invoke(model)); 
+				sl.add(String.valueOf(r));
     		}
     	}
-		return CD;
+		return sl;
 	}
 	
 	/* @author Lucas
@@ -298,62 +295,62 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRow(String DBNAME,String searchstring) {
-		 ArrayList<String> CD = new ArrayList<String>();
+	public ArrayList<String> getRow(String dbName,String searchstring) {
+		 ArrayList<String> row = new ArrayList<String>();
 		 
-			switch(DBNAME) {
+			switch(dbName) {
 			case "race":
-				RaceModel Entryrace = raceRepository.findByRaceName(searchstring);
-				CD = bobMakesSortedList(Entryrace);
+				RaceModel entryrace = raceRepository.findByRaceName(searchstring);
+				row = bobMakesSortedList(entryrace);
 				break;
 			case "job":
-				JobModel Entryjob = jobRepository.findByJobName(searchstring);
-				CD = bobMakesSortedList(Entryjob);
+				JobModel entryjob = jobRepository.findByJobName(searchstring);
+				row = bobMakesSortedList(entryjob);
 				break;
 			case "class":
-				ClassModel Entryclass = classRepository.findByClassName(searchstring);
-				CD = bobMakesSortedList(Entryclass);
+				ClassModel entryclass = classRepository.findByClassName(searchstring);
+				row = bobMakesSortedList(entryclass);
 				break;
 			case "features":
-				FeatureModel Entryfeature = featureRepository.findByFeatureName(searchstring);
-				CD = bobMakesSortedList(Entryfeature);
+				FeatureModel entryfeature = featureRepository.findByFeatureName(searchstring);
+				row = bobMakesSortedList(entryfeature);
 				break;
 			case "armor":
-			    ArmorModel Entryarmor = armorRepository.findByArmorName(searchstring);
-			    CD = bobMakesSortedList(Entryarmor);
+			    ArmorModel entryarmor = armorRepository.findByArmorName(searchstring);
+			    row = bobMakesSortedList(entryarmor);
 				break;
 			case "weapon":
-			    WeaponModel Entryweapon = weaponRepository.findByWeaponName(searchstring);
-			    CD = bobMakesSortedList(Entryweapon);
+			    WeaponModel entryweapon = weaponRepository.findByWeaponName(searchstring);
+			    row = bobMakesSortedList(entryweapon);
 				break;
 			case "level":
-			    LevelModel Entrylevel = levelRepository.findByLevelNumber(Integer.parseInt(searchstring));
-			    CD = bobMakesSortedList(Entrylevel);
+			    LevelModel entrylevel = levelRepository.findByLevelNumber(Integer.parseInt(searchstring));
+			    row = bobMakesSortedList(entrylevel);
 				break;
 			case "skills":
-				SkillModel Entryskill = skillRepository.findBySkillName(searchstring);
-				CD = bobMakesSortedList(Entryskill);
+				SkillModel entryskill = skillRepository.findBySkillName(searchstring);
+				row = bobMakesSortedList(entryskill);
 				break;
 			case "dracances":
-				DracAncesModel Entrydracances = dracAncesRepository.findByDraconicDragon(searchstring);
-				CD = bobMakesSortedList(Entrydracances);
+				DracAncesModel entrydracances = dracAncesRepository.findByDraconicDragon(searchstring);
+				row = bobMakesSortedList(entrydracances);
 				break;
 			case "spellslots":
-				SpellSlotsModel Entryspellslots = spellSlotsRepository.findBySpellSlotsClass(searchstring);
-				CD = bobMakesSortedList(Entryspellslots);
+				SpellSlotsModel entryspellslots = spellSlotsRepository.findBySpellSlotsClass(searchstring);
+				row = bobMakesSortedList(entryspellslots);
 				break;
 			case "spells":
-			    SpellModel Entryspells = spellRepository.findBySpellName(searchstring);
-			    CD = bobMakesSortedList(Entryspells);
+			    SpellModel entryspells = spellRepository.findBySpellName(searchstring);
+			    row = bobMakesSortedList(entryspells);
 				break;
 			case "deity":
-		    	DeityModel Entrydeity = deityRepository.findByDeityName(searchstring);
-		    	CD = bobMakesSortedList(Entrydeity);
+		    	DeityModel entrydeity = deityRepository.findByDeityName(searchstring);
+		    	row = bobMakesSortedList(entrydeity);
 			break;
 			default:
-				CD = null;
+				row = null;
 			}
-			return CD;
+			return row;
 	}
 	
 	/* @author Lucas
@@ -366,7 +363,7 @@ public class DBMS implements ApplicationContextAware{
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
 	public ArrayList<String> getRandomRow(String dbname) {
-	    Long qty;
+	    long qty;
 	    Page<?> questionPage;
 	    int idx;
 	    ArrayList<String> randRow = new ArrayList<String>();
