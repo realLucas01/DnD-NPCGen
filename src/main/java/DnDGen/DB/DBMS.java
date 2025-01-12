@@ -15,7 +15,6 @@
 
 package DnDGen.DB;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,6 +33,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import DnDGen.DB.Sortierung.Order;
@@ -157,9 +158,9 @@ public class DBMS implements ApplicationContextAware{
 	
 	/* @author Lucas
 	 *
-	 * Ordnet alle methoden innerhalb der Datenbankmodellen in der Reihenfolge in der sie deklariert wurden.
+	 * Ordnet alle Methoden innerhalb der Datenbankmodellen in der Reihenfolge in der sie deklariert wurden.
 	 * 
-	 * @param clazz Classe deren Methoden geordnet werden sollen
+	 * @param clazz Klasse deren Methoden geordnet werden sollen
 	 */
 	public Method[] ordner(Class<?> clazz) {
 		Method[] methods = clazz.getMethods();
@@ -272,6 +273,16 @@ public class DBMS implements ApplicationContextAware{
 		return col;
 	}
 	
+	public ArrayList<String> bobMakesSortedList(Object Model){
+		ArrayList<String> CD = new ArrayList<String>();
+		for (Method m : ordner(Model.getClass())) {
+			if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {
+				sneaky(() -> r = m.invoke(Model)); 
+    			CD.add(String.valueOf(r));
+    		}
+    	}
+		return CD;
+	}
 	
 	/* @author Lucas
 	 *
@@ -287,117 +298,57 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRow(String DBNAME,String searchstring) {	
+	public ArrayList<String> getRow(String DBNAME,String searchstring) {
 		 ArrayList<String> CD = new ArrayList<String>();
 		 
 			switch(DBNAME) {
 			case "race":
 				RaceModel Entryrace = raceRepository.findByRaceName(searchstring);
-				for (Method m : ordner(Entryrace.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryrace));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+				CD = bobMakesSortedList(Entryrace);
 				break;
 			case "job":
 				JobModel Entryjob = jobRepository.findByJobName(searchstring);
-				for (Method m : ordner(Entryjob.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryjob));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+				CD = bobMakesSortedList(Entryjob);
 				break;
 			case "class":
 				ClassModel Entryclass = classRepository.findByClassName(searchstring);
-				for (Method m : ordner(Entryclass.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryclass));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+				CD = bobMakesSortedList(Entryclass);
 				break;
 			case "features":
 				FeatureModel Entryfeature = featureRepository.findByFeatureName(searchstring);
-				for (Method m : ordner(Entryfeature.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryfeature));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+				CD = bobMakesSortedList(Entryfeature);
 				break;
 			case "armor":
 			    ArmorModel Entryarmor = armorRepository.findByArmorName(searchstring);
-			    for (Method m : ordner(Entryarmor.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryarmor));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+			    CD = bobMakesSortedList(Entryarmor);
 				break;
 			case "weapon":
 			    WeaponModel Entryweapon = weaponRepository.findByWeaponName(searchstring);
-			    for (Method m : ordner(Entryweapon.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryweapon));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+			    CD = bobMakesSortedList(Entryweapon);
 				break;
 			case "level":
 			    LevelModel Entrylevel = levelRepository.findByLevelNumber(Integer.parseInt(searchstring));
-			    for (Method m : ordner(Entrylevel.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entrylevel));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+			    CD = bobMakesSortedList(Entrylevel);
 				break;
 			case "skills":
 				SkillModel Entryskill = skillRepository.findBySkillName(searchstring);
-				for (Method m : ordner(Entryskill.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryskill));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+				CD = bobMakesSortedList(Entryskill);
 				break;
 			case "dracances":
 				DracAncesModel Entrydracances = dracAncesRepository.findByDraconicDragon(searchstring);
-				for (Method m : ordner(Entrydracances.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entrydracances));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+				CD = bobMakesSortedList(Entrydracances);
 				break;
 			case "spellslots":
 				SpellSlotsModel Entryspellslots = spellSlotsRepository.findBySpellSlotsClass(searchstring);
-				for (Method m : ordner(Entryspellslots.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entryspellslots));
-							CD.add(String.valueOf(r));
-		    		}
-		    	}
+				CD = bobMakesSortedList(Entryspellslots);
 				break;
 			case "spells":
-			    	SpellModel Entryspells = spellRepository.findBySpellName(searchstring);
-			    	for (Method m : ordner(Entryspells.getClass())) {
-			    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-			    			 sneaky(() -> r = m.invoke(Entryspells));
-			    			 CD.add(String.valueOf(r));
-			    		}
-			    	}
+			    SpellModel Entryspells = spellRepository.findBySpellName(searchstring);
+			    CD = bobMakesSortedList(Entryspells);
 				break;
 			case "deity":
 		    	DeityModel Entrydeity = deityRepository.findByDeityName(searchstring);
-		    	for (Method m : ordner(Entrydeity.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(Entrydeity));
-		    			 CD.add(String.valueOf(r));
-		    		}
-		    	}
+		    	CD = bobMakesSortedList(Entrydeity);
 			break;
 			default:
 				CD = null;
@@ -427,12 +378,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = classRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	ClassModel randclass = (ClassModel) questionPage.getContent().get(0);
-			    for (Method m : ordner(randclass.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randclass));
-		    			 randRow.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRow = bobMakesSortedList(randclass);
 		    }
 			break;
 		case "language":
@@ -441,12 +387,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = languageRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	LanguageModel randlanuguage = (LanguageModel) questionPage.getContent().get(0);
-			    for (Method m : ordner(randlanuguage.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randlanuguage));
-		    			 randRow.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRow = bobMakesSortedList(randlanuguage);
 		    }
 			break;
 		case "job":
@@ -455,12 +396,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = jobRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	JobModel randjob =  (JobModel) questionPage.getContent().get(0);
-			    for (Method m : ordner(randjob.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randjob));
-		    			 randRow.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRow = bobMakesSortedList(randjob);
 		    }
 			break;
 		case "race":
@@ -469,12 +405,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = raceRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	RaceModel randrace = (RaceModel) questionPage.getContent().get(0);
-			    for (Method m : ordner(randrace.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randrace));
-		    			 randRow.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRow = bobMakesSortedList(randrace);
 		    }
 			break;
 		case "description":
@@ -483,12 +414,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = descriptionRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	DescriptionModel randesc = (DescriptionModel) questionPage.getContent().get(0);
-			    for (Method m : ordner(randesc.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randesc));
-		    			 randRow.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRow = bobMakesSortedList(randesc);
 		    }
 			break;
 		case "alignment":
@@ -497,12 +423,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = alignmentRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	AlignmentModel randalig = (AlignmentModel) questionPage.getContent().get(0);
-			    for (Method m : ordner(randalig.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randalig));
-		    			 randRow.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRow = bobMakesSortedList(randalig);
 		    }
 			break;
 		case "dracances":
@@ -511,12 +432,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = dracAncesRepository.findAll(PageRequest.of(idx, 1));
 		    if (questionPage.hasContent()) {
 		    	DracAncesModel randdracances = (DracAncesModel) questionPage.getContent().get(0);
-			    for (Method m : ordner(randdracances.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randdracances));
-		    			 randRow.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRow = bobMakesSortedList(randdracances);
 		    }
 			break;
 			
@@ -551,12 +467,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = armorRepository.getArmorPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	ArmorModel randarmorpref = (ArmorModel) questionPage2.getContent().get(0);
-		    	for (Method m : ordner(randarmorpref.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0) {	
-		    			 sneaky(() -> r = m.invoke(randarmorpref));
-		    			 randRowPref.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRowPref = bobMakesSortedList(randarmorpref);
 		    }
 			break;
 		case "weapon":
@@ -565,12 +476,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = weaponRepository.getWeaponPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	WeaponModel randweaponpref = (WeaponModel) questionPage2.getContent().get(0);
-		    	for (Method m : ordner(randweaponpref.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randweaponpref));
-		    			 randRowPref.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRowPref = bobMakesSortedList(randweaponpref);
 		    }
 			break;
 		case "deity":
@@ -579,12 +485,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = deityRepository.getDeityPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	DeityModel randdeitypref = (DeityModel) questionPage2.getContent().get(0);
-		    	for (Method m : ordner(randdeitypref.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randdeitypref));
-		    			 randRowPref.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRowPref = bobMakesSortedList(randdeitypref);
 		    }
 			break;
 		case "name":
@@ -593,12 +494,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = nameRepository.getNamePref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	NameModel randnamepref = (NameModel) questionPage2.getContent().get(0);
-		    	for (Method m : ordner(randnamepref.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randnamepref));
-		    			 randRowPref.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRowPref = bobMakesSortedList(randnamepref);
 		    }
 			break;
 		case "abilisc":
@@ -607,12 +503,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage2 = abiliScRepository.getAbiliScPref(pref,PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	AbiliScModel randabilipref = (AbiliScModel) questionPage2.getContent().get(0);
-		    	for (Method m : ordner(randabilipref.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(randabilipref));
-		    			 randRowPref.add(String.valueOf(r));
-		    		}
-		    	}
+		    	randRowPref = bobMakesSortedList(randabilipref);
 		    }
 			break;
 		default:
@@ -680,12 +571,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = spellRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
 		    if (questionPage.hasContent()) {
 		    	SpellModel spellmultpref = (SpellModel) questionPage.getContent().get(0);
-		    	for (Method m : ordner(spellmultpref.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(spellmultpref));
-		    			 rowMultPref.add(String.valueOf(r));
-		    		}
-		    	}
+		    	rowMultPref = bobMakesSortedList(spellmultpref);
 		    }
 		    break;
 		case "spellknown":
@@ -694,12 +580,7 @@ public class DBMS implements ApplicationContextAware{
 		    questionPage = spellKnownRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
 		    if (questionPage.hasContent()) {
 		    	SpellKnownModel spellknownmultpref = (SpellKnownModel) questionPage.getContent().get(0);
-		    	for (Method m : ordner(spellknownmultpref.getClass())) {
-		    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-		    			 sneaky(() -> r = m.invoke(spellknownmultpref));
-		    			 rowMultPref.add(String.valueOf(r));
-		    		}
-		    	}
+		    	rowMultPref = bobMakesSortedList(spellknownmultpref);
 		    }
 		    break;
 		default:
