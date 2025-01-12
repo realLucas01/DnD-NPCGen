@@ -10,8 +10,14 @@ import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 
 
+/**
+ * The type Random generator.
+ */
 public class RandomGenerator {
 
+	/**
+	 * The App ctx.
+	 */
 	/* @author Lucas
 	 *
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
@@ -20,23 +26,60 @@ public class RandomGenerator {
 	 * ich hoffe/denke, dass es auch so funktionieren sollte, übernehme aber keine Verantwortung dafür.
 	 */
 	ApplicationContext appCtx = DBMS.getApplicationContext();
+	/**
+	 * The Dbms.
+	 */
 	DBMS dbms = appCtx.getBean(DBMS.class);
 
+	/**
+	 * The Rand.
+	 */
 	Random rand = new SecureRandom();
 
+	/**
+	 * The Name db class.
+	 */
 	String nameDBClass = "class";
+	/**
+	 * The Name dbd spell known.
+	 */
 	String nameDBDSpellKnown = "spellknown";
+	/**
+	 * The Name db spells.
+	 */
 	String nameDBSpells = "spells";
+	/**
+	 * The Name db features.
+	 */
 	String nameDBFeatures = "features";
+	/**
+	 * The Name db spell slots.
+	 */
 	String nameDBSpellSlots = "spellslots";
+	/**
+	 * The Logger.
+	 */
 	Logger logger;
-	//Aufteilung eines großen String in kleinere
+
+	/**
+	 * Big string to divided string list.
+	 *
+	 * @param bigString the big string
+	 * @return the list
+	 */
+//Aufteilung eines großen String in kleinere
 	public List<String> bigStringToDividedString(String bigString) {
         String[] partsOfTheBigString = bigString.split(", "); //Teilung des großen Strings an den Stellen wo ein Komma ist
         //rückgabe, des aufgeteilten Strings als eine Liste
         return new ArrayList<>(List.of(partsOfTheBigString));
 	}
 
+	/**
+	 * Divide doubles list.
+	 *
+	 * @param bigNumber the big number
+	 * @return the list
+	 */
 	public static List<Double> divideDoubles(String bigNumber) {
 		List<String> dividedString = new ArrayList<>();
 		List<Double> parsedToDouble = new ArrayList<>();
@@ -54,6 +97,13 @@ public class RandomGenerator {
 		return parsedToDouble;
 	}
 
+	/**
+	 * Dice thrower int.
+	 *
+	 * @param diceCount  the dice count
+	 * @param diceNumber the dice number
+	 * @return the int
+	 */
 	public int diceThrower(Integer diceCount, Integer diceNumber) {
 
 		int addedRolls = 0;
@@ -66,6 +116,12 @@ public class RandomGenerator {
 		return addedRolls;
 	}
 
+	/**
+	 * Rand ability score list.
+	 *
+	 * @param amountOfThrows the amount of throws
+	 * @return the list
+	 */
 	public List<Integer> randAbilityScore(Integer amountOfThrows) {
 		ArrayList<Integer> value = new ArrayList<>();
 		ArrayList<Integer> finishedSetForAbilityScores = new ArrayList<>();
@@ -95,6 +151,12 @@ public class RandomGenerator {
 		return finishedSetForAbilityScores;
 	}
 
+	/**
+	 * Rand height double.
+	 *
+	 * @param race the race
+	 * @return the double
+	 */
 	public double randHeight(String race) {
 		ArrayList<String> rawHeight;
 		ArrayList<Double> minMaxArray;
@@ -114,6 +176,11 @@ public class RandomGenerator {
         return Math.round(randomNum * 10.0) / 10.0;
 	}
 
+	/**
+	 * Rand char class string.
+	 *
+	 * @return the string
+	 */
 	/* @Luca */
 	public   String randCharClass() {
 		ArrayList<String> rndClass = dbms.getRandomRow(nameDBClass);
@@ -121,6 +188,11 @@ public class RandomGenerator {
 		return rndClass.get(1);
 	}
 
+	/**
+	 * Rand race string.
+	 *
+	 * @return the string
+	 */
 	/* TO DO @Lenard */
 	public String randRace() {
 		String race;
@@ -130,6 +202,11 @@ public class RandomGenerator {
 		return race;
 	}
 
+	/**
+	 * Rand job string.
+	 *
+	 * @return the string
+	 */
 	/* TO DO @Lenard */
 	public   String randJob() {
 		String job;
@@ -142,12 +219,23 @@ public class RandomGenerator {
 		return job;
 	}
 
+	/**
+	 * Rand level int.
+	 *
+	 * @return the int
+	 */
 	/* @Luca */
 	public int randLevel() {
 		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
 		return rand.nextInt(21);
 	}
 
+	/**
+	 * Rand size string.
+	 *
+	 * @param race the race
+	 * @return the string
+	 */
 	public String randSize(String race) {
 		String size;
 		ArrayList<String> sizeArray;
@@ -167,6 +255,12 @@ public class RandomGenerator {
 		return size;
 	}
 
+	/**
+	 * Rand description list.
+	 *
+	 * @param race the race
+	 * @return the list
+	 */
 	/* TO DO @Lenard */
 	public List<String> randDescription(String race) {
 		ArrayList<String> desc = new ArrayList<>();
@@ -189,7 +283,15 @@ public class RandomGenerator {
 		return desc;
 	}
 
-	/* Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
+	/**
+	 * Figure out prof list list.
+	 *
+	 * @param neededProfList the needed prof list
+	 * @param charClass      the char class
+	 * @param race           the race
+	 * @return the list
+	 */
+/* Funktion um alle gewünschten Prof aus Klasse, Rasse und Features zu bekommen
 		Derzeit ist es möglich mit dieser Funktion die Profs für Waffen, Rüstung und zusätzliche Sicht zu bekommen
 	*/
 	/* @Luca */
@@ -207,6 +309,14 @@ public class RandomGenerator {
 		}
 		return new ArrayList<>(profSet);
 	}
+
+	/**
+	 * Figure out armor prof list list.
+	 *
+	 * @param charClass the char class
+	 * @param race      the race
+	 * @return the list
+	 */
 	public List<String> figureOutArmorProfList(String charClass, String race){
 		List<String> profList; // Liste mit Ergebnissen die zurückgegeben wird
 		List<String> databaseReturn; // Liste die von der DB zurückkommt
@@ -225,6 +335,14 @@ public class RandomGenerator {
 		}
 		return profList;
 	}
+
+	/**
+	 * Figure out weapon prof list list.
+	 *
+	 * @param charClass the char class
+	 * @param race      the race
+	 * @return the list
+	 */
 	public List<String> figureOutWeaponProfList(String charClass, String race){
 		List<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
 		List<String> databaseReturn; // Liste die von der DB zurückkommt
@@ -248,6 +366,12 @@ public class RandomGenerator {
 		return  profList;
 	}
 
+	/**
+	 * Get vision string.
+	 *
+	 * @param race the race
+	 * @return the string
+	 */
 	public String getVision (String race){
 		String visions = ""; // Liste mit Ergebnissen die zurückgegeben wird
 		List<String> databaseReturn; // Liste die von der DB zurückkommt
@@ -270,6 +394,12 @@ public class RandomGenerator {
 		return visions;
 	}
 
+	/**
+	 * Rand armor string.
+	 *
+	 * @param armorProf the armor prof
+	 * @return the string
+	 */
 	/* TO DO @Luca */
 	public String randArmor(List<String> armorProf) {
 		String armor; //return value
@@ -285,6 +415,12 @@ public class RandomGenerator {
 		return armor;
 	}
 
+	/**
+	 * Rand weapon string.
+	 *
+	 * @param weaponProf the weapon prof
+	 * @return the string
+	 */
 	/* @Luca */
 	public String randWeapon(List<String> weaponProf) {
 		int lengthOfWeaponProf = weaponProf.size();
@@ -303,6 +439,12 @@ public class RandomGenerator {
 
 	}
 
+	/**
+	 * Rand deity string.
+	 *
+	 * @param alignment the alignment
+	 * @return the string
+	 */
 	/* TO DO @Lenard */
 	public String randDeity(String alignment) {
 		String deity;
@@ -315,12 +457,24 @@ public class RandomGenerator {
 		return deity;
 	}
 
+	/**
+	 * Rand languages string.
+	 *
+	 * @return the string
+	 */
 	/* @Luca */
 	public   String randLanguages() {
 		List<String> rndLang = dbms.getRandomRow("language");
 		return rndLang.get(1);
 	}
 
+	/**
+	 * Rand name string.
+	 *
+	 * @param gender the gender
+	 * @param race   the race
+	 * @return the string
+	 */
 	/* TO DO @Lenard */
 	public String randName(String gender, String race) {
 		String name;
@@ -351,6 +505,12 @@ public class RandomGenerator {
 	}
 
 
+	/**
+	 * Rand age int.
+	 *
+	 * @param race the race
+	 * @return the int
+	 */
 	/* @Luca */
 	public int randAge(String race) {
 		List<String> raceList;
@@ -361,7 +521,15 @@ public class RandomGenerator {
 		return rand.nextInt(ageMax) + ageAdult;
 	}
 
-	//Schroedingers Funktion(ehemals)
+	/**
+	 * Rand skill prof list.
+	 *
+	 * @param possibleSkills the possible skills
+	 * @param numberSkill    the number skill
+	 * @param knownSkillList the known skill list
+	 * @return the list
+	 */
+//Schroedingers Funktion(ehemals)
 	/* @Luca */
 	public List<String> randSkillProf(List<String> possibleSkills, int numberSkill, List<String> knownSkillList) {
 		if (possibleSkills.isEmpty()) {
@@ -383,8 +551,13 @@ public class RandomGenerator {
 		return new ArrayList<>(uniqueSkills);
 	}
 
+	/**
+	 * Rand gender string.
+	 *
+	 * @return the string
+	 */
 	/* TO DO @Lenard */
-	public   String randGender() {
+	public String randGender() {
 		String gender;
 		int value = rand.nextInt(2);
 
@@ -396,10 +569,22 @@ public class RandomGenerator {
 		return gender;
 	}
 
+	/**
+	 * Rand alignment string.
+	 *
+	 * @return the string
+	 */
 	public String randAlignment() {
 
 		return dbms.getRandomRow("alignment").get(2);
 	}
+
+	/**
+	 * Get highest spell level int.
+	 *
+	 * @param chosenNpc the chosen npc
+	 * @return the int
+	 */
 	public int getHighestSpellLevel(NpcClass chosenNpc){
 		int dbCounter = 3;
 		int highestSpellLevel = 0 ;
@@ -414,6 +599,12 @@ public class RandomGenerator {
 		return highestSpellLevel;
 	}
 
+	/**
+	 * Random spells for class npc class.
+	 *
+	 * @param chosenNpc the chosen npc
+	 * @return the npc class
+	 */
 	public NpcClass randomSpellsForClass(NpcClass chosenNpc){
 		String classSpellKnownColDB = dbms.getRow(nameDBClass, chosenNpc.getGenClass()).get(9);
 		int spellCount ;
@@ -463,6 +654,14 @@ public class RandomGenerator {
 		}
 		return chosenNpc;
 	}
+
+	/**
+	 * Assign spells to npc.
+	 *
+	 * @param chosenNpc  the chosen npc
+	 * @param spellLevel the spell level
+	 * @param spellNames the spell names
+	 */
 	public void assignSpellsToNpc(NpcClass chosenNpc, int spellLevel, String spellNames) {
         switch (spellLevel) {
             case 1 -> chosenNpc.setFirstLevelSpell(spellNames);
@@ -481,7 +680,7 @@ public class RandomGenerator {
 	/*
 	Anzahl der möglichen Spells für die Klasse
 	 */
-	private int determineNumberOfKnownSpell(NpcClass chosenNpc) {
+	private Integer determineNumberOfKnownSpell(NpcClass chosenNpc) {
 
 		String colClassForSpell = dbms.getRow(nameDBClass, chosenNpc.getGenClass()).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
@@ -522,6 +721,11 @@ public class RandomGenerator {
         return dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber);
 	}
 
+	/**
+	 * Add race cantrips and spells.
+	 *
+	 * @param chosenNpc the chosen npc
+	 */
 	public void addRaceCantripsAndSpells(NpcClass chosenNpc){
 		List<String> featureList = bigStringToDividedString(dbms.getRow("race", chosenNpc.getRace()).get(3));
 		List<String> featureSpellList = new ArrayList<>();
@@ -592,6 +796,14 @@ public class RandomGenerator {
 		}
 	}
 
+	/**
+	 * Passive perception string.
+	 *
+	 * @param abilityModifier the ability modifier
+	 * @param skillList       the skill list
+	 * @param profBonus       the prof bonus
+	 * @return the string
+	 */
 	public String passivePerception(List<Integer> abilityModifier, List<String> skillList, int profBonus){
 		int perception;
 
@@ -604,6 +816,14 @@ public class RandomGenerator {
         return String.valueOf(perception);
 	}
 
+	/**
+	 * Spell attack mod int.
+	 *
+	 * @param abilityModifier the ability modifier
+	 * @param profBonus       the prof bonus
+	 * @param genClass        the gen class
+	 * @return the int
+	 */
 	public int spellAttackMod(List<Integer> abilityModifier, int profBonus, String genClass){
 		int spellAttackMod = 0;
 
@@ -627,6 +847,12 @@ public class RandomGenerator {
 		return spellAttackMod;
 	}
 
+	/**
+	 * Spell save dc int.
+	 *
+	 * @param spellAttackMod the spell attack mod
+	 * @return the int
+	 */
 	public int spellSaveDC(int spellAttackMod){
 		int spellSaveDC = 0;
 

@@ -10,11 +10,25 @@ import java.util.Random;
 import java.util.logging.Logger;
 //import java.util.Scanner;
 
+/**
+ * The type Random file selector.
+ */
 public class RandomFileSelector {
+    /**
+     * The Random.
+     */
     static Random random = new SecureRandom();
+    /**
+     * The Logger.
+     */
     static Logger logger = Logger.getLogger(RandomFileSelector.class.getName());
 
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         /*
         // Scanner für Benutzereingaben initialisieren
@@ -37,7 +51,13 @@ public class RandomFileSelector {
         getRandomPNG("Tiefling");
     }
 
-    // Rekursiv alle Dateien eines Ordners (inkl. Unterordnern) auflisten
+    /**
+     * List all files list.
+     *
+     * @param folder the folder
+     * @return the list
+     */
+// Rekursiv alle Dateien eines Ordners (inkl. Unterordnern) auflisten
     public static List<File> listAllFiles(File folder) {
         List<File> files = new ArrayList<>();
         File[] fileList = folder.listFiles();
@@ -55,7 +75,14 @@ public class RandomFileSelector {
         return files;
     }
 
-    // Zufällige Anzahl von Dateien aus der Liste auswählen
+    /**
+     * Gets random files.
+     *
+     * @param files the files
+     * @param count the count
+     * @return the random files
+     */
+// Zufällige Anzahl von Dateien aus der Liste auswählen
     public static List<File> getRandomFiles(List<File> files, int count) {
         List<File> randomFiles = new ArrayList<>();
 
@@ -71,6 +98,12 @@ public class RandomFileSelector {
         return randomFiles;
     }
 
+    /**
+     * Rand file.
+     *
+     * @param folder    the folder
+     * @param fileCount the file count
+     */
     public static void randFile(File folder, int fileCount) {
 
         // Prüfen, ob der Ordner existiert
@@ -102,7 +135,13 @@ public class RandomFileSelector {
             }
         }
     }
-    //Hier bekommt man das zufällige Bild des NPCs ausgewählt
+
+    /**
+     * Get random png.
+     *
+     * @param race the race
+     */
+//Hier bekommt man das zufällige Bild des NPCs ausgewählt
     public static void getRandomPNG(/*NPCClass generatedNPC*/ String race){
         String filePath = "F:\\DnD\\DnD Material\\DnD Token  Collection";
         File folder = new File(filePath);

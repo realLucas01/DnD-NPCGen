@@ -9,47 +9,149 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The type Edit npc.
+ */
 public class EditNpc {
+    /**
+     * The App ctx.
+     */
     /* @author Lucas
      *
      * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
      * neu-konstruktion von DBMS wäre sonst leer.
      */
     ApplicationContext appCtx = DBMS.getApplicationContext();
+    /**
+     * The Dbms.
+     */
     DBMS dbms = appCtx.getBean(DBMS.class);
 
+    /**
+     * The Rnd numb.
+     */
     Random rndNumb = new SecureRandom();
+    /**
+     * The Rand gen.
+     */
     RandomGenerator randGen = new RandomGenerator();
+    /**
+     * The Rand npc.
+     */
     RandomNpc randNpc = new RandomNpc();
 
 
+    /**
+     * The Weapon list.
+     */
     ArrayList<String> weaponList;
+    /**
+     * The Languages.
+     */
     ArrayList<String> languages;
+    /**
+     * The Saving throws.
+     */
     ArrayList<String> savingThrows;
+    /**
+     * The Description.
+     */
     ArrayList<String> description;
+    /**
+     * The Skill list.
+     */
     ArrayList<String> skillList = new ArrayList<>();
+    /**
+     * The Ability scores.
+     */
     List<Integer> abilityScores;
+    /**
+     * The Ability modifier.
+     */
     ArrayList<Integer> abilityModifier;
+    /**
+     * The Armor.
+     */
     String armor;
+    /**
+     * The Armor class.
+     */
     int armorClass;
+    /**
+     * The Generated npc finished.
+     */
     List<String> generatedNpcFinished = new ArrayList<>();
+    /**
+     * The Race.
+     */
     String race;
+    /**
+     * The Job.
+     */
     String job;
+    /**
+     * The Gen class.
+     */
     String genClass;
+    /**
+     * The Gender.
+     */
     String gender;
+    /**
+     * The Name.
+     */
     String name;
+    /**
+     * The Alignment.
+     */
     String alignment;
+    /**
+     * The Deity.
+     */
     String deity;
+    /**
+     * The Senses.
+     */
     String senses;
+    /**
+     * The Level.
+     */
     int level;
+    /**
+     * The Age.
+     */
     int age;
+    /**
+     * The Prof bonus.
+     */
     int profBonus;
+    /**
+     * The Health points.
+     */
     int healthPoints;
+    /**
+     * The Action list.
+     */
     ArrayList<String> actionList;
+    /**
+     * The Bonus action list.
+     */
     ArrayList<String> bonusActionList;
+    /**
+     * The Bonus text list.
+     */
     ArrayList<String> bonusTextList;
+    /**
+     * The Movement speed list.
+     */
     ArrayList<String> movementSpeedList;
+    /**
+     * The Spell list.
+     */
     ArrayList<String> spellList;
+    /**
+     * The Spell ability.
+     */
     ArrayList<String> spellAbility;
 /*
     eine ArrayList, diese ist wie folgt aufgebaut:
@@ -92,6 +194,13 @@ public class EditNpc {
  */
 
 
+    /**
+     * Apply edit list.
+     *
+     * @param newNpc the new npc
+     * @param oldNpc the old npc
+     * @return the list
+     */
     public List<Object> applyEdit(List<Object> newNpc, List<Object> oldNpc) {
         /*
         Legende:
@@ -309,7 +418,14 @@ public class EditNpc {
         return changedNpc;
     }
 
-    /*
+    /**
+     * Find changes list.
+     *
+     * @param newNpc the new npc
+     * @param oldNpc the old npc
+     * @return the list
+     */
+/*
         Diese Funktion vergleicht den alten und neuen Npc und gibt eine Liste mit den changes zurück
     */
     public List<String> findChanges(List<Object> newNpc, List<Object> oldNpc) {
@@ -545,6 +661,13 @@ public class EditNpc {
         return false;
     }
 
+    /**
+     * Remove race ability addition list.
+     *
+     * @param race         the race
+     * @param abilityScore the ability score
+     * @return the list
+     */
     public List<Integer> removeRaceAbilityAddition(String race, ArrayList<Integer> abilityScore) {
         List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
         int raceModNumber;
@@ -578,6 +701,12 @@ public class EditNpc {
         return  abilityScore;
     }
 
+    /**
+     * Remove plus number in a string list list.
+     *
+     * @param stringList the string list
+     * @return the list
+     */
     public List<String> removePlusNumberInAStringList (List<String> stringList ){
         List<String> stringListWithoutNumbers = new ArrayList<>();
         for(String skills:stringList){

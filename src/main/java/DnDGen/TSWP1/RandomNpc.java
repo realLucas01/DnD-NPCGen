@@ -5,24 +5,51 @@ import java.util.*;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
 
+/**
+ * The type Random npc.
+ */
 public class RandomNpc {
-	/* @author Lucas
+    /**
+     * The App ctx.
+     */
+    /* @author Lucas
 	 * 
 	 * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
 	 * neu-konstruktion von DBMS wäre sonst leer.
 	 */
     ApplicationContext appCtx = DBMS.getApplicationContext();
+    /**
+     * The Dbms.
+     */
     DBMS dbms = appCtx.getBean(DBMS.class);
-    
+
+    /**
+     * The Rnd numb.
+     */
     Random rndNumb =  new SecureRandom();
+    /**
+     * The Rand gen.
+     */
     RandomGenerator randGen = new RandomGenerator();
-    /*
+    /**
+     * The Name db features.
+     */
+/*
     nicht wundern, diese variablen die hier folgen dienen dazu sich wiederholende Strings bei DB aufrufen zu vermeiden
     und um SonarCube zufriedenzustellen
      */
     String nameDBFeatures = "features";
+    /**
+     * The Name db commoner.
+     */
     String nameDBCommoner = "Commoner";
+    /**
+     * The Name db class.
+     */
     String nameDBClass = "class";
+    /**
+     * The Search term bonus action.
+     */
     String searchTermBonusAction = "bonus action";
 
 
@@ -92,6 +119,18 @@ public class RandomNpc {
         26: bonusTextList ;
      */
 
+    /**
+     * Create random npc npc class.
+     *
+     * @param inputName         the input name
+     * @param inputRace         the input race
+     * @param inputClass        the input class
+     * @param inputJob          the input job
+     * @param inputLevel        the input level
+     * @param inputAbilityScore the input ability score
+     * @param inputGender       the input gender
+     * @return the npc class
+     */
     public NpcClass createRandomNPC(String inputName, String inputRace, String inputClass, String inputJob, Integer inputLevel, String inputAbilityScore, String inputGender) {
         NpcClass randNpc = new NpcClass();
         List<String> weaponList;
@@ -279,6 +318,13 @@ public class RandomNpc {
         return randNpc;
     }
 
+    /**
+     * Distribute ability score list.
+     *
+     * @param rolledAbilityScore the rolled ability score
+     * @param charClass          the char class
+     * @return the list
+     */
     public List<Integer> distributeAbilityScore (List<Integer> rolledAbilityScore, String charClass) {
     	List<Integer> rawAbilityScores ;
     	List<String> arrayForClass;
@@ -330,6 +376,12 @@ public class RandomNpc {
     	}
     }
 
+    /**
+     * Determine ability modifier list.
+     *
+     * @param abilityScore the ability score
+     * @return the list
+     */
     public List<Integer> determineAbilityModifier(List<Integer> abilityScore){
         List<Integer> abilityModifier = new ArrayList<>();
         float calcMod;
@@ -340,6 +392,14 @@ public class RandomNpc {
         return abilityModifier;
     }
 
+    /**
+     * Add ability score to skill list list.
+     *
+     * @param abilityModifier the ability modifier
+     * @param skillList       the skill list
+     * @param profBonus       the prof bonus
+     * @return the list
+     */
     public List<String> addAbilityScoreToSkillList(List<Integer> abilityModifier, List<String> skillList, int profBonus ){
         List<String> skillListWithNumbers = new ArrayList<>();
         String dbAbilityScore ;
@@ -369,7 +429,16 @@ public class RandomNpc {
         }
         return skillListWithNumbers;
     }
-    /*
+
+    /**
+     * Determine armor and ac list.
+     *
+     * @param genClass        the gen class
+     * @param race            the race
+     * @param abilityModifier the ability modifier
+     * @return the list
+     */
+/*
     Diese Funktion wurde ausgelagert. Sie möchte, um glücklich zu sein, die klasse, rasse und die ability Modifier.
     Am Ende wird zurückgegeben eine ArrayList<> mit (Die ausgewählte Rüstung, die Armor Class vollständig berechnet)
      */
@@ -422,6 +491,14 @@ public class RandomNpc {
         armorAndArmorClass.add(String.valueOf(armorClass));
         return armorAndArmorClass;
     }
+
+    /**
+     * Determine weapons list.
+     *
+     * @param genClass the gen class
+     * @param race     the race
+     * @return the list
+     */
     public List<String> determineWeapons(String genClass, String race){
         List<String> weaponProfList = randGen.figureOutProfList("weapon", genClass, race);
         List<String> weaponList = new ArrayList<>();
@@ -435,6 +512,13 @@ public class RandomNpc {
         weaponList.addAll(removeDuplicateWeapons);
         return weaponList;
     }
+
+    /**
+     * Determine movement speed list.
+     *
+     * @param race the race
+     * @return the list
+     */
     public List<String> determineMovementSpeed(String race) {
         //creature Speed
         List<String> movementSpeed = randGen.bigStringToDividedString(dbms.getRow("race", race).get(9));
@@ -453,9 +537,25 @@ public class RandomNpc {
         }
         return movementSpeedList;
     }
+
+    /**
+     * Determine prof bonus int.
+     *
+     * @param level the level
+     * @return the int
+     */
     public int determineProfBonus(int level) {
        return Integer.parseInt(dbms.getRow("level", String.valueOf(level)).get(2));
     }
+
+    /**
+     * Determine saving throws list.
+     *
+     * @param genClass        the gen class
+     * @param abilityModifier the ability modifier
+     * @param profBonus       the prof bonus
+     * @return the list
+     */
     public List<String> determineSavingThrows(String genClass, List<Integer> abilityModifier, int profBonus){
         List<String> savingThrows = new ArrayList<>();
         if(!genClass.equals(nameDBCommoner)) {
@@ -478,6 +578,15 @@ public class RandomNpc {
         }
         return savingThrows;
     }
+
+    /**
+     * Calculate hp int.
+     *
+     * @param genClass        the gen class
+     * @param level           the level
+     * @param abilityModifier the ability modifier
+     * @return the int
+     */
     public int calculateHP(String genClass, int level, List<Integer> abilityModifier ){
         if (level == 0){
             level = 1;
@@ -485,6 +594,15 @@ public class RandomNpc {
         return randGen.diceThrower(level, Integer.parseInt(dbms.getRow(nameDBClass,genClass).get(2)))+ level*abilityModifier.get(2);
 
     }
+
+    /**
+     * Determine skill list list.
+     *
+     * @param race     the race
+     * @param job      the job
+     * @param genClass the gen class
+     * @return the list
+     */
     public List<String> determineSkillList (String race, String job, String genClass){
         //Race Skills
         int numberSkill;
@@ -536,6 +654,14 @@ public class RandomNpc {
             skillList.addAll(removeDuplicate);
         return skillList;
     }
+
+    /**
+     * Determine languages list.
+     *
+     * @param race the race
+     * @param job  the job
+     * @return the list
+     */
     public List<String> determineLanguages(String race, String job){
         String languagesRace = dbms.getRow("race", race).get(10);   // Sprachen der Rasse
         String languagesJob = dbms.getRow("job", job).get(3); // Anzahl der möglichen Sprachen durch den Job
@@ -553,6 +679,14 @@ public class RandomNpc {
         languages.addAll(removeDuplicatedLanguages);
         return languages;
     }
+
+    /**
+     * Determine features list.
+     *
+     * @param race            the race
+     * @param searchedFeature the searched feature
+     * @return the list
+     */
     public List<String> determineFeatures(String race, String searchedFeature){
         List<String> features = new ArrayList<>();
         List<String> finalFeatures = new ArrayList<>();
@@ -578,6 +712,14 @@ public class RandomNpc {
         }
         return finalFeatures;
     }
+
+    /**
+     * Add race modifier to ability score list.
+     *
+     * @param race         the race
+     * @param abilityScore the ability score
+     * @return the list
+     */
     public List<Integer> addRaceModifierToAbilityScore(String race, List<Integer> abilityScore){
         List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
         int raceModNumber;
@@ -597,7 +739,15 @@ public class RandomNpc {
         }
         return abilityScore;
     }
-    /*
+
+    /**
+     * Add ability score improvement list.
+     *
+     * @param level        the level
+     * @param abilityScore the ability score
+     * @return the list
+     */
+/*
     Diese Funktion wird verwendet um die Ability Scores auf den Level 4, 8, 12, 16 und 19 zu erhöhen.
     Sie achtet auch darauf, dass erst ungerade AS erhöht werden und die priorisierten AS zuerst
     Bitte nicht anfassen, ausser ihr versteht wie und warum diese Funktion funktioniert
@@ -610,6 +760,13 @@ public class RandomNpc {
         }
         return abilityScore;
     }
+
+    /**
+     * Add improvement list.
+     *
+     * @param abilityScore the ability score
+     * @return the list
+     */
     public List<Integer> addImprovement(List<Integer> abilityScore){
         List<Integer> unevenAbSc  =new ArrayList<>();
         List<Integer> abilityScoreBelow20  =new ArrayList<>();
@@ -659,6 +816,9 @@ public class RandomNpc {
                 abilityScore.set(abilityScore.indexOf(last), last + 1);
             }
         }
+    }
+    public int test(){
+        return 1;
     }
 }
 

@@ -6,6 +6,9 @@ import org.springframework.context.ApplicationContext;
 import java.security.SecureRandom;
 import java.util.*;
 
+/**
+ * The type Ui history edit update.
+ */
 /*
   *   0: ID //muss auch wieder zurückgegeben werden
         1: irgendwas von Lucas
@@ -42,19 +45,44 @@ import java.util.*;
         length - 1: Datetime
  */
 public class UiHistoryEditUpdate {
+    /**
+     * The App ctx.
+     */
     /* @author Lucas
      *
      * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
      * neu-konstruktion von DBMS wäre sonst leer.
      */
     ApplicationContext appCtx = DBMS.getApplicationContext();
+    /**
+     * The Dbms.
+     */
     DBMS dbms = appCtx.getBean(DBMS.class);
+    /**
+     * The Rnd numb.
+     */
     Random rndNumb = new SecureRandom();
+    /**
+     * The Rand gen.
+     */
     RandomGenerator randGen = new RandomGenerator();
+    /**
+     * The Rand npc.
+     */
     RandomNpc randNpc = new RandomNpc();
+    /**
+     * The Edit npc.
+     */
     EditNpc editNpc = new EditNpc();
 
-    /*
+    /**
+     * Update history edit npc class.
+     *
+     * @param changes the changes
+     * @param oldNpc  the old npc
+     * @return the npc class
+     */
+/*
     changes = {race, class, alignment}
      */
     public NpcClass updateHistoryEdit (List<String> changes, NpcClass oldNpc ){
