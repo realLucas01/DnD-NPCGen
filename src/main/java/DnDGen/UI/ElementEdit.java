@@ -34,9 +34,13 @@ public class ElementEdit {
     private final NpcClass cNPC;
     private GridPane abilityGrid;
     private HBox inventoryBox;
+    private HBox skillBox;
 
     // Liste, um die ausgewählten Kacheln zu speichern
-    private List<String> selectedTiles = new ArrayList<>();
+    private List<String> languagesTiles = new ArrayList<>();
+    private List<String> armorTiles = new ArrayList<>();
+    private List<String> weaponTiles = new ArrayList<>();
+    private Button classTile = new Button();
 
     ElementEdit(Stage window, Integer id, DBMS dbms) {
         this.window = window;
@@ -350,7 +354,40 @@ public class ElementEdit {
         inventoryBox.getChildren().addAll(inventoryL, armorBox, weaponBox, buttonBox);
 
 
+
+
+
+
         // Skills
+        skillBox = new HBox();
+        Label skillL = new Label("Skills");
+        skillL.getStyleClass().add("bold-label");
+        Text skillText = new Text();
+
+        // Button mit Bild
+        ImageView skillImageView = new ImageView(image);
+        armorImageView.setFitWidth(20);
+        armorImageView.setFitHeight(20);
+        Button skillButton = new Button("Choose Skills", skillImageView);
+
+        // Button Aktion
+        skillButton.setOnAction(e -> openPopup(window,"skill"));
+
+        skillBox.getChildren().addAll(skillL, skillText, skillButton);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Senses
 
@@ -366,7 +403,7 @@ public class ElementEdit {
                                            cbJob, ageF, cbGender, cbDeity, cbLevel,
                                            amorClassF, hitPointsF, classRaceEditButton(), speedGrid);
 
-        npcDate.getChildren().addAll(nameClassGrid, languagesGrid, abilityGrid, inventoryBox);
+        npcDate.getChildren().addAll(nameClassGrid, languagesGrid, abilityGrid, inventoryBox, skillBox);
     }
 
     /**
@@ -391,7 +428,11 @@ public class ElementEdit {
             NpcClass updateNPC = editUpdate.updateHistoryEdit(changes,cNPC);
 
             // Geänderte Daten anzeigen lassen
-            selectedTiles = updateNPC.getLanguages();
+            languagesTiles = updateNPC.getLanguages();
+            weaponTiles = updateNPC.getWeaponList();
+            List<String> armorList = new ArrayList<>(dbms.onlyColumn("armor"));
+
+
             setDatenNPC(updateNPC);
             VisibleElements();
         });
@@ -471,7 +512,7 @@ public class ElementEdit {
 
             // Erstellen eines Strings, der alle ausgewählten Sprachen enthält
         StringBuilder stringBuilder = new StringBuilder();
-        for (String lang : selectedTiles) {
+        for (String lang : languagesTiles) {
             stringBuilder.append(lang).append("\n");
         }
 
@@ -522,6 +563,53 @@ public class ElementEdit {
                 fieldMod.setText(abilityModifiers.get(i).toString());
             }
         }
+
+
+        Node inventoryNode = npcDate.getChildren().get(3);
+
+        if (inventoryNode instanceof HBox) {
+            HBox inventoryBox = (HBox) inventoryNode;
+            VBox armorBox = (VBox) inventoryBox.getChildren().get(1);
+            Text armorText = (Text) armorBox.getChildren().get(1);
+
+            StringBuilder armorStringBuilder = new StringBuilder();
+            for (String armor : armorTiles) {
+                armorStringBuilder.append(armor).append("\n");
+            }
+            armorText.setText(armorStringBuilder.toString());
+
+            VBox weaponBox = (VBox) inventoryBox.getChildren().get(2);
+            Text weaponText = (Text) weaponBox.getChildren().get(1);
+
+            StringBuilder weaponStringBuilder = new StringBuilder();
+            for (String weapon : weaponTiles) {
+                weaponStringBuilder.append(weapon).append("\n");
+            }
+            weaponText.setText(weaponStringBuilder.toString());
+        } else {
+            inventoryNode = npcDate.getChildren().get(4);
+            HBox inventoryBox = (HBox) inventoryNode;
+            VBox armorBox = (VBox) inventoryBox.getChildren().get(1);
+            Text armorText = (Text) armorBox.getChildren().get(1);
+
+            StringBuilder armorStringBuilder = new StringBuilder();
+            for (String armor : armorTiles) {
+                armorStringBuilder.append(armor).append("\n");
+            }
+            armorText.setText(armorStringBuilder.toString());
+
+            VBox weaponBox = (VBox) inventoryBox.getChildren().get(2);
+            Text weaponText = (Text) weaponBox.getChildren().get(1);
+
+            StringBuilder weaponStringBuilder = new StringBuilder();
+            for (String weapon : weaponTiles) {
+                weaponStringBuilder.append(weapon).append("\n");
+            }
+            weaponText.setText(weaponStringBuilder.toString());
+        }
+
+
+
     }
 
     // Hilfsmethode: Knoten aus GridPane anhand von Zeile und Spalte holen
@@ -580,89 +668,47 @@ public class ElementEdit {
      * @author Marie
      */
     private void openPopup(Stage owner, String searchString) {
-        // Neues Fenster erstellen
         Stage popup = new Stage();
-        popup.setTitle("Popup-Fenster");
-        popup.initModality(Modality.WINDOW_MODAL); // Sperrt Interaktion mit dem Hauptfenster
+        popup.setTitle(searchString);
+        popup.initModality(Modality.WINDOW_MODAL);
         popup.initOwner(owner);
 
-        // Inhalt des Pop-up-Fensters
         VBox layout = new VBox(10);
         layout.setStyle("-fx-padding: 10px; -fx-alignment: center;");
 
-        // Daten für die Kacheln
-        List<String> items = new ArrayList<>();
-        switch (searchString) {
-            case "language":
-                items = dbms.onlyColumn("language");
-                break;
+        List<String> items = loadItems(searchString);
+        List<String> selectedList = getSelectedList(searchString);
 
-            case "armor":
-                items = dbms.onlyColumn("armor");
-                break;
-            case "weapon":
-                items = dbms.onlyColumn("weapon");
-                break;
-        }
-
-
-        // TilePane für die Kacheln
         TilePane tilePane = new TilePane();
-        tilePane.setHgap(10); // Horizontaler Abstand zwischen Kacheln
-        tilePane.setVgap(10); // Vertikaler Abstand zwischen Kacheln
-        tilePane.setPrefColumns(3); // Anzahl der Spalten
+        tilePane.setHgap(10);
+        tilePane.setVgap(10);
+        tilePane.setPrefColumns(3);
 
-        // Für jedes Element in der Liste eine Kachel hinzufügen
         for (String item : items) {
             Button tile = new Button(item);
-            tile.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
-            tile.setPrefSize(100, 50); // Größe der Kachel
+            updateTileStyle(tile, selectedList.contains(item));
 
-            // Setzen der anfänglichen Kachelmarkierung basierend auf selectedTiles
-            if (selectedTiles.contains(item)) {
-                tile.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;"); // Als ausgewählt markieren
-            } else {
-                tile.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;"); // Als nicht ausgewählt setzen
-            }
-
-            // Hinzufügen des EventHandlers für die Benutzerinteraktion
             tile.setOnAction(e -> {
-                if (selectedTiles.contains(item)) {
-                    // Entfernen, wenn bereits ausgewählt
-                    selectedTiles.remove(item);
-                    tile.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+                if (selectedList.contains(item)) {
+                    selectedList.remove(item);
+                    updateTileStyle(tile, false);
                 } else {
-                    // Hinzufügen, wenn nicht ausgewählt
-                    selectedTiles.add(item);
-                    tile.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;");
+                    selectedList.add(item);
+                    updateTileStyle(tile, true);
                 }
             });
 
             tilePane.getChildren().add(tile);
         }
 
-        // Button für die Bestätigung
-        Button confirmButton = new Button("Bestätigen");
+        Button confirmButton = new Button("OK");
         confirmButton.setOnAction(e -> {
-            // Liste der ausgewählten Kacheln ausgeben oder weiterreichen
-            // Index des GridPane bestimmen (abhängig davon, ob MenuBar existiert) (krasse if-Bedingung)
             int gridIndex = (npcDate.getChildren().getFirst() instanceof MenuBar) ? 2 : 1;
-
-            // Zugriff auf das GridPane, das die Sprachen enthält
             GridPane languagesGrid = (GridPane) npcDate.getChildren().get(gridIndex);
-
-            // Erstellen eines Strings, der alle ausgewählten Sprachen enthält
-            StringBuilder stringBuilder = new StringBuilder();
-            for (String lang : selectedTiles) {
-                stringBuilder.append(lang).append("\n");
-            }
-
-            // Aktualisieren des Texts im entsprechenden Label
-            ((Text) languagesGrid.getChildren().get(1)).setText(stringBuilder.toString());
+            updateGridPaneWithSelected(languagesGrid, selectedList, searchString);
             popup.close();
         });
 
-        // Layout zusammenstellen
         layout.getChildren().addAll(tilePane, confirmButton);
         layout.setStyle("-fx-padding: 20px; -fx-alignment: center;");
 
@@ -670,6 +716,63 @@ public class ElementEdit {
         popup.setScene(popupScene);
         popup.show();
     }
+
+
+
+    private void updateGridPaneWithSelected(GridPane gridPane, List<String> selectedItems, String searchString) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String item : selectedItems) {
+            stringBuilder.append(item).append("\n");
+        }
+
+        // Erkennen, welches Textfeld aktualisiert werden soll
+        Text targetText;
+        switch (searchString) {
+            case "armor":
+                targetText = (Text) ((VBox) inventoryBox.getChildren().get(1)).getChildren().get(1);
+                break;
+            case "weapon":
+                targetText = (Text) ((VBox) inventoryBox.getChildren().get(2)).getChildren().get(1);
+                break;
+            case "language":
+            default:
+                targetText = (Text) gridPane.getChildren().get(1); // Standard: Languages
+                break;
+        }
+
+        targetText.setText(stringBuilder.toString());
+    }
+
+
+    private void updateTileStyle(Button tile, boolean isSelected) {
+        if (isSelected) {
+            tile.setStyle("-fx-background-color: lightblue; -fx-padding: 10px;");
+        } else {
+            tile.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
+        }
+    }
+
+
+    private List<String> getSelectedList(String searchString) {
+        switch (searchString) {
+            case "language":
+                return languagesTiles;
+            case "armor":
+                return armorTiles;
+            case "weapon":
+                return weaponTiles;
+            default:
+                return new ArrayList<>();
+        }
+    }
+
+
+    // Methode zum dynamischen Laden von Daten
+    private List<String> loadItems(String searchString) {
+        return dbms.onlyColumn(searchString);
+    }
+
+
 
 
     // gibt die Scene zurück
