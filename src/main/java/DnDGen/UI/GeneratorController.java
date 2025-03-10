@@ -28,68 +28,96 @@ public class GeneratorController {
     }
 
     /**
-     * Verarbeitet die GET-Anfrage für den Endpunkt "/generator" und bereitet
-     * die erforderlichen Model-Attribute für die NPC-Generator-Seite vor.
+     * Behandelt GET-Anfragen an den "/generator"-Endpunkt und bereitet das Model
+     * mit den notwendigen Attributen für die Ansicht vor.
      *
-     * @param model Das Model-Objekt, mit dem Daten an die View übergeben werden
-     * @return Der Name des Thymeleaf-Templates, das gerendert werden soll ("generator")
-     *
-     * @author Marie
-     * @author ChatGPT
+     * @param model Das Model-Objekt, das verwendet wird, um Attribute an die Ansicht zu übergeben
+     * @return der Name der Thymeleaf-Vorlage, um die Generator-Seite anzuzeigen
      */
     @GetMapping("/generator")
     String getGeneratorPage(Model model) {
-        // Mögliche Werte für die Drop-down-Menüs
-        ArrayList<String> raceList = dbms.onlyColumn("race");
-        Collections.sort(raceList);
-        model.addAttribute("races", raceList);
 
-        ArrayList<String> classList = dbms.onlyColumn("class");
-        Collections.sort(classList);
-        model.addAttribute("classes", classList);
+        // Werte für die Dropdown-Menüs vorbereiten
+        populateDropdowns(model);
 
-        ArrayList<String> jobList = dbms.onlyColumn("job");
-        Collections.sort(jobList);
-        model.addAttribute("jobs", jobList);
-
-        ArrayList<String> abilityScoreList = dbms.onlyColumn("abilisc");
-        Collections.sort(abilityScoreList);
-        model.addAttribute("abilityScores", abilityScoreList);
-
-        return "generator"; // Zeigt die Thymeleaf Seite an
+        return "generator"; // Zeigt die Thymeleaf-Seite an
     }
 
 
+    /**
+     * Generiert einen NPC (Nicht-Spieler-Charakter) basierend auf den angegebenen Parametern und fügt diesen dem Model hinzu.
+     * Bereitet Dropdown-Menüdaten vor, erstellt den NPC, formatiert die NPC-Daten und gibt das entsprechende
+     * Thymeleaf-Template zurück.
+     *
+     * @param name     der Name des NPCs; kann null oder leer sein
+     * @param race     die Rasse des NPCs; kann null oder leer sein
+     * @param genClass die allgemeine Klasse oder der Archetyp des NPCs; kann null oder leer sein
+     * @param job      die spezifische Aufgabe oder Rolle des NPCs; kann null oder leer sein
+     * @param level    die Stufe oder Machtstufe des NPCs; kann null oder leer sein
+     * @param abilisc  die Fähigkeitspunkte oder Beschreibung des NPCs; kann null oder leer sein
+     * @param gender   das Geschlecht des NPCs; kann null oder leer sein
+     * @param model    das Model, dem Dropdown-Menüdaten und NPC-Daten hinzugefügt werden
+     * @return der Name des Thymeleaf-Templates, das die NPC-Generator-Seite rendert
+     */
     @PostMapping("/generate")
     public String generateNPC(@RequestParam(required = false) String name,
                               @RequestParam(required = false) String race,
                               @RequestParam(required = false) String genClass,
                               @RequestParam(required = false) String job,
                               @RequestParam(required = false) String level,
-                              @RequestParam(required = false) String abilityScore,
+                              @RequestParam(required = false) String abilisc,
                               @RequestParam(required = false) String gender,
                               Model model) {
+        populateDropdowns(model); // Menü-Daten vorbereiten
 
-        // Mögliche Werte für die Drop-down-Menüs
-        ArrayList<String> raceList = dbms.onlyColumn("race");
-        Collections.sort(raceList);
-        model.addAttribute("races", raceList);
+        NpcClass npc = createNPC(name, race, genClass, job, level, abilisc, gender); // NPC erstellen
 
-        ArrayList<String> classList = dbms.onlyColumn("class");
-        Collections.sort(classList);
-        model.addAttribute("classes", classList);
+        formatNpcDataForModel(npc, model); // NPC-Daten formatieren und ins Model einfügen
 
-        ArrayList<String> jobList = dbms.onlyColumn("job");
-        Collections.sort(jobList);
-        model.addAttribute("jobs", jobList);
-
-        ArrayList<String> abilityScoreList = dbms.onlyColumn("abilisc");
-        Collections.sort(abilityScoreList);
-        model.addAttribute("abilityScores", abilityScoreList);
+        return "generator"; // Thymeleaf-Template zurückgeben
+    }
 
 
+    /**
+     * Füllt die Dropdown-Optionen im angegebenen Model mit sortierten Daten für verschiedene Kategorien.
+     *
+     * @param model Das Model-Objekt, zu dem Dropdown-Attribute hinzugefügt werden
+     */
+    private void populateDropdowns(Model model) {
+        model.addAttribute("races", getSortedColumn("race"));
+        model.addAttribute("classes", getSortedColumn("class"));
+        model.addAttribute("jobs", getSortedColumn("job"));
+        model.addAttribute("abilisc", getSortedColumn("abilisc"));
+    }
 
-        // Konvertiere die Eingaben in das richtige Format mit den vorhandenen Methoden
+    
+    /**
+     * Ruft eine Spalte von Strings aus der Datenbank ab, sortiert sie in aufsteigender Reihenfolge und gibt die sortierte Liste zurück.
+     *
+     * @param columnName der Name der Spalte, die abgerufen und sortiert werden soll
+     * @return eine Liste von Strings, die die sortierten Werte der angegebenen Spalte enthält
+     */
+    private List<String> getSortedColumn(String columnName) {
+        ArrayList<String> list = dbms.onlyColumn(columnName);
+        Collections.sort(list);
+        return list;
+    }
+
+    
+    /**
+     * Erstellt einen neuen NPC (Non-Player Character) mit zufälligen oder spezifischen Attributen
+     * basierend auf den bereitgestellten Eingabeparametern.
+     *
+     * @param name         Der Name des NPCs; wenn "zufall" angegeben wird, wird ein zufälliger Name generiert.
+     * @param race         Die Rasse des NPCs; wenn "zufall" angegeben wird, wird eine zufällige Rasse ausgewählt.
+     * @param genClass     Die generelle Klasse (z. B. Krieger, Magier) des NPCs; wenn "zufall" angegeben wird, wird eine zufällige Klasse ausgewählt.
+     * @param job          Der spezifische Beruf oder die Aufgabe des NPCs; wenn "zufall" angegeben wird, wird ein zufälliger Beruf zugewiesen.
+     * @param level        Die Stufe des NPCs; wenn "zufall" angegeben wird, wird eine zufällige Stufe als Ganzzahl generiert.
+     * @param abilityScore Die Attributswerte des NPCs (z. B. Stärke, Intelligenz); wenn "zufall" angegeben wird, wird ein zufälliger Wert generiert.
+     * @param gender       Das Geschlecht des NPCs; wenn "zufall" angegeben wird, wird ein zufälliges Geschlecht ausgewählt.
+     * @return Eine Instanz der Klasse NpcClass, die den generierten NPC mit spezifischen oder zufälligen Attributen darstellt.
+     */
+    private NpcClass createNPC(String name, String race, String genClass, String job, String level, String abilityScore, String gender) {
         String finalName = zufallString(name);
         String finalRace = zufall(race);
         String finalClass = zufall(genClass);
@@ -98,13 +126,44 @@ public class GeneratorController {
         String finalAbilityScore = zufall(abilityScore);
         String finalGender = zufallString(gender);
 
-        // Erstelle den NPC
-        NpcClass npc = randomNpc.createRandomNPC(finalName, finalRace, finalClass, finalJob, finalLevel, finalAbilityScore, finalGender);
+        return randomNpc.createRandomNPC(finalName, finalRace, finalClass, finalJob, finalLevel, finalAbilityScore, finalGender);
+    }
 
-        // Daten formatieren
-        Map<String, Object> formattedNpcData = formatNpcData(npc);
+    
+    /**
+     * Formatiert NPC-Daten und fügt dem bereitgestellten Modell verschiedene Attribute zur Anzeige in der Benutzeroberfläche hinzu.
+     *
+     * @param npc   Das NPC-Objekt, das Daten enthält, die formatiert und dem Modell hinzugefügt werden sollen.
+     * @param model Das Model-Objekt, zu dem die NPC-Daten und Attribute als Schlüssel-Wert-Paare hinzugefügt werden.
+     */
+    private void formatNpcDataForModel(NpcClass npc, Model model) {
+        Map<String, Object> formattedNpcData = formatNpcData(npc); // Main-NPC-Daten
+        model.addAttribute("npc", formattedNpcData);
 
-        // Liste der Ability Scores mit Modifiers als "+X"
+        model.addAttribute("abilityScores", getAbilityScoresWithModifiers(npc));
+        model.addAttribute("savingThrows", formatSavingThrows(npc));
+        model.addAttribute("allAbilities", Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
+
+        addMovementAndSensesToModel(npc, model);
+        addSpellsToModel(npc, model);
+        addDescriptionToModel(npc, model);
+
+        model.addAttribute("hitPoints", npc.getHealthPoints());
+        model.addAttribute("armorClass", npc.getArmorClass());
+        model.addAttribute("armor", npc.getArmor());
+        model.addAttribute("weapons", npc.getWeaponList());
+        model.addAttribute("skills", npc.getSkillList());
+    }
+
+    
+    /**
+     * Kombiniert die Attributswerte und ihre entsprechenden Modifikatoren eines gegebenen NPCs in eine formatierte String-Liste.
+     * Jeder Eintrag in der Liste enthält einen Attributswert gefolgt von seinem Modifikator (z. B. "14 +2").
+     *
+     * @param npc Das NPC-Objekt, das die Attributswerte und Modifikatoren zur Formatierung enthält.
+     * @return Eine Liste von Strings, wobei jeder String einen Attributswert und seinen Modifikator kombiniert.
+     */
+    private List<String> getAbilityScoresWithModifiers(NpcClass npc) {
         List<String> abilityScoresWithModifiers = new ArrayList<>();
         List<Integer> abilityScores = npc.getAbilityScores();
         List<Integer> abilityModifiers = npc.getAbilityModifier();
@@ -113,53 +172,59 @@ public class GeneratorController {
             String modifier = (abilityModifiers.get(i) >= 0) ? "+" + abilityModifiers.get(i) : String.valueOf(abilityModifiers.get(i));
             abilityScoresWithModifiers.add(abilityScores.get(i) + " " + modifier);
         }
+        return abilityScoresWithModifiers;
+    }
 
-
-        // Liste der Saving Throws passend zu den Ability Scores
+    
+    /**
+     * Formatiert die Rettungswürfe einer gegebenen NPC-Klasse in eine Liste, wobei die Werte
+     * mit spezifischen Attributen (Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit, Charisma) ausgerichtet werden.
+     * Wenn der NPC keine Rettungswürfe oder ungültige Eingaben hat, wird eine Standardliste mit leeren Strings zurückgegeben.
+     *
+     * @param npc Das NPC-Objekt, das Informationen zu Rettungswürfen enthält.
+     * @return Eine Liste der Rettungswürfe, formatiert nach Attributen, wobei jeder Wert den Attributen
+     * "Str", "Dex", "Con", "Int", "Wis", "Cha" entspricht. Wenn keine gültigen Rettungswürfe
+     * gefunden werden, enthält die Liste leere Strings.
+     */
+    private List<String> formatSavingThrows(NpcClass npc) {
         List<String> savingThrowsFormatted = Arrays.asList("", "", "", "", "", "");
         List<String> allAbilities = Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha");
-
-        // Sicherstellen, dass die Liste nicht null ist
         List<String> savingThrows = npc.getSavingThrows();
+
         if (savingThrows == null || (savingThrows.size() == 1 && savingThrows.contains("none"))) {
-            savingThrows = Collections.emptyList(); // Leere Liste, falls kein gültiger Eintrag vorhanden ist
+            return savingThrowsFormatted; // Leere Liste bei ungültigen Saving Throws
         }
 
         for (String savingThrow : savingThrows) {
-            // Sicherstellen, dass der Saving Throw nicht null oder leer ist
             if (savingThrow == null || savingThrow.trim().isEmpty() || savingThrow.equalsIgnoreCase("none")) {
-                continue; // Überspringen von leeren, ungültigen oder "none"-Werten
+                continue;
             }
-
-            // Überprüfen, ob das Element das erwartete Format hat
             String[] parts = savingThrow.split(" ");
-            if (parts.length != 2) {
-                // Optionale Protokollierung hier
-                System.err.println("Ungültiges Format für Saving Throw: " + savingThrow);
-                continue; // Überspringen von ungültig formatierten Saving Throws
-            }
-
-            // Extrahieren von Ability und Modifier
-            String ability = parts[0].trim();
-            String value = parts[1].trim();
-
-            // Überprüfen, ob die Ability gültig ist
-            int index = allAbilities.indexOf(ability);
-            if (index != -1) {
-                savingThrowsFormatted.set(index, value); // Speichern des Wertes für die Ability
-            } else {
-                // Optionale Protokollierung für unbekannte Ability
-                System.err.println("Unbekannte Ability: " + ability);
+            if (parts.length == 2) {
+                String ability = parts[0].trim();
+                String value = parts[1].trim();
+                int index = allAbilities.indexOf(ability);
+                if (index != -1) {
+                    savingThrowsFormatted.set(index, value);
+                }
             }
         }
+        return savingThrowsFormatted;
+    }
 
-
-        // Movement Speed verarbeiten
+    
+    /**
+     * Fügt die Bewegungsraten und Sinne eines NPCs in das bereitgestellte Model ein.
+     * Die Methode extrahiert Geh- und Fluggeschwindigkeiten aus dem NPC und fügt diese zusammen
+     * mit einer Liste der Sinne in das Model ein.
+     *
+     * @param npc   Das NPC-Objekt, aus dem die Bewegungsraten und Sinne entnommen werden.
+     * @param model Das Model-Objekt, dem die Bewegungsraten und Sinne als Attribute hinzugefügt werden.
+     */
+    private void addMovementAndSensesToModel(NpcClass npc, Model model) {
         String walkingSpeed = "";
         String flyingSpeed = "";
-        List<String> movementSpeeds = npc.getMovementSpeedList();
-
-        for (String speed : movementSpeeds) {
+        for (String speed : npc.getMovementSpeedList()) {
             if (speed.contains("walking")) {
                 walkingSpeed = speed;
             } else if (speed.contains("flying")) {
@@ -167,17 +232,26 @@ public class GeneratorController {
             }
         }
 
+        model.addAttribute("walkingSpeed", walkingSpeed);
+        model.addAttribute("flyingSpeed", flyingSpeed);
 
-        // Senses (String trennen & als Liste übergeben)
-        List<String> sensesList = Arrays.asList(npc.getSenses().split(",\\s*")); // Trenne nach ", "
+        List<String> sensesList = Arrays.asList(npc.getSenses().split(",\\s*"));
+        model.addAttribute("senses", sensesList);
+    }
 
-
-
-        // Hilfsfunktion zur Umwandlung von Strings in Listen
+    
+    /**
+     * Fügt die Zauber eines NPCs auf verschiedenen Stufen als Attribute zum bereitgestellten Model hinzu.
+     * Wandelt kommagetrennte Zauberstrings in Listen um und weist sie den entsprechenden
+     * Zauberstufen-Attributen im Model zur Anzeige in der Ansicht zu.
+     *
+     * @param npc   Das NPC-Objekt, das die Zauberdetails für verschiedene Stufen enthält.
+     * @param model Das Model-Objekt, dem die Zauberattribute hinzugefügt werden.
+     */
+    private void addSpellsToModel(NpcClass npc, Model model) {
         Function<String, List<String>> stringToList = str ->
                 (str == null || str.isEmpty()) ? Collections.emptyList() : Arrays.asList(str.split("\\s*,\\s*"));
 
-        // Spell-Listen umwandeln und an das Model übergeben
         model.addAttribute("spellCantrips", stringToList.apply(npc.getSpellCantrips()));
         model.addAttribute("spellFirstLevel", stringToList.apply(npc.getFirstLevelSpell()));
         model.addAttribute("spellSecondLevel", stringToList.apply(npc.getSecondLevelSpell()));
@@ -188,47 +262,39 @@ public class GeneratorController {
         model.addAttribute("spellSeventhLevel", stringToList.apply(npc.getSeventhLevelSpell()));
         model.addAttribute("spellEighthLevel", stringToList.apply(npc.getEightLevelSpell()));
         model.addAttribute("spellNinthLevel", stringToList.apply(npc.getNinthLevelSpell()));
+    }
 
-
-        // Titel für die Beschreibung
+    
+    /**
+     * Fügt eine formatierte Beschreibung eines NPCs zum bereitgestellten Model hinzu.
+     * Die Methode formatiert einzelne beschreibende Attribute des NPCs, wie Augen, Haare und Eigenschaften,
+     * in eine strukturierte Liste und erzeugt außerdem einen zusammenhängenden Beschreibungstext zur Anzeige.
+     *
+     * @param npc   Das NPC-Objekt, das die Beschreibungsdetails enthält und dem Model hinzugefügt werden soll.
+     * @param model Das Model-Objekt, dem die formatierte Beschreibungsliste und der Text hinzugefügt werden.
+     */
+    private void addDescriptionToModel(NpcClass npc, Model model) {
         List<String> descriptionTitles = Arrays.asList("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
                 "Bond", "Flaw", "Ideal", "Voice", "Clothing", "Attitude", "Size", "Height");
 
-        // Beschreibungsliste zusammen mit Titeln erstellen
         List<String> formattedDescription = new ArrayList<>();
         List<String> npcDescription = npc.getDescription();
+
         for (int i = 0; i < npcDescription.size(); i++) {
             formattedDescription.add(descriptionTitles.get(i) + ": " + npcDescription.get(i));
         }
 
-        // Daten an Thymeleaf weitergeben
-        model.addAttribute("npc", formattedNpcData);
-        // AbilityScores und Saving throws
-        model.addAttribute("abilityScores", abilityScoresWithModifiers);
-        model.addAttribute("savingThrows", savingThrowsFormatted);
-        model.addAttribute("allAbilities", allAbilities);
-        // HP, AC, Movement und Languages
-        model.addAttribute("hitPoints", npc.getHealthPoints());
-        model.addAttribute("armorClass", npc.getArmorClass());
-        model.addAttribute("walkingSpeed", walkingSpeed);
-        model.addAttribute("flyingSpeed", flyingSpeed);
-        model.addAttribute("languages", npc.getLanguages());
-        // Rüstung & Waffen setzen
-        model.addAttribute("armor", npc.getArmor());
-        model.addAttribute("weapons", npc.getWeaponList());
-        // Skills & Senses
-        model.addAttribute("skills", npc.getSkillList());
-        model.addAttribute("senses", sensesList);
-        // Beschreibungsliste ins Model
         model.addAttribute("descriptionList", formattedDescription);
-        // Fließtextbeschreibung mit Geschlechtserkennung erzeugen
         model.addAttribute("descriptionText", generateDescriptionText(npc));
-
-        // Zur generator.html zurückkehren und NPC anzeigen
-        return "generator";
     }
 
 
+    /**
+     * Generiert einen formatierten Beschreibungstext für den angegebenen NPC basierend auf dessen Attributen und Beschreibungen.
+     *
+     * @param npc Das NPC-Objekt mit Attributen und Beschreibungsdetails, die für die Konstruktion des Beschreibungstextes verwendet werden.
+     * @return Ein formatierter String, der den NPC beschreibt. Wenn keine Beschreibung verfügbar ist, wird eine Standardnachricht zurückgegeben.
+     */
     private String generateDescriptionText(NpcClass npc) {
         List<String> desc = npc.getDescription();
 
@@ -242,13 +308,12 @@ public class GeneratorController {
         String hairStyle = desc.get(2) != null ? desc.get(2) : "a simple style";
 
         // Beschreibung formatieren
-        return String.format("%s has striking %s eyes. %s %s hair is %s, worn in %s. %s skin has a %s tone. %s is generally %s in behavior and has a distinctive habit: %s. %s feels strongly about \"%s\" and struggles with \"%s\". %s values \"%s\" above all. %s speaks with a %s voice. They usually wear %s and tend to come across as %s. %s is %s in size and stands at %s feet tall.",
-                npc.getName(), desc.get(0), possessivePronoun, desc.get(1), desc.get(1), hairStyle,
+        return String.format("%s has striking %s eyes. %s hair is %s, worn in %s. %s skin has a %s tone. %s is generally %s in behavior and has a distinctive habit: %s. %s feels strongly about \"%s\" and struggles with \"%s\". %s values \"%s\" above all. %s speaks with a %s voice. They usually wear %s and tend to come across as %s. %s is %s in size and stands at %s feet tall.",
+                npc.getName(), desc.get(0), possessivePronoun, desc.get(1), hairStyle,
                 npc.getName(), desc.get(3), pronoun, desc.get(4), desc.get(5),
                 pronoun, desc.get(6), desc.get(7),
                 pronoun, desc.get(8), pronoun, desc.get(9),
-                pronoun, desc.get(10), pronoun, desc.get(11),
-                pronoun, desc.get(12), desc.get(13));
+                desc.get(10), pronoun, desc.get(11), desc.get(12), desc.get(13));
     }
 
 
@@ -282,6 +347,12 @@ public class GeneratorController {
     }
 
 
+    /**
+     * Formatiert die bereitgestellten NPC-Daten in eine Kartenstruktur zur weiteren Verarbeitung oder Anzeige.
+     *
+     * @param npc Das NPC-Objekt, das zu formatierende Daten enthält.
+     * @return Eine Map, bei der die Schlüssel Eigenschaftsnamen (z. B. "name", "level") und die Werte die entsprechenden NPC-Daten sind.
+     */
     private Map<String, Object> formatNpcData(NpcClass npc) {
         Map<String, Object> npcData = new HashMap<>();
 
@@ -296,43 +367,6 @@ public class GeneratorController {
         npcData.put("deity", npc.getDeity());
 
         return npcData;
-    }
-
-
-    private List<String> formatAbilityScores(List<Integer> scores, List<Integer> modifiers) {
-        List<String> formattedScores = new ArrayList<>();
-        String[] abilityNames = {"Str", "Dex", "Con", "Int", "Wis", "Cha"};
-
-        for (int i = 0; i < scores.size(); i++) {
-            String modifier = modifiers.get(i) >= 0 ? "+" + modifiers.get(i) : String.valueOf(modifiers.get(i));
-            formattedScores.add(abilityNames[i] + ": " + scores.get(i) + " (" + modifier + ")");
-        }
-        return formattedScores;
-    }
-
-
-    private String formatDescription(NpcClass npc) {
-        List<String> listNpc = npc.getDescription();
-        if (listNpc.isEmpty()) return "Keine Beschreibung verfügbar.";
-
-        String name = npc.getName();
-        String pronoun = npc.getGender().equals("male") ? "his" : "her";
-        String possessivePronoun = npc.getGender().equals("male") ? "he" : "she";
-
-        return name + "'s eyes are " + listNpc.get(0) + ". " +
-                capitalize(pronoun) + " hair is " + listNpc.get(1) + " in the style of " + listNpc.get(2) + ". " +
-                name + "'s skin appears to be " + listNpc.get(3) + ". " +
-                capitalize(possessivePronoun) + " behaves " + listNpc.get(4) + ". " +
-                capitalize(listNpc.get(5)) + " is " + pronoun + " mannerism. " +
-                capitalize(possessivePronoun) + " has a bond: \"" + listNpc.get(6) + "\". " +
-                name + "'s flaw is \"" + listNpc.get(7) + "\", " + pronoun + " ideal is " + listNpc.get(8) + ". When " +
-                possessivePronoun + " speaks, " + pronoun + " voice sounds like " + listNpc.get(9) + ".";
-    }
-
-
-    // Erster Buchstabe groß
-    private String capitalize(String word) {
-        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 
 
