@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>DnD NPC Generator</title>
+        <link rel="stylesheet" th:href="@{/styles.css}">
+    </head>
+    <body>
+        <h1>DnD NPC Generator</h1>
+        <form action="/generate" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="Name">
+
+            <label>Rasse:</label>
+            <select name="race">
+                <option value="zufall">Zufall</option>
+                <option th:each="race : ${races}" th:text="${race}" th:value="${race}"></option>
+            </select>
+
+            <label>Klasse:</label>
+            <select name="klasse">
+                <option value="zufall">Zufall</option>
+                <option th:each="klasse : ${classes}" th:text="${klasse}" th:value="${klasse}"></option>
+            </select>
+
+            <label>Job:</label>
+            <select name="job">
+                <option value="zufall">Zufall</option>
+                <option th:each="job : ${jobs}" th:text="${job}" th:value="${job}"></option>
+            </select>
+
+            <label>Level:</label>
+            <input type="number" name="level" min="1" max="20">
+
+            <label>Ability Score:</label>
+            <input type="text" name="ability">
+
+            <label>Geschlecht:</label>
+            <select name="sex">
+                <option value="male">Männlich</option>
+                <option value="female">Weiblich</option>
+            </select>
+
+            <button type="submit">Generieren</button>
+        </form>
+    </body>
+</html>

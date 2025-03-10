@@ -41,7 +41,7 @@ import DnDGen.DB.Sortierung.Order;
 import DnDGen.TSWP1.RandomGenerator;
 
 
-@SpringBootApplication
+@Service
 public class DBMS implements ApplicationContextAware{
 	@SuppressWarnings("unused")
 	private static ConfigurableApplicationContext ctx;
@@ -99,7 +99,7 @@ public class DBMS implements ApplicationContextAware{
 	 * verbindung zur MySQL DB.
 	 */
 	public static void main(String[] args) {
-		ctx = SpringApplication.run(DBMS.class, args);
+		//ctx = SpringApplication.run(DBMS.class, args);
 	}
 
 	/* @author Lucas

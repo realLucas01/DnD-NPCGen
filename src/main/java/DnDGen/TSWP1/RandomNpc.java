@@ -2,13 +2,24 @@ package DnDGen.TSWP1;
 
 import java.security.SecureRandom;
 import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import DnDGen.DB.DBMS;
+import org.springframework.stereotype.Service;
 
 /**
  * The type Random npc.
  */
+@Service
 public class RandomNpc {
+
+    @Autowired
+    public RandomNpc(DBMS dbms) {
+        this.dbms = dbms;
+    }
+
+
     /**
      * The App ctx.
      */

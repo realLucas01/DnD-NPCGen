@@ -1,19 +1,21 @@
-package DnDGen.TSWP1;
+package DnDGen;
 
 import DnDGen.DB.DBMS;
-import DnDGen.UI.UI;
-import DnDGen.UI.UIStarter;
+import DnDGen.TSWP1.RandomNpc;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
+
 
 @SpringBootTest
 class BasicTest {
     //TODO Funkionen mit Datenbankaufruf funktionieren derzeit noch nicht
 
-    RandomNpc randomNpc = new RandomNpc();
+    @Autowired
+    private RandomNpc randomNpc;
+
     //ApplicationContext appCtx = DBMS.getApplicationContext();
     /**
      * The Dbms.

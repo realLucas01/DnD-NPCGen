@@ -1,6 +1,7 @@
 package DnDGen.TSWP1;
 
 import DnDGen.DB.DBMS;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.security.SecureRandom;
@@ -69,7 +70,9 @@ public class UiHistoryEditUpdate {
     /**
      * The Rand npc.
      */
-    RandomNpc randNpc = new RandomNpc();
+	@Autowired
+	private RandomNpc randNpc;
+    //RandomNpc randNpc = new RandomNpc();
     /**
      * The Edit npc.
      */
