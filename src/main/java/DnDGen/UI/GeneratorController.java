@@ -201,9 +201,6 @@ public class GeneratorController {
             formattedDescription.add(descriptionTitles.get(i) + ": " + npcDescription.get(i));
         }
 
-        System.out.println(npc.getDescription());
-        System.out.println(generateDescriptionText(npc));
-
         // Daten an Thymeleaf weitergeben
         model.addAttribute("npc", formattedNpcData);
         // AbilityScores und Saving throws
