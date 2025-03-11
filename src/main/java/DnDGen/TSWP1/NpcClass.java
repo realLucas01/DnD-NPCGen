@@ -4,10 +4,15 @@ import DnDGen.DB.DBMS;
 import DnDGen.DB.HistoryModel;
 import org.springframework.context.ApplicationContext;
 
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+
+
 
 
 /**
@@ -645,382 +650,420 @@ public class NpcClass {
     public void removeSpellCantrip(String spells) {
         this.cantrips = this.cantrips.replace(spells, "");
     }
-        /*
-         * Get first level spell string.
-         *
-         * @return the string
-         */
-        public String getFirstLevelSpell () {
-            return firstLevelSpell;
-        }
 
-        /**
-         * Set first level spell.
-         *
-         * @param spells the spells
-         */
-        public void setFirstLevelSpell (String spells){
-            this.firstLevelSpell = spells;
-        }
+    /*
+     * Get first level spell string.
+     *
+     * @return the string
+     */
+    public String getFirstLevelSpell() {
+        return firstLevelSpell;
+    }
 
-        /**
-         * Add first level spell.
-         *
-         * @param spells the spells
-         */
-        public void addFirstLevelSpell (String spells){
-            this.firstLevelSpell = this.firstLevelSpell + spells;
-        }
+    /**
+     * Set first level spell.
+     *
+     * @param spells the spells
+     */
+    public void setFirstLevelSpell(String spells) {
+        this.firstLevelSpell = spells;
+    }
 
-        /**
-         * Remove first level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeFirstLevelSpell (String spells){
-            this.firstLevelSpell = this.firstLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add first level spell.
+     *
+     * @param spells the spells
+     */
+    public void addFirstLevelSpell(String spells) {
+        this.firstLevelSpell = this.firstLevelSpell + spells;
+    }
 
-        /**
-         * Get second level spell string.
-         *
-         * @return the string
-         */
-        public String getSecondLevelSpell () {
-            return secondLevelSpell;
-        }
+    /**
+     * Remove first level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeFirstLevelSpell(String spells) {
+        this.firstLevelSpell = this.firstLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set second level spell.
-         *
-         * @param spells the spells
-         */
-        public void setSecondLevelSpell (String spells){
-            this.secondLevelSpell = spells;
-        }
+    /**
+     * Get second level spell string.
+     *
+     * @return the string
+     */
+    public String getSecondLevelSpell() {
+        return secondLevelSpell;
+    }
 
-        /**
-         * Add second level spell.
-         *
-         * @param spells the spells
-         */
-        public void addSecondLevelSpell (String spells){
-            this.secondLevelSpell = this.secondLevelSpell + spells;
-        }
+    /**
+     * Set second level spell.
+     *
+     * @param spells the spells
+     */
+    public void setSecondLevelSpell(String spells) {
+        this.secondLevelSpell = spells;
+    }
 
-        /**
-         * Remove second level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeSecondLevelSpell (String spells){
-            this.secondLevelSpell = this.secondLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add second level spell.
+     *
+     * @param spells the spells
+     */
+    public void addSecondLevelSpell(String spells) {
+        this.secondLevelSpell = this.secondLevelSpell + spells;
+    }
 
-        /**
-         * Get third level spell string.
-         *
-         * @return the string
-         */
-        public String getThirdLevelSpell () {
-            return thirdLevelSpell;
-        }
+    /**
+     * Remove second level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeSecondLevelSpell(String spells) {
+        this.secondLevelSpell = this.secondLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set third level spell.
-         *
-         * @param spells the spells
-         */
-        public void setThirdLevelSpell (String spells){
-            this.thirdLevelSpell = spells;
-        }
+    /**
+     * Get third level spell string.
+     *
+     * @return the string
+     */
+    public String getThirdLevelSpell() {
+        return thirdLevelSpell;
+    }
 
-        /**
-         * Add third level spell.
-         *
-         * @param spells the spells
-         */
-        public void addThirdLevelSpell (String spells){
-            this.thirdLevelSpell = this.thirdLevelSpell + spells;
-        }
+    /**
+     * Set third level spell.
+     *
+     * @param spells the spells
+     */
+    public void setThirdLevelSpell(String spells) {
+        this.thirdLevelSpell = spells;
+    }
 
-        /**
-         * Remove third level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeThirdLevelSpell (String spells){
-            this.thirdLevelSpell = this.thirdLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add third level spell.
+     *
+     * @param spells the spells
+     */
+    public void addThirdLevelSpell(String spells) {
+        this.thirdLevelSpell = this.thirdLevelSpell + spells;
+    }
 
-        /**
-         * Get fourth level spell string.
-         *
-         * @return the string
-         */
-        public String getFourthLevelSpell () {
-            return fourthLevelSpell;
-        }
+    /**
+     * Remove third level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeThirdLevelSpell(String spells) {
+        this.thirdLevelSpell = this.thirdLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set fourth level spell.
-         *
-         * @param spells the spells
-         */
-        public void setFourthLevelSpell (String spells){
-            this.fourthLevelSpell = spells;
-        }
+    /**
+     * Get fourth level spell string.
+     *
+     * @return the string
+     */
+    public String getFourthLevelSpell() {
+        return fourthLevelSpell;
+    }
 
-        /**
-         * Add fourth level spell.
-         *
-         * @param spells the spells
-         */
-        public void addFourthLevelSpell (String spells){
-            this.fourthLevelSpell = this.fourthLevelSpell + spells;
-        }
+    /**
+     * Set fourth level spell.
+     *
+     * @param spells the spells
+     */
+    public void setFourthLevelSpell(String spells) {
+        this.fourthLevelSpell = spells;
+    }
 
-        /**
-         * Remove fourth level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeFourthLevelSpell (String spells){
-            this.fourthLevelSpell = this.fourthLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add fourth level spell.
+     *
+     * @param spells the spells
+     */
+    public void addFourthLevelSpell(String spells) {
+        this.fourthLevelSpell = this.fourthLevelSpell + spells;
+    }
 
-        /**
-         * Get fifth level spell string.
-         *
-         * @return the string
-         */
-        public String getFifthLevelSpell () {
-            return fifthLevelSpell;
-        }
+    /**
+     * Remove fourth level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeFourthLevelSpell(String spells) {
+        this.fourthLevelSpell = this.fourthLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set fifth level spell.
-         *
-         * @param spells the spells
-         */
-        public void setFifthLevelSpell (String spells){
-            this.fifthLevelSpell = spells;
-        }
+    /**
+     * Get fifth level spell string.
+     *
+     * @return the string
+     */
+    public String getFifthLevelSpell() {
+        return fifthLevelSpell;
+    }
 
-        /**
-         * Add fifth level spell.
-         *
-         * @param spells the spells
-         */
-        public void addFifthLevelSpell (String spells){
-            this.fifthLevelSpell = this.fifthLevelSpell + spells;
-        }
+    /**
+     * Set fifth level spell.
+     *
+     * @param spells the spells
+     */
+    public void setFifthLevelSpell(String spells) {
+        this.fifthLevelSpell = spells;
+    }
 
-        /**
-         * Remove fifth level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeFifthLevelSpell (String spells){
-            this.fifthLevelSpell = this.fifthLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add fifth level spell.
+     *
+     * @param spells the spells
+     */
+    public void addFifthLevelSpell(String spells) {
+        this.fifthLevelSpell = this.fifthLevelSpell + spells;
+    }
 
-        /**
-         * Get sixth level spell string.
-         *
-         * @return the string
-         */
-        public String getSixthLevelSpell () {
-            return sixthLevelSpell;
-        }
+    /**
+     * Remove fifth level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeFifthLevelSpell(String spells) {
+        this.fifthLevelSpell = this.fifthLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set sixth level spell.
-         *
-         * @param spells the spells
-         */
-        public void setSixthLevelSpell (String spells){
-            this.sixthLevelSpell = spells;
-        }
+    /**
+     * Get sixth level spell string.
+     *
+     * @return the string
+     */
+    public String getSixthLevelSpell() {
+        return sixthLevelSpell;
+    }
 
-        /**
-         * Add sixth level spell.
-         *
-         * @param spells the spells
-         */
-        public void addSixthLevelSpell (String spells){
-            this.sixthLevelSpell = this.sixthLevelSpell + spells;
-        }
+    /**
+     * Set sixth level spell.
+     *
+     * @param spells the spells
+     */
+    public void setSixthLevelSpell(String spells) {
+        this.sixthLevelSpell = spells;
+    }
 
-        /**
-         * Remove sixth level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeSixthLevelSpell (String spells){
-            this.sixthLevelSpell = this.sixthLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add sixth level spell.
+     *
+     * @param spells the spells
+     */
+    public void addSixthLevelSpell(String spells) {
+        this.sixthLevelSpell = this.sixthLevelSpell + spells;
+    }
 
-        /**
-         * Get seventh level spell string.
-         *
-         * @return the string
-         */
-        public String getSeventhLevelSpell () {
-            return seventhLevelSpell;
-        }
+    /**
+     * Remove sixth level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeSixthLevelSpell(String spells) {
+        this.sixthLevelSpell = this.sixthLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set seventh level spell.
-         *
-         * @param spells the spells
-         */
-        public void setSeventhLevelSpell (String spells){
-            this.seventhLevelSpell = spells;
-        }
+    /**
+     * Get seventh level spell string.
+     *
+     * @return the string
+     */
+    public String getSeventhLevelSpell() {
+        return seventhLevelSpell;
+    }
 
-        /**
-         * Add seventh level spell.
-         *
-         * @param spells the spells
-         */
-        public void addSeventhLevelSpell (String spells){
-            this.seventhLevelSpell = this.seventhLevelSpell + spells;
-        }
+    /**
+     * Set seventh level spell.
+     *
+     * @param spells the spells
+     */
+    public void setSeventhLevelSpell(String spells) {
+        this.seventhLevelSpell = spells;
+    }
 
-        /**
-         * Remove seventh level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeSeventhLevelSpell (String spells){
-            this.seventhLevelSpell = this.seventhLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add seventh level spell.
+     *
+     * @param spells the spells
+     */
+    public void addSeventhLevelSpell(String spells) {
+        this.seventhLevelSpell = this.seventhLevelSpell + spells;
+    }
 
-        /**
-         * Get eight level spell string.
-         *
-         * @return the string
-         */
-        public String getEightLevelSpell () {
-            return eightLevelSpell;
-        }
+    /**
+     * Remove seventh level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeSeventhLevelSpell(String spells) {
+        this.seventhLevelSpell = this.seventhLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set eight level spell.
-         *
-         * @param spells the spells
-         */
-        public void setEightLevelSpell (String spells){
-            this.eightLevelSpell = spells;
-        }
+    /**
+     * Get eight level spell string.
+     *
+     * @return the string
+     */
+    public String getEightLevelSpell() {
+        return eightLevelSpell;
+    }
 
-        /**
-         * Add eight level spell.
-         *
-         * @param spells the spells
-         */
-        public void addEightLevelSpell (String spells){
-            this.eightLevelSpell = this.eightLevelSpell + spells;
-        }
+    /**
+     * Set eight level spell.
+     *
+     * @param spells the spells
+     */
+    public void setEightLevelSpell(String spells) {
+        this.eightLevelSpell = spells;
+    }
 
-        /**
-         * Remove eight level spells.
-         *
-         * @param spells the spells
-         */
-        public void removeEightLevelSpells (String spells){
-            this.eightLevelSpell = this.eightLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add eight level spell.
+     *
+     * @param spells the spells
+     */
+    public void addEightLevelSpell(String spells) {
+        this.eightLevelSpell = this.eightLevelSpell + spells;
+    }
 
-        /**
-         * Get ninth level spell string.
-         *
-         * @return the string
-         */
-        public String getNinthLevelSpell () {
-            return ninthLevelSpell;
-        }
+    /**
+     * Remove eight level spells.
+     *
+     * @param spells the spells
+     */
+    public void removeEightLevelSpells(String spells) {
+        this.eightLevelSpell = this.eightLevelSpell.replace(spells, "");
+    }
 
-        /**
-         * Set ninth level spell.
-         *
-         * @param spells the spells
-         */
-        public void setNinthLevelSpell (String spells){
-            this.ninthLevelSpell = spells;
-        }
+    /**
+     * Get ninth level spell string.
+     *
+     * @return the string
+     */
+    public String getNinthLevelSpell() {
+        return ninthLevelSpell;
+    }
 
-        /**
-         * Add ninth level spell.
-         *
-         * @param spells the spells
-         */
-        public void addNinthLevelSpell (String spells){
-            this.ninthLevelSpell = this.ninthLevelSpell + spells;
-        }
+    /**
+     * Set ninth level spell.
+     *
+     * @param spells the spells
+     */
+    public void setNinthLevelSpell(String spells) {
+        this.ninthLevelSpell = spells;
+    }
 
-        /**
-         * Remove ninth level spell.
-         *
-         * @param spells the spells
-         */
-        public void removeNinthLevelSpell (String spells){
-            this.ninthLevelSpell = this.ninthLevelSpell.replace(spells, "");
-        }
+    /**
+     * Add ninth level spell.
+     *
+     * @param spells the spells
+     */
+    public void addNinthLevelSpell(String spells) {
+        this.ninthLevelSpell = this.ninthLevelSpell + spells;
+    }
 
-        /**
-         * Funktion wird verwendet um für Testzwecke den NPC vollständig zu printen
-         */
-        public void printNpc () {
+    /**
+     * Remove ninth level spell.
+     *
+     * @param spells the spells
+     */
+    public void removeNinthLevelSpell(String spells) {
+        this.ninthLevelSpell = this.ninthLevelSpell.replace(spells, "");
+    }
+
+    /**
+     * Funktion wird verwendet um für Testzwecke den NPC vollständig zu printen
+     */
+    public void printNpc() {
+        for (String s : Arrays.asList("name: " + name, "level: " + level, "class: " + genClass, "race: " + race, "job: " + job, "AC: " + armorClass,
+                "HP: " + healthPoints, "Movement: " + movementSpeedList, "languages: " + languages, "AbilityScore: " + abilityScores, "SavingThrows: "
+                        + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "Spelllist: " +
+                        spellList, "SpellAbility: " + spellAbility, "Description: " + description, "ActionList: " + actionList, "bonusActionList: " +
+                        bonusActionList, "ProfBonus: " + profBonus, "AbilityModifier: " + abilityModifier, "Gender: " + gender, "Age: " + age, "Alignment: "
+                        + alignment, "Deity: " + deity, "BonusTextList: " + bonusTextList, "Cantrips: " + cantrips, "firstLevelSpell: " + firstLevelSpell,
+                "secondLevelSpell: " + secondLevelSpell, "thirdLevelSpell: " + thirdLevelSpell, "fourthLevelSpell: " + fourthLevelSpell, "fifthLevelSpell: "
+                        + fifthLevelSpell, "sixthLevelSpell: " + sixthLevelSpell, "seventhLevelSpell: " + seventhLevelSpell, "eightLevelSpell: " + eightLevelSpell,
+                "ninthLevelSpell: " + ninthLevelSpell)) {
+            logger.info(s);
+        }
+    }
+
+    /**
+     * Save npc in history.
+     */
+    public void saveNpcInHistory() {
+        ArrayList<Object> history = new ArrayList<>();
+
+        history.add(name);
+        history.add(level);
+        history.add(genClass);
+        history.add(race);
+        history.add(job);
+        history.add(armorClass);
+        history.add(healthPoints);
+        history.add(movementSpeedList);
+        history.add(languages);
+        history.add(abilityScores);
+        history.add(savingThrows);
+        history.add(armor);
+        history.add(weaponList);
+        history.add(skillList);
+        history.add(senses);
+        history.add(spellList);
+        history.add(spellAbility);
+        history.add(description);
+        history.add(actionList);
+        history.add(bonusActionList);
+        history.add(profBonus);
+
+        history.add(abilityModifier);
+        history.add(gender);
+        history.add(age);
+        history.add(alignment);
+        history.add(deity);
+        history.add(bonusTextList);
+
+        dbms.saveEntry(history);
+    }
+
+
+    public void exportNPC() {
+        Charset utf8 = StandardCharsets.UTF_8;
+        System.out.println(name);
+        String fileName = STR."\{name}.txt";
+        File file = new File(fileName);
+        try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)))  {
+
             for (String s : Arrays.asList("name: " + name, "level: " + level, "class: " + genClass, "race: " + race, "job: " + job, "AC: " + armorClass,
                     "HP: " + healthPoints, "Movement: " + movementSpeedList, "languages: " + languages, "AbilityScore: " + abilityScores, "SavingThrows: "
                             + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "Spelllist: " +
-                            spellList, "SpellAbility: " + spellAbility, "Description: " + description, "ActionList: " + actionList, "bonusActionList: " +
+                            spellList, "SpellAbility: " + spellAbility/*, "Description: " + description*/, "ActionList: " + actionList, "bonusActionList: " +
                             bonusActionList, "ProfBonus: " + profBonus, "AbilityModifier: " + abilityModifier, "Gender: " + gender, "Age: " + age, "Alignment: "
                             + alignment, "Deity: " + deity, "BonusTextList: " + bonusTextList, "Cantrips: " + cantrips, "firstLevelSpell: " + firstLevelSpell,
                     "secondLevelSpell: " + secondLevelSpell, "thirdLevelSpell: " + thirdLevelSpell, "fourthLevelSpell: " + fourthLevelSpell, "fifthLevelSpell: "
                             + fifthLevelSpell, "sixthLevelSpell: " + sixthLevelSpell, "seventhLevelSpell: " + seventhLevelSpell, "eightLevelSpell: " + eightLevelSpell,
                     "ninthLevelSpell: " + ninthLevelSpell)) {
-                logger.info(s);
+
+                writer.write(s + "\n");
             }
-        }
+            /*
+            von Marie gekl...liehen
+             */
+            List<String> descriptionTitles = Arrays.asList("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
+                    "Bond", "Flaw", "Ideal", "Voice", "Clothing", "Attitude", "Size", "Height");
 
-        /**
-         * Save npc in history.
-         */
-        public void saveNpcInHistory () {
-            ArrayList<Object> history = new ArrayList<>();
+            List<String> npcDescription = getDescription();
 
-            history.add(name);
-            history.add(level);
-            history.add(genClass);
-            history.add(race);
-            history.add(job);
-            history.add(armorClass);
-            history.add(healthPoints);
-            history.add(movementSpeedList);
-            history.add(languages);
-            history.add(abilityScores);
-            history.add(savingThrows);
-            history.add(armor);
-            history.add(weaponList);
-            history.add(skillList);
-            history.add(senses);
-            history.add(spellList);
-            history.add(spellAbility);
-            history.add(description);
-            history.add(actionList);
-            history.add(bonusActionList);
-            history.add(profBonus);
-
-            history.add(abilityModifier);
-            history.add(gender);
-            history.add(age);
-            history.add(alignment);
-            history.add(deity);
-            history.add(bonusTextList);
-
-            dbms.saveEntry(history);
+            for (int i = 0; i < npcDescription.size(); i++) {
+                writer.write(descriptionTitles.get(i) + ": " + npcDescription.get(i) + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
+}
