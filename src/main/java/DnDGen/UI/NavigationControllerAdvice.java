@@ -13,8 +13,13 @@ public class NavigationControllerAdvice {
 
     @ModelAttribute("currentUri")
     public String addCurrentUri(HttpServletRequest request) {
-        // Liefert die aktuelle URI für jedes Template
-        return request.getRequestURI();
+        String uri = request.getRequestURI();
+
+        // /detail und /edit sollen NICHT in der Navigation erscheinen
+        if (uri.startsWith("/detail") || uri.startsWith("/edit")) {
+            return "";
+        }
+        return uri;
     }
 }
 

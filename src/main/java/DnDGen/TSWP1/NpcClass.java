@@ -74,6 +74,7 @@ public class NpcClass {
     private String seventhLevelSpell;
     private String eightLevelSpell;
     private String ninthLevelSpell;
+    private Integer id;
 
     /**
      * Gets name.
@@ -613,6 +614,7 @@ public class NpcClass {
         setGender(entry.getHistoryGender());
         setAge(entry.getHistoryAge());
         setBonusTextList(entry.getHistoryBonusTextList());
+        setId(entry.getHistoryId());
     }
 
     /**
@@ -1065,5 +1067,13 @@ public class NpcClass {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

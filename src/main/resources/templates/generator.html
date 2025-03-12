@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" xmlns:th="https://www.thymeleaf.org">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>Generator</title>
@@ -12,10 +12,11 @@
     </head>
 
     <body>
+        <!-- NavBar -->
         <div th:replace="~{fragments/navbar :: nav}"></div>
 
         <main>
-            <!-- NPC Erstellungs-Formular -->
+            <!-- NPC Erstellung-Formular -->
             <form th:action="@{/generate}" method="post" class="container mt-4">
                 <div class="row mb-3">
                     <label for="name" class="form-label">Name:</label>
@@ -122,7 +123,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Ability Scores mit Modifiern -->
+                                    <!-- Ability Scores mit Modifiers -->
                                     <tr>
                                         <th>Ability Scores</th>
                                         <td th:each="score : ${abilityScores}" th:text="${score}"></td>
