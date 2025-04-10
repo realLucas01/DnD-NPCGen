@@ -38,7 +38,7 @@ public class GeneratorController {
     String getGeneratorPage(Model model) {
 
         // Werte für die Dropdown-Menüs vorbereiten
-        populateDropdowns(model);
+        populateDropdowns(model, "", "Zufall", "Zufall", "Zufall", "Zufall", "Zufall", "Zufall");
 
         return "generator"; // Zeigt die Thymeleaf-Seite an
     }
@@ -68,7 +68,7 @@ public class GeneratorController {
                               @RequestParam(required = false) String abilisc,
                               @RequestParam(required = false) String gender,
                               Model model) {
-        populateDropdowns(model); // Menü-Daten vorbereiten
+        populateDropdowns(model, name, race, genClass, job, level, abilisc, gender); // Menü-Daten vorbereiten
 
         NpcClass npc = createNPC(name, race, genClass, job, level, abilisc, gender); // NPC erstellen
 
@@ -83,11 +83,21 @@ public class GeneratorController {
      *
      * @param model Das Model-Objekt, zu dem Dropdown-Attribute hinzugefügt werden
      */
-    private void populateDropdowns(Model model) {
+    private void populateDropdowns(Model model, String name, String race, String genClass, String job, String level, String abiliscor, String gender) {
+        // Dropdown erstellen
         model.addAttribute("races", getSortedColumn("race"));
         model.addAttribute("classes", getSortedColumn("class"));
         model.addAttribute("jobs", getSortedColumn("job"));
         model.addAttribute("abilisc", getSortedColumn("abilisc"));
+
+        // vorher gewählte Daten übergeben
+        model.addAttribute("name", name);
+        model.addAttribute("selectedRace", race);
+        model.addAttribute("selectedClass", genClass);
+        model.addAttribute("selectedJob", job);
+        model.addAttribute("selectedLevel", level);
+        model.addAttribute("selectedAbilisc", abiliscor);
+        model.addAttribute("selectedGender", gender);
     }
 
     
@@ -235,6 +245,8 @@ public class GeneratorController {
         model.addAttribute("walkingSpeed", walkingSpeed);
         model.addAttribute("flyingSpeed", flyingSpeed);
 
+        model.addAttribute("languages", npc.getLanguages());
+
         List<String> sensesList = Arrays.asList(npc.getSenses().split(",\\s*"));
         model.addAttribute("senses", sensesList);
     }
@@ -295,7 +307,7 @@ public class GeneratorController {
      * @param npc Das NPC-Objekt mit Attributen und Beschreibungsdetails, die für die Konstruktion des Beschreibungstextes verwendet werden.
      * @return Ein formatierter String, der den NPC beschreibt. Wenn keine Beschreibung verfügbar ist, wird eine Standardnachricht zurückgegeben.
      */
-    private String generateDescriptionText(NpcClass npc) {
+    public String generateDescriptionText(NpcClass npc) {
         List<String> desc = npc.getDescription();
 
         if (desc == null || desc.isEmpty()) return "Keine Beschreibung verfügbar.";

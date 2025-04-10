@@ -78,10 +78,10 @@
                     <div class="row">
                         <!-- Hit Points & Armor Class -->
                         <div class="col-md-6">
-                            <strong>Hit Points:</strong> <span th:text="${hitPoints}"></span>
+                            <strong>Hit Points:</strong> <span th:text="${npc.healthPoints}"></span>
                         </div>
                         <div class="col-md-6">
-                            <strong>Armor Class:</strong> <span th:text="${armorClass}"></span>
+                            <strong>Armor Class:</strong> <span th:text="${npc.armorClass}"></span>
                         </div>
                     </div>
 
@@ -97,9 +97,9 @@
 
                     <h4>Languages</h4>
                     <div>
-                <span th:each="lang, iterStat : ${languages}">
-                    <span th:text="${lang}"></span><span th:if="${!iterStat.last}">, </span>
-                </span>
+                        <span th:each="lang, iterStat : ${npc.languages}">
+                            <span th:text="${lang}"></span><span th:if="${!iterStat.last}">, </span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                         <div class="col-md-6">
                             <strong>Armor:</strong>
                             <ul>
-                                <li th:text="${armor}"></li>
+                                <li th:text="${npc.armor}"></li>
                             </ul>
                         </div>
 
@@ -121,7 +121,7 @@
                         <div class="col-md-6">
                             <strong>Weapons:</strong>
                             <ul>
-                                <li th:each="weapon : ${weapons}" th:text="${weapon}"></li>
+                                <li th:each="weapon : ${npc.weaponList}" th:text="${weapon}"></li>
                             </ul>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                         <div class="col-md-6">
                             <strong>Skills:</strong>
                             <ul>
-                                <li th:each="skill : ${skills}" th:text="${skill}"></li>
+                                <li th:each="skill : ${npc.skillList}" th:text="${skill}"></li>
                             </ul>
                         </div>
 
@@ -256,6 +256,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Edit weitereitung -->
+            <a th:href="@{/edit(id=${npc.id})}" class="btn btn-primary">
+                edit NPC
+            </a>
+
         </div>
     </body>
 

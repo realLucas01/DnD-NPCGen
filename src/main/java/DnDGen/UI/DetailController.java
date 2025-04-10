@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +34,12 @@ public class DetailController {
      * @return Die Thymeleaf-Template-Seite "detail"
      */
     @GetMapping("/detail")
-    public String getNpcDetail(@RequestParam("id") int id, Model model) {
+    public String getNpcDetail(@RequestParam(required = false) Integer id, Model model, RedirectAttributes redirectAttributes) {
+        if (id == null) {
+            redirectAttributes.addFlashAttribute("error", "Ungültige NPC-ID.");
+            return "redirect:/history";
+        }
+
         NpcClass npc = new NpcClass();
         npc.historyEntryToNpc(dbms.getHistoryEntry(id));
 
@@ -98,8 +104,11 @@ public class DetailController {
         // Nullprüfung und alternative Handhabung
         String sensesValue = npc.getSenses();  // Wert aus der Methode holen
         List<String> senses = (sensesValue != null && !sensesValue.isEmpty())
-                ? List.of(sensesValue.split(",\\s*"))
-                : Collections.emptyList();  // Leere Liste verwenden, falls null oder leer
+                ? new ArrayList<>(List.of(sensesValue.split(",\\s*")))
+                : new ArrayList<>();  // Leere Liste verwenden, falls null oder leer
+
+
+        //System.out.println( "Senses: " + sensesValue + " -> " + senses);
 
         model.addAttribute("senses", senses);  // Senses dem Model hinzufügen
 
@@ -116,6 +125,20 @@ public class DetailController {
         model.addAttribute("spellSeventhLevel", splitString(npc.getSeventhLevelSpell()));
         model.addAttribute("spellEighthLevel", splitString(npc.getEightLevelSpell()));
         model.addAttribute("spellNinthLevel", splitString(npc.getNinthLevelSpell()));
+
+        // Print-Zeilen
+        /*
+        System.out.println("Cantrips: " + npc.getSpellCantrips() + " -> " + splitString(npc.getSpellCantrips()));
+        System.out.println("First Level Spells: " + npc.getFirstLevelSpell() + " -> " + splitString(npc.getFirstLevelSpell()));
+        System.out.println("Second Level Spells: " + npc.getSecondLevelSpell() + " -> " + splitString(npc.getSecondLevelSpell()));
+        System.out.println("Third Level Spells: " + npc.getThirdLevelSpell() + " -> " + splitString(npc.getThirdLevelSpell()));
+        System.out.println("Fourth Level Spells: " + npc.getFourthLevelSpell() + " -> " + splitString(npc.getFourthLevelSpell()));
+        System.out.println("Fifth Level Spells: " + npc.getFifthLevelSpell() + " -> " + splitString(npc.getFifthLevelSpell()));
+        System.out.println("Sixth Level Spells: " + npc.getSixthLevelSpell() + " -> " + splitString(npc.getSixthLevelSpell()));
+        System.out.println("Seventh Level Spells: " + npc.getSeventhLevelSpell() + " -> " + splitString(npc.getSeventhLevelSpell()));
+        System.out.println("Eighth Level Spells: " + npc.getEightLevelSpell() + " -> " + splitString(npc.getEightLevelSpell()));
+        System.out.println("Ninth Level Spells: " + npc.getNinthLevelSpell() + " -> " + splitString(npc.getNinthLevelSpell()));
+        */
     }
 
     private void addDescriptionToModel(NpcClass npc, Model model) {
@@ -129,7 +152,36 @@ public class DetailController {
         }
 
         model.addAttribute("descriptionList", formattedDesc);
+        model.addAttribute("descriptionText", generateDescriptionText(npc));
     }
+
+    /**
+     * Generiert einen formatierten Beschreibungstext für den angegebenen NPC basierend auf dessen Attributen und Beschreibungen.
+     *
+     * @param npc Das NPC-Objekt mit Attributen und Beschreibungsdetails, die für die Konstruktion des Beschreibungstextes verwendet werden.
+     * @return Ein formatierter String, der den NPC beschreibt. Wenn keine Beschreibung verfügbar ist, wird eine Standardnachricht zurückgegeben.
+     */
+    public String generateDescriptionText(NpcClass npc) {
+        List<String> desc = npc.getDescription();
+
+        if (desc == null || desc.isEmpty()) return "Keine Beschreibung verfügbar.";
+
+        // Geschlechtsspezifische Pronomen setzen
+        String pronoun = npc.getGender().equalsIgnoreCase("male") ? "he" : "she";
+        String possessivePronoun = npc.getGender().equalsIgnoreCase("male") ? "his" : "her";
+
+        // Null-Werte durch sinnvolle Platzhalter ersetzen
+        String hairStyle = desc.get(2) != null ? desc.get(2) : "a simple style";
+
+        // Beschreibung formatieren
+        return String.format("%s has striking %s eyes. %s hair is %s, worn in %s. %s skin has a %s tone. %s is generally %s in behavior and has a distinctive habit: %s. %s feels strongly about \"%s\" and struggles with \"%s\". %s values \"%s\" above all. %s speaks with a %s voice. They usually wear %s and tend to come across as %s. %s is %s in size and stands at %s feet tall.",
+                npc.getName(), desc.get(0), possessivePronoun, desc.get(1), hairStyle,
+                npc.getName(), desc.get(3), pronoun, desc.get(4), desc.get(5),
+                pronoun, desc.get(6), desc.get(7),
+                pronoun, desc.get(8), pronoun, desc.get(9),
+                desc.get(10), pronoun, desc.get(11), desc.get(12), desc.get(13));
+    }
+
 
     private List<String> splitString(String input) {
         return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*,\\s*"));

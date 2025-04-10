@@ -20,46 +20,52 @@
             <form th:action="@{/generate}" method="post" class="container mt-4">
                 <div class="row mb-3">
                     <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" class="form-control">
+                    <input type="text" id="name" name="name" class="form-control" th:value="${name}">
                 </div>
 
                 <div class="row mb-3">
                     <label for="race" class="form-label">Rasse:</label>
                     <select id="race" name="race" class="form-select">
-                        <option value="Zufall">Zufall</option>
-                        <option th:each="race : ${races}" th:value="${race}" th:text="${race}"></option>
+                        <option value="Zufall" th:selected="${selectedRace == 'Zufall'}">Zufall</option>
+                        <option th:each="race : ${races}" th:value="${race}" th:text="${race}"
+                                th:selected="${race == selectedRace}">
+                        </option>
                     </select>
                 </div>
 
                 <div class="row mb-3">
                     <label for="class" class="form-label">Klasse:</label>
                     <select id="class" name="genClass" class="form-select">
-                        <option value="Zufall">Zufall</option>
-                        <option th:each="class : ${classes}" th:value="${class}" th:text="${class}"></option>
+                        <option value="Zufall" th:selected="${selectedClass == 'Zufall'}">Zufall</option>
+                        <option th:each="class : ${classes}" th:value="${class}" th:text="${class}"
+                                th:selected="${class == selectedClass}"></option>
                     </select>
                 </div>
 
                 <div class="row mb-3">
                     <label for="job" class="form-label">Beruf:</label>
                     <select id="job" name="job" class="form-select">
-                        <option value="Zufall">Zufall</option>
-                        <option th:each="job : ${jobs}" th:value="${job}" th:text="${job}"></option>
+                        <option value="Zufall" th:selected="${selectedJob == 'Zufall'}">Zufall</option>
+                        <option th:each="job : ${jobs}" th:value="${job}" th:text="${job}"
+                                th:selected="${job == selectedJob}"></option>
                     </select>
                 </div>
 
                 <div class="row mb-3">
                     <label for="level" class="form-label">Level:</label>
                     <select id="level" name="level" class="form-select">
-                        <option value="Zufall">Zufall</option>
-                        <option th:each="level : ${#numbers.sequence(1,20)}" th:value="${level}" th:text="${level}"></option>
+                        <option value="Zufall" th:selected="${selectedLevel == 'Zufall'}">Zufall</option>
+                        <option th:each="level : ${#numbers.sequence(1,20)}" th:value="${level}" th:text="${level}"
+                                th:selected="${level == selectedLevel}"></option>
                     </select>
                 </div>
 
                 <div class="row mb-3">
                     <label for="abilisc" class="form-label">Ability Score:</label>
                     <select id="abilisc" name="abilisc" class="form-select">
-                        <option value="Zufall">Zufall</option>
-                        <option th:each="score : ${abilisc}" th:value="${score}" th:text="${score}"></option>
+                        <option value="Zufall" th:selected="${selectedAbilisc == 'Zufall'}">Zufall</option>
+                        <option th:each="score : ${abilisc}" th:value="${score}" th:text="${score}"
+                                th:selected="${score == selectedAbilisc}"></option>
                     </select>
                 </div>
 
@@ -67,19 +73,23 @@
                     <legend class="col-form-label">Geschlecht</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input type="radio" name="gender" value="Zufall" id="genderRandom" class="form-check-input" checked>
+                            <input type="radio" name="gender" value="Zufall" id="genderRandom" class="form-check-input"
+                                   th:checked="${selectedGender == 'Zufall'}">
                             <label for="genderRandom" class="form-check-label">Zufall</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" name="gender" value="male" id="genderMale" class="form-check-input">
+                            <input type="radio" name="gender" value="male" id="genderMale" class="form-check-input"
+                                   th:checked="${selectedGender == 'male'}">
                             <label for="genderMale" class="form-check-label">Männlich</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" name="gender" value="female" id="genderFemale" class="form-check-input">
+                            <input type="radio" name="gender" value="female" id="genderFemale" class="form-check-input"
+                                   th:checked="${selectedGender == 'female'}">
                             <label for="genderFemale" class="form-check-label">Weiblich</label>
                         </div>
                     </div>
                 </fieldset>
+
 
                 <div class="row mb-3 text-center">
                     <button type="submit" class="btn btn-primary w-100">Generieren</button>
