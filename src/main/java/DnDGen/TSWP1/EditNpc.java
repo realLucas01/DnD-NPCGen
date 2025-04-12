@@ -549,7 +549,7 @@ public class EditNpc {
 
         if (oldLevel < newLevel) {
             levelDiff = newLevel - oldLevel;
-            abilityScores = randNpc.addAbilityScoreImprovement(levelDiff - 4, abilityScores);
+           // abilityScores = randNpc.addAbilityScoreImprovement(levelDiff - 4, abilityScores);
             return;
         } else if (oldLevel > newLevel) {
             levelDiff = oldLevel - newLevel;

@@ -614,6 +614,8 @@ public class NpcClass {
         setGender(entry.getHistoryGender());
         setAge(entry.getHistoryAge());
         setBonusTextList(entry.getHistoryBonusTextList());
+        setSenses((entry.getHistorySenses()));
+        //SpellList fehlt noch
         setId(entry.getHistoryId());
     }
 

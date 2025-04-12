@@ -217,7 +217,7 @@ public class RandomNpc {
         //distribute AbilityScore
         abilityScores = distributeAbilityScore(abilityScores, genClass);
         abilityScores =  addRaceModifierToAbilityScore(race,abilityScores);
-        abilityScores =  addAbilityScoreImprovement(level, abilityScores);
+        abilityScores =  abilityScoreImprovement(level, abilityScores, genClass);
         randNpc.setAbilityScores(abilityScores);
         //calc AbilityModifier
         abilityModifier =  determineAbilityModifier(abilityScores);
@@ -326,6 +326,7 @@ public class RandomNpc {
          */
         randNpc.saveNpcInHistory(); // speichern in der History
 
+        //randNpc.exportNPC(); // NPC wird in eine .txt expotiert
         return randNpc;
     }
 
@@ -357,32 +358,29 @@ public class RandomNpc {
     	finishedAbilityScores.add("Cha");
     	
     	if(!(charClass.equals(nameDBCommoner))) {
-    	int i = 0;
-    	int j = 0;
+            int i = 0;
+            int j = 0;
 
-    	while(i <= 5 && j <= 5) {
+            while(i <= 5 && j <= 5) {
 
-            String aScore = dividedAbilityScores.get(i);
-    		Integer value = rawAbilityScores.get(i);
-    		String aScoreFinished = finishedAbilityScores.get(j);
-
-    		if(aScoreFinished.equals(aScore)  ) {
-    			finishedAbilityScores.set(j, value.toString());
-    			j++;
-    			i = 0;
-    		} else {
-    			i++;
-    		}
-    	}
-    	for(int k = 0; k < 6; k++) {
-    		Integer parsedInt = Integer.parseInt(finishedAbilityScores.get(k));
-    		parsedAbilityScores.add(parsedInt);
-    	}
-    	return parsedAbilityScores;
+                String aScore = dividedAbilityScores.get(i);
+                Integer value = rawAbilityScores.get(i);
+                String aScoreFinished = finishedAbilityScores.get(j);
+                if(aScoreFinished.equals(aScore)  ) {
+                    finishedAbilityScores.set(j, value.toString());
+                    j++;
+                    i = 0;
+                } else {
+                    i++;
+                }
+    	    }
+            for(int k = 0; k < 6; k++) {
+                Integer parsedInt = Integer.parseInt(finishedAbilityScores.get(k));
+                parsedAbilityScores.add(parsedInt);
+            }
+    	    return parsedAbilityScores;
     	} else {
-    		
     		Collections.shuffle(rawAbilityScores);
-
             return rawAbilityScores;
     	}
     }
@@ -751,85 +749,222 @@ public class RandomNpc {
         return abilityScore;
     }
 
-    /**
-     * Add ability score improvement list.
-     *
-     * @param level        the level
-     * @param abilityScore the ability score
-     * @return the list
-     */
-/*
-    Diese Funktion wird verwendet um die Ability Scores auf den Level 4, 8, 12, 16 und 19 zu erhöhen.
-    Sie achtet auch darauf, dass erst ungerade AS erhöht werden und die priorisierten AS zuerst
-    Bitte nicht anfassen, ausser ihr versteht wie und warum diese Funktion funktioniert
-     */
-    public List<Integer> addAbilityScoreImprovement (int level, List<Integer> abilityScore ){
-        // Berechnung der Verbesserungen basierend auf dem Level
-        int improveCount = Math.max(0, level / 4);  // 1 bei Level 4, 2 bei Level 8 usw.
-        for (int i = 0; i < improveCount; i++) {
-            abilityScore = addImprovement(abilityScore);
+    public List<Integer> abilityScoreImprovement(Integer level, List<Integer> abilityScore, String classNameNPC){
+        Random randOrNot =  new SecureRandom();
+        int randDistribution = randOrNot.nextInt(2);
+        int improveCount = Math.max(0, level/4);
+
+        for (int i=0; i < improveCount; i++){
+           /* if (randDistribution == 1){ //
+                abilityScore = addImprovement(abilityScore, classNameNPC);
+            } else {
+                abilityScore = addRandomImprovement(abilityScore);
+            }
+            */
+            abilityScore = addImprovement(abilityScore,classNameNPC); // aufruf
         }
         return abilityScore;
     }
-
-    /**
-     * Add improvement list.
-     *
-     * @param abilityScore the ability score
-     * @return the list
-     */
-    public List<Integer> addImprovement(List<Integer> abilityScore){
-        List<Integer> unevenAbSc  =new ArrayList<>();
-        List<Integer> abilityScoreBelow20  =new ArrayList<>();
-        for(Integer abilities : abilityScore ) {
-            if (abilities < 20) {      // finde alle Ability Scores die kleiner als 20 sind
-                abilityScoreBelow20.add(abilities);
+    public List<Integer> addImprovement (List<Integer> abilityScore, String classNameNPC) {
+        /*
+        List<Integer> priorityScore = new ArrayList<>(abilityScore);
+        priorityScore.sort(Collections.reverseOrder());
+        /*
+        die höchsten werte werden um eins erhöht, solange sie unter 20 sind
+         */
+        /*
+        for (int i = 0, j = 0; (i < 6) && (j < 2); i++) {
+            if (priorityScore.get(i) < 20) {
+                abilityScore.set((abilityScore.get(priorityScore.indexOf(priorityScore.get(i)))), priorityScore.get((i) + 1));
+                j++;
             }
         }
-        if (abilityScoreBelow20.isEmpty()) {  // wenn alle über 20 sind, dann gib die bekommene Ability Scores zurück
+         */
+        //------------------------ ALT
+        /*
+            check nach der Klasse, aus der Klasse werden die höchsten AS genommen und überprüft
+            wenn beide ungerade beide um eins erhöhen, wenn beide gerade und unter 20 wird eins erhöht
+            wenn beide unter 20 werden die nächsten ungeraden um eins erhöht
+         */
+        if(classNameNPC.equals("Commoner")){
+            //System.out.println("Commoner, abort");
             return abilityScore;
         }
+        List<String> classASDistributionWeight = randGen.bigStringToDividedString(dbms.getRow(nameDBClass, classNameNPC).get(8));
+        List<String> mostImportantAS = new ArrayList<>();
+        mostImportantAS.add(classASDistributionWeight.get(0));
+        mostImportantAS.add(classASDistributionWeight.get(1));
+        List<Integer> aSIndex = new ArrayList<>();
+        List<Integer> vIAS = new ArrayList<>();
+        // for (String abSc : classASDistributionWeight) {
+        for(String abSc : mostImportantAS) {
+            switch (abSc) { // Werte über 20 werden nicht berücksichtigt
+                case "Str":
+                    if (abilityScore.getFirst() < 20) {
+                        vIAS.add(abilityScore.getFirst());
+                        aSIndex.add(0);
+                    }
+                    continue;
+                case "Dex":
+                    if (abilityScore.get(1) < 20) {
+                        aSIndex.add(1);
+                        vIAS.add(abilityScore.get(1));
+                    }
+                    break;
+                case "Con":
+                    if (abilityScore.get(2) < 20) {
+                        aSIndex.add(2);
+                        vIAS.add(abilityScore.get(2));
+                    }
+                    break;
 
-        abilityScoreBelow20.sort(Collections.reverseOrder());
+                case "Int":
+                    if (abilityScore.get(3) < 20) {
+                        aSIndex.add(3);
+                        vIAS.add(abilityScore.get(3));
+                    }
+                    break;
 
-        for (Integer abilities : abilityScoreBelow20) { // wenn es ungerade gibt werden diese erst einmal aufgefüllt
-            if (abilities % 2 == 1) {   // check, ob ungerade
-                unevenAbSc.add(abilities);
+                case "Wis":
+                    if (abilityScore.get(4) < 20) {
+                        aSIndex.add(4);
+                        vIAS.add(abilityScore.get(4));
+                    }
+                    break;
+
+                case "Cha":
+                    if (abilityScore.get(5) < 20) {
+                        aSIndex.add(5);
+                        vIAS.add(abilityScore.get(5));
+                    }
+                    break;
+                default:
+                    System.out.println("Fehler:AbilityScore Improvement Nr. 1");
+                    break;
             }
         }
-        // Priorisiere das Erhöhen von ungeraden Werten
-        if (!unevenAbSc.isEmpty()) {
-            increaseUnevenScores(abilityScore, unevenAbSc);
-        } else {
-            // Wenn keine ungeraden Werte vorhanden sind, füge +2 hinzu (maximal 20)
-            increaseEvenScores(abilityScore, abilityScoreBelow20);
-        }
-         return abilityScore;
-        }
-
-    private void increaseEvenScores(List<Integer> abilityScore, List<Integer> abilityScoreBelow20) {
-        for (Integer abSc : abilityScoreBelow20) {
-            if (abSc + 2 <= 20) {
-                abilityScore.set(abilityScore.indexOf(abSc), abSc + 2);
-                break;
+            int unevenCount = 0;
+            for (Integer aS : vIAS) { // check wie viele ungerade sind und unter 20
+                if (aS < 20) {
+                    unevenCount = unevenCount + isItUneven(aS);
+                }
             }
-        }
+            //wie groß die Liste ist
+            int size = vIAS.size();
+            Random randOrNot = new SecureRandom();
+            switch (size) {
+                case 0:// beide werte sind über 20, andere Werte müssen überprüft werden
+                    for(int i =0; i<2;i++){
+                        abilityScore = increaseSecOrThirdAS(abilityScore);
+                    }
+                    break;
+                case 1: // einer unter zwanzig, überprüfen ob dieser um 2 erhöht werden kann, ansonsten weiter der liste nach
+                    if (vIAS.getFirst() <= 18) { // einen um 2 erhöht
+                        abilityScore.set(aSIndex.getFirst(), vIAS.getFirst() + 2);
+                        return abilityScore;
+                    }
+                    if (vIAS.getFirst() == 19) {// einer der wichtigen danach einer der übrigen überprüft, ob unter 20 und ungerade
+                        abilityScore.set(aSIndex.getFirst(), vIAS.getFirst() + 1);
+                        // ein weiterer der zweitrangigen als nächstes
+                        abilityScore = increaseSecOrThirdAS(abilityScore);
+                    }
+                    break;
+                case 2: //beide unter 20, überprüfen, ob ein oder beide ungerade sind, wenn ungerade wird der zweite punkt zufällig verteilt
+                    switch (unevenCount) {
+                        case 0:// beide sind ungerade, beide werden um 1 erhöht
+                            abilityScore.set(aSIndex.getFirst(), vIAS.getFirst() + 1);
+                            abilityScore.set(aSIndex.getLast(), vIAS.getLast() + 1);
+                            break;
+                        case 1: // einer ist ungerade, einer gerade
+                            for (Integer aS : vIAS) { // der ungerade wird erhöht
+                                if (aS % 2 == 1) {
+                                    abilityScore.set(aSIndex.get(vIAS.indexOf(aS)), aS + 1);
+                                    vIAS.set(vIAS.indexOf(aS),aS+1);
+                                }
+                            }
+                            int randInd = randOrNot.nextInt(2);
+                            //int randInd=1;
+                            if (randInd == 0) { // einer der beiden wird zufällig erhöht
+                                abilityScore.set(aSIndex.getFirst(), vIAS.getFirst() + 1);
+                            } else {
+                                abilityScore.set(aSIndex.getLast(), vIAS.getLast() + 1);
+                            }
+                            break;
+                        case 2: // beide sind gerade, der wichtigste/höchste wird um 2 erhöht
+                            abilityScore.set(aSIndex.getFirst(), vIAS.getFirst() + 2);
+                            break;
+                        default:
+                            //Fehler
+                            System.out.println("Fehler ASI 1");
+                            break;
+                    }
+                    break;
+                default:
+                    //Fehler
+                    System.out.println("Fehler ASI 2");
+                    break;
+            }
+        return abilityScore;
     }
 
-    private void increaseUnevenScores(List<Integer> abilityScore, List<Integer> unevenAbSc) {
-        // Erhöht ungerade Scores priorisiert
-        if (!unevenAbSc.isEmpty()) {
-            Integer first = unevenAbSc.getFirst();
-            abilityScore.set(abilityScore.indexOf(first), first + 1);
+    public Integer isItUneven(Integer numb){
+        if(numb%2==1) return 0; else return 1;
+    }
 
-            if (unevenAbSc.size() > 1) {
-                Integer last = unevenAbSc.getLast();
-                abilityScore.set(abilityScore.indexOf(last), last + 1);
+    /**
+     * Sollten die Priorisierten AS nicht weiter erhöht werden können, werden die  restlichen AS erhöht
+     * Priorität unter 20 und ungerade
+     *
+     * @param abilityScore wird übergeben, bearbeitet und zurückgegeben
+     * @return abilityScore
+     */
+    public List<Integer> increaseSecOrThirdAS(List<Integer> abilityScore){
+        List<Integer> secondaryAS = new ArrayList<>();
+        List<Integer> secondaryIndexList = new ArrayList<>();
+        List<Integer> thirdAS = new ArrayList<>();
+        List<Integer> thirtIndexList = new ArrayList<>();
+        Random randOrNot = new SecureRandom();
+        for (int i = 0; i <= 5; i++) {
+            if ((abilityScore.get(i) < 20) && (abilityScore.get(i) % 2 == 1)) {// wert ist unter 20 und ungerade, betrifft die AS ohne Priorität 1 und 2
+                secondaryAS.add(abilityScore.get(i));
+                secondaryIndexList.add(i);
+            } else if (abilityScore.get(i) < 20) { // sollte es nicht ungerade sein aber unter 20
+                thirdAS.add(abilityScore.get(i));
+                thirtIndexList.add(i);
             }
         }
+        if ((secondaryAS.isEmpty()) && (thirdAS.isEmpty())) {// wenn listen leer, müssten alle werte über 20 sein
+           // return abilityScore;
+        }
+        else if ((!secondaryAS.isEmpty())&&(thirdAS.isEmpty())) {
+            int randDistribution = randOrNot.nextInt(secondaryAS.size());
+            abilityScore.set(secondaryIndexList.get(randDistribution),secondaryAS.get(randDistribution)+1);
+            //return abilityScore;
+        }
+        else if ((secondaryAS.isEmpty())&&(!thirdAS.isEmpty())) {
+            int randDistribution = randOrNot.nextInt(thirdAS.size()); // zufällig was ausgewählt werden soll
+            abilityScore.set(thirtIndexList.get(randDistribution),thirdAS.get(randDistribution)+1);
+            //return abilityScore;
+        }
+        int randDistribution= randOrNot.nextInt(secondaryAS.size());
+        abilityScore.set(secondaryIndexList.get(randDistribution),secondaryAS.get(randDistribution)+1);
+
+
+        return abilityScore; // sicherheitshalber
     }
-    public int test(){
-        return 1;
+    /**
+     * Zwei Ability Werte werden zufällig um eins erhöht, diese Zahl kann derzeit 20 überschreiten
+     * @param abilityScore
+     * @return abilityScore
+     */
+    public List<Integer> addRandomImprovement(List<Integer> abilityScore){
+        Random rndNumber =  new SecureRandom();
+
+        for(int i=0; i<2; i++ ){
+            int randIncrIndex = rndNumber.nextInt(6)+1;
+            abilityScore.set(randIncrIndex, abilityScore.get(randIncrIndex)+1);
+        }
+        return abilityScore;
     }
 }
 
