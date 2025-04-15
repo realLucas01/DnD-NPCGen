@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.*;
 import java.util.function.Function;
 
+import static DnDGen.UI.HelpFunctions.*;
+
 /**
  * @author Marie
  */
@@ -20,11 +22,16 @@ import java.util.function.Function;
 public class GeneratorController {
     private final DBMS dbms;
     private final RandomNpc randomNpc;
+    private final HelpFunctions helpFunctions;
+
+
+
 
     @Autowired // Spring injiziert automatisch eine Instanz von DBMS
-    public GeneratorController(DBMS dbms, RandomNpc randomNpc) {
+    public GeneratorController(DBMS dbms, RandomNpc randomNpc, HelpFunctions helpFunctions) {
         this.dbms = dbms;
         this.randomNpc = randomNpc;
+        this.helpFunctions = helpFunctions;
     }
 
     /**
@@ -85,10 +92,10 @@ public class GeneratorController {
      */
     private void populateDropdowns(Model model, String name, String race, String genClass, String job, String level, String abiliscor, String gender) {
         // Dropdown erstellen
-        model.addAttribute("races", getSortedColumn("race"));
-        model.addAttribute("classes", getSortedColumn("class"));
-        model.addAttribute("jobs", getSortedColumn("job"));
-        model.addAttribute("abilisc", getSortedColumn("abilisc"));
+        model.addAttribute("races", helpFunctions.getSortedColumn("race"));
+        model.addAttribute("classes", helpFunctions.getSortedColumn("class"));
+        model.addAttribute("jobs", helpFunctions.getSortedColumn("job"));
+        model.addAttribute("abilisc", helpFunctions.getSortedColumn("abilisc"));
 
         // vorher gewählte Daten übergeben
         model.addAttribute("name", name);
@@ -98,19 +105,6 @@ public class GeneratorController {
         model.addAttribute("selectedLevel", level);
         model.addAttribute("selectedAbilisc", abiliscor);
         model.addAttribute("selectedGender", gender);
-    }
-
-    
-    /**
-     * Ruft eine Spalte von Strings aus der Datenbank ab, sortiert sie in aufsteigender Reihenfolge und gibt die sortierte Liste zurück.
-     *
-     * @param columnName der Name der Spalte, die abgerufen und sortiert werden soll
-     * @return eine Liste von Strings, die die sortierten Werte der angegebenen Spalte enthält
-     */
-    private List<String> getSortedColumn(String columnName) {
-        ArrayList<String> list = dbms.onlyColumn(columnName);
-        Collections.sort(list);
-        return list;
     }
 
     
@@ -150,8 +144,8 @@ public class GeneratorController {
         Map<String, Object> formattedNpcData = formatNpcData(npc); // Main-NPC-Daten
         model.addAttribute("npc", formattedNpcData);
 
-        model.addAttribute("abilityScores", getAbilityScoresWithModifiers(npc));
-        model.addAttribute("savingThrows", formatSavingThrows(npc));
+        model.addAttribute("abilityScores", helpFunctions.getAbilityScoresWithModifiers(npc));
+        model.addAttribute("savingThrows", helpFunctions.formatSavingThrows(npc));
         model.addAttribute("allAbilities", Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha"));
 
         addMovementAndSensesToModel(npc, model);
@@ -165,64 +159,7 @@ public class GeneratorController {
         model.addAttribute("skills", npc.getSkillList());
     }
 
-    
-    /**
-     * Kombiniert die Attributswerte und ihre entsprechenden Modifikatoren eines gegebenen NPCs in eine formatierte String-Liste.
-     * Jeder Eintrag in der Liste enthält einen Attributswert gefolgt von seinem Modifikator (z. B. "14 +2").
-     *
-     * @param npc Das NPC-Objekt, das die Attributswerte und Modifikatoren zur Formatierung enthält.
-     * @return Eine Liste von Strings, wobei jeder String einen Attributswert und seinen Modifikator kombiniert.
-     */
-    private List<String> getAbilityScoresWithModifiers(NpcClass npc) {
-        List<String> abilityScoresWithModifiers = new ArrayList<>();
-        List<Integer> abilityScores = npc.getAbilityScores();
-        List<Integer> abilityModifiers = npc.getAbilityModifier();
 
-        for (int i = 0; i < abilityScores.size(); i++) {
-            String modifier = (abilityModifiers.get(i) >= 0) ? "+" + abilityModifiers.get(i) : String.valueOf(abilityModifiers.get(i));
-            abilityScoresWithModifiers.add(abilityScores.get(i) + " " + modifier);
-        }
-        return abilityScoresWithModifiers;
-    }
-
-    
-    /**
-     * Formatiert die Rettungswürfe einer gegebenen NPC-Klasse in eine Liste, wobei die Werte
-     * mit spezifischen Attributen (Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit, Charisma) ausgerichtet werden.
-     * Wenn der NPC keine Rettungswürfe oder ungültige Eingaben hat, wird eine Standardliste mit leeren Strings zurückgegeben.
-     *
-     * @param npc Das NPC-Objekt, das Informationen zu Rettungswürfen enthält.
-     * @return Eine Liste der Rettungswürfe, formatiert nach Attributen, wobei jeder Wert den Attributen
-     * "Str", "Dex", "Con", "Int", "Wis", "Cha" entspricht. Wenn keine gültigen Rettungswürfe
-     * gefunden werden, enthält die Liste leere Strings.
-     */
-    private List<String> formatSavingThrows(NpcClass npc) {
-        List<String> savingThrowsFormatted = Arrays.asList("", "", "", "", "", "");
-        List<String> allAbilities = Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha");
-        List<String> savingThrows = npc.getSavingThrows();
-
-        if (savingThrows == null || (savingThrows.size() == 1 && savingThrows.contains("none"))) {
-            return savingThrowsFormatted; // Leere Liste bei ungültigen Saving Throws
-        }
-
-        for (String savingThrow : savingThrows) {
-            if (savingThrow == null || savingThrow.trim().isEmpty() || savingThrow.equalsIgnoreCase("none")) {
-                continue;
-            }
-            String[] parts = savingThrow.split(" ");
-            if (parts.length == 2) {
-                String ability = parts[0].trim();
-                String value = parts[1].trim();
-                int index = allAbilities.indexOf(ability);
-                if (index != -1) {
-                    savingThrowsFormatted.set(index, value);
-                }
-            }
-        }
-        return savingThrowsFormatted;
-    }
-
-    
     /**
      * Fügt die Bewegungsraten und Sinne eines NPCs in das bereitgestellte Model ein.
      * Die Methode extrahiert Geh- und Fluggeschwindigkeiten aus dem NPC und fügt diese zusammen
@@ -276,6 +213,10 @@ public class GeneratorController {
         model.addAttribute("spellNinthLevel", stringToList.apply(npc.getNinthLevelSpell()));
     }
 
+
+    // Inventory
+
+
     
     /**
      * Fügt eine formatierte Beschreibung eines NPCs zum bereitgestellten Model hinzu.
@@ -297,35 +238,7 @@ public class GeneratorController {
         }
 
         model.addAttribute("descriptionList", formattedDescription);
-        model.addAttribute("descriptionText", generateDescriptionText(npc));
-    }
-
-
-    /**
-     * Generiert einen formatierten Beschreibungstext für den angegebenen NPC basierend auf dessen Attributen und Beschreibungen.
-     *
-     * @param npc Das NPC-Objekt mit Attributen und Beschreibungsdetails, die für die Konstruktion des Beschreibungstextes verwendet werden.
-     * @return Ein formatierter String, der den NPC beschreibt. Wenn keine Beschreibung verfügbar ist, wird eine Standardnachricht zurückgegeben.
-     */
-    public String generateDescriptionText(NpcClass npc) {
-        List<String> desc = npc.getDescription();
-
-        if (desc == null || desc.isEmpty()) return "Keine Beschreibung verfügbar.";
-
-        // Geschlechtsspezifische Pronomen setzen
-        String pronoun = npc.getGender().equalsIgnoreCase("male") ? "he" : "she";
-        String possessivePronoun = npc.getGender().equalsIgnoreCase("male") ? "his" : "her";
-
-        // Null-Werte durch sinnvolle Platzhalter ersetzen
-        String hairStyle = desc.get(2) != null ? desc.get(2) : "a simple style";
-
-        // Beschreibung formatieren
-        return String.format("%s has striking %s eyes. %s hair is %s, worn in %s. %s skin has a %s tone. %s is generally %s in behavior and has a distinctive habit: %s. %s feels strongly about \"%s\" and struggles with \"%s\". %s values \"%s\" above all. %s speaks with a %s voice. They usually wear %s and tend to come across as %s. %s is %s in size and stands at %s feet tall.",
-                npc.getName(), desc.get(0), possessivePronoun, desc.get(1), hairStyle,
-                npc.getName(), desc.get(3), pronoun, desc.get(4), desc.get(5),
-                pronoun, desc.get(6), desc.get(7),
-                pronoun, desc.get(8), pronoun, desc.get(9),
-                desc.get(10), pronoun, desc.get(11), desc.get(12), desc.get(13));
+        model.addAttribute("descriptionText", helpFunctions.generateDescriptionText(npc));
     }
 
 

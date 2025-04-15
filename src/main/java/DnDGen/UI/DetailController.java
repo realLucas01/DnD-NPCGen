@@ -21,10 +21,12 @@ import java.util.List;
 @Controller
 public class DetailController {
     private final DBMS dbms;
+    private final HelpFunctions helpFunctions;
 
     @Autowired
-    public DetailController(DBMS dbms) {
+    public DetailController(DBMS dbms, HelpFunctions helpFunctions) {
         this.dbms = dbms;
+        this.helpFunctions = helpFunctions;
     }
 
     /**
@@ -54,8 +56,8 @@ public class DetailController {
      */
     private void formatNpcDataForModel(NpcClass npc, Model model) {
         model.addAttribute("npc", npc);
-        model.addAttribute("abilityScores", getAbilityScoresWithModifiers(npc));
-        model.addAttribute("savingThrows", formatSavingThrows(npc));
+        model.addAttribute("abilityScores", helpFunctions.getAbilityScoresWithModifiers(npc));
+        model.addAttribute("savingThrows", helpFunctions.formatSavingThrows(npc));
         model.addAttribute("allAbilities", List.of("Str", "Dex", "Con", "Int", "Wis", "Cha"));
 
         addMovementAndSensesToModel(npc, model);
@@ -63,38 +65,9 @@ public class DetailController {
         addDescriptionToModel(npc, model);
     }
 
-    private List<String> getAbilityScoresWithModifiers(NpcClass npc) {
-        List<String> result = new ArrayList<>();
-        List<Integer> scores = npc.getAbilityScores();
-        List<Integer> mods = npc.getAbilityModifier();
 
-        for (int i = 0; i < scores.size(); i++) {
-            String mod = (mods.get(i) >= 0) ? "+" + mods.get(i) : String.valueOf(mods.get(i));
-            result.add(scores.get(i) + " " + mod);
-        }
-        return result;
-    }
 
-    private List<String> formatSavingThrows(NpcClass npc) {
-        List<String> formattedThrows = new ArrayList<>(List.of("", "", "", "", "", "")); // Mutable List
-        List<String> abilities = List.of("Str", "Dex", "Con", "Int", "Wis", "Cha");
-        List<String> savingThrows = npc.getSavingThrows();
 
-        if (savingThrows == null || savingThrows.isEmpty() || savingThrows.contains("none")) {
-            return formattedThrows;
-        }
-
-        for (String throwValue : savingThrows) {
-            String[] parts = throwValue.split(" ");
-            if (parts.length == 2) {
-                int index = abilities.indexOf(parts[0]);
-                if (index != -1) {
-                    formattedThrows.set(index, parts[1]);
-                }
-            }
-        }
-        return formattedThrows;
-    }
 
     private void addMovementAndSensesToModel(NpcClass npc, Model model) {
         List<String> speeds = npc.getMovementSpeedList();
@@ -141,6 +114,10 @@ public class DetailController {
         */
     }
 
+    // Inventory
+
+
+
     private void addDescriptionToModel(NpcClass npc, Model model) {
         List<String> descriptions = npc.getDescription();
         List<String> titles = List.of("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
@@ -152,34 +129,7 @@ public class DetailController {
         }
 
         model.addAttribute("descriptionList", formattedDesc);
-        model.addAttribute("descriptionText", generateDescriptionText(npc));
-    }
-
-    /**
-     * Generiert einen formatierten Beschreibungstext für den angegebenen NPC basierend auf dessen Attributen und Beschreibungen.
-     *
-     * @param npc Das NPC-Objekt mit Attributen und Beschreibungsdetails, die für die Konstruktion des Beschreibungstextes verwendet werden.
-     * @return Ein formatierter String, der den NPC beschreibt. Wenn keine Beschreibung verfügbar ist, wird eine Standardnachricht zurückgegeben.
-     */
-    public String generateDescriptionText(NpcClass npc) {
-        List<String> desc = npc.getDescription();
-
-        if (desc == null || desc.isEmpty()) return "Keine Beschreibung verfügbar.";
-
-        // Geschlechtsspezifische Pronomen setzen
-        String pronoun = npc.getGender().equalsIgnoreCase("male") ? "he" : "she";
-        String possessivePronoun = npc.getGender().equalsIgnoreCase("male") ? "his" : "her";
-
-        // Null-Werte durch sinnvolle Platzhalter ersetzen
-        String hairStyle = desc.get(2) != null ? desc.get(2) : "a simple style";
-
-        // Beschreibung formatieren
-        return String.format("%s has striking %s eyes. %s hair is %s, worn in %s. %s skin has a %s tone. %s is generally %s in behavior and has a distinctive habit: %s. %s feels strongly about \"%s\" and struggles with \"%s\". %s values \"%s\" above all. %s speaks with a %s voice. They usually wear %s and tend to come across as %s. %s is %s in size and stands at %s feet tall.",
-                npc.getName(), desc.get(0), possessivePronoun, desc.get(1), hairStyle,
-                npc.getName(), desc.get(3), pronoun, desc.get(4), desc.get(5),
-                pronoun, desc.get(6), desc.get(7),
-                pronoun, desc.get(8), pronoun, desc.get(9),
-                desc.get(10), pronoun, desc.get(11), desc.get(12), desc.get(13));
+        model.addAttribute("descriptionText", helpFunctions.generateDescriptionText(npc));
     }
 
 

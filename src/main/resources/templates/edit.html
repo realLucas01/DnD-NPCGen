@@ -14,6 +14,56 @@
         <!-- NavBar -->
         <div th:replace="~{fragments/navbar :: nav}"></div>
 
+
+        <!-- NPC erste Änderungen (Name, Class, Alignment, Race) -->
+        <form th:action="@{/editFirst}" method="post" class="container mt-4">
+            <!-- Name -->
+            <div class="row mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" th:value="${name}">
+            </div>
+
+            <!-- Race -->
+            <div class="row mb-3">
+                <label for="race" class="form-label">Rasse:</label>
+                <select id="race" name="race" class="form-select">
+                    <option value="Zufall" th:selected="${race == 'Zufall'}">Zufall</option>
+                    <option th:each="rac : ${races}" th:value="${rac}" th:text="${rac}"
+                            th:selected="${rac == race}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Class -->
+            <div class="row mb-3">
+                <label for="class" class="form-label">Klasse:</label>
+                <select id="class" name="genClass" class="form-select">
+                    <option value="Zufall" th:selected="${class == 'Zufall'}">Zufall</option>
+                    <option th:each="cla : ${classes}" th:value="${cla}" th:text="${cla}"
+                            th:selected="${cla == class}"></option>
+                </select>
+            </div>
+
+            <!-- Alignment -->
+            <div class="row mb-3">
+                <label for="alignment" class="form-label">Klasse:</label>
+                <select id="alignment" name="alignment" class="form-select">
+                    <option value="Zufall" th:selected="${alignment == 'Zufall'}">Zufall</option>
+                    <option th:each="align : ${alignments}" th:value="${align}" th:text="${align}"
+                            th:selected="${align == alignment}"></option>
+                </select>
+            </div>
+
+
+
+            <div class="row mb-3 text-center">
+                <button type="submit" class="btn btn-primary w-100">Next</button>
+            </div>
+        </form>
+
+        <!-- NPC alle Änderungen -->
+
+
     </body>
 
     <!-- Bootstrap JavaScript über CDN -->
