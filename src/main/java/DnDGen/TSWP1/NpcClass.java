@@ -625,8 +625,6 @@ public class NpcClass {
         setBonusTextList(entry.getHistoryBonusTextList());
         setSenses((entry.getHistorySenses()));
         setSpellList(new ArrayList<>(entry.getHistorySpells()));
-        System.out.println(spellList);
-        System.out.println(spellList.get(0));
         setId(entry.getHistoryId());
     }
 
