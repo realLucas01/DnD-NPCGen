@@ -2,6 +2,7 @@ package DnDGen.TSWP1;
 
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -63,6 +64,7 @@ public class RandomNpc {
      */
     String searchTermBonusAction = "bonus action";
 
+    Logger logger = Logger.getLogger(getClass().getName());
 
     /*
 
@@ -298,7 +300,7 @@ public class RandomNpc {
         randNpc = randGen.randomSpellsForClass(randNpc);
         //spells
         List<Object> spellList =  randNpc.getSpellList();
-        randGen.addRaceCantripsAndSpells(randNpc);
+        randGen.addRaceCantripsAndSpells(randNpc); //todo funkt das? ?
         randNpc.setSpellList(spellList);
         //features
         List<String> actionList = determineFeatures(race,"action");
@@ -750,37 +752,14 @@ public class RandomNpc {
     }
 
     public List<Integer> abilityScoreImprovement(Integer level, List<Integer> abilityScore, String classNameNPC){
-        Random randOrNot =  new SecureRandom();
-        int randDistribution = randOrNot.nextInt(2);
         int improveCount = Math.max(0, level/4);
 
         for (int i=0; i < improveCount; i++){
-           /* if (randDistribution == 1){ //
-                abilityScore = addImprovement(abilityScore, classNameNPC);
-            } else {
-                abilityScore = addRandomImprovement(abilityScore);
-            }
-            */
             abilityScore = addImprovement(abilityScore,classNameNPC); // aufruf
         }
         return abilityScore;
     }
     public List<Integer> addImprovement (List<Integer> abilityScore, String classNameNPC) {
-        /*
-        List<Integer> priorityScore = new ArrayList<>(abilityScore);
-        priorityScore.sort(Collections.reverseOrder());
-        /*
-        die höchsten werte werden um eins erhöht, solange sie unter 20 sind
-         */
-        /*
-        for (int i = 0, j = 0; (i < 6) && (j < 2); i++) {
-            if (priorityScore.get(i) < 20) {
-                abilityScore.set((abilityScore.get(priorityScore.indexOf(priorityScore.get(i)))), priorityScore.get((i) + 1));
-                j++;
-            }
-        }
-         */
-        //------------------------ ALT
         /*
             check nach der Klasse, aus der Klasse werden die höchsten AS genommen und überprüft
             wenn beide ungerade beide um eins erhöhen, wenn beide gerade und unter 20 wird eins erhöht
@@ -839,7 +818,7 @@ public class RandomNpc {
                     }
                     break;
                 default:
-                    System.out.println("Fehler:AbilityScore Improvement Nr. 1");
+                    logger.info("Fehler:AbilityScore Improvement Nr. 1");
                     break;
             }
         }
@@ -895,13 +874,13 @@ public class RandomNpc {
                             break;
                         default:
                             //Fehler
-                            System.out.println("Fehler ASI 1");
+                            logger.info("Fehler ASI 1");
                             break;
                     }
                     break;
                 default:
                     //Fehler
-                    System.out.println("Fehler ASI 2");
+                    logger.info("Fehler ASI 2");
                     break;
             }
         return abilityScore;
@@ -934,35 +913,33 @@ public class RandomNpc {
             }
         }
         if ((secondaryAS.isEmpty()) && (thirdAS.isEmpty())) {// wenn listen leer, müssten alle werte über 20 sein
-           // return abilityScore;
+            return abilityScore;
         }
         else if ((!secondaryAS.isEmpty())&&(thirdAS.isEmpty())) {
             int randDistribution = randOrNot.nextInt(secondaryAS.size());
             abilityScore.set(secondaryIndexList.get(randDistribution),secondaryAS.get(randDistribution)+1);
-            //return abilityScore;
+            return abilityScore;
         }
         else if ((secondaryAS.isEmpty())&&(!thirdAS.isEmpty())) {
             int randDistribution = randOrNot.nextInt(thirdAS.size()); // zufällig was ausgewählt werden soll
             abilityScore.set(thirtIndexList.get(randDistribution),thirdAS.get(randDistribution)+1);
-            //return abilityScore;
+            return abilityScore;
         }
         int randDistribution= randOrNot.nextInt(secondaryAS.size());
         abilityScore.set(secondaryIndexList.get(randDistribution),secondaryAS.get(randDistribution)+1);
-
-
         return abilityScore; // sicherheitshalber
     }
     /**
      * Zwei Ability Werte werden zufällig um eins erhöht, diese Zahl kann derzeit 20 überschreiten
-     * @param abilityScore
+     * @param abilityScore von dem NPC, wird wieder zurückgegeben
      * @return abilityScore
      */
     public List<Integer> addRandomImprovement(List<Integer> abilityScore){
         Random rndNumber =  new SecureRandom();
 
         for(int i=0; i<2; i++ ){
-            int randIncrIndex = rndNumber.nextInt(6)+1;
-            abilityScore.set(randIncrIndex, abilityScore.get(randIncrIndex)+1);
+            int randIncreaseIndex = rndNumber.nextInt(6)+1;
+            abilityScore.set(randIncreaseIndex, abilityScore.get(randIncreaseIndex)+1);
         }
         return abilityScore;
     }

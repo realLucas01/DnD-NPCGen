@@ -587,7 +587,6 @@ public class EditNpc {
                     sortedAS.set(0, sortedAS.getFirst() - 2);
             }
         }
-
         abilityScores = sortedAS;
     }
 
