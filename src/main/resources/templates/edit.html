@@ -20,37 +20,46 @@
             <!-- Name -->
             <div class="row mb-3">
                 <label for="name" class="form-label">Name:</label>
-                <input type="text" id="name" name="name" class="form-control" th:value="${name}">
+                <input type="text" id="name" name="name" class="form-control" th:value="${name}" th:disabled="${switch}">
             </div>
 
             <!-- Race -->
             <div class="row mb-3">
-                <label for="race" class="form-label">Rasse:</label>
-                <select id="race" name="race" class="form-select">
-                    <option value="Zufall" th:selected="${race == 'Zufall'}">Zufall</option>
-                    <option th:each="rac : ${races}" th:value="${rac}" th:text="${rac}"
-                            th:selected="${rac == race}">
+                <label for="race" class="form-label">Race:</label>
+                <select id="race" name="race" class="form-select" th:disabled="${switch}">
+                    <!-- Standardoptionen -->
+                    <option value="Zufall" th:selected="${race == 'Zufall'}" th:disabled="${switch}">Zufall</option>
+                    <option th:each="rac : ${races}" th:value="${rac}" th:text="${rac}" th:selected="${rac == race}">
                     </option>
+
+                    <!-- Neue Option, nur wenn switch == true -->
+                    <option th:if="${switch}" th:value="${selectedRace}" th:selected="${selectedRace}" th:text="${selectedRace}"></option>
                 </select>
             </div>
 
             <!-- Class -->
             <div class="row mb-3">
-                <label for="class" class="form-label">Klasse:</label>
-                <select id="class" name="genClass" class="form-select">
+                <label for="class" class="form-label">Class:</label>
+                <select id="class" name="genClass" class="form-select" th:disabled="${switch}">
                     <option value="Zufall" th:selected="${class == 'Zufall'}">Zufall</option>
-                    <option th:each="cla : ${classes}" th:value="${cla}" th:text="${cla}"
-                            th:selected="${cla == class}"></option>
+                    <option th:each="cla : ${classes}" th:value="${cla}" th:text="${cla}" th:selected="${cla == class}">
+                    </option>
+
+                    <!-- Neue Option, nur wenn switch == true -->
+                    <option th:if="${switch}" th:value="${selectedClass}" th:selected="${selectedClass}" th:text="${selectedClass}"></option>
                 </select>
             </div>
 
             <!-- Alignment -->
             <div class="row mb-3">
-                <label for="alignment" class="form-label">Klasse:</label>
-                <select id="alignment" name="alignment" class="form-select">
+                <label for="alignment" class="form-label">Alignment:</label>
+                <select id="alignment" name="alignment" class="form-select" th:disabled="${switch}">
                     <option value="Zufall" th:selected="${alignment == 'Zufall'}">Zufall</option>
-                    <option th:each="align : ${alignments}" th:value="${align}" th:text="${align}"
-                            th:selected="${align == alignment}"></option>
+                    <option th:each="align : ${alignments}" th:value="${align}" th:text="${align}" th:selected="${align == alignment}">
+                    </option>
+
+                    <!-- Neue Option, nur wenn switch == true -->
+                    <option th:if="${switch}" th:value="${selectedAlignment}" th:selected="${selectedAlignment}" th:text="${selectedAlignment}"></option>
                 </select>
             </div>
 
@@ -62,7 +71,171 @@
         </form>
 
         <!-- NPC alle Änderungen -->
+        <div class="container mt-4" th:if="${switch}">
+            <!-- Level -->
+            <div class="row mb-3">
+                <label for="level" class="form-label">Level:</label>
+                <select id="level" name="level" class="form-select">
+                    <option value="Zufall">Zufall</option>
+                    <option th:each="levell : ${#numbers.sequence(1,20)}" th:value="${levell}" th:text="${levell}"
+                            th:selected="${levell == level}"></option>
+                </select>
+            </div>
 
+            <!-- Jobs -->
+            <div class="row mb-3">
+                <label for="job" class="form-label">Beruf:</label>
+                <select id="job" name="job" class="form-select">
+                    <option value="Zufall" th:selected="${job == 'Zufall'}">Zufall</option>
+                    <option th:each="jobb : ${jobs}" th:value="${jobb}" th:text="${jobb}"
+                            th:selected="${jobb == job}"></option>
+                </select>
+            </div>
+
+            <!-- Deities -->
+            <div class="row mb-3">
+                <label for="deity" class="form-label">Gottheit:</label>
+                <select id="deity" name="deity" class="form-select">
+                    <option th:each="deityValue : ${deities}" th:value="${deityValue}" th:text="${deityValue}"
+                            th:selected="${deityValue == deity}"></option>
+                </select>
+            </div>
+
+            <!-- Sex -->
+            <fieldset class="row mb-3">
+                <legend class="col-form-label">Geschlecht</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input type="radio" name="gender" value="Zufall" id="genderRandom" class="form-check-input"
+                               th:checked="${sex == 'Zufall'}">
+                        <label for="genderRandom" class="form-check-label">Zufall</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" name="gender" value="male" id="genderMale" class="form-check-input"
+                               th:checked="${sex == 'male'}">
+                        <label for="genderMale" class="form-check-label">Männlich</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" name="gender" value="female" id="genderFemale" class="form-check-input"
+                               th:checked="${sex == 'female'}">
+                        <label for="genderFemale" class="form-check-label">Weiblich</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Age -->
+            <div class="row mb-3">
+                <label for="age" class="form-label">Alter:</label>
+                <input id="age" name="age" type="number" class="form-control" th:value="${age}" min="0" />
+            </div>
+
+            <!-- AC -->
+            <div class="row mb-3">
+                <label for="AC" class="form-label">Rüstungsklasse (AC):</label>
+                <input id="AC" name="AC" type="number" class="form-control" th:value="${AC}" min="0" />
+            </div>
+
+            <!-- HP -->
+            <div class="row mb-3">
+                <label for="HP" class="form-label">Lebenspunkte (HP):</label>
+                <input id="HP" name="HP" type="number" class="form-control" th:value="${HP}" min="0" />
+            </div>
+
+            <!-- Speed -->
+            <div class="row mb-3">
+                <!-- Walking Speed -->
+                <div class="col-6">
+                    <label for="walkingSpeed" class="form-label">Walkingspeed:</label>
+                    <div class="input-group">
+                        <input id="walkingSpeed" name="walkingSpeed" type="number" class="form-control" th:value="${walkingSpeed}" min="0" />
+                        <span class="input-group-text">ft</span>
+                    </div>
+                </div>
+
+                <!-- Flying Speed -->
+                <div class="col-6">
+                    <label for="flyingSpeed" class="form-label">Flying speed:</label>
+                    <div class="input-group">
+                        <input id="flyingSpeed" name="flyingSpeed" type="number" class="form-control" th:value="${flyingSpeed}" min="0" />
+                        <span class="input-group-text">ft</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div class="row mb-3">
+                <div class="d-flex align-items-center">
+                    <label class="form-label me-2 mb-0"><b>Languages:</b></label>
+                    <!-- Liste der Sprachen -->
+                    <p th:text="${language}" class="form-control-plaintext mb-0"></p>
+                </div>
+
+                <!-- Button zum Öffnen des Pop-ups -->
+                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#languagesModal">
+                    Choose Languages
+                </button>
+            </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="languagesModal" tabindex="-1" aria-labelledby="languagesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="languagesModalLabel">Verfügbare Sprachen</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-2">
+                                    <!-- Liste der Sprachen -->
+                                    <div th:each="lang : ${languages}" class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <!-- Checkbox für die Sprache -->
+                                                <input type="checkbox"
+                                                       th:id="${'language_' + lang}"
+                                                       th:name="lang"
+                                                       th:value="${lang}"
+                                                       th:checked="${language.contains(lang)}"
+                                                       class="form-check-input me-2">
+                                                <label th:for="${'language_' + lang}" class="form-check-label" th:text="${lang}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- AbilityScores -->
+
+
+            <!-- Inventar -->
+                <!-- Armor -->
+
+
+                <!-- Weapon -->
+
+
+            <!-- Skills -->
+
+            <!-- Senses -->
+
+            <!-- Spells -->
+
+            <!-- Description -->
+
+
+
+
+            <!-- Save weitereitung -->
+
+
+        </div>
 
     </body>
 
