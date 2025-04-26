@@ -79,9 +79,7 @@ public class DetailController {
         List<String> senses = (sensesValue != null && !sensesValue.isEmpty())
                 ? new ArrayList<>(List.of(sensesValue.split(",\\s*")))
                 : new ArrayList<>();  // Leere Liste verwenden, falls null oder leer
-
-
-        //System.out.println( "Senses: " + sensesValue + " -> " + senses);
+        
 
         model.addAttribute("senses", senses);  // Senses dem Model hinzufügen
 
@@ -98,20 +96,6 @@ public class DetailController {
         model.addAttribute("spellSeventhLevel", splitString(npc.getSeventhLevelSpell()));
         model.addAttribute("spellEighthLevel", splitString(npc.getEightLevelSpell()));
         model.addAttribute("spellNinthLevel", splitString(npc.getNinthLevelSpell()));
-
-        // Print-Zeilen
-        /*
-        System.out.println("Cantrips: " + npc.getSpellCantrips() + " -> " + splitString(npc.getSpellCantrips()));
-        System.out.println("First Level Spells: " + npc.getFirstLevelSpell() + " -> " + splitString(npc.getFirstLevelSpell()));
-        System.out.println("Second Level Spells: " + npc.getSecondLevelSpell() + " -> " + splitString(npc.getSecondLevelSpell()));
-        System.out.println("Third Level Spells: " + npc.getThirdLevelSpell() + " -> " + splitString(npc.getThirdLevelSpell()));
-        System.out.println("Fourth Level Spells: " + npc.getFourthLevelSpell() + " -> " + splitString(npc.getFourthLevelSpell()));
-        System.out.println("Fifth Level Spells: " + npc.getFifthLevelSpell() + " -> " + splitString(npc.getFifthLevelSpell()));
-        System.out.println("Sixth Level Spells: " + npc.getSixthLevelSpell() + " -> " + splitString(npc.getSixthLevelSpell()));
-        System.out.println("Seventh Level Spells: " + npc.getSeventhLevelSpell() + " -> " + splitString(npc.getSeventhLevelSpell()));
-        System.out.println("Eighth Level Spells: " + npc.getEightLevelSpell() + " -> " + splitString(npc.getEightLevelSpell()));
-        System.out.println("Ninth Level Spells: " + npc.getNinthLevelSpell() + " -> " + splitString(npc.getNinthLevelSpell()));
-        */
     }
 
     // Inventory

@@ -42,8 +42,9 @@ public class IndexController {
     @GetMapping("/")
     String getGeneratorPage(Model model) {
 
+        String zufall = "Zufall";
         // Werte für die Dropdown-Menüs vorbereiten
-        populateDropdowns(model, "", "Zufall", "Zufall", "Zufall", "Zufall", "Zufall", "Zufall");
+        populateDropdowns(model, "", zufall, zufall, zufall, zufall, zufall, zufall);
 
         return "index"; // Zeigt die Thymeleaf-Seite an
     }

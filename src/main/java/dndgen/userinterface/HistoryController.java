@@ -41,8 +41,7 @@ public class HistoryController {
                     NpcClass npc = new NpcClass();
                     npc.historyEntryToNpc(npcData);
                     return npc;
-                })
-                .collect(Collectors.toList());
+                }).toList();
 
 
         model.addAttribute("npcHistory", npcHistory);

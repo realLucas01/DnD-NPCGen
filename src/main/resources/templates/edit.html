@@ -177,39 +177,41 @@
             </div>
 
                 <!-- Modal -->
+            <form th:action="@{/editLanguages}" method="post">
                 <div class="modal fade" id="languagesModal" tabindex="-1" aria-labelledby="languagesModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="languagesModalLabel">Verfügbare Sprachen</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row g-2">
-                                    <!-- Liste der Sprachen -->
-                                    <div th:each="lang : ${languages}" class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <!-- Checkbox für die Sprache -->
-                                                <input type="checkbox"
-                                                       th:id="${'language_' + lang}"
-                                                       th:name="lang"
-                                                       th:value="${lang}"
-                                                       th:checked="${language.contains(lang)}"
-                                                       class="form-check-input me-2">
-                                                <label th:for="${'language_' + lang}" class="form-check-label" th:text="${lang}"></label>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="languagesModalLabel">Verfügbare Sprachen</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-2">
+                                        <!-- Liste der Sprachen -->
+                                        <div th:each="lang : ${languages}" class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <!-- Checkbox für die Sprache -->
+                                                    <input type="checkbox"
+                                                           th:id="${'language_' + lang}"
+                                                           th:name="lang"
+                                                           th:value="${lang}"
+                                                           th:checked="${language.contains(lang)}"
+                                                           class="form-check-input me-2">
+                                                    <label th:for="${'language_' + lang}" class="form-check-label" th:text="${lang}"></label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-                                <button type="submit" class="btn btn-primary">Speichern</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                                    <button type="submit" class="btn btn-primary">Speichern</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
             <!-- AbilityScores -->
 

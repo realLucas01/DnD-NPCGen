@@ -22,7 +22,8 @@ public class EditController {
     private final DBMS dbms;
     private NpcClass npc;
     private final HelpFunctions helpFunctions;
-    
+    private NpcClass updateNPC;
+
     @Autowired
     public EditController(DBMS dbms, HelpFunctions helpFunctions) {
         this.dbms = dbms;
@@ -49,101 +50,84 @@ public class EditController {
         model.addAttribute("class", npc.getGenClass());
         model.addAttribute("alignment", npc.getAlignment());
 
+        updateNPC = new NpcClass();
+        updateNPC.historyEntryToNpc(dbms.getHistoryEntry(2));
+
         return "edit";
     }
 
     @PostMapping("/editFirst")
-    public String editNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
+    public String editedNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
         // Änderungen → Kernelemente können NICHT geändert werden
         model.addAttribute("switch", true);
 
-        // Kernänderungen vornehmen
+        // Änderungen vornehmen
         List<String> changes = new ArrayList<>(3);
-        
         changes.add(race);
         changes.add(genClass);
         changes.add(alignment);
         changes.add(name);
 
-        // NPC bearbeiten
+        // NPC aktualisieren
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
-        //NpcClass updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
-        NpcClass updateNPC = new NpcClass();
-        updateNPC.historyEntryToNpc(dbms.getHistoryEntry(2));
+        NpcClass updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
 
+        // Anzeigen-Logik vorbereiten
+        prepareEditAttributes(model, updateNPC);
 
+        return "edit";
+    }
 
-        // vorher gewählte Daten übergeben
-        model.addAttribute("name", updateNPC.getName());
-        model.addAttribute("selectedRace", updateNPC.getRace());
-        model.addAttribute("selectedClass", updateNPC.getGenClass());
-        model.addAttribute("selectedAlignment", updateNPC.getAlignment());
-
+    private void prepareEditAttributes(Model model, NpcClass npc) {
+        // Gemeinsame Parameter vorbereiten
+        model.addAttribute("name", npc.getName());
+        model.addAttribute("selectedRace", npc.getRace());
+        model.addAttribute("selectedClass", npc.getGenClass());
+        model.addAttribute("selectedAlignment", npc.getAlignment());
         model.addAttribute("npc", npc);
 
-        // Level
-        model.addAttribute("level", updateNPC.getLevel());
-
-        // Job
+        // Zusatzdaten (Level, Jobs, etc.)
+        model.addAttribute("level", npc.getLevel());
         model.addAttribute("jobs", helpFunctions.getSortedColumn("job"));
-        model.addAttribute("job", updateNPC.getJob());
+        model.addAttribute("job", npc.getJob());
+        model.addAttribute("deities", dbms.getColWithPref("deity", npc.getAlignment()));
+        model.addAttribute("deity", npc.getAlignment());
 
-        // Deity
-        model.addAttribute("deities", dbms.getColWithPref("deity", updateNPC.getAlignment()));
-        model.addAttribute("deity", updateNPC.getAlignment());
+        // Weitere Werte (Geschlecht, Alter, HP, Geschwindigkeit)
+        model.addAttribute("sex", npc.getGender());
+        model.addAttribute("age", npc.getAge());
+        model.addAttribute("AC", npc.getArmorClass());
+        model.addAttribute("HP", npc.getHealthPoints());
 
-        // Sex
-        model.addAttribute("sex", updateNPC.getGender());
-
-        // Age
-        model.addAttribute("age", updateNPC.getAge());
-
-        // AC
-        model.addAttribute("AC", updateNPC.getArmorClass());
-
-        // HP
-        model.addAttribute("HP", updateNPC.getHealthPoints());
-
-        // Speed
-        List<String> speeds = updateNPC.getMovementSpeedList();
+        // Bewegungswerte
+        List<String> speeds = npc.getMovementSpeedList();
         String walkingSpeed = speeds.stream()
                 .filter(s -> s.contains("walking"))
                 .findFirst()
                 .orElse("");
-
-        String flyinggSpeed = speeds.stream()
+        String flyingSpeed = speeds.stream()
                 .filter(s -> s.contains("flying"))
                 .findFirst()
                 .orElse("");
-
         model.addAttribute("walkingSpeed", walkingSpeed.replaceAll("\\D+", ""));
-        model.addAttribute("flyingSpeed",flyinggSpeed.replaceAll("\\D+", "") );
+        model.addAttribute("flyingSpeed", flyingSpeed.replaceAll("\\D+", ""));
 
-        // Languages
+        // Sprachen
         model.addAttribute("languages", dbms.onlyColumn("language"));
-        model.addAttribute("language", String.join(", ", updateNPC.getLanguages()));
+        model.addAttribute("language", String.join(", ", npc.getLanguages()));
 
-        // AbilityScores
+        // Ability Scores
         model.addAttribute("abilityScores", helpFunctions.getAbilityScoresWithModifiers(npc));
         model.addAttribute("savingThrows", helpFunctions.formatSavingThrows(npc));
         model.addAttribute("allAbilities", List.of("Str", "Dex", "Con", "Int", "Wis", "Cha"));
 
         // Inventar
-            // Armor
-            model.addAttribute("armors", dbms.onlyColumn("armor"));
-            model.addAttribute("armor", updateNPC.getArmor());
+        model.addAttribute("armors", dbms.onlyColumn("armor"));
+        model.addAttribute("armor", npc.getArmor());
+        model.addAttribute("weapons", dbms.onlyColumn("weapon"));
+        model.addAttribute("weapon", npc.getWeaponList());
 
-            // Weapon
-            model.addAttribute("weapons", dbms.onlyColumn("weapon"));
-            model.addAttribute("weapon", updateNPC.getWeaponList());
-
-        // Skills
-
-        // Senses
-
-        // Spells
-
-        // Description
+        // Beschreibung
         List<String> descriptions = npc.getDescription();
         List<String> titles = List.of("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
                 "Bond", "Flaw", "Ideal", "Voice", "Clothing", "Attitude", "Size", "Height");
@@ -152,19 +136,29 @@ public class EditController {
         for (int i = 0; i < descriptions.size(); i++) {
             formattedDesc.add(titles.get(i) + ": " + descriptions.get(i));
         }
-
         model.addAttribute("descriptionList", formattedDesc);
-        model.addAttribute("descriptionText", helpFunctions.generateDescriptionText(updateNPC));
-
-        
-        return "edit";
+        model.addAttribute("descriptionText", helpFunctions.generateDescriptionText(npc));
     }
 
-    
+
     @PostMapping("editSave")
     public String saveEdit() {
 
         return "redirect:/detail?id=" + npc.getId();
+    }
+
+    @PostMapping("editLanguages")
+    public String editLanguages(@RequestParam("lang") List<String> selectedLanguages, Model model) {
+
+        model.addAttribute("switch", true);
+        // Sprachen aktualisieren
+        updateNPC.setLanguages(selectedLanguages);
+
+        // Update der Anzeige vorbereiten
+        prepareEditAttributes(model, updateNPC);
+
+        return "edit";
+
     }
     
 }
