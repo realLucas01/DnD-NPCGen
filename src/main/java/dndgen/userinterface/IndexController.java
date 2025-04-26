@@ -17,7 +17,7 @@ import java.util.function.Function;
  * @author Marie
  */
 @Controller
-public class GeneratorController {
+public class IndexController {
     private final DBMS dbms;
     private final RandomNpc randomNpc;
     private final HelpFunctions helpFunctions;
@@ -26,26 +26,26 @@ public class GeneratorController {
 
 
     @Autowired // Spring injiziert automatisch eine Instanz von DBMS
-    public GeneratorController(DBMS dbms, RandomNpc randomNpc, HelpFunctions helpFunctions) {
+    public IndexController(DBMS dbms, RandomNpc randomNpc, HelpFunctions helpFunctions) {
         this.dbms = dbms;
         this.randomNpc = randomNpc;
         this.helpFunctions = helpFunctions;
     }
 
     /**
-     * Behandelt GET-Anfragen an den "/generator"-Endpunkt und bereitet das Model
+     * Behandelt GET-Anfragen an den "/index"-Endpunkt und bereitet das Model
      * mit den notwendigen Attributen für die Ansicht vor.
      *
      * @param model Das Model-Objekt, das verwendet wird, um Attribute an die Ansicht zu übergeben
-     * @return der Name der Thymeleaf-Vorlage, um die Generator-Seite anzuzeigen
+     * @return der Name der Thymeleaf-Vorlage, um die Index(Generator)-Seite anzuzeigen
      */
-    @GetMapping("/generator")
+    @GetMapping("/")
     String getGeneratorPage(Model model) {
 
         // Werte für die Dropdown-Menüs vorbereiten
         populateDropdowns(model, "", "Zufall", "Zufall", "Zufall", "Zufall", "Zufall", "Zufall");
 
-        return "generator"; // Zeigt die Thymeleaf-Seite an
+        return "index"; // Zeigt die Thymeleaf-Seite an
     }
 
 
@@ -62,10 +62,10 @@ public class GeneratorController {
      * @param abilisc  die Fähigkeitspunkte oder Beschreibung des NPCs; kann null oder leer sein
      * @param gender   das Geschlecht des NPCs; kann null oder leer sein
      * @param model    das Model, dem Dropdown-Menüdaten und NPC-Daten hinzugefügt werden
-     * @return der Name des Thymeleaf-Templates, das die NPC-Generator-Seite rendert
+     * @return der Name des Thymeleaf-Templates, das die NPC-Index(Generator)-Seite rendert
      */
-    @PostMapping("/generate")
-    public String generateNPC(@RequestParam(required = false) String name,
+    @PostMapping("/index")
+    public String NPC(@RequestParam(required = false) String name,
                               @RequestParam(required = false) String race,
                               @RequestParam(required = false) String genClass,
                               @RequestParam(required = false) String job,
@@ -79,7 +79,7 @@ public class GeneratorController {
 
         formatNpcDataForModel(npc, model); // NPC-Daten formatieren und ins Model einfügen
 
-        return "generator"; // Thymeleaf-Template zurückgeben
+        return "index"; // Thymeleaf-Template zurückgeben
     }
 
 
