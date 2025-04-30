@@ -23,6 +23,7 @@ public class EditController {
     private NpcClass npc;
     private final HelpFunctions helpFunctions;
     private NpcClass updateNPC;
+    private final String switchValue = "switch";
 
     @Autowired
     public EditController(DBMS dbms, HelpFunctions helpFunctions) {
@@ -37,7 +38,7 @@ public class EditController {
         npc.historyEntryToNpc(dbms.getHistoryEntry(id));
 
         // noch keinen Änderungen → Kernelemente können geändert werden
-        model.addAttribute("switch", false);
+        model.addAttribute(switchValue, false);
 
         // Dropdown erstellen
         model.addAttribute("races", helpFunctions.getSortedColumn("race"));
@@ -59,7 +60,7 @@ public class EditController {
     @PostMapping("/editFirst")
     public String editedNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
         // Änderungen → Kernelemente können NICHT geändert werden
-        model.addAttribute("switch", true);
+        model.addAttribute(switchValue, true);
 
         // Änderungen vornehmen
         List<String> changes = new ArrayList<>(3);
@@ -70,7 +71,7 @@ public class EditController {
 
         // NPC aktualisieren
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
-        NpcClass updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
+       // updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
 
         // Anzeigen-Logik vorbereiten
         prepareEditAttributes(model, updateNPC);
@@ -150,7 +151,7 @@ public class EditController {
     @PostMapping("editLanguages")
     public String editLanguages(@RequestParam("lang") List<String> selectedLanguages, Model model) {
 
-        model.addAttribute("switch", true);
+        model.addAttribute(switchValue, true);
         // Sprachen aktualisieren
         updateNPC.setLanguages(selectedLanguages);
 

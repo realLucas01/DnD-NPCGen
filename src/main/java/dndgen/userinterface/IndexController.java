@@ -1,6 +1,5 @@
 package dndgen.userinterface;
 
-import dndgen.database.DBMS;
 import dndgen.tswp1.NpcClass;
 import dndgen.tswp1.RandomNpc;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,14 @@ import java.util.function.Function;
  */
 @Controller
 public class IndexController {
-    private final DBMS dbms;
     private final RandomNpc randomNpc;
     private final HelpFunctions helpFunctions;
-
+    private final String zufall = "Zufall";
 
 
 
     @Autowired // Spring injiziert automatisch eine Instanz von DBMS
-    public IndexController(DBMS dbms, RandomNpc randomNpc, HelpFunctions helpFunctions) {
-        this.dbms = dbms;
+    public IndexController(RandomNpc randomNpc, HelpFunctions helpFunctions) {
         this.randomNpc = randomNpc;
         this.helpFunctions = helpFunctions;
     }
@@ -37,14 +34,12 @@ public class IndexController {
      * mit den notwendigen Attributen für die Ansicht vor.
      *
      * @param model Das Model-Objekt, das verwendet wird, um Attribute an die Ansicht zu übergeben
-     * @return der Name der Thymeleaf-Vorlage, um die Index(Generator)-Seite anzuzeigen
+     * @return der Name der Thymeleaf-Vorlage, um den Index (Generator)-Seite anzuzeigen
      */
     @GetMapping("/")
     String getGeneratorPage(Model model) {
-
-        String zufall = "Zufall";
         // Werte für die Dropdown-Menüs vorbereiten
-        populateDropdowns(model, "", zufall, zufall, zufall, zufall, zufall, zufall);
+        populateDropdowns(model, new DropdownSelection("", zufall, zufall, zufall, zufall, zufall, zufall));
 
         return "index"; // Zeigt die Thymeleaf-Seite an
     }
@@ -66,7 +61,7 @@ public class IndexController {
      * @return der Name des Thymeleaf-Templates, das die NPC-Index(Generator)-Seite rendert
      */
     @PostMapping("/index")
-    public String NPC(@RequestParam(required = false) String name,
+    public String generateNPC(@RequestParam(required = false) String name,
                               @RequestParam(required = false) String race,
                               @RequestParam(required = false) String genClass,
                               @RequestParam(required = false) String job,
@@ -74,7 +69,7 @@ public class IndexController {
                               @RequestParam(required = false) String abilisc,
                               @RequestParam(required = false) String gender,
                               Model model) {
-        populateDropdowns(model, name, race, genClass, job, level, abilisc, gender); // Menü-Daten vorbereiten
+        populateDropdowns(model, new DropdownSelection(name, race, genClass, job, level, abilisc, gender)); // Menü-Daten vorbereiten
 
         NpcClass npc = createNPC(name, race, genClass, job, level, abilisc, gender); // NPC erstellen
 
@@ -89,21 +84,22 @@ public class IndexController {
      *
      * @param model Das Model-Objekt, zu dem Dropdown-Attribute hinzugefügt werden
      */
-    private void populateDropdowns(Model model, String name, String race, String genClass, String job, String level, String abiliscor, String gender) {
-        // Dropdown erstellen
+    private void populateDropdowns(Model model, DropdownSelection selection) {
+        // Dropdown-Daten hinzufügen
         model.addAttribute("races", helpFunctions.getSortedColumn("race"));
         model.addAttribute("classes", helpFunctions.getSortedColumn("class"));
         model.addAttribute("jobs", helpFunctions.getSortedColumn("job"));
         model.addAttribute("abilisc", helpFunctions.getSortedColumn("abilisc"));
 
         // vorher gewählte Daten übergeben
-        model.addAttribute("name", name);
-        model.addAttribute("selectedRace", race);
-        model.addAttribute("selectedClass", genClass);
-        model.addAttribute("selectedJob", job);
-        model.addAttribute("selectedLevel", level);
-        model.addAttribute("selectedAbilisc", abiliscor);
-        model.addAttribute("selectedGender", gender);
+        model.addAttribute("name", selection.getName());
+        model.addAttribute("selectedRace", selection.getRace());
+        model.addAttribute("selectedClass", selection.getGenClass());
+        model.addAttribute("selectedJob", selection.getJob());
+        model.addAttribute("selectedLevel", selection.getLevel());
+        model.addAttribute("selectedAbilisc", selection.getAbilisc());
+        model.addAttribute("selectedGender", selection.getGender());
+
     }
 
     
@@ -233,7 +229,7 @@ public class IndexController {
         List<String> npcDescription = npc.getDescription();
 
         for (int i = 0; i < npcDescription.size(); i++) {
-            formattedDescription.add(descriptionTitles.get(i) + ": " + npcDescription.get(i));
+            formattedDescription.add(String.format("%s: %s", descriptionTitles.get(i), npcDescription.get(i)));
         }
 
         model.addAttribute("descriptionList", formattedDescription);
@@ -247,7 +243,7 @@ public class IndexController {
      * @return `null`, falls "zufall", sonst der Originalstring
      */
     public String zufall(String input) {
-        return ("Zufall".equalsIgnoreCase(input) || input.isEmpty()) ? null : input;
+        return (zufall.equalsIgnoreCase(input) || input.isEmpty()) ? null : input;
     }
 
 
@@ -257,7 +253,7 @@ public class IndexController {
      * @return `null` falls "zufall", sonst Integer-Wert
      */
     public Integer zufallLevel(String input) {
-        return ("Zufall".equalsIgnoreCase(input) || input.isEmpty()) ? null : Integer.parseInt(input);
+        return (zufall.equalsIgnoreCase(input) || input.isEmpty()) ? null : Integer.parseInt(input);
     }
 
 
@@ -267,7 +263,7 @@ public class IndexController {
      * @return `null` falls leer oder "zufall", sonst der String selbst
      */
     public String zufallString(String string) {
-        return (string == null || string.equalsIgnoreCase("Zufall") || string.isEmpty()) ? null : string;
+        return (string == null || string.equalsIgnoreCase(zufall) || string.isEmpty()) ? null : string;
     }
 
 
