@@ -85,7 +85,7 @@ public class UiHistoryEditUpdate {
      * @param oldNpc  the old npc
      * @return the npc class
      */
-/*
+	/*
     changes = {race, class, alignment}
      */
     public NpcClass updateHistoryEdit (List<String> changes, NpcClass oldNpc ){
@@ -97,11 +97,11 @@ public class UiHistoryEditUpdate {
         //race change
         if(!Objects.equals(newRace, oldNpc.getRace())){
         	//race geändert
-            //Änderungen: RaceAbilityScoreAddierung, Features, Skills, Language, Speed, Description:(Age, height, size), Senses
-			ArrayList<Integer> abilityScore =(ArrayList<Integer>) oldNpc.getAbilityScores();
+            //Änderungen: RaceAbilityScore Addierung, Features, Skills, Language, Speed, Description:(Age, height, size), Senses
+			List<Integer> abilityScore =oldNpc.getAbilityScores();
 			newNpc.setRace(newRace);
-            abilityScore = (ArrayList<Integer>) editNpc.removeRaceAbilityAddition(oldNpc.getRace(), abilityScore);
-            abilityScore = (ArrayList<Integer>) randNpc.addRaceModifierToAbilityScore(newRace, abilityScore);
+            abilityScore = editNpc.removeRaceAbilityAddition(oldNpc.getRace(), abilityScore);
+            abilityScore = randNpc.addRaceModifierToAbilityScore(newRace, abilityScore);
 			newNpc.setAbilityScores(abilityScore);
 
 			newNpc.setBonusTextList(randNpc.determineFeatures(newRace,"bonus text")); //Features
@@ -140,6 +140,7 @@ public class UiHistoryEditUpdate {
 			classChange(newNpc,newCharClass, oldNpc);
 
         }
+		//Alignment Change
         if ((!Objects.equals(newAlignment, oldNpc.getAlignment()))){
 			newNpc.setAlignment(newAlignment);
 
@@ -147,13 +148,6 @@ public class UiHistoryEditUpdate {
         }
         //geänderten wird dem userinterface zurückgegeben
         return newNpc;
-    }
-
-    /*
-    Option um nicht die HP manuell ausrechnen zu müssen, kann die Option angeboten werden diese auch wieder zufällig generieren zu lassen
-     */
-    private int newRolledHP(int level, String genClass, List<Integer> abilityModifier){
-        return randNpc.calculateHP(genClass, level, abilityModifier);
     }
 
 	private void alignmentChanges(String newAlignment, NpcClass newNpc, NpcClass oldNpc){
@@ -170,18 +164,18 @@ public class UiHistoryEditUpdate {
     	
     	//AbiliSc
 		List<Integer> abilityScore = newNpc.getAbilityScores();
-        abilityScore = editNpc.removeRaceAbilityAddition(newNpc.getRace(), (ArrayList<Integer>) abilityScore);//Race, ABiliSc
+        abilityScore = editNpc.removeRaceAbilityAddition(newNpc.getRace(), abilityScore);//Race, ABiliSc
         abilityScore = randNpc.distributeAbilityScore(abilityScore,newClass);
         abilityScore = randNpc.addRaceModifierToAbilityScore(newNpc.getRace(),abilityScore);
     	newNpc.setAbilityScores(abilityScore);
     	
     	//Armor+AC
-    	List<String> newArmorPossibi = randGen.figureOutProfList("armor", newClass, newNpc.getRace());
+    	List<String> newArmorPossible = randGen.figureOutProfList("armor", newClass, newNpc.getRace());
     	String oldArmor = currentNpc.getArmor();
-    		for (String newArmor : newArmorPossibi) {
+    		for (String newArmor : newArmorPossible) {
     			if (newArmor.equals(oldArmor)) {
     				break;
-    			}else if (newArmor.equals(newArmorPossibi.getLast())){
+    			}else if (newArmor.equals(newArmorPossible.getLast())){
     				oldArmor = null;
 					newNpc.setArmorClass(0);
 				}
@@ -189,16 +183,16 @@ public class UiHistoryEditUpdate {
     	newNpc.setArmor(oldArmor);
 
     	//Weapons
-    	List<String> newWeaponPossibi = randGen.figureOutProfList("weapon", newClass, newNpc.getRace());
+    	List<String> newWeaponPossible = randGen.figureOutProfList("weapon", newClass, newNpc.getRace());
     	List<String> oldWeapons = currentNpc.getWeaponList();
-		oldWeapons.removeIf(oldSkill -> !newWeaponPossibi.contains(oldSkill));
+		oldWeapons.removeIf(oldSkill -> !newWeaponPossible.contains(oldSkill));
 
     	//direkt neu befüllen? Oder (potentiell) leer lassen?
     	int weaponCount = rndNumb.nextInt(4)+2;
     	while (oldWeapons.size() < weaponCount) {
-    		int newRandWeap = rndNumb.nextInt(newWeaponPossibi.size());
-    		oldWeapons.add(newWeaponPossibi.get(newRandWeap));
-    		newWeaponPossibi.remove(newRandWeap);
+    		int newRandWeapon = rndNumb.nextInt(newWeaponPossible.size());
+    		oldWeapons.add(newWeaponPossible.get(newRandWeapon));
+    		newWeaponPossible.remove(newRandWeapon);
     	}
     	newNpc.setWeaponList(oldWeapons);
 

@@ -270,7 +270,8 @@ public class NpcClass {
      *
      * @param savingThrows the saving throws
      */
-    public void setSavingThrows(List<String> savingThrows) {
+    public void
+        setSavingThrows(List<String> savingThrows) {
         this.savingThrows = savingThrows;
     }
 
@@ -994,7 +995,7 @@ public class NpcClass {
     public void printNpc() {
         for (String s : Arrays.asList("name: " + name, "level: " + level, "class: " + genClass, "race: " + race, "job: " + job, "AC: " + armorClass,
                 "HP: " + healthPoints, "Movement: " + movementSpeedList, "languages: " + languages, "AbilityScore: " + abilityScores, "SavingThrows: "
-                        + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "Spelllist: " +
+                        + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "SpellList: " +
                         spellList, "SpellAbility: " + spellAbility, "Description: " + description, "ActionList: " + actionList, "bonusActionList: " +
                         bonusActionList, "ProfBonus: " + profBonus, "AbilityModifier: " + abilityModifier, "Gender: " + gender, "Age: " + age, "Alignment: "
                         + alignment, "Deity: " + deity, "BonusTextList: " + bonusTextList, "Cantrips: " + cantrips, "firstLevelSpell: " + firstLevelSpell,
@@ -1053,7 +1054,7 @@ public class NpcClass {
 
             for (String s : Arrays.asList("name: " + name, "level: " + level, "class: " + genClass, "race: " + race, "job: " + job, "AC: " + armorClass,
                     "HP: " + healthPoints, "Movement: " + movementSpeedList, "languages: " + languages, "AbilityScore: " + abilityScores, "SavingThrows: "
-                            + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "Spelllist: " +
+                            + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "SpellList: " +
                             spellList, "SpellAbility: " + spellAbility/*, "Description: " + description*/, "ActionList: " + actionList, "bonusActionList: " +
                             bonusActionList, "ProfBonus: " + profBonus, "AbilityModifier: " + abilityModifier, "Gender: " + gender, "Age: " + age, "Alignment: "
                             + alignment, "Deity: " + deity, "BonusTextList: " + bonusTextList, "Cantrips: " + cantrips, "firstLevelSpell: " + firstLevelSpell,
@@ -1064,7 +1065,7 @@ public class NpcClass {
                 writer.write(s + "\n");
             }
             /*
-            von Marie gekl...liehen
+            von Marie ge...liehen
              */
             List<String> descriptionTitles = Arrays.asList("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
                     "Bond", "Flaw", "Ideal", "Voice", "Clothing", "Attitude", "Size", "Height");

@@ -189,7 +189,7 @@ public class RandomNpc {
             genClass = nameDBCommoner;
         } else {
             genClass = inputClass;
-            if(inputClass.equals(nameDBCommoner)){level=0;}
+            if(inputClass.equals(nameDBCommoner)){level=0;randNpc.setLevel(level);}
         }
         randNpc.setGenClass((genClass));
         //random AbilityScore
@@ -247,9 +247,9 @@ public class RandomNpc {
 
         //Saving Throws
         savingThrows = determineSavingThrows(genClass, abilityModifier, profBonus);// saving throws
+        randNpc.setSavingThrows(savingThrows);
 
         //SkillList
-        randNpc.setSavingThrows(savingThrows);
         if (!genClass.equals(nameDBCommoner)) {     // Fall Commoner?
             skillList = determineSkillList(race, job, genClass);
             randNpc.setSkillList(addAbilityScoreToSkillList(abilityModifier,skillList, profBonus));
@@ -300,7 +300,7 @@ public class RandomNpc {
         randNpc = randGen.randomSpellsForClass(randNpc);
         //spells
         List<Object> spellList =  randNpc.getSpellList();
-        randGen.addRaceCantripsAndSpells(randNpc); //todo funkt das? ?
+        randGen.addRaceCantripsAndSpells(randNpc);
         randNpc.setSpellList(spellList);
         //features
         List<String> actionList = determineFeatures(race,"action");
@@ -328,7 +328,7 @@ public class RandomNpc {
          */
         randNpc.saveNpcInHistory(); // speichern in der History
 
-        //randNpc.exportNPC(); // NPC wird in eine .txt expotiert
+        //randNpc.exportNPC(); // NPC wird in eine .txt exportiert
         return randNpc;
     }
 
@@ -404,7 +404,7 @@ public class RandomNpc {
     }
 
     /**
-     * Add ability score to skill list list.
+     * Add ability score to skill list.
      *
      * @param abilityModifier the ability modifier
      * @param skillList       the skill list
@@ -427,7 +427,7 @@ public class RandomNpc {
                 }
                 switch (dbAbilityScore) {
                     case "Str" -> skillListWithNumbers.add(s + " +" + (abilityModifier.getFirst() + profBonus));
-                    case "Dex" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(1) + profBonus));
+                    case "Dex" -> skillListWithNumbers.add(s + "+" + (abilityModifier.get(1) + profBonus));
                     case "Con" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(2) + profBonus));
                     case "Int" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(3) + profBonus));
                     case "Wis" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(4) + profBonus));
@@ -602,12 +602,14 @@ public class RandomNpc {
         if (level == 0){
             level = 1;
         }
-        return randGen.diceThrower(level, Integer.parseInt(dbms.getRow(nameDBClass,genClass).get(2)))+ level*abilityModifier.get(2);
+        int hp = randGen.diceThrower(level, Integer.parseInt(dbms.getRow(nameDBClass,genClass).get(2)))+ level*abilityModifier.get(2);
+        if (hp == 0 ) hp =1;
+        return hp;
 
     }
 
     /**
-     * Determine skill list list.
+     * Determine skill list.
      *
      * @param race     the race
      * @param job      the job
@@ -619,7 +621,7 @@ public class RandomNpc {
         int numberSkill;
         List<String> skillList =new ArrayList<>();
         String raceSkillList = dbms.getRow("race", race).get(6);
-        if((raceSkillList != null)&&(!raceSkillList.contains("Any"))&&(raceSkillList.contains(":"))){ // nicht null, nicht Any, aber enthält":"
+        if((raceSkillList != null)&&(!raceSkillList.contains("Any"))&&(raceSkillList.contains(":"))){ // nicht null, nicht Any, aber enthält einen Doppelpunkt
             numberSkill = Integer.parseInt(raceSkillList.substring(0,1));
             raceSkillList = raceSkillList.substring(raceSkillList.indexOf(":")+1, raceSkillList.length()-1);
             skillList = randGen.randSkillProf(randGen.bigStringToDividedString(raceSkillList),numberSkill, skillList);
@@ -753,6 +755,8 @@ public class RandomNpc {
 
     public List<Integer> abilityScoreImprovement(Integer level, List<Integer> abilityScore, String classNameNPC){
         int improveCount = Math.max(0, level/4);
+        if(level == 20) improveCount--;
+        if(level == 19) improveCount++;
 
         for (int i=0; i < improveCount; i++){
             abilityScore = addImprovement(abilityScore,classNameNPC); // aufruf
@@ -761,11 +765,11 @@ public class RandomNpc {
     }
     public List<Integer> addImprovement (List<Integer> abilityScore, String classNameNPC) {
         /*
-            check nach der Klasse, aus der Klasse werden die höchsten AS genommen und überprüft
-            wenn beide ungerade beide um eins erhöhen, wenn beide gerade und unter 20 wird eins erhöht
+            check nach der Klasse, aus der Klasse werden die höchsten AS genommen und überprüft,
+            wenn beide ungerade beide um eins erhöhen, wenn beide gerade und unter 20 wird eins erhöht,
             wenn beide unter 20 werden die nächsten ungeraden um eins erhöht
          */
-        if(classNameNPC.equals("Commoner")){
+        if (classNameNPC.equals("Commoner")) {
             //System.out.println("Commoner, abort");
             return abilityScore;
         }
@@ -776,7 +780,7 @@ public class RandomNpc {
         List<Integer> aSIndex = new ArrayList<>();
         List<Integer> vIAS = new ArrayList<>();
         // for (String abSc : classASDistributionWeight) {
-        for(String abSc : mostImportantAS) {
+        for (String abSc : mostImportantAS) {
             switch (abSc) { // Werte über 20 werden nicht berücksichtigt
                 case "Str":
                     if (abilityScore.getFirst() < 20) {
@@ -822,6 +826,9 @@ public class RandomNpc {
                     break;
             }
         }
+        return aSImprovement(abilityScore,aSIndex,vIAS);
+    }
+        public List<Integer> aSImprovement(List<Integer> abilityScore, List<Integer> aSIndex, List<Integer> vIAS){
             int unevenCount = 0;
             for (Integer aS : vIAS) { // check wie viele ungerade sind und unter 20
                 if (aS < 20) {
@@ -891,7 +898,7 @@ public class RandomNpc {
     }
 
     /**
-     * Sollten die Priorisierten AS nicht weiter erhöht werden können, werden die  restlichen AS erhöht
+     * Sollten die Priorisierten AS nicht weiter erhöht werden können, werden die restlichen AS erhöht
      * Priorität unter 20 und ungerade
      *
      * @param abilityScore wird übergeben, bearbeitet und zurückgegeben
@@ -930,7 +937,7 @@ public class RandomNpc {
         return abilityScore; // sicherheitshalber
     }
     /**
-     * Zwei Ability Werte werden zufällig um eins erhöht, diese Zahl kann derzeit 20 überschreiten
+     * Zwei Abilitys werden zufällig um eins erhöht, diese Zahl kann derzeit 20 überschreiten
      * @param abilityScore von dem NPC, wird wieder zurückgegeben
      * @return abilityScore
      */
