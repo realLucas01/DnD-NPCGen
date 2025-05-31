@@ -67,8 +67,6 @@ public class DetailController {
 
 
 
-
-
     private void addMovementAndSensesToModel(NpcClass npc, Model model) {
         List<String> speeds = npc.getMovementSpeedList();
         model.addAttribute("walkingSpeed", speeds.stream().filter(s -> s.contains("walking")).findFirst().orElse(""));
@@ -84,6 +82,10 @@ public class DetailController {
         model.addAttribute("senses", senses);  // Senses dem Model hinzufügen
 
     }
+
+
+
+
 
     private void addSpellsToModel(NpcClass npc, Model model) {
         model.addAttribute("spellCantrips", splitString(npc.getSpellCantrips()));

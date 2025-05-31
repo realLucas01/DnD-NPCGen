@@ -31,13 +31,24 @@ public class EditController {
         this.helpFunctions = helpFunctions;
     }
 
+    /**
+     * Handles the editing of an NPC by preparing the required data, attributes, and UI elements
+     * for the editing view. It loads the NPC's details based on a provided ID, sets necessary
+     * model attributes, and returns the name of the view for rendering.
+     *
+     * @param id the unique identifier of the NPC to be edited
+     * @param model the model to which NPC attributes and other data are added for rendering the view
+     * @return the name of the view to be returned for NPC editing
+     *
+     * @author Marie
+     */
     @GetMapping("/edit")
     public String editNpc(@RequestParam Integer id, Model model) {
         // NPC-Objekt erstellen
         npc = new NpcClass();
         npc.historyEntryToNpc(dbms.getHistoryEntry(id));
 
-        // noch keinen Änderungen → Kernelemente können geändert werden
+        // noch keine Änderungen → Kernelemente können geändert werden
         model.addAttribute(switchValue, false);
 
         // Dropdown erstellen
@@ -52,18 +63,31 @@ public class EditController {
         model.addAttribute("alignment", npc.getAlignment());
 
         updateNPC = new NpcClass();
+
+        // Update NPC funktioniert nicht → wirft Fehler → NPC Daten, die angezeigt werden, werden statisch immer aus NPC ide 2 genommen
         updateNPC.historyEntryToNpc(dbms.getHistoryEntry(2));
 
         return "edit";
     }
 
+    /**
+     * Handles the editing of an NPC's attributes by updating the provided data, setting the necessary
+     * model attributes, and preparing the view for rendering after the changes are made.
+     *
+     * @param name the name of the NPC being edited
+     * @param race the race of the NPC to be updated
+     * @param genClass the class of the NPC to be updated
+     * @param alignment the alignment of the NPC to be updated
+     * @param model the model used to store updated attributes for rendering the view
+     * @return the name of the view to be returned for the editing screen
+     */
     @PostMapping("/editFirst")
     public String editedNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
         // Änderungen → Kernelemente können NICHT geändert werden
         model.addAttribute(switchValue, true);
 
         // Änderungen vornehmen
-        List<String> changes = new ArrayList<>(3);
+        List<String> changes = new ArrayList<>(4);
         changes.add(race);
         changes.add(genClass);
         changes.add(alignment);
@@ -71,7 +95,8 @@ public class EditController {
 
         // NPC aktualisieren
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
-       // updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
+        // TODO updateNPC fixen
+        // updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
 
         // Anzeigen-Logik vorbereiten
         prepareEditAttributes(model, updateNPC);
@@ -79,7 +104,19 @@ public class EditController {
         return "edit";
     }
 
+    /**
+     * Prepares the attributes for editing an NPC by setting various properties,
+     * such as general attributes, additional data, movement values, languages,
+     * ability scores, inventory, and descriptions, into the provided model.
+     *
+     * @param model the model used to prepare attributes for rendering the editing view
+     * @param npc the NPC object whose attributes are being prepared for editing
+     *
+     * @author Marie
+     */
     private void prepareEditAttributes(Model model, NpcClass npc) {
+        // TODO Funktion verkleinern -> Auslagern/Refactoring
+
         // Gemeinsame Parameter vorbereiten
         model.addAttribute("name", npc.getName());
         model.addAttribute("selectedRace", npc.getRace());
@@ -124,9 +161,9 @@ public class EditController {
 
         // Inventar
         model.addAttribute("armors", dbms.onlyColumn("armor"));
-        model.addAttribute("armor", npc.getArmor());
+        model.addAttribute("armor", String.join(", ", npc.getArmor())); // TODO ist String, sollte wahrscheinlich List sein, wegen mehrerer möglichen Objekten
         model.addAttribute("weapons", dbms.onlyColumn("weapon"));
-        model.addAttribute("weapon", npc.getWeaponList());
+        model.addAttribute("weapon", String.join(", ", npc.getWeaponList()));
 
         // Beschreibung
         List<String> descriptions = npc.getDescription();
@@ -144,22 +181,88 @@ public class EditController {
 
     @PostMapping("editSave")
     public String saveEdit() {
-
+        // TODO Das ganze Speichern des bearbeiteten NPC fehlt
         return "redirect:/detail?id=" + npc.getId();
     }
 
+    /**
+     * Handles the editing of selected languages for an NPC by updating the language list
+     * and preparing the model with the updated information.
+     *
+     * @param selectedLanguages the list of languages selected by the user
+     * @param model the model used to prepare attributes for view rendering
+     * @return a string indicating the name of the view to be rendered
+     *
+     * @author Marie
+     */
     @PostMapping("editLanguages")
     public String editLanguages(@RequestParam("lang") List<String> selectedLanguages, Model model) {
+        editListLangWeaponArmors(selectedLanguages, "lang", model);
+        return "edit";
 
+    }
+
+    /**
+     * Handles the editing of selected armors for an NPC by updating the armor list
+     * and preparing the model with the updated information.
+     *
+     * @param selectedArmors the list of armors selected by the user
+     * @param model the model used to prepare attributes for view rendering
+     * @return a string indicating the name of the view to be rendered
+     *
+     * @author Marie
+     */
+    @PostMapping("editArmors")
+    public String editArmors(@RequestParam("arm") List<String> selectedArmors, Model model) {
+        editListLangWeaponArmors(selectedArmors, "armor", model);
+        return "edit";
+    }
+
+    /**
+     * Handles the editing of selected weapons for an NPC by updating the weapon list
+     * and preparing the model with the updated information.
+     *
+     * @param selectedWeapons the list of weapons selected by the user
+     * @param model the model used to prepare attributes for view rendering
+     * @return a string indicating the name of the view to be rendered
+     *
+     * @author Marie
+     */
+    @PostMapping("editWeapons")
+    public String editWeapons(@RequestParam("wea") List<String> selectedWeapons, Model model) {
+        editListLangWeaponArmors(selectedWeapons, "weapon", model);
+        return "edit";
+    }
+
+    /**
+     * Updates the specified NPC's attributes (languages, armor, or weapons) based on the given type
+     * and prepares the model for displaying updated information.
+     *
+     * @param selectedList the list of selected values to be assigned to the NPC's attribute
+     * @param type the type of attribute to update ("lang" for languages, armor, weapon)
+     * @param model the model used to prepare attributes for view rendering
+     *
+     * @author Marie
+     */
+    private void editListLangWeaponArmors(List<String> selectedList, String type, Model model) {
         model.addAttribute(switchValue, true);
-        // Sprachen aktualisieren
-        updateNPC.setLanguages(selectedLanguages);
+
+        // Liste aktualisieren
+        switch (type) {
+            case "lang":
+                updateNPC.setLanguages(selectedList);
+                break;
+            case "armor":
+                updateNPC.setArmor(String.valueOf(selectedList));
+                break;
+            case "weapon":
+                updateNPC.setWeaponList(selectedList);
+        }
 
         // Update der Anzeige vorbereiten
         prepareEditAttributes(model, updateNPC);
 
-        return "edit";
-
     }
+
     
 }

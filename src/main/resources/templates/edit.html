@@ -213,28 +213,128 @@
                     </div>
                 </form>
 
-            <!-- AbilityScores -->
+            <!-- TODO AbilityScores -->
 
 
             <!-- Inventar -->
+            <div class="row mb-3">
                 <!-- Armor -->
+                    <div class="col-6">
+                        <!-- Liste der Rüstungen vom NPC -->
+                        <div class="d-flex align-items-center">
+                            <label class="form-label me-2 mb-0"><b>Armors:</b></label>
+                            <p th:text="${armor}" class="form-control-plaintext mb-0"></p>
+                        </div>
 
+                        <!-- Button zum Öffnen des Pop-ups -->
+                        <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#armorsModal">
+                            Choose armors
+                        </button>
+                    </div>
 
                 <!-- Weapon -->
+                    <div class="col-6">
+                        <!-- Liste der Waffen vom NPC -->
+                        <div class="d-flex align-items-center">
+                            <label class="form-label me-2 mb-0"><b>Weapons:</b></label>
+                            <p th:text="${weapon}" class="form-control-plaintext mb-0"></p>
+                        </div>
+
+                        <!-- Button zum Öffnen des Pop-ups -->
+                        <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#weaponsModal">
+                            Choose weapons
+                        </button>
+                    </div>
+            </div>
+
+                <!-- Armor Modal -->
+                <form th:action="@{/editArmors}" method="post">
+                    <div class="modal fade" id="armorsModal" tabindex="-1" aria-labelledby="armorsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="armorsModalLabel">available armors</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-2">
+                                        <!-- Liste aller Rüstungen -->
+                                        <div th:each="arm : ${armors}" class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <!-- Checkbox für die Rüstungen -->
+                                                    <input type="checkbox"
+                                                           th:id="${'armor_' + arm}"
+                                                           th:name="arm"
+                                                           th:value="${arm}"
+                                                           th:checked="${armor.contains(arm)}"
+                                                           class="form-check-input me-2">
+                                                    <label th:for="${'armor_' + arm}" class="form-check-label" th:text="${arm}"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                                    <button type="submit" class="btn btn-primary">save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Weapon Modal -->
+                <form th:action="@{/editWeapons}" method="post">
+                    <div class="modal fade" id="weaponsModal" tabindex="-1" aria-labelledby="weaponsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="weaponsModalLabel">available weapons</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-2">
+                                        <!-- Liste aller Waffen -->
+                                        <div th:each="wea : ${weapons}" class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <!-- Checkbox für die Rüstungen -->
+                                                    <input type="checkbox"
+                                                           th:id="${'weapon_' + wea}"
+                                                           th:name="wea"
+                                                           th:value="${wea}"
+                                                           th:checked="${weapon.contains(wea)}"
+                                                           class="form-check-input me-2">
+                                                    <label th:for="${'weapon_' + wea}" class="form-check-label" th:text="${wea}"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                                    <button type="submit" class="btn btn-primary">save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
 
-            <!-- Skills -->
 
-            <!-- Senses -->
+            <!-- TODO Skills -->
 
-            <!-- Spells -->
+            <!-- TODO Senses -->
 
-            <!-- Description -->
+            <!-- TODO Spells -->
+
+            <!-- TODO Description -->
 
 
 
 
-            <!-- Save weitereitung -->
+            <!-- TODO Save Weiterleitung -->
 
 
         </div>
