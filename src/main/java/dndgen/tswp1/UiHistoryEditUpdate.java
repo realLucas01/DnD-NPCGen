@@ -100,7 +100,7 @@ public class UiHistoryEditUpdate {
             //Änderungen: RaceAbilityScore Addierung, Features, Skills, Language, Speed, Description:(Age, height, size), Senses
 			List<Integer> abilityScore =oldNpc.getAbilityScores();
 			newNpc.setRace(newRace);
-            abilityScore = editNpc.removeRaceAbilityAddition(oldNpc.getRace(), abilityScore);
+            abilityScore = editNpc.removeRaceAbilityAddition(oldNpc.getRace(), (ArrayList<Integer>) abilityScore);
             abilityScore = randNpc.addRaceModifierToAbilityScore(newRace, abilityScore);
 			newNpc.setAbilityScores(abilityScore);
 
@@ -164,7 +164,7 @@ public class UiHistoryEditUpdate {
     	
     	//AbiliSc
 		List<Integer> abilityScore = newNpc.getAbilityScores();
-        abilityScore = editNpc.removeRaceAbilityAddition(newNpc.getRace(), abilityScore);//Race, ABiliSc
+        abilityScore = editNpc.removeRaceAbilityAddition(newNpc.getRace(), (ArrayList<Integer>) abilityScore);//Race, ABiliSc
         abilityScore = randNpc.distributeAbilityScore(abilityScore,newClass);
         abilityScore = randNpc.addRaceModifierToAbilityScore(newNpc.getRace(),abilityScore);
     	newNpc.setAbilityScores(abilityScore);
