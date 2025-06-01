@@ -6,18 +6,17 @@ import dndgen.tswp1.UiHistoryEditUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Marie
  */
 @Controller
+@SessionAttributes("updateNPC")
 public class EditController {
     private final DBMS dbms;
     private NpcClass npc;
@@ -66,6 +65,7 @@ public class EditController {
 
         // Update NPC funktioniert nicht → wirft Fehler → NPC Daten, die angezeigt werden, werden statisch immer aus NPC ide 2 genommen
         updateNPC.historyEntryToNpc(dbms.getHistoryEntry(2));
+        model.addAttribute("updateNPC", updateNPC); // hier wird Session-Wert gesetzt
 
         return "edit";
     }
@@ -155,10 +155,11 @@ public class EditController {
         model.addAttribute("language", String.join(", ", npc.getLanguages()));
 
         // Ability Scores
-        model.addAttribute("abilityScores", helpFunctions.getAbilityScoresWithModifiers(npc));
+       /* model.addAttribute("abilityScores", helpFunctions.getAbilityScoresWithModifiers(npc));
         model.addAttribute("savingThrows", helpFunctions.formatSavingThrows(npc));
         model.addAttribute("allAbilities", List.of("Str", "Dex", "Con", "Int", "Wis", "Cha"));
-
+        */
+        formatNpcDataForStats(npc, model);
         // Inventar
         model.addAttribute("armors", dbms.onlyColumn("armor"));
         model.addAttribute("armor", String.join(", ", npc.getArmor())); // TODO ist String, sollte wahrscheinlich List sein, wegen mehrerer möglichen Objekten
@@ -264,5 +265,130 @@ public class EditController {
 
     }
 
-    
+    private void formatNpcDataForStats(NpcClass npc, Model model) {
+        List<String> allAbilities = Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha");
+
+        // Die getrennten Werte und Modifikatoren direkt über die vorhandenen Funktionen abrufen
+        List<Integer> abilityScores = npc.getAbilityScores();
+        List<Integer> abilityModifiers = npc.getAbilityModifier();
+        List<String> savingNpc = npc.getSavingThrows();
+
+
+        // Liste für Saving Throws formatieren
+        Map<String, Integer> savingThrows = new LinkedHashMap<>(); // LinkedHashMap: gewährleistet Reihenfolge
+
+        // Die Namen der Schlüssel hinzufügen, mit null als Placeholder-Wert
+        for (String ability : allAbilities) {
+            // Überprüfen der Fähigkeiten aus der NPC-Liste
+            for (String saving : savingNpc) {
+                if (saving.substring(0, 3).contains(ability)) {
+                    try {
+                        // Substring ab Index 4 (nach dem ":") parsen
+                        int parsedValue = Integer.parseInt(saving.substring(4));
+                        savingThrows.put(ability, parsedValue); // Hinzufügen des Werts
+                        break;
+                    } catch (NumberFormatException e) {
+                        // Im Fehlerfall wird kein neuer Wert hinzugefügt
+                    }
+                } else {
+                    savingThrows.put(ability, 0); // Standardwert setzen
+                }
+            }
+        }
+
+        model.addAttribute("allAbilities", allAbilities); // Fähigkeitsnamen
+        model.addAttribute("abilityScores", abilityScores); // Werte (Scores)
+        model.addAttribute("abilityModifiers", abilityModifiers); // Modifikatoren
+        model.addAttribute("savingThrows",savingThrows);
+    }
+
+
+    @PostMapping("/editAbility")
+    @ResponseBody
+    public ResponseEntity<Void> editAbility(@RequestParam String key, @RequestParam int value,
+                                            @ModelAttribute("updateNPC") NpcClass updateNPC) {
+        
+        List<Integer> abilityScores = updateNPC.getAbilityScores();
+
+        abilityScores.set(Integer.parseInt(key), value);
+
+        updateNPC.setAbilityScores(abilityScores);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/editModifier")
+    @ResponseBody
+    public ResponseEntity<Void> editModifier(@RequestParam String key, @RequestParam int value,
+                                             @ModelAttribute("updateNPC") NpcClass updateNPC) {
+        List<Integer> abilityModifiers = updateNPC.getAbilityModifier();
+
+        abilityModifiers.set(Integer.parseInt(key), value);
+
+        updateNPC.setAbilityModifier(abilityModifiers);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/editSavingThrows")
+    @ResponseBody
+    public ResponseEntity<Void> editSavingThrows(@RequestParam String key, @RequestParam int value,
+                                                 @ModelAttribute("updateNPC") NpcClass updateNPC) {
+        List<String> throwsList = updateNPC.getSavingThrows();
+
+        List<String> allAbilities = Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha");
+
+        // Neue Liste für die aktualisierten Saving Throws
+        List<String> updatedThrowsList = new ArrayList<>();
+
+        // Aktualisiere die Liste basierend auf den vorhandenen Daten
+        for (String ability : allAbilities) {
+            boolean isUpdated = false;
+
+            for (String saving : throwsList) {
+                // Überprüfung, ob die Fähigkeit in der Liste enthalten ist
+                if (saving.substring(0, 3).equalsIgnoreCase(ability)) {
+                    try {
+                        // Substring-Parsing: "+1" oder Zahlenwert ab Index 4 extrahieren
+                        int parsedValue = Integer.parseInt(saving.substring(4));
+
+                        // Wenn die Fähigkeit mit `key` übereinstimmt, aktualisiere den Wert
+                        if (ability.equals(key)) {
+                            updatedThrowsList.add(ability + " " + (value >= 0 ? "+" : "") + value); // Format: Con +1
+                        } else {
+                            updatedThrowsList.add(ability + " " + (parsedValue >= 0 ? "+" : "") + parsedValue); // Behalte aktuellen Wert
+                        }
+                        isUpdated = true;
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.err.println("Ungültiges Zahlenformat: " + saving); // Debuggingzwecke
+                    }
+                }
+            }
+            // Wenn die Fähigkeit nicht in throwsList enthalten war, füge sie mit 0 (Standardwert) hinzu oder aktualisiere sie
+            if (!isUpdated) {
+                if (ability.equals(key)) {
+                    updatedThrowsList.add(ability + " " + (value >= 0 ? "+" : "") + value); // Neuer Wert
+                } else {
+                    updatedThrowsList.add(ability + " +0"); // Standardwert, falls nichts vorher gesetzt
+                }
+            }
+        }
+
+        // Überprüfen, ob `key` in der aktualisierten Liste korrekt enthalten ist
+        if (!allAbilities.contains(key)) {
+            updatedThrowsList.add(key + " " + (value >= 0 ? "+" : "") + value); // Füge das neue Element hinzu
+        }
+
+        // Die aktualisierte Liste zurück in den NPC setzen
+        updateNPC.setSavingThrows(updatedThrowsList);
+
+        return ResponseEntity.ok().build();
+
+    }
+
+
+
+
+
 }
