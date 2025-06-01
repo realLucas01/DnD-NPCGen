@@ -2,6 +2,7 @@ package dndgen.userinterface;
 
 import dndgen.tswp1.NpcClass;
 import dndgen.tswp1.RandomNpc;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,13 +37,25 @@ public class IndexController {
      * @param model Das Model-Objekt, das verwendet wird, um Attribute an die Ansicht zu übergeben
      * @return der Name der Thymeleaf-Vorlage, um den Index (Generator)-Seite anzuzeigen
      */
-    @GetMapping("/")
-    String getGeneratorPage(Model model) {
-        // Werte für die Dropdown-Menüs vorbereiten
-        populateDropdowns(model, new DropdownSelection("", zufall, zufall, zufall, zufall, zufall, zufall));
+    @GetMapping(value = {"/", "/index"})
+    String getGeneratorPage(Model model, HttpSession session) {
+        // Prüfe, ob ein NPC in der Session existiert
+        NpcClass existingNpc = (NpcClass) session.getAttribute("currentNpc");
+        DropdownSelection existingSelection = (DropdownSelection) session.getAttribute("currentSelection");
 
-        return "index"; // Zeigt die Thymeleaf-Seite an
+        if (existingNpc != null) {
+            // Wenn ein NPC existiert, verwende die gespeicherten Daten
+            formatNpcDataForModel(existingNpc, model);
+            populateDropdowns(model, existingSelection);
+            model.addAttribute("npc", existingNpc);
+        } else {
+            // Wenn kein NPC existiert, initialisiere nur die Dropdown-Menüs
+            populateDropdowns(model, new DropdownSelection("", zufall, zufall, zufall, zufall, zufall, zufall));
+        }
+        return "index";
+
     }
+
 
 
     /**
@@ -68,15 +81,25 @@ public class IndexController {
                               @RequestParam(required = false) String level,
                               @RequestParam(required = false) String abilisc,
                               @RequestParam(required = false) String gender,
-                              Model model) {
-        populateDropdowns(model, new DropdownSelection(name, race, genClass, job, level, abilisc, gender)); // Menü-Daten vorbereiten
+                              Model model,
+                              HttpSession session) {
 
-        NpcClass npc = createNPC(name, race, genClass, job, level, abilisc, gender); // NPC erstellen
+        DropdownSelection selection = new DropdownSelection(name, race, genClass, job, level, abilisc, gender);
+        populateDropdowns(model, selection);
 
-        formatNpcDataForModel(npc, model); // NPC-Daten formatieren und ins Model einfügen
+        NpcClass npc = createNPC(name, race, genClass, job, level, abilisc, gender);
+        formatNpcDataForModel(npc, model);
 
-        return "index"; // Thymeleaf-Template zurückgeben
+        // Speichere NPC und Selection in der Session
+        session.setAttribute("currentNpc", npc);
+        session.setAttribute("currentSelection", selection);
+
+        return "redirect:/index";
+
+
     }
+
+
 
 
     /**
