@@ -19,5 +19,6 @@ public interface SkillRepository extends CrudRepository<SkillModel, Integer>{
 	@Query("SELECT m FROM SkillModel m WHERE m.skillName Like %?1%")
 	SkillModel findBySkillName(String name);
 	ArrayList<SkillModel> findBySkillAbilityScore(String abilityScore);
-
+	@Query("SELECT s.skillName FROM SkillModel s")
+	ArrayList<String> getallSkillCol();
 }

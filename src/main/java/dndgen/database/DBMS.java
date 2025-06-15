@@ -219,6 +219,8 @@ public class DBMS implements ApplicationContextAware{
 		case "weapon":
 			onlycol = weaponRepository.getallWeapCol();
 			break;
+		case "skill":
+			onlycol = skillRepository.getallSkillCol();
 		default:
 			onlycol = null;
 			break;
