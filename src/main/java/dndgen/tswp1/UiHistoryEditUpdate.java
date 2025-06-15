@@ -97,10 +97,10 @@ public class UiHistoryEditUpdate {
         //race change
         if(!Objects.equals(newRace, oldNpc.getRace())){
         	//race geändert
-            //Änderungen: RaceAbilityScore Addierung, Features, Skills, Language, Speed, Description:(Age, height, size), Senses
+            //Änderungen	: RaceAbilityScore addition, Features, Skills, Language, Speed, Description:(Age, height, size), Senses
 			List<Integer> abilityScore =oldNpc.getAbilityScores();
 			newNpc.setRace(newRace);
-            abilityScore = editNpc.removeRaceAbilityAddition(oldNpc.getRace(), (ArrayList<Integer>) abilityScore);
+            abilityScore = removeRaceAbilityAddition(oldNpc.getRace(),  abilityScore);
             abilityScore = randNpc.addRaceModifierToAbilityScore(newRace, abilityScore);
 			newNpc.setAbilityScores(abilityScore);
 
@@ -135,7 +135,7 @@ public class UiHistoryEditUpdate {
 		//class change
 		if (!Objects.equals(newCharClass, oldNpc.getGenClass())) {
             // class geändert
-            // Änderungen: HP, (profWeapon,profArmor(+AC): nur Löschen wenn nicht mehr geht.), Skills(überprüfen welche bleiben können, welche nicht), AbilityScoreDistribution(von Luca holen), Spells(nuke), features(class features ersetzen, siehe funktion zum überprüfen welche egligable sind)
+            // Änderungen: HP, (profWeapon,profArmor(+AC): nur Löschen wenn nicht mehr geht.), Skills (überprüfen welche bleiben können, welche nicht), AbilityScoreDistribution(von Luca holen), Spells(nuke), features(class features ersetzen, siehe funktion zum Überprüfen welche eligible sind)
         	newNpc.setGenClass(newCharClass);
 			classChange(newNpc,newCharClass, oldNpc);
 
@@ -162,9 +162,9 @@ public class UiHistoryEditUpdate {
     	//Hp änderung
     	newNpc.setHealthPoints(randNpc.calculateHP(newClass, newNpc.getLevel(), newNpc.getAbilityModifier()));
     	
-    	//AbiliSc
+    	//AbilitySc
 		List<Integer> abilityScore = newNpc.getAbilityScores();
-        abilityScore = editNpc.removeRaceAbilityAddition(newNpc.getRace(), (ArrayList<Integer>) abilityScore);//Race, ABiliSc
+        abilityScore = removeRaceAbilityAddition(newNpc.getRace(), abilityScore);//Race, ABiliSc
         abilityScore = randNpc.distributeAbilityScore(abilityScore,newClass);
         abilityScore = randNpc.addRaceModifierToAbilityScore(newNpc.getRace(),abilityScore);
     	newNpc.setAbilityScores(abilityScore);
@@ -187,7 +187,7 @@ public class UiHistoryEditUpdate {
     	List<String> oldWeapons = currentNpc.getWeaponList();
 		oldWeapons.removeIf(oldSkill -> !newWeaponPossible.contains(oldSkill));
 
-    	//direkt neu befüllen? Oder (potentiell) leer lassen?
+    	//direkt neu befüllen? Oder (potenziell) leer lassen?
     	int weaponCount = rndNumb.nextInt(4)+2;
     	while (oldWeapons.size() < weaponCount) {
     		int newRandWeapon = rndNumb.nextInt(newWeaponPossible.size());
@@ -210,6 +210,45 @@ public class UiHistoryEditUpdate {
     	//Features
 
     }
+
+	/**
+	 * Remove race ability addition list.
+	 *
+	 * @param race         the race
+	 * @param abilityScore the ability score
+	 * @return the list
+	 */
+	public List<Integer> removeRaceAbilityAddition(String race, List<Integer> abilityScore) {
+		List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
+		int raceModNumber;
+		for (String s : raceAbilityModifier) {
+			raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
+			s = s.substring(0, 3);
+			switch (s) {
+				case "Str":
+					abilityScore.set(0, abilityScore.getFirst() - raceModNumber);
+					break;
+				case "Dex":
+					abilityScore.set(1, abilityScore.get(1) - raceModNumber);
+					break;
+				case "Con":
+					abilityScore.set(2, abilityScore.get(2) - raceModNumber);
+					break;
+				case "Int":
+					abilityScore.set(3, abilityScore.get(3) - raceModNumber);
+					break;
+				case "Wis":
+					abilityScore.set(4, abilityScore.get(4) - raceModNumber);
+					break;
+				case "Cha":
+					abilityScore.set(5, abilityScore.get(5) - raceModNumber);
+					break;
+				default:
+					break;
+			}
+		}
+		return abilityScore;
+	}
 
 
 

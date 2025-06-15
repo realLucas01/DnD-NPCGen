@@ -229,11 +229,9 @@ public class RandomNpc {
         healthPoints = calculateHP(genClass, level, abilityModifier);
         randNpc.setHealthPoints(healthPoints);
 
-        List<String> armorList = determineArmorAndAC(genClass, race, abilityModifier);
-        String armor = armorList.get(0);
-        int armorClass = Integer.parseInt(armorList.get(1));
-        randNpc.setArmor(armor);//armor
-        randNpc.setArmorClass(armorClass);//AC
+        determineArmorAndAC(genClass, race, randNpc);
+
+
 
         weaponList = determineWeapons(genClass, race);
         randNpc.setWeaponList(weaponList);//waffenliste
@@ -446,33 +444,38 @@ public class RandomNpc {
      *
      * @param genClass        the gen class
      * @param race            the race
-     * @param abilityModifier the ability modifier
-     * @return the list
+     * @param crtNPC the ability modifier
      */
-/*
+    /*
     Diese Funktion wurde ausgelagert. Sie möchte, um glücklich zu sein, die klasse, rasse und die ability Modifier.
     Am Ende wird zurückgegeben eine ArrayList<> mit (Die ausgewählte Rüstung, die Armor Class vollständig berechnet)
      */
-    public List<String> determineArmorAndAC(String genClass, String race, List<Integer> abilityModifier){
+    public void determineArmorAndAC(String genClass, String race, NpcClass crtNPC){
         List<String> armorProfList = randGen.figureOutProfList("armor", genClass, race);
+
+        boolean isThereAShield = armorProfList.contains("Shield");
+        String armor = randGen.randArmor(armorProfList);
+
+        calculateArmorClass(armor,crtNPC,isThereAShield);
+    }
+
+    public void calculateArmorClass(String armor, NpcClass crtNPC, boolean shield) {
+        //Berechnung AC
         List<String> armorBoni;
         List<String> currentArmor;
         String kindOfArmor;
+        List<Integer> abilityModifier = crtNPC.getAbilityModifier();
         int armorClass;
-        boolean isThereAShield =armorProfList.contains("Shield");
-        String armorList = randGen.randArmor(armorProfList);
-
-        //Berechnung AC
-        if(armorList == null){
-            armorList = "None";
+        if (armor == null) {
+            armor = "None";
         }
-        currentArmor= dbms.getRow("armor",armorList);
+        currentArmor = dbms.getRow("armor", armor);
         armorClass = Integer.parseInt(currentArmor.get(3));
         armorBoni = randGen.bigStringToDividedString(currentArmor.get(5));
 
         kindOfArmor = currentArmor.get(2);
-        if((kindOfArmor.equals("Natural Armor"))||(kindOfArmor.equals("Class Armor"))){
-            for(String s: armorBoni){
+        if ((kindOfArmor.equals("Natural Armor")) || (kindOfArmor.equals("Class Armor"))) {
+            for (String s : armorBoni) {
                 //für jeden AbilityScore Boni, diesen hinzufügen
                 armorClass = switch (s) {
                     case "Str" -> armorClass + abilityModifier.get(0);
@@ -484,23 +487,22 @@ public class RandomNpc {
                     default -> armorClass;
                 };
             }
-        }else if((armorBoni.size()==1)&&(armorBoni.contains("Dex"))) {
+        } else if ((armorBoni.size() == 1) && (armorBoni.contains("Dex"))) {
             armorClass = Integer.parseInt(currentArmor.get(3)) + abilityModifier.get(1);
         }
-        if((armorClass> Integer.parseInt(currentArmor.get(4)))){//überprüfen ob AC im toleranten Bereich liegt
-            armorClass= Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
+        if ((armorClass > Integer.parseInt(currentArmor.get(4)))) {//überprüfen ob AC im toleranten Bereich liegt
+            armorClass = Integer.parseInt(currentArmor.get(4)); // wenn nein, dann diesen festlegen
         }
-        if(isThereAShield){
-            int shieldPercent= rndNumb.nextInt(2);
-            if(shieldPercent == 1){
-                armorList = armorList + " + " + "Shield";
-                armorClass = armorClass +2;
+        if (shield) {
+            int shieldPercent = rndNumb.nextInt(2);
+            if (shieldPercent == 1) {
+                armor += " + Shield";
+                armorClass = armorClass + 2;
             }
+
         }
-        List<String> armorAndArmorClass = new ArrayList<>();
-        armorAndArmorClass.add(armorList);
-        armorAndArmorClass.add(String.valueOf(armorClass));
-        return armorAndArmorClass;
+        crtNPC.setArmor(armor);
+        crtNPC.setArmorClass(armorClass);
     }
 
     /**
@@ -752,7 +754,6 @@ public class RandomNpc {
         }
         return abilityScore;
     }
-
     public List<Integer> abilityScoreImprovement(Integer level, List<Integer> abilityScore, String classNameNPC){
         int improveCount = Math.max(0, level/4);
         if(level == 20) improveCount--;
@@ -828,7 +829,7 @@ public class RandomNpc {
         }
         return aSImprovement(abilityScore,aSIndex,vIAS);
     }
-        public List<Integer> aSImprovement(List<Integer> abilityScore, List<Integer> aSIndex, List<Integer> vIAS){
+    public List<Integer> aSImprovement(List<Integer> abilityScore, List<Integer> aSIndex, List<Integer> vIAS){
             int unevenCount = 0;
             for (Integer aS : vIAS) { // check wie viele ungerade sind und unter 20
                 if (aS < 20) {
@@ -892,7 +893,6 @@ public class RandomNpc {
             }
         return abilityScore;
     }
-
     public Integer isItUneven(Integer numb){
         if(numb%2==1) return 0; else return 1;
     }
