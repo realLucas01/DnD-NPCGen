@@ -35,7 +35,6 @@ public class HistoryController {
 
         // Letzte 10 NPCs aus der History abrufen
         List<NpcClass> npcHistory = dbms.getHistory().stream()
-                .limit(10)
                 .map(npcData -> {
                     NpcClass npc = new NpcClass();
                     npc.historyEntryToNpc(npcData);

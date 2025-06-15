@@ -724,16 +724,16 @@ public class DBMS implements ApplicationContextAware{
 		 switch(typeOfChange) {
 		 case "save":
 			 if (historyRepository.count() == 0) {
-				 historyRepository.findById(11).get().setRunVar(1);
+				 historyRepository.findById(13).get().setRunVar(1);
 				 break;	 
-			 }else if (historyRepository.findById(11).get().getRunVar() == 11) {
-				 historyRepository.setRuVaManuel(1, 11);;
+			 }else if (historyRepository.findById(13).get().getRunVar() == 13) {
+				 historyRepository.setRuVaManuel(1, 13);;
 				 break;
 			 }
-			 histchange.setHistoryId(historyRepository.findById(11).get().getRunVar());
+			 histchange.setHistoryId(historyRepository.findById(13).get().getRunVar());
 			 histchange.setHistoryEntryAge(LocalDateTime.now());
 			 historyRepository.save(histchange);
-			 historyRepository.setRuVaManuel((historyRepository.findById(11).get().getRunVar())+1, 11);
+			 historyRepository.setRuVaManuel((historyRepository.findById(13).get().getRunVar())+1, 13);
 			 break;
 		 case "update":
 			 //historyRepository.setNewInfoById(histentry.getHistoryFirstName(),histentry.getHistoryLastName(),histentry.getHistoryOccurance(),histentry.getHistoryId());

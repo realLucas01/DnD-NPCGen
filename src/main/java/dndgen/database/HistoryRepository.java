@@ -24,6 +24,6 @@ public interface HistoryRepository extends CrudRepository<HistoryModel, Integer>
 	@Modifying
 	@Query("update HistoryModel u set u.runVar = ?1 where u.historyId = ?2")
 	void setRuVaManuel(Integer runVar, Integer historyId);
-	@Query("SELECT n FROM HistoryModel n WHERE NOT n.historyId=11")
+	@Query("SELECT n FROM HistoryModel n WHERE NOT n.historyId=13")
 	ArrayList<HistoryModel> findEverythingExceptCounter();
 }
