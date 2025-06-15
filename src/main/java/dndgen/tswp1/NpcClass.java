@@ -4,6 +4,7 @@ import dndgen.database.DBMS;
 import dndgen.database.HistoryModel;
 import org.springframework.context.ApplicationContext;
 
+import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -1044,25 +1045,29 @@ public class NpcClass {
         dbms.saveEntry(history);
     }
 
-
+    /*
+        export des NPCs als txt Datei
+     */
     public void exportNPC() {
         Charset utf8 = StandardCharsets.UTF_8;
         System.out.println(name);
+        File desktopPath = FileSystemView.getFileSystemView().getHomeDirectory();
         String fileName = STR."\{name}.txt";
-        File file = new File(fileName);
+        File file = new File(desktopPath,fileName);
         try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)))  {
 
             for (String s : Arrays.asList("name: " + name, "level: " + level, "class: " + genClass, "race: " + race, "job: " + job, "AC: " + armorClass,
-                    "HP: " + healthPoints, "Movement: " + movementSpeedList, "languages: " + languages, "AbilityScore: " + abilityScores, "SavingThrows: "
+                    "HP: " + healthPoints, "Movement: " + movementSpeedList, "languages: " + languages, "AbilityScore: " + abilityScores,"AbilityModifier: " + abilityModifier, "SavingThrows: "
                             + savingThrows, "Armor: " + armor, "weaponList: " + weaponList, "Skills: " + skillList, "senses: " + senses, "SpellList: " +
                             spellList, "SpellAbility: " + spellAbility/*, "Description: " + description*/, "ActionList: " + actionList, "bonusActionList: " +
-                            bonusActionList, "ProfBonus: " + profBonus, "AbilityModifier: " + abilityModifier, "Gender: " + gender, "Age: " + age, "Alignment: "
+                            bonusActionList, "ProfBonus: " + profBonus, "Gender: " + gender, "Age: " + age, "Alignment: "
                             + alignment, "Deity: " + deity, "BonusTextList: " + bonusTextList, "Cantrips: " + cantrips, "firstLevelSpell: " + firstLevelSpell,
                     "secondLevelSpell: " + secondLevelSpell, "thirdLevelSpell: " + thirdLevelSpell, "fourthLevelSpell: " + fourthLevelSpell, "fifthLevelSpell: "
                             + fifthLevelSpell, "sixthLevelSpell: " + sixthLevelSpell, "seventhLevelSpell: " + seventhLevelSpell, "eightLevelSpell: " + eightLevelSpell,
                     "ninthLevelSpell: " + ninthLevelSpell)) {
 
                 writer.write(s + "\n");
+
             }
             /*
             von Marie ge...liehen
@@ -1078,7 +1083,10 @@ public class NpcClass {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+
         }
+        System.out.println(file.getAbsolutePath());
+
     }
 
     public Integer getId() {
