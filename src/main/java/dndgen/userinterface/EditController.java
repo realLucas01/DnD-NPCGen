@@ -14,7 +14,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Marie
+ * Diese Klasse ist verantwortlich für die Bearbeitung von NPCs.
+ * Sie ermöglicht Vorgänge wie die Vorbereitung von Daten für die Bearbeitungsansicht,
+ * das Aktualisieren von NPC-Daten und die Verwaltung von spezifischen Attributen wie
+ * Fähigkeiten, Modifikatoren, Waffen, Rüstungen und Sprachen.
+ * Nutzt Services und Hilfsfunktionen für Datenbankzugriffe und logische Verarbeitung.
  */
 @Controller
 @SessionAttributes("updateNPC")
@@ -32,14 +36,13 @@ public class EditController {
     }
 
     /**
-     * Handles the editing of an NPC by preparing the required data, attributes, and UI elements
-     * for the editing view. It loads the NPC's details based on a provided ID, sets necessary
-     * model attributes, and returns the name of the view for rendering.
+     * Handhabt die Bearbeitung eines NPCs, indem die erforderlichen Daten, Attribute und UI-Elemente
+     * für die Bearbeitungsansicht vorbereitet werden. Lädt die NPC-Details basierend auf einer übergebenen ID,
+     * setzt die notwendigen Model-Attribute und gibt den Namen der View für das Rendering zurück.
      *
-     * @param id the unique identifier of the NPC to be edited
-     * @param model the model to which NPC attributes and other data are added for rendering the view
-     * @return the name of the view to be returned for NPC editing
-     *
+     * @param id    das eindeutige Kennzeichen des zu bearbeitenden NPCs
+     * @param model das Model, dem NPC-Attribute und andere Daten für das Rendering der View hinzugefügt werden
+     * @return der Name der View, die für die NPC-Bearbeitung zurückgegeben wird
      * @author Marie
      */
     @GetMapping("/edit")
@@ -71,16 +74,17 @@ public class EditController {
         return "edit";
     }
 
+    
     /**
-     * Handles the editing of an NPC's attributes by updating the provided data, setting the necessary
-     * model attributes, and preparing the view for rendering after the changes are made.
+     * Bearbeitet die Attribute eines NPCs durch Aktualisierung der bereitgestellten Daten, setzt die
+     * notwendigen Model-Attribute und bereitet die View für das Rendering nach den Änderungen vor.
      *
-     * @param name the name of the NPC being edited
-     * @param race the race of the NPC to be updated
-     * @param genClass the class of the NPC to be updated
-     * @param alignment the alignment of the NPC to be updated
-     * @param model the model used to store updated attributes for rendering the view
-     * @return the name of the view to be returned for the editing screen
+     * @param name      der Name des zu bearbeitenden NPCs
+     * @param race      die Rasse des NPCs, die aktualisiert werden soll
+     * @param genClass  die Klasse des NPCs, die aktualisiert werden soll
+     * @param alignment die Gesinnung des NPCs, die aktualisiert werden soll
+     * @param model     das Model zur Speicherung der aktualisierten Attribute für die View-Darstellung
+     * @return der Name der View, die für den Bearbeitungsbildschirm zurückgegeben werden soll
      */
     @PostMapping("/editFirst")
     public String editedNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
@@ -105,14 +109,14 @@ public class EditController {
         return "edit";
     }
 
+    
     /**
-     * Prepares the attributes for editing an NPC by setting various properties,
-     * such as general attributes, additional data, movement values, languages,
-     * ability scores, inventory, and descriptions, into the provided model.
+     * Bereitet die Attribute für die Bearbeitung eines NPCs vor, indem verschiedene Eigenschaften,
+     * wie allgemeine Attribute, zusätzliche Daten, Bewegungswerte, Sprachen,
+     * Fähigkeitswerte, Inventar und Beschreibungen, in das bereitgestellte Model gesetzt werden.
      *
-     * @param model the model used to prepare attributes for rendering the editing view
-     * @param npc the NPC object whose attributes are being prepared for editing
-     *
+     * @param model das Model zur Vorbereitung der Attribute für die Anzeige der Bearbeitungsansicht
+     * @param npc   das NPC-Objekt, dessen Attribute für die Bearbeitung vorbereitet werden
      * @author Marie
      */
     private void prepareEditAttributes(Model model, NpcClass npc) {
@@ -157,11 +161,8 @@ public class EditController {
         model.addAttribute("language", String.join(", ", npc.getLanguages()));
 
         // Ability Scores
-       /* model.addAttribute("abilityScores", helpFunctions.getAbilityScoresWithModifiers(npc));
-        model.addAttribute("savingThrows", helpFunctions.formatSavingThrows(npc));
-        model.addAttribute("allAbilities", List.of("Str", "Dex", "Con", "Int", "Wis", "Cha"));
-        */
         formatNpcDataForStats(npc, model);
+        
         // Inventar
         model.addAttribute("armors", dbms.onlyColumn("armor"));
         model.addAttribute("armor", String.join(", ", npc.getArmor())); // TODO ist String, sollte wahrscheinlich List sein, wegen mehrerer möglichen Objekten
@@ -194,14 +195,14 @@ public class EditController {
         return "redirect:/detail?id=" + npc.getId();
     }
 
+    
     /**
-     * Handles the editing of selected languages for an NPC by updating the language list
-     * and preparing the model with the updated information.
+     * Bearbeitet die ausgewählten Sprachen für einen NPC durch Aktualisieren der Sprachen-Liste
+     * und Vorbereitung des Models mit den aktualisierten Informationen.
      *
-     * @param selectedLanguages the list of languages selected by the user
-     * @param model the model used to prepare attributes for view rendering
-     * @return a string indicating the name of the view to be rendered
-     *
+     * @param selectedLanguages die Liste der vom Benutzer ausgewählten Sprachen
+     * @param model             das Model zur Vorbereitung der Attribute für die View-Darstellung
+     * @return ein String, der den Namen der zu rendernden View angibt
      * @author Marie
      */
     @PostMapping("editLanguages")
@@ -211,14 +212,14 @@ public class EditController {
 
     }
 
+    
     /**
-     * Handles the editing of selected armors for an NPC by updating the armor list
-     * and preparing the model with the updated information.
+     * Bearbeitet die ausgewählten Rüstungen für einen NPC durch Aktualisieren der Rüstungsliste
+     * und Vorbereitung des Models mit den aktualisierten Informationen.
      *
-     * @param selectedArmors the list of armors selected by the user
-     * @param model the model used to prepare attributes for view rendering
-     * @return a string indicating the name of the view to be rendered
-     *
+     * @param selectedArmors die Liste der vom Benutzer ausgewählten Rüstungen
+     * @param model          das Model zur Vorbereitung der Attribute für die View-Darstellung
+     * @return ein String, der den Namen der zu rendernden View angibt
      * @author Marie
      */
     @PostMapping("editArmors")
@@ -227,14 +228,14 @@ public class EditController {
         return "edit";
     }
 
+
     /**
-     * Handles the editing of selected weapons for an NPC by updating the weapon list
-     * and preparing the model with the updated information.
+     * Bearbeitet die ausgewählten Waffen für einen NPC durch Aktualisieren der Waffen-Liste
+     * und Vorbereitung des Models mit den aktualisierten Informationen.
      *
-     * @param selectedWeapons the list of weapons selected by the user
-     * @param model the model used to prepare attributes for view rendering
-     * @return a string indicating the name of the view to be rendered
-     *
+     * @param selectedWeapons die Liste der vom Benutzer ausgewählten Waffen
+     * @param model           das Model zur Vorbereitung der Attribute für die View-Darstellung
+     * @return ein String, der den Namen der zu rendernden View angibt
      * @author Marie
      */
     @PostMapping("editWeapons")
@@ -243,15 +244,14 @@ public class EditController {
         return "edit";
     }
 
+
     /**
-     * Updates the specified NPC's attributes (languages, armor, or weapons) based on the given type
-     * and prepares the model for displaying updated information.
+     * Bearbeitet und aktualisiert spezifische Attribute einer Liste basierend auf dem angegebenen Typ und aktualisiert das Model entsprechend.
      *
-     * @param selectedList the list of selected values to be assigned to the NPC's attribute
-     * @param type the type of attribute to update ("lang" for languages, armor, weapon)
-     * @param model the model used to prepare attributes for view rendering
-     *
-     * @author Marie
+     * @param selectedList die zu aktualisierende Liste von Elementen  
+     * @param type der Typ des zu modifizierenden Attributs (z.B. "lang", "armor", "skill", "weapon")
+     * @param model das Model-Objekt zur Aktualisierung der Attribute für die Anzeige
+     * @throws IllegalArgumentException wenn ein unbekannter Attributstyp angegeben wird
      */
     private void editListAttributes(List<String> selectedList, String type, Model model) {
         model.addAttribute(switchValue, true);
@@ -279,6 +279,16 @@ public class EditController {
 
     }
 
+    
+    /**
+     * Formatiert die NPC-Daten für die statistische Darstellung
+     * und fügt Attribute wie Fähigkeitswerte, Modifikatoren und Rettungswürfe zum
+     * Model für die Verwendung in einer Ansicht hinzu.
+     *
+     * @param npc   das NPC-Objekt, das die Rohdaten für Fähigkeitswerte, Modifikatoren
+     *              und Rettungswürfe enthält
+     * @param model das Model-Objekt zum Speichern der formatierten Daten als Attribute
+     */
     private void formatNpcDataForStats(NpcClass npc, Model model) {
         List<String> allAbilities = Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha");
 
@@ -317,6 +327,19 @@ public class EditController {
     }
 
 
+    /**
+     * Aktualisiert die Attributwerte eines gegebenen NPCs. Diese Methode verarbeitet die vorhandenen
+     * Attributwerte und übernimmt die bereitgestellten Aktualisierungen durch Ändern des entsprechenden
+     * Werts für den angegebenen Schlüssel. Die aktualisierte Liste der Attributwerte wird dann im
+     * NPC-Objekt gespeichert.
+     *
+     * @param key       der Attributschlüssel (z.B. "0", "1", etc.), der den
+     *                  Index in der Attributwerte-Liste darstellt
+     * @param value     der neue Wert, der für den angegebenen Schlüssel in der
+     *                  Attributwerte-Liste gesetzt werden soll
+     * @param updateNPC das NPC-Objekt, dessen Attributwerte aktualisiert werden
+     * @return ein ResponseEntity das das Ergebnis der Operation anzeigt
+     */
     @PostMapping("/editAbility")
     @ResponseBody
     public ResponseEntity<Void> editAbility(@RequestParam String key, @RequestParam int value,
@@ -331,6 +354,17 @@ public class EditController {
         return ResponseEntity.ok().build();
     }
 
+    
+    /**
+     * Aktualisiert die Fähigkeitsmodifikatoren eines angegebenen NPC. Diese Methode verarbeitet die vorhandenen
+     * Fähigkeitsmodifikatoren und übernimmt die bereitgestellten Aktualisierungen durch Ändern des entsprechenden
+     * Werts für den angegebenen Schlüssel. Die aktualisierte Liste der Fähigkeitsmodifikatoren wird dann im NPC gespeichert.
+     *
+     * @param key       der Attributschlüssel (z.B. "0", "1", etc.), der den zu aktualisierenden Index in der Fähigkeitsmodifikator-Liste darstellt
+     * @param value     der neue Wert, der für den angegebenen Schlüssel in der Fähigkeitsmodifikator-Liste gesetzt werden soll
+     * @param updateNPC das NPC-Objekt, dessen Fähigkeitsmodifikatoren aktualisiert werden
+     * @return ein ResponseEntity, das das Ergebnis der Operation anzeigt
+     */
     @PostMapping("/editModifier")
     @ResponseBody
     public ResponseEntity<Void> editModifier(@RequestParam String key, @RequestParam int value,
@@ -344,6 +378,18 @@ public class EditController {
         return ResponseEntity.ok().build();
     }
 
+    
+    /**
+     * Aktualisiert die Rettungswürfe eines angegebenen NSCs. Diese Methode verarbeitet die vorhandenen
+     * Rettungswürfe und übernimmt die bereitgestellten Aktualisierungen oder fügt einen neuen
+     * Eintrag hinzu, falls der angegebene Schlüssel nicht vorhanden ist. Nach der Verarbeitung
+     * wird die aktualisierte Liste der Rettungswürfe im NPC gespeichert.
+     *
+     * @param key       der Attributsschlüssel (z.B. "Str", "Dex", etc.) zum Aktualisieren oder Hinzufügen
+     * @param value     der neue Wert für den angegebenen Attributsschlüssel
+     * @param updateNPC das NPC-Objekt, dessen Rettungswürfe aktualisiert werden
+     * @return ein ResponseEntity das das Ergebnis der Operation anzeigt
+     */
     @PostMapping("/editSavingThrows")
     @ResponseBody
     public ResponseEntity<Void> editSavingThrows(@RequestParam String key, @RequestParam int value,
@@ -401,14 +447,14 @@ public class EditController {
 
     }
 
+    
     /**
-     * Handles the editing of selected skills for an NPC by updating the skill list
-     * and preparing the model with the updated information.
+     * Bearbeitet die ausgewählten Fähigkeiten eines NSCs durch Aktualisieren der
+     * Skill Liste und Vorbereitung des Models mit den aktualisierten Informationen.
      *
-     * @param selectedSkills the list of skills selected by the user
-     * @param model the model used to prepare attributes for view rendering
-     * @return a string indicating the name of the view to be rendered
-     *
+     * @param selectedSkills die vom Benutzer ausgewählte Liste der Fähigkeiten
+     * @param model          das Model, das für die Vorbereitung der Attribute für die View-Darstellung verwendet wird
+     * @return ein String, der den Namen der zu rendernden View angibt
      * @author Marie
      */
     @PostMapping("editSkills")
@@ -417,6 +463,14 @@ public class EditController {
         return "edit";
     }
 
+    
+    /**
+     * Filtert eine Liste von Fähigkeits-Strings, indem nachfolgende "+" mit Zahlenwerten
+     * und umgebende Leerzeichen in den Strings entfernt werden.
+     *
+     * @param skills die zu filterende Liste der Fähigkeits-Strings
+     * @return eine neue Liste der Fähigkeits-Strings nach Anwendung der Filteroperation
+     */
     public static List<String> filterSkills(List<String> skills) {
         return skills.stream()
                 .map(skill -> skill.replaceAll("\\s*\\+\\d+", "")) // Entfernt Leerzeichen und den "+" plus Zahl
