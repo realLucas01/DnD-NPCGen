@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Marie
@@ -122,6 +123,7 @@ public class EditController {
         model.addAttribute("selectedRace", npc.getRace());
         model.addAttribute("selectedClass", npc.getGenClass());
         model.addAttribute("selectedAlignment", npc.getAlignment());
+        model.addAttribute("selectedSkills", npc.getSkillList());
         model.addAttribute("npc", npc);
 
         // Zusatzdaten (Level, Jobs, etc.)
@@ -166,6 +168,11 @@ public class EditController {
         model.addAttribute("weapons", dbms.onlyColumn("weapon"));
         model.addAttribute("weapon", String.join(", ", npc.getWeaponList()));
 
+        // Skills
+        model.addAttribute("skills", filterSkills(npc.getSkillList()));
+        model.addAttribute("availableSkills", dbms.onlyColumn("skill"));
+
+
         // Beschreibung
         List<String> descriptions = npc.getDescription();
         List<String> titles = List.of("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
@@ -183,6 +190,7 @@ public class EditController {
     @PostMapping("editSave")
     public String saveEdit() {
         // TODO Das ganze Speichern des bearbeiteten NPC fehlt
+        // TODO skills, nochmal durchlaufen, da +... Werte fehlen
         return "redirect:/detail?id=" + npc.getId();
     }
 
@@ -198,7 +206,7 @@ public class EditController {
      */
     @PostMapping("editLanguages")
     public String editLanguages(@RequestParam("lang") List<String> selectedLanguages, Model model) {
-        editListLangWeaponArmors(selectedLanguages, "lang", model);
+        editListAttributes(selectedLanguages, "lang", model);
         return "edit";
 
     }
@@ -215,7 +223,7 @@ public class EditController {
      */
     @PostMapping("editArmors")
     public String editArmors(@RequestParam("arm") List<String> selectedArmors, Model model) {
-        editListLangWeaponArmors(selectedArmors, "armor", model);
+        editListAttributes(selectedArmors, "armor", model);
         return "edit";
     }
 
@@ -231,7 +239,7 @@ public class EditController {
      */
     @PostMapping("editWeapons")
     public String editWeapons(@RequestParam("wea") List<String> selectedWeapons, Model model) {
-        editListLangWeaponArmors(selectedWeapons, "weapon", model);
+        editListAttributes(selectedWeapons, "weapon", model);
         return "edit";
     }
 
@@ -245,7 +253,7 @@ public class EditController {
      *
      * @author Marie
      */
-    private void editListLangWeaponArmors(List<String> selectedList, String type, Model model) {
+    private void editListAttributes(List<String> selectedList, String type, Model model) {
         model.addAttribute(switchValue, true);
 
         // Liste aktualisieren
@@ -256,8 +264,14 @@ public class EditController {
             case "armor":
                 updateNPC.setArmor(String.valueOf(selectedList));
                 break;
+            case "skill":
+                updateNPC.setSkillList(selectedList);
+                break;
             case "weapon":
                 updateNPC.setWeaponList(selectedList);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown attribute type: " + type);
         }
 
         // Update der Anzeige vorbereiten
@@ -387,7 +401,27 @@ public class EditController {
 
     }
 
+    /**
+     * Handles the editing of selected skills for an NPC by updating the skill list
+     * and preparing the model with the updated information.
+     *
+     * @param selectedSkills the list of skills selected by the user
+     * @param model the model used to prepare attributes for view rendering
+     * @return a string indicating the name of the view to be rendered
+     *
+     * @author Marie
+     */
+    @PostMapping("editSkills")
+    public String editSkills(@RequestParam("skill") List<String> selectedSkills, Model model) {
+        editListAttributes(selectedSkills, "skill", model);
+        return "edit";
+    }
 
+    public static List<String> filterSkills(List<String> skills) {
+        return skills.stream()
+                .map(skill -> skill.replaceAll("\\s*\\+\\d+", "")) // Entfernt Leerzeichen und den "+" plus Zahl
+                .collect(Collectors.toList());
+    }
 
 
 

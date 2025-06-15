@@ -216,7 +216,7 @@
                     </div>
                 </form>
 
-            <!-- TODO AbilityScores -->
+
             <!-- Ability Scores & Saving Throws -->
             <div class="container mt-3">
                 <div class="row border rounded p-3 bg-light">
@@ -400,6 +400,59 @@
 
 
             <!-- TODO Skills -->
+            <!-- Skills -->
+            <div class="row mb-3">
+                <div class="d-flex align-items-center">
+                    <label class="form-label me-2 mb-0"><b>Skills:</b></label>
+                    <!-- Liste der Skills -->
+                    <p th:text="${skills}" class="form-control-plaintext mb-0"></p>
+                </div>
+
+                <!-- Button zum Öffnen des Pop-ups -->
+                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#skillsModal">
+                    Choose Skills
+                </button>
+            </div>
+
+            <!-- Modal -->
+            <form th:action="@{/editSkills}" method="post">
+                <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="skillsModalLabel">Available Skills</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-2">
+                                    <!-- Liste der Skills -->
+                                    <div th:each="skill : ${availableSkills}" class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <!-- Checkbox für den Skill -->
+                                                <input type="checkbox"
+                                                       th:id="${'skill_' + skill}"
+                                                       th:name="skill"
+                                                       th:value="${skill}"
+                                                       th:checked="${skills.contains(skill)}"
+                                                       class="form-check-input me-2">
+                                                <label th:for="${'skill_' + skill}" class="form-check-label" th:text="${skill}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
 
             <!-- TODO Senses -->
 
