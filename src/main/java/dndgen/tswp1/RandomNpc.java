@@ -431,7 +431,6 @@ public class RandomNpc {
                     case "Wis" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(4) + profBonus));
                     case "Cha" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(5) + profBonus));
                     default -> {
-                            //hi
                         }
                 }
             }

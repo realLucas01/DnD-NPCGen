@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -150,7 +151,6 @@ public class EditNpc {
      * @param stringList the string list
      * @return the list
      */
-    @Autowired
     public List<String> removePlusNumberInAStringList(List<String> stringList) {
         List<String> stringListWithoutNumbers = new ArrayList<>();
         for (String skills : stringList) {
@@ -159,7 +159,7 @@ public class EditNpc {
         return stringListWithoutNumbers;
     }
 
-    public void editTheNPC(NpcClass changedNPC, NpcClass oldNPC) {
+    public void editTheNPC(NpcClass changedNPC, NpcClass oldNPC, Integer historyID, LocalDateTime dateTime) {
         NpcClass editedNPC = oldNPC;
         editedNPC.setName(changedNPC.getName());
         editedNPC.setAbilityScores(changedNPC.getAbilityScores());
@@ -202,6 +202,7 @@ public class EditNpc {
         editedNPC.setEightLevelSpell(changedNPC.getEightLevelSpell());
         editedNPC.setNinthLevelSpell(changedNPC.getNinthLevelSpell());
 
+        dbms.updateEntry(historyID);
     }
 
 

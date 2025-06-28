@@ -279,12 +279,12 @@ public class RandomGenerator {
 		desc.add(size);
 		desc.add(Double.toString(height));
 
-		//Eyes, HairColor, HairStyle, Skin, Trait, Mannerism, Bond, Flaw, Ideal, Voice, Clothing, Attitude, Plothook, size, height
+		//Eyes, HairColor, HairStyle, Skin, Trait, Mannerism, Bond, Flaw, Ideal, Voice, Clothing, Attitude, Plot hook, size, height
 		return desc;
 	}
 
 	/**
-	 * Figure out prof list list.
+	 * Figure out prof list.
 	 *
 	 * @param neededProfList the needed prof list
 	 * @param charClass      the char class
@@ -311,7 +311,7 @@ public class RandomGenerator {
 	}
 
 	/**
-	 * Figure out armor prof list list.
+	 * Figure out armor prof list.
 	 *
 	 * @param charClass the char class
 	 * @param race      the race
@@ -337,7 +337,7 @@ public class RandomGenerator {
 	}
 
 	/**
-	 * Figure out weapon prof list list.
+	 * Figure out weapon prof list.
 	 *
 	 * @param charClass the char class
 	 * @param race      the race
@@ -529,7 +529,7 @@ public class RandomGenerator {
 	 * @param knownSkillList the known skill list
 	 * @return the list
 	 */
-//Schroedingers Funktion(ehemals)
+//Schrodinger Funktion(ehemals)
 	/* @Luca */
 	public List<String> randSkillProf(List<String> possibleSkills, int numberSkill, List<String> knownSkillList) {
 		if (possibleSkills.isEmpty()) {
@@ -580,7 +580,7 @@ public class RandomGenerator {
 	}
 
 	/**
-	 * Get highest spell level int.
+	 * Get the highest spell level int.
 	 *
 	 * @param chosenNpc the chosen npc
 	 * @return the int

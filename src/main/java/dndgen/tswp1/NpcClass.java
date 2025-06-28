@@ -1052,7 +1052,7 @@ public class NpcClass {
         Charset utf8 = StandardCharsets.UTF_8;
         System.out.println(name);
         File desktopPath = FileSystemView.getFileSystemView().getHomeDirectory();
-        String fileName = STR."\{name}.txt";
+        String fileName = name + ".txt";
         File file = new File(desktopPath,fileName);
         try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)))  {
 
