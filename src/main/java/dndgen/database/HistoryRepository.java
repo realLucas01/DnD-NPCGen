@@ -9,7 +9,6 @@
 package dndgen.database;
 
 import java.util.ArrayList;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -22,8 +21,8 @@ public interface HistoryRepository extends CrudRepository<HistoryModel, Integer>
 	ArrayList<HistoryModel> findByRunVar(Integer runVar);
 	@Transactional
 	@Modifying
-	@Query("update HistoryModel u set u.runVar = ?1 where u.historyId = ?2")
-	void setRuVaManuel(Integer runVar, Integer historyId);
-	@Query("SELECT n FROM HistoryModel n WHERE NOT n.historyId=13")
+	@Query("update HistoryModel u set u.runVar = ?1 where u.Id = ?2")
+	void setRuVaManuel(Integer runVar, Integer Id);
+	@Query("SELECT n FROM HistoryModel n WHERE NOT n.Id=13")
 	ArrayList<HistoryModel> findEverythingExceptCounter();
 }

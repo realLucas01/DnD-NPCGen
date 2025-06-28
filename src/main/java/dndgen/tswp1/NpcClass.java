@@ -600,34 +600,34 @@ public class NpcClass {
      * @param entry the entry
      */
     public void historyEntryToNpc(HistoryModel entry) {
-        setRace(entry.getHistoryRace());
-        setGenClass(entry.getHistoryClass());
-        setAlignment(entry.getHistoryAlignment());
-        setDeity(entry.getHistoryDeity());
-        setName(entry.getHistoryName());
-        setLevel(entry.getHistoryLevel());
-        setJob(entry.getHistoryJob());
-        setArmorClass(entry.getHistoryAc());
-        setHealthPoints(entry.getHistoryHp());
-        setMovementSpeedList(entry.getHistorySpeed());
-        setLanguages(entry.getHistoryLanguages());
-        setAbilityScores(entry.getHistoryAbiliSc());
-        setAbilityModifier(entry.getHistoryAbiliMod());
-        setSavingThrows(entry.getHistorySavingTh());
-        setArmor(entry.getHistoryArmor());
-        setWeaponList(entry.getHistoryWeapon());
-        setSkillList(entry.getHistorySkills());
-        setSpellAbility(entry.getHistorySpellAb());
-        setDescription(entry.getHistoryDesc());
-        setActionList(entry.getHistoryActions());
-        setBonusActionList(entry.getHistoryBonusTextList());
-        setProfBonus(entry.getHistoryProfBonus());
-        setGender(entry.getHistoryGender());
-        setAge(entry.getHistoryAge());
-        setBonusTextList(entry.getHistoryBonusTextList());
-        setSenses((entry.getHistorySenses()));
-        setSpellList(new ArrayList<>(entry.getHistorySpells()));
-        setId(entry.getHistoryId());
+        setRace(entry.getRace());
+        setGenClass(entry.getGenClass());
+        setAlignment(entry.getAlignment());
+        setDeity(entry.getDeity());
+        setName(entry.getName());
+        setLevel(entry.getLevel());
+        setJob(entry.getJob());
+        setArmorClass(entry.getArmorClass());
+        setHealthPoints(entry.getHealthPoints());
+        setMovementSpeedList(entry.getMovementSpeedList());
+        setLanguages(entry.getLanguages());
+        setAbilityScores(entry.getAbilityScores());
+        setAbilityModifier(entry.getAbilityModifier());
+        setSavingThrows(entry.getSavingThrows());
+        setArmor(entry.getArmor());
+        setWeaponList(entry.getWeaponList());
+        setSkillList(entry.getSkillList());
+        setSpellAbility(entry.getSpellAbility());
+        setDescription(entry.getDescription());
+        setActionList(entry.getActionList());
+        setBonusActionList(entry.getBonusTextList());
+        setProfBonus(entry.getProfBonus());
+        setGender(entry.getGender());
+        setAge(entry.getAge());
+        setBonusTextList(entry.getBonusTextList());
+        setSenses((entry.getSenses()));
+        setSpellList(new ArrayList<>(entry.getSpellList()));
+        setId(entry.getId());
     }
 
     /**
@@ -1006,45 +1006,6 @@ public class NpcClass {
             logger.info(s);
         }
     }
-
-    /**
-     * Save npc in history.
-     */
-    public void saveNpcInHistory() {
-        ArrayList<Object> history = new ArrayList<>();
-
-        history.add(name);
-        history.add(level);
-        history.add(genClass);
-        history.add(race);
-        history.add(job);
-        history.add(armorClass);
-        history.add(healthPoints);
-        history.add(movementSpeedList);
-        history.add(languages);
-        history.add(abilityScores);
-        history.add(savingThrows);
-        history.add(armor);
-        history.add(weaponList);
-        history.add(skillList);
-        history.add(senses);
-        history.add(spellList);
-        history.add(spellAbility);
-        history.add(description);
-        history.add(actionList);
-        history.add(bonusActionList);
-        history.add(profBonus);
-
-        history.add(abilityModifier);
-        history.add(gender);
-        history.add(age);
-        history.add(alignment);
-        history.add(deity);
-        history.add(bonusTextList);
-
-        dbms.saveEntry(history);
-    }
-
     /*
         export des NPCs als txt Datei
      */

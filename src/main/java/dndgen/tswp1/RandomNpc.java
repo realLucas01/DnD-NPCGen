@@ -324,7 +324,7 @@ public class RandomNpc {
         }
 
          */
-        randNpc.saveNpcInHistory(); // speichern in der History
+        dbms.saveHistoryEntry(randNpc); // speichern in der History
 
         //randNpc.exportNPC(); // NPC wird in eine .txt exportiert
         return randNpc;

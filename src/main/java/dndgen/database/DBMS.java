@@ -652,7 +652,7 @@ public class DBMS implements ApplicationContextAware{
 		Collections.sort(historycontent, new Comparator<HistoryModel>() {
 		    @Override
 		    public int compare(HistoryModel o1, HistoryModel o2) {
-		        return o2.getHistoryEntryAge().compareTo(o1.getHistoryEntryAge());
+		        return o2.getEntryAge().compareTo(o1.getEntryAge());
 		    }
 		});
 		return historycontent;
@@ -680,18 +680,17 @@ public class DBMS implements ApplicationContextAware{
 	
 	/* @author Lucas
 	 *
-	 * Iniziert das speichern einer neuen Zeile über das DBMS, da die
-	 * genaue Struktur der History database aktuell noch unbekannt ist, ist diese funktion
-	 * was Eingaben und teilweise Struktur betrift noch WIP.
+	 * Iniziert das speichern eines neuen Datensatzes in die History.
 	 */
-	public void saveEntry(ArrayList<Object> NPC) {
+	public void saveHistoryEntry(NpcClass NPC) {
 		HistoryModel newentry = new HistoryModel();
 	    	for (Method m : ordner(newentry.getClass())) {
-	    		if (m.getName().startsWith("set") && m.getParameterTypes().length == 1 && !m.getName().equals("setHistoryId")&& 
-	    				!m.getName().equals("setRunVar")&& !m.getName().equals("setHistoryEntryAge")) {	
-	    			 sneaky(() -> r = m.invoke(newentry, NPC.getFirst()));
-	    			 NPC.removeFirst();
-	    		}
+	    			for (Method l : NPC.getClass().getDeclaredMethods()) {
+	    				if (l.getName().startsWith("get") && m.getName().startsWith("set") 
+	    						&& l.getName().substring(3).equals(m.getName().substring(3))){
+	    					sneaky(() -> r = m.invoke(newentry, l.invoke(NPC)));
+	    				}
+	    			}
 	    	}
 		 manageHistory("save",newentry);
 		 return;
@@ -699,23 +698,28 @@ public class DBMS implements ApplicationContextAware{
 	
 	/* @author Lucas
 	 *
-	 * Iniziert das updaten/bearbeiten einer neuen Zeile über das DBMS, da die
-	 * genaue Struktur der History database aktuell noch unbekannt ist, ist diese funktion
-	 * was Eingaben und teilweise Struktur betrift noch WIP.
+	 * Iniziert das updaten/bearbeiten eines Datensatzes in der History.
 	 */
-	public void updateEntry(Integer HistID) {
+	public void updateHistoryEntry(NpcClass NPC, Integer ID, LocalDateTime entryAge) {
 		 HistoryModel updatedentry = new HistoryModel();
-		 updatedentry.setHistoryId(HistID);
-		//hier würden die weitern übertragenen Daten in das Model 
-		//newentry eingetragen werden.
+		 updatedentry.setId(ID);
+		 updatedentry.setEntryAge(entryAge);
+		 for (Method m : ordner(updatedentry.getClass())) {
+ 			for (Method l : NPC.getClass().getDeclaredMethods()) {
+ 				if (l.getName().startsWith("get") && m.getName().startsWith("set") 
+ 						&& l.getName().substring(3).equals(m.getName().substring(3))){
+ 					sneaky(() -> r = m.invoke(updatedentry, l.invoke(NPC)));
+ 				}
+ 			}
+		 }
 		 manageHistory("update",updatedentry);
 		 return;
-	 }
+	}
 
 	/* @author Lucas
 	 *
-	 * Verwaltet die ausführung der speicher und update funktion der History
-	 * um unteranderem sicherstellen zu können das es nie mehr als 10 Einträge
+	 * Verwaltet die Ausführung der Speicher- und Update-funktion der History
+	 * um sicherstellen zu können das es nie mehr als 10 Einträge
 	 * gibt und immer der älteste gelöscht wird.
 	 */
 	@Transactional
@@ -725,18 +729,18 @@ public class DBMS implements ApplicationContextAware{
 		 case "save":
 			 if (historyRepository.count() == 0) {
 				 historyRepository.findById(13).get().setRunVar(1);
-				 break;	 
+				 break;
 			 }else if (historyRepository.findById(13).get().getRunVar() == 13) {
 				 historyRepository.setRuVaManuel(1, 13);;
 				 break;
 			 }
-			 histchange.setHistoryId(historyRepository.findById(13).get().getRunVar());
-			 histchange.setHistoryEntryAge(LocalDateTime.now());
+			 histchange.setId(historyRepository.findById(13).get().getRunVar());
+			 histchange.setEntryAge(LocalDateTime.now());
 			 historyRepository.save(histchange);
 			 historyRepository.setRuVaManuel((historyRepository.findById(13).get().getRunVar())+1, 13);
 			 break;
 		 case "update":
-			 //historyRepository.setNewInfoById(histentry.getHistoryFirstName(),histentry.getHistoryLastName(),histentry.getHistoryOccurance(),histentry.getHistoryId());
+			 historyRepository.save(histchange);
 			 break;
 		 }
 	}
