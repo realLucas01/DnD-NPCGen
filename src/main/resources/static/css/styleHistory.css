@@ -1,0 +1,41 @@
+:root {
+    --background-orange: #f2c894;
+    --foreground-orange: #ffb347;
+    --foreground-yellow: rgb(247, 228, 190);
+    --border-orange: #c7882e;
+}
+
+body{
+    background-color: var(--background-orange);
+}
+
+.ueberschrift{
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    padding-bottom: 0.5rem;
+}
+
+.card{
+    background-color: var(--foreground-orange);
+    font-family: 'MedievalSharp';
+}
+
+.card .card-title{
+    width: 100%;
+    border-bottom: 2px solid var(--foreground-yellow);
+    padding-bottom: 5px;
+}
+
+.card .card-footer{
+    background-color: var(--foreground-yellow);
+}
+
+.card .card-footer .btn{
+    background-color: var(--foreground-orange);
+    color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--foreground-orange);
+}
