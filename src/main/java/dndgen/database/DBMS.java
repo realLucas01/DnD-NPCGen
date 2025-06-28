@@ -32,11 +32,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import dndgen.database.Sortierung.Order;
 import dndgen.tswp1.RandomGenerator;
+import dndgen.tswp1.NpcClass;
 
 
 @Service
@@ -240,8 +243,6 @@ public class DBMS implements ApplicationContextAware{
 	public ArrayList<String> getColWithPref(String dbname,String Clazz){
 		ArrayList<String> col = new ArrayList<String>();
 		RandomGenerator randGen = new RandomGenerator();
-		//Liste für Spells nach Klasse, Level, Spelllevel. Für Waffen+Rüstung nach Prof in Klasse in InnerJoin mit der jeweiligen Klasse
-		//-deity, -alignment, -languange, -Weapon, -Armor, -Spells, -actions
 		switch(dbname) {
 		case "weapon":
 			ArrayList<String> weaponprefs = (ArrayList<String>) randGen.bigStringToDividedString(classRepository.getWeaponPref(Clazz));
@@ -255,8 +256,8 @@ public class DBMS implements ApplicationContextAware{
 				col.addAll(armorRepository.getArmorCol(armorpref));
 			}
 			break;
-		case "spells":
-			col = spellRepository.getSpellCol(Clazz);
+		case "spellsForClassAvailabilty":
+			col = spellRepository.getSpellColForClassAvailabilty(Clazz);
 			break;
 		case "actions":
 			col = actionRepository.getActionsCol(Clazz);
@@ -296,7 +297,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRow(String dbName,String searchstring) {
+	public ArrayList<String> getRowWithPref(String dbName,String searchstring) {
 		 ArrayList<String> row = new ArrayList<String>();
 		 
 			switch(dbName) {
@@ -363,7 +364,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRandomRow(String dbname) {
+	public ArrayList<String> getRandRow(String dbname) {
 	    long qty;
 	    Page<?> questionPage;
 	    int idx;
@@ -452,7 +453,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRowPref(String dbname, String pref){
+	public ArrayList<String> getRandRowWithPref(String dbname, String pref){
 	    int qty;
 	    Page<?> questionPage2;
 	    int idx;
@@ -527,7 +528,7 @@ public class DBMS implements ApplicationContextAware{
 	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
 	 * 					werden in der ArrayList hintereinnader gehangen.
 	 */
-	public ArrayList<String> getMultRowPref(String dbname, String pref, Integer numberofrow){
+	public ArrayList<String> getMultRandRowWithPref(String dbname, String pref, Integer numberofrow){
 		ArrayList<String> rand = new ArrayList<String>();
 		ArrayList<String> multRowPref = new ArrayList<String>();
 		
@@ -556,7 +557,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRowMultPref(String dbname, String pref1, String pref2){
+	public ArrayList<String> getRandRowWithMultPref(String dbname, String pref1, String pref2){
 	    int qty;
 	    Page<?> questionPage;
 	    int idx;
@@ -605,16 +606,16 @@ public class DBMS implements ApplicationContextAware{
 	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
 	 * 					werden in der ArrayList hintereinnader gehangen.
 	 */
-	public ArrayList<String> getMultRowMultPref(String dbname, String pref, String pref2, Integer rownumber){
+	public ArrayList<String> getMultRowWithMultPref(String dbname, String pref, String pref2, Integer rownumber){
 		ArrayList<String> rand = new ArrayList<String>();
 		ArrayList<String> multRowMultPref = new ArrayList<String>();
 		Integer i = 2;
 		
 		switch(dbname) {
 		case "spells":
-			multRowMultPref.addAll(getRowMultPref(dbname, pref, pref2));
+			multRowMultPref.addAll(getRandRowWithMultPref(dbname, pref, pref2));
 			while (i <= rownumber) {
-				rand.addAll(getRowMultPref(dbname, pref, pref2));
+				rand.addAll(getRandRowWithMultPref(dbname, pref, pref2));
 				if (multRowMultPref.containsAll(rand)) {
 					rand.clear();
 				} else {
@@ -668,12 +669,6 @@ public class DBMS implements ApplicationContextAware{
 	 */
 	public HistoryModel getHistoryEntry(Integer ID){
 		HistoryModel Entry = historyRepository.findByHistoryId(ID);
-		/*for (Method m : ordner(Entry.getClass())) {
-    		if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {	
-    			 sneaky(() -> r = m.invoke(Entry));
-    			 FinalEntry.add(String.valueOf(r));
-    		}
-    	}*/
 		return Entry;
 	}
 	
@@ -762,8 +757,9 @@ public class DBMS implements ApplicationContextAware{
 			Repo = armorRepository;
 			break;
 		default: 
-			Repo = nameRepository;
+			Repo = null;
 		}
+		System.out.println(Repo);
 		return Repo;
 	}
 }

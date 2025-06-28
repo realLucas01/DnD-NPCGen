@@ -218,8 +218,8 @@ public class EditNpc {
         editedNPC.setSavingThrows(randNpc.determineSavingThrows(changedNPC.getGenClass(), editedNPC.getAbilityModifier(),editedNPC.getProfBonus()));
     }
     private void setJobChanges(NpcClass changedNPC, NpcClass oldNPC, NpcClass editedNPC){
-        List<String> oldJobSkills = randGen.bigStringToDividedString(dbms.getRow("job", oldNPC.getJob()).get(2));
-        List<String> newJobSkills = randGen.bigStringToDividedString(dbms.getRow("job", changedNPC.getJob()).get(2));
+        List<String> oldJobSkills = randGen.bigStringToDividedString(dbms.getRowWithPref("job", oldNPC.getJob()).get(2));
+        List<String> newJobSkills = randGen.bigStringToDividedString(dbms.getRowWithPref("job", changedNPC.getJob()).get(2));
         List<String> currentSkills = changedNPC.getSkillList();
         currentSkills.removeAll(oldJobSkills);
         currentSkills.addAll(newJobSkills);

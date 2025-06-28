@@ -164,7 +164,7 @@ public class RandomGenerator {
 		double min;
 		double max;
 
-		rawHeight = dbms.getRow("race", race);
+		rawHeight = dbms.getRowWithPref("race", race);
 		height = rawHeight.get(7);
 
 		minMaxArray = (ArrayList<Double>) divideDoubles(height);
@@ -183,7 +183,7 @@ public class RandomGenerator {
 	 */
 	/* @Luca */
 	public   String randCharClass() {
-		ArrayList<String> rndClass = dbms.getRandomRow(nameDBClass);
+		ArrayList<String> rndClass = dbms.getRandRow(nameDBClass);
 
 		return rndClass.get(1);
 	}
@@ -196,7 +196,7 @@ public class RandomGenerator {
 	/* TO DO @Lenard */
 	public String randRace() {
 		String race;
-        ArrayList<String> newRace = dbms.getRandomRow("race");
+        ArrayList<String> newRace = dbms.getRandRow("race");
 		race = newRace.get(1);
 
 		return race;
@@ -212,7 +212,7 @@ public class RandomGenerator {
 		String job;
 
 		ArrayList<String> newJob;
-		newJob = dbms.getRandomRow("job");
+		newJob = dbms.getRandRow("job");
 
 		job = newJob.get(1);
 
@@ -241,7 +241,7 @@ public class RandomGenerator {
 		ArrayList<String> sizeArray;
 		ArrayList<String> newSize;
 
-		sizeArray = dbms.getRow("race", race);
+		sizeArray = dbms.getRowWithPref("race", race);
 		size = sizeArray.get(8);
 		newSize = (ArrayList<String>) bigStringToDividedString(size);
 
@@ -271,7 +271,7 @@ public class RandomGenerator {
 
 		int i = 1;
 		while(i < 13) {
-			dbData = dbms.getRandomRow("description");
+			dbData = dbms.getRandRow("description");
 			desc.add(dbData.get(i));
 			dbData.clear();
 			i++;
@@ -321,11 +321,11 @@ public class RandomGenerator {
 		List<String> profList; // Liste mit Ergebnissen die zurückgegeben wird
 		List<String> databaseReturn; // Liste die von der database zurückkommt
 		String kindOfFeature; // letzte Spalte aus der database um Festzustellen um was es sich hier handelt
-		profList = bigStringToDividedString(dbms.getRow(nameDBClass, charClass).get(4));
-		databaseReturn = dbms.getRow("race", race);
+		profList = bigStringToDividedString(dbms.getRowWithPref(nameDBClass, charClass).get(4));
+		databaseReturn = dbms.getRowWithPref("race", race);
 		if(!Objects.equals(databaseReturn.get(3), "null")) {
 			for (String feature : bigStringToDividedString(databaseReturn.get(3))) {    // die erhaltenen Rassen Features werden durchgecheckt, ob welche dabei sind die Armor Prof geben
-				databaseReturn = dbms.getRow(nameDBFeatures, feature);
+				databaseReturn = dbms.getRowWithPref(nameDBFeatures, feature);
 				kindOfFeature = databaseReturn.get(3);
 				if (kindOfFeature.contains("armor:")) {    // der Teil des Features, an dem man Feststellt, ob es sich um einen Armor Prof handelt wird entfernt
 					kindOfFeature= kindOfFeature.replace("armor: ", "");
@@ -347,14 +347,14 @@ public class RandomGenerator {
 		List<String> profList = new ArrayList<>(); // Liste mit Ergebnissen die zurückgegeben wird
 		List<String> databaseReturn; // Liste die von der database zurückkommt
 		String kindOfFeature; // letzte Spalte aus der database um Festzustellen um was es sich hier handelt
-		databaseReturn = dbms.getRow(nameDBClass, charClass);
+		databaseReturn = dbms.getRowWithPref(nameDBClass, charClass);
 		if(!Objects.equals(databaseReturn.get(3), "null")) {
 
 			profList = bigStringToDividedString(databaseReturn.get(3));
-			databaseReturn = dbms.getRow("race", race);
+			databaseReturn = dbms.getRowWithPref("race", race);
 			if (!Objects.equals(databaseReturn.get(3), "null")) {
 				for (String feature : bigStringToDividedString(databaseReturn.get(3))) {
-					databaseReturn = dbms.getRow(nameDBFeatures, feature);
+					databaseReturn = dbms.getRowWithPref(nameDBFeatures, feature);
 					kindOfFeature = databaseReturn.get(3);
 					if (kindOfFeature.contains("weapon:")) {
 						kindOfFeature = kindOfFeature.replace("weapon:", " ");
@@ -377,11 +377,11 @@ public class RandomGenerator {
 		List<String> databaseReturn; // Liste die von der database zurückkommt
 		String kindOfFeature; // letzte Spalte aus der database um Festzustellen um was es sich hier handelt
 		StringBuilder visionStringBuilder = new StringBuilder();
-		for(String feature: bigStringToDividedString(dbms.getRow("race", race).get(3))){
+		for(String feature: bigStringToDividedString(dbms.getRowWithPref("race", race).get(3))){
 			if(feature.equals("null") ){
 				break;
 			}
-			databaseReturn = dbms.getRow(nameDBFeatures, feature);
+			databaseReturn = dbms.getRowWithPref(nameDBFeatures, feature);
 			kindOfFeature = databaseReturn.get(3);
 			if(kindOfFeature.contains("vision")){
 				visionStringBuilder.append(kindOfFeature);
@@ -407,7 +407,7 @@ public class RandomGenerator {
 		int lengthOfArmorProfList = armorProf.size();
 		String rndArmor = armorProf.get(rand.nextInt(lengthOfArmorProfList));
 		if((rndArmor.equals("Light Armor"))||(rndArmor.equals("Medium Armor"))||(rndArmor.equals("Heavy Armor"))){
-			List<String> armorList = dbms.getRowPref("armor", rndArmor);
+			List<String> armorList = dbms.getRandRowWithPref("armor", rndArmor);
 			armor = armorList.get(1);
 		}else{	//Sonderfälle Rüstung
 			armor = rndArmor;
@@ -430,7 +430,7 @@ public class RandomGenerator {
 		}
 		String rndWeapon = weaponProf.get(rand.nextInt(lengthOfWeaponProf)); // aus der Prof Liste wird ein Eintrag zufällig ausgewählt
 		if((rndWeapon.equals("Simple Weapon")||(rndWeapon.equals("Martial Weapon")))) {
-			List<String> weaponList = dbms.getRowPref("weapon", rndWeapon);
+			List<String> weaponList = dbms.getRandRowWithPref("weapon", rndWeapon);
 			weapon = weaponList.get(1);
 		}else {
 			weapon = rndWeapon;
@@ -451,7 +451,7 @@ public class RandomGenerator {
 
 		List<String> newDeity;
 
-		newDeity = dbms.getRowPref("deity", alignment);
+		newDeity = dbms.getRandRowWithPref("deity", alignment);
 		deity = newDeity.get(1);
 
 		return deity;
@@ -464,7 +464,7 @@ public class RandomGenerator {
 	 */
 	/* @Luca */
 	public   String randLanguages() {
-		List<String> rndLang = dbms.getRandomRow("language");
+		List<String> rndLang = dbms.getRandRow("language");
 		return rndLang.get(1);
 	}
 
@@ -492,11 +492,11 @@ public class RandomGenerator {
 		List<String> newName;
 
         do {
-            newName = dbms.getRowPref("name", newRaceString);
+            newName = dbms.getRandRowWithPref("name", newRaceString);
             firstName = newName.get(1);
         } while (!(gender.equals(newName.get(4))));
 
-		newName = dbms.getRowPref("name", newRaceString);
+		newName = dbms.getRandRowWithPref("name", newRaceString);
 		secondName = newName.get(2);
 
 		name = firstName + " " + secondName;
@@ -514,7 +514,7 @@ public class RandomGenerator {
 	/* @Luca */
 	public int randAge(String race) {
 		List<String> raceList;
-		raceList = dbms.getRow("race", race);
+		raceList = dbms.getRowWithPref("race", race);
 		int ageAdult = Integer.parseInt(raceList.get(4));
 		int ageMax = Integer.parseInt(raceList.get(5));
 
@@ -576,7 +576,7 @@ public class RandomGenerator {
 	 */
 	public String randAlignment() {
 
-		return dbms.getRandomRow("alignment").get(2);
+		return dbms.getRandRow("alignment").get(2);
 	}
 
 	/**
@@ -589,7 +589,7 @@ public class RandomGenerator {
 		int dbCounter = 3;
 		int highestSpellLevel = 0 ;
 		for(int i=1; i<10;i++){
-			int spellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNpc.getGenClass()).get(dbCounter)).get(chosenNpc.getLevel()-1));
+			int spellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRowWithPref(nameDBSpellSlots, chosenNpc.getGenClass()).get(dbCounter)).get(chosenNpc.getLevel()-1));
 			if(spellLevel == 0){
 				return highestSpellLevel;
 			}
@@ -606,7 +606,7 @@ public class RandomGenerator {
 	 * @return the npc class
 	 */
 	public NpcClass randomSpellsForClass(NpcClass chosenNpc){
-		String classSpellKnownColDB = dbms.getRow(nameDBClass, chosenNpc.getGenClass()).get(9);
+		String classSpellKnownColDB = dbms.getRowWithPref(nameDBClass, chosenNpc.getGenClass()).get(9);
 		int spellCount ;
 		int highestSpellLevel;
 		int cantripNumber;
@@ -619,19 +619,19 @@ public class RandomGenerator {
 			case "null":
 				return chosenNpc;
 			case "tabelle":
-				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Spell Known").get(3)).get(chosenNpc.getLevel()-1));
+				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRandRowWithMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Spell Known").get(3)).get(chosenNpc.getLevel()-1));
 				highestSpellLevel = getHighestSpellLevel(chosenNpc);
-				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNpc.getGenClass()).get(2)).get(chosenNpc.getLevel()-1));
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowWithPref(nameDBSpellSlots, chosenNpc.getGenClass()).get(2)).get(chosenNpc.getLevel()-1));
 				break;
 			case "spezial":
-				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Spell Known").get(3)).get(chosenNpc.getLevel()-1));
-				highestSpellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Slot Level").get(3)).get(chosenNpc.getLevel()-1));
-				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Cantrips").get(3)).get(chosenNpc.getLevel()-1));
+				spellCount = Integer.parseInt(bigStringToDividedString(dbms.getRandRowWithMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Spell Known").get(3)).get(chosenNpc.getLevel()-1));
+				highestSpellLevel = Integer.parseInt(bigStringToDividedString(dbms.getRandRowWithMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Slot Level").get(3)).get(chosenNpc.getLevel()-1));
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRandRowWithMultPref(nameDBDSpellKnown,chosenNpc.getGenClass(),"Cantrips").get(3)).get(chosenNpc.getLevel()-1));
 				break;
 			default:
 				spellCount = determineNumberOfKnownSpell(chosenNpc);
 				highestSpellLevel = getHighestSpellLevel(chosenNpc);
-				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRow(nameDBSpellSlots, chosenNpc.getGenClass()).get(2)).get(chosenNpc.getLevel()-1));
+				cantripNumber = Integer.parseInt(bigStringToDividedString(dbms.getRowWithPref(nameDBSpellSlots, chosenNpc.getGenClass()).get(2)).get(chosenNpc.getLevel()-1));
 				break;
 		}
 		if(bracketIndex!=-1) { //wenn innerhalb der Klassen Namen eine Klammer steht, um Varianten dieser zu kennzeichen, muss sie entfernt werden, um spells zu finden
@@ -645,7 +645,7 @@ public class RandomGenerator {
 		if(spellCount != 0 ){
 			for (int currentSpellLevel=1;currentSpellLevel <= highestSpellLevel;currentSpellLevel++){
 				numberOfRandomSpellsPerLevel = rand.nextInt(6-3)+3;
-				List<String> spellsForLevel = dbms.getMultRowMultPref(nameDBSpells, spellClass, Integer.toString(currentSpellLevel), numberOfRandomSpellsPerLevel);
+				List<String> spellsForLevel = dbms.getMultRowWithMultPref(nameDBSpells, spellClass, Integer.toString(currentSpellLevel), numberOfRandomSpellsPerLevel);
 				assignSpellsToNpc(chosenNpc, currentSpellLevel, determineSpellNames(spellsForLevel));
 				spellCount -= numberOfRandomSpellsPerLevel;
 
@@ -682,7 +682,7 @@ public class RandomGenerator {
 	 */
 	private Integer determineNumberOfKnownSpell(NpcClass chosenNpc) {
 
-		String colClassForSpell = dbms.getRow(nameDBClass, chosenNpc.getGenClass()).get(9);
+		String colClassForSpell = dbms.getRowWithPref(nameDBClass, chosenNpc.getGenClass()).get(9);
 		String abilityModifierForSpells = colClassForSpell.substring(0, 3);
 		int spellModNumber = 0;
 		int knownSpells;
@@ -718,7 +718,7 @@ public class RandomGenerator {
 	}
 
 	private List<String> determineCantrips(int cantripsNumber, String finalGenClass ){
-        return dbms.getMultRowMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber);
+        return dbms.getMultRowWithMultPref(nameDBSpells, finalGenClass, "Cantrip", cantripsNumber);
 	}
 
 	/**
@@ -727,20 +727,20 @@ public class RandomGenerator {
 	 * @param chosenNpc the chosen npc
 	 */
 	public void addRaceCantripsAndSpells(NpcClass chosenNpc){
-		List<String> featureList = bigStringToDividedString(dbms.getRow("race", chosenNpc.getRace()).get(3));
+		List<String> featureList = bigStringToDividedString(dbms.getRowWithPref("race", chosenNpc.getRace()).get(3));
 		List<String> featureSpellList = new ArrayList<>();
 
 		for (String features : featureList){
 			if ((Objects.equals(features, "null")||(features==null))){
 				return;
 			}
-			String possibleSpellFeature =  dbms.getRow(nameDBFeatures,features).get(3);
+			String possibleSpellFeature =  dbms.getRowWithPref(nameDBFeatures,features).get(3);
 			if ((possibleSpellFeature.contains("cantrip")||(possibleSpellFeature.contains("spell")))){
 				featureSpellList.add(features);
 			}
 		}
 		for (String spellFeature : featureSpellList){
-			String kindOfFeature = dbms.getRow(nameDBFeatures,spellFeature).get(3);
+			String kindOfFeature = dbms.getRowWithPref(nameDBFeatures,spellFeature).get(3);
 
 			if(kindOfFeature.startsWith("cantrip:")) {
 				aufspaltungRaceCantrip(kindOfFeature, chosenNpc);
@@ -791,7 +791,7 @@ public class RandomGenerator {
 			if(spellName==null){
 				return;
 			}
-			spellLevel = Integer.parseInt(dbms.getRow("spells", spellName.trim()).get(2));
+			spellLevel = Integer.parseInt(dbms.getRowWithPref("spells", spellName.trim()).get(2));
 			assignSpellsToNpc(chosenNpc,spellLevel,spellName);
 		}
 	}
@@ -827,7 +827,7 @@ public class RandomGenerator {
 	public int spellAttackMod(List<Integer> abilityModifier, int profBonus, String genClass){
 		int spellAttackMod = 0;
 
-		String spellMod = dbms.getRow("class", genClass).get(11);
+		String spellMod = dbms.getRowWithPref("class", genClass).get(11);
         switch (spellMod) {
             case "Cha" -> spellAttackMod = abilityModifier.get(5) + profBonus;
             case "Wis" -> spellAttackMod = abilityModifier.get(4) + profBonus;

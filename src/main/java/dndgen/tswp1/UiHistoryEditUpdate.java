@@ -117,9 +117,9 @@ public class UiHistoryEditUpdate {
 			newNpc.setAge(randGen.randAge(newRace));//age
 
 			//Languages
-			List<String> raceLanguage = randGen.bigStringToDividedString(dbms.getRow("race", newRace).get(10));
+			List<String> raceLanguage = randGen.bigStringToDividedString(dbms.getRowWithPref("race", newRace).get(10));
 			raceLanguage.removeLast();
-			List<String> oldRaceLanguage = randGen.bigStringToDividedString(dbms.getRow("race", oldNpc.getRace()).get(10));
+			List<String> oldRaceLanguage = randGen.bigStringToDividedString(dbms.getRowWithPref("race", oldNpc.getRace()).get(10));
 			oldRaceLanguage.removeLast();
 			List<String> oldNpcRaceLanguage = oldNpc.getLanguages();
 			oldNpcRaceLanguage.removeAll(oldRaceLanguage);
@@ -153,7 +153,7 @@ public class UiHistoryEditUpdate {
 	private void alignmentChanges(String newAlignment, NpcClass newNpc, NpcClass oldNpc){
 		//Deity
 		String deity = oldNpc.getDeity();
-		if(!Objects.equals(dbms.getRow("deity", deity).get(2), newAlignment)){
+		if(!Objects.equals(dbms.getRowWithPref("deity", deity).get(2), newAlignment)){
 			newNpc.setDeity("---");
 		}
 	}
@@ -201,7 +201,7 @@ public class UiHistoryEditUpdate {
     	newNpc.setSpellList(null);
     	
     	//Skills
-    	List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRow("class", newClass).get(6));
+    	List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRowWithPref("class", newClass).get(6));
     	List<String> oldSkills = currentNpc.getSkillList();
 
         oldSkills.removeIf(oldSkill -> !possibleSkillList.contains(oldSkill));
@@ -219,7 +219,7 @@ public class UiHistoryEditUpdate {
 	 * @return the list
 	 */
 	public List<Integer> removeRaceAbilityAddition(String race, List<Integer> abilityScore) {
-		List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRow("race", race).get(2));
+		List<String> raceAbilityModifier = randGen.bigStringToDividedString(dbms.getRowWithPref("race", race).get(2));
 		int raceModNumber;
 		for (String s : raceAbilityModifier) {
 			raceModNumber = Integer.parseInt(s.substring(s.length() - 1));
