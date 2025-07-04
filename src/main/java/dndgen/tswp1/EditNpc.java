@@ -202,7 +202,7 @@ public class EditNpc {
         editedNPC.setEightLevelSpell(changedNPC.getEightLevelSpell());
         editedNPC.setNinthLevelSpell(changedNPC.getNinthLevelSpell());
 
-        dbms.updateEntry(historyID);
+        dbms.updateHistoryEntry(editedNPC, historyID, dateTime);
     }
 
 
