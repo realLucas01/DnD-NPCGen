@@ -557,7 +557,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRandRowWithMultPref(String dbname, String pref1, String pref2){
+	public ArrayList<String> getRandRowWithMultPref(String dbname,String pref1,String pref2){
 	    int qty;
 	    Page<?> questionPage;
 	    int idx;
@@ -580,6 +580,15 @@ public class DBMS implements ApplicationContextAware{
 		    if (questionPage.hasContent()) {
 		    	SpellKnownModel spellknownmultpref = (SpellKnownModel) questionPage.getContent().get(0);
 		    	rowMultPref = bobMakesSortedList(spellknownmultpref);
+		    }
+		    break;
+		case "actions":
+			qty = actionRepository.findByMultPrefsize(pref1, Integer.valueOf(pref2)).size();
+			idx = (int)(Math.random() * qty);
+		    questionPage = actionRepository.findByMultPrefdata(pref1, Integer.valueOf(pref2),PageRequest.of(idx,1));
+		    if (questionPage.hasContent()) {
+		    	ActionModel actionnmultpref = (ActionModel) questionPage.getContent().get(0);
+		    	rowMultPref = bobMakesSortedList(actionnmultpref);
 		    }
 		    break;
 		default:
