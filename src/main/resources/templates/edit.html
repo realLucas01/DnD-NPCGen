@@ -455,6 +455,45 @@
 
 
             <!-- TODO Senses -->
+            <!-- Senses -->
+            <div class="row mb-3">
+                <div class="d-flex align-items-center">
+                    <label class="form-label mb-2"><b>Senses:</b></label>
+                    <!-- Liste der Senses -->
+                    <p th:text="${senses}" class="form-control-plaintext mb-0"></p>
+                </div>
+
+                <!-- Checkbox-Liste direkt anzeigen -->
+                <div class="col-12">
+                    <div class="row g-2">
+                        <div th:each="sense : ${availableSenses}" class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <div class="form-check me-2">
+                                    <input type="checkbox"
+                                           th:id="${'sense_' + sense}"
+                                           name="sense"
+                                           th:value="${sense}"
+                                           th:checked="${senses.keySet().contains(sense)}"
+                                           class="form-check-input" />
+                                    <label th:for="${'sense_' + sense}" class="form-check-label" th:text="${sense}"></label>
+                                </div>
+
+                                <div class="input-group" style="width: 120px;">
+                                    <input type="number"
+                                           th:name="${'senseRange_' + sense}"
+                                           min="10" max="120" step="5"
+                                           class="form-control"
+                                           placeholder="10"
+                                           th:value="${senses.get(sense) != null ? senses.get(sense) : 0}">
+                                    <span class="input-group-text">ft.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
             <!-- TODO Spells -->
 

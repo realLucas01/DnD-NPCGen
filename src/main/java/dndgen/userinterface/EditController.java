@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +30,13 @@ public class EditController {
     private final HelpFunctions helpFunctions;
     private NpcClass updateNPC;
     private final String switchValue = "switch";
+    private final List<String> availableSenses = Arrays.asList(
+            "Darkvision",
+            "Blindsight",
+            "Tremorsense",
+            "Truesight",
+            "Passive Perception"
+    );
 
     @Autowired
     public EditController(DBMS dbms, HelpFunctions helpFunctions) {
@@ -100,8 +109,9 @@ public class EditController {
 
         // NPC aktualisieren
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
+
         // TODO updateNPC fixen
-        // updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
+        //updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
 
         // Anzeigen-Logik vorbereiten
         prepareEditAttributes(model, updateNPC);
@@ -128,6 +138,7 @@ public class EditController {
         model.addAttribute("selectedClass", npc.getGenClass());
         model.addAttribute("selectedAlignment", npc.getAlignment());
         model.addAttribute("selectedSkills", npc.getSkillList());
+        model.addAttribute("selectedSenses", npc.getSenses());
         model.addAttribute("npc", npc);
 
         // Zusatzdaten (Level, Jobs, etc.)
@@ -172,6 +183,11 @@ public class EditController {
         // Skills
         model.addAttribute("skills", filterSkills(npc.getSkillList()));
         model.addAttribute("availableSkills", dbms.onlyColumn("skill"));
+
+        // Senses
+        model.addAttribute("senses", getSelectedSenses());
+        model.addAttribute("availableSenses", availableSenses);
+        System.out.println("Senses: " + getSelectedSenses());
 
 
         // Beschreibung
@@ -269,6 +285,9 @@ public class EditController {
                 break;
             case "weapon":
                 updateNPC.setWeaponList(selectedList);
+                break;
+            case "sense":
+                updateNPC.setSenses(String.valueOf(selectedList));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown attribute type: " + type);
@@ -477,6 +496,28 @@ public class EditController {
                 .collect(Collectors.toList());
     }
 
+    public Map<String, Integer> getSelectedSenses() {
+        if (npc.getSenses() == null || npc.getSenses().isEmpty()) {
+            return Collections.emptyMap();
+        }
 
+        return Arrays.stream(npc.getSenses().split(","))
+                .map(String::trim)
+                .collect(Collectors.toMap(
+                        // Entfernt die Zahl + alles dahinter, Name bleibt vollständig
+                        sense -> sense.replaceAll("\\s+\\d+.*$", ""),
+                        // Extrahiert nur die Zahl, ignoriert Einheit
+                        sense -> {
+                            Matcher matcher = Pattern.compile("\\b(\\d+)\\b").matcher(sense);
+                            return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0;  // Default 0 statt null
+                        }
+                ));
+    }
+
+    @PostMapping("editSenses")
+    public String editSenses(@RequestParam("sense") List<String> selectedSenses, Model model) {
+        editListAttributes(selectedSenses, "sense", model);
+        return "edit";
+    }
 
 }
