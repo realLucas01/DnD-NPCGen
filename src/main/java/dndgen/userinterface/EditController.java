@@ -111,7 +111,7 @@ public class EditController {
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
 
         // TODO updateNPC fixen
-        //updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
+        updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
 
         // Anzeigen-Logik vorbereiten
         prepareEditAttributes(model, updateNPC);

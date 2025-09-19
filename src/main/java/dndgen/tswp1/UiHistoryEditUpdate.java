@@ -71,12 +71,7 @@ public class UiHistoryEditUpdate {
      * The Rand npc.
      */
 	@Autowired
-	private RandomNpc randNpc;
-    //RandomNpc randNpc = new RandomNpc();
-    /**
-     * The Edit npc.
-     */
-    EditNpc editNpc = new EditNpc();
+    RandomNpc randNpc = new RandomNpc(dbms);
 
     /**
      * Update history edit npc class.
@@ -89,10 +84,15 @@ public class UiHistoryEditUpdate {
     changes = {race, class, alignment}
      */
     public NpcClass updateHistoryEdit (List<String> changes, NpcClass oldNpc ){
-        NpcClass newNpc = oldNpc;
+        new NpcClass();
+        NpcClass newNpc;
+		newNpc = oldNpc;
         String newRace = changes.get(0);
         String newCharClass = changes.get(1);
         String newAlignment = changes.get(2);
+		String newName = changes.get(3);
+
+		newNpc.setName(newName);
 
         //race change
         if(!Objects.equals(newRace, oldNpc.getRace())){
@@ -190,16 +190,17 @@ public class UiHistoryEditUpdate {
     	//direkt neu befüllen? Oder (potenziell) leer lassen?
     	int weaponCount = rndNumb.nextInt(4)+2;
     	while (oldWeapons.size() < weaponCount) {
-    		int newRandWeapon = rndNumb.nextInt(newWeaponPossible.size());
+    		int newRandWeapon = rndNumb.nextInt(newWeaponPossible.size()); // Hier trat ein Fehler auf: "bound must be positive"
     		oldWeapons.add(newWeaponPossible.get(newRandWeapon));
     		newWeaponPossible.remove(newRandWeapon);
     	}
     	newNpc.setWeaponList(oldWeapons);
 
     	//Spells
+		/* todo spells fixen sie sollten nicht auf null gesetzt werden
     	newNpc.setSpellAbility(null);
     	newNpc.setSpellList(null);
-    	
+    	*/
     	//Skills
     	List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRowWithPref("class", newClass).get(6));
     	List<String> oldSkills = currentNpc.getSkillList();
