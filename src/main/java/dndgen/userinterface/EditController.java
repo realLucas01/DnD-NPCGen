@@ -76,8 +76,6 @@ public class EditController {
 
         updateNPC = new NpcClass();
 
-        // Update NPC funktioniert nicht → wirft Fehler → NPC Daten, die angezeigt werden, werden statisch immer aus NPC ide 2 genommen
-        updateNPC.historyEntryToNpc(dbms.getHistoryEntry(2));
         model.addAttribute("updateNPC", updateNPC); // hier wird Session-Wert gesetzt
 
         return "edit";
@@ -204,11 +202,15 @@ public class EditController {
     }
 
 
-    @PostMapping("editSave")
+    @PostMapping("saveNpc")
     public String saveEdit() {
         // TODO Das ganze Speichern des bearbeiteten NPC fehlt
         // TODO skills, nochmal durchlaufen, da +... Werte fehlen
-        return "redirect:/detail?id=" + npc.getId();
+
+        dbms.updateHistoryEntry(updateNPC, updateNPC.getId(), dbms.getHistoryEntry(updateNPC.getId()).getEntryAge());
+
+        //return "redirect:/detail?id=" + npc.getId();
+        return "redirect:/history";
     }
 
     
