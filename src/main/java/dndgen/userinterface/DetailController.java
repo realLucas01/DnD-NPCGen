@@ -67,6 +67,13 @@ public class DetailController {
 
 
 
+
+    /**
+     * Fügt MovementSpeed und Senses zum bereitgestellten Modell hinzu, basierend auf den Attributen des NPCs.
+     *
+     * @param npc Das NPC-Objekt, das Speed und Senses enthält.
+     * @param model Das Modell, zu dem Speed und Senses hinzugefügt werden.
+     */
     private void addMovementAndSensesToModel(NpcClass npc, Model model) {
         List<String> speeds = npc.getMovementSpeedList();
         model.addAttribute("walkingSpeed", speeds.stream().filter(s -> s.contains("walking")).findFirst().orElse(""));
@@ -85,8 +92,13 @@ public class DetailController {
 
 
 
-
-
+    /**
+     * Fügt Spell-Informationen aus dem bereitgestellten NPC-Objekt zum Modell hinzu, indem die Spell-Strings aufgeteilt
+     * und nach Zaubergraden kategorisiert werden.
+     *
+     * @param npc Das NPC-Objekt, das Spell-Informationen für verschiedene Grade enthält.
+     * @param model Das Modell, zu dem die verarbeiteten Spelldaten hinzugefügt werden.
+     */
     private void addSpellsToModel(NpcClass npc, Model model) {
         model.addAttribute("spellCantrips", splitString(npc.getSpellCantrips()));
         model.addAttribute("spellFirstLevel", splitString(npc.getFirstLevelSpell()));
@@ -100,10 +112,18 @@ public class DetailController {
         model.addAttribute("spellNinthLevel", splitString(npc.getNinthLevelSpell()));
     }
 
+
     // Inventory
+    //TODO
 
 
-
+    /**
+     * Fügt eine formatierte Beschreibung eines NPC zum bereitgestellten Modell hinzu. Die Beschreibungen werden mit vordefinierten Titeln
+     * gepaart und für Anzeigezwecke formatiert. Zusätzlich wird ein zusammengefasster Beschreibungstext generiert und zum Modell hinzugefügt.
+     *
+     * @param npc Das NPC-Objekt, das zu formatierende Beschreibungsdetails enthält.
+     * @param model Das Modell, dem die formatierte Beschreibung und der generierte Beschreibungstext hinzugefügt werden.
+     */
     private void addDescriptionToModel(NpcClass npc, Model model) {
         List<String> descriptions = npc.getDescription();
         List<String> titles = List.of("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",

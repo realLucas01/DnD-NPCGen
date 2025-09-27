@@ -60,7 +60,7 @@ public class EditController {
         npc = new NpcClass();
         npc.historyEntryToNpc(dbms.getHistoryEntry(id));
 
-        // noch keine Änderungen → Kernelemente können geändert werden
+        // Noch keine Änderungen → Kernelemente können geändert werden
         model.addAttribute(switchValue, false);
 
         // Dropdown erstellen
