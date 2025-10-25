@@ -1,0 +1,44 @@
+55, Shapechanger, You can use an action to transform your appearance or revert to your natural form. You can't duplicate the appearance of a creature you've never seen. Equipment does not change, bonus action to revert., racial trait  
+56, Changeling Instincts, You gain proficiency in two of the following skills: Deception, Insight, Intimidation, or Persuasion., racial trait  
+57, Mountain Born, You’re acclimated to high altitude, including elevations above 20,000 feet. You’re also naturally adapted to cold climates., environmental trait  
+58, Fairy Flight, You have a flying speed of 30 feet and can hover., movement  
+59, Fey Magic, You know the Druidcraft cantrip. At higher levels, you can cast faerie fire and enlarge/reduce once per long rest., spellcasting  
+60, Unending Breath, You can hold your breath indefinitely while not incapacitated., passive bonus  
+61, Mingle with the Wind, You can cast the levitate spell once per long rest, using Constitution as your spellcasting ability., spellcasting  
+62, Earth Walk, You can move across difficult terrain made of earth or stone without expending extra movement., movement  
+63, Merge with Stone, You can cast pass without trace once per long rest, using Constitution as spellcasting ability., spellcasting  
+64, Fire Resistance, You have resistance to fire damage., resistance  
+65, Reach to the Blaze, You know the produce flame cantrip. You can cast burning hands once per long rest., spellcasting  
+66, Acid Resistance, You have resistance to acid damage., resistance  
+67, Call to the Wave, You can breathe air and water and cast shape water cantrip., spellcasting  
+68, Astral Spark, Once per turn, when you hit with a weapon attack, deal extra force damage equal to proficiency bonus., combat bonus  
+69, Firearms Mastery, You have proficiency with firearms, and ignore loading property of them., weapon trait  
+70, Gnome Cunning, You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic., resistance  
+71, Artificer’s Lore, Add double proficiency to History checks related to magic items, alchemical objects, or technological devices., bonus text  
+72, Fury of the Small, When you damage a creature larger than you, add your proficiency bonus to the damage once per rest., combat bonus  
+73, Nimble Escape, You can take the Disengage or Hide action as a bonus action each turn., action trait  
+74, Hare-Trigger, You add your proficiency bonus to initiative rolls., bonus text  
+75, Lucky Footwork, When you fail a Dex save, roll a d4 and add it, possibly changing the result., saving throw  
+76, Fey Gift, You can use the Help action as a bonus action; allies gain temporary bonuses., action trait  
+77, Fortune from the Many, If you miss an attack or fail a save, add a number of d4 equal to nearby allies (max +5)., saving throw  
+78, Dual Mind, You have advantage on all Wisdom saving throws., resistance  
+79, Mental Discipline, You resist psychic damage and cannot be charmed or frightened easily., resistance  
+80, Expert Forgery, You can duplicate handwriting and documents after careful study., skill trait  
+81, Mimicry, You can mimic sounds and voices you have heard; listeners can detect imitation with Insight., skill trait  
+82, Draconic Cry, As a bonus action, unleash a cry that gives allies advantage on attacks against enemies within 10 feet until your next turn., combat bonus  
+83, Kobold Legacy, Choose one: gain proficiency in Arcana, advantage on saving throws vs fear, or minor sorcerous magic., racial trait  
+84, Daunting Roar, As a bonus action, force creatures within 10 feet to make a Wisdom save or be frightened until your next turn., combat bonus  
+85, Hunter’s Instincts, You gain proficiency in one of the following: Athletics, Intimidation, Perception, or Survival., skill trait  
+86, Hungry Jaws, As a bonus action, make a bite attack that restores hit points equal to your proficiency bonus once per rest., combat bonus  
+87, Natural Armor, Your AC equals 13 + Dexterity modifier while unarmored., defense  
+88, Goring Rush, After you Dash, make a horn attack as a bonus action., combat bonus  
+89, Hammering Horns, After you hit with a melee attack, shove the target 10 feet away with a bonus action., combat bonus  
+90, Relentless Endurance, When reduced to 0 HP but not killed, drop to 1 HP instead (once per long rest)., survival  
+91, Silent Feathers, You have proficiency in Stealth, and you make no sound when flying., skill trait  
+92, Owl Glide, You have a flying speed of 30 feet; you can’t fly in medium or heavy armor., movement  
+93, Magic Resistance, You have advantage on saving throws against spells and magical effects., resistance  
+94, Ram, You can use your horns for melee attacks (1d4 bludgeoning damage)., combat bonus  
+95, Shifting, As a bonus action, enter a bestial form gaining temporary HP and a special ability depending on subtype., transformation  
+96, Shifting Feature, Gain one special bonus depending on your shifter type (e.g., climbing speed, extra damage, etc.)., racial trait  
+97, Constructed Resilience, You have advantage on saving throws vs poison, immune to disease, and don’t need to eat, drink, or breathe., resistance  
+98, Integrated Protection, You can integrate armor into your body, granting AC bonus and cannot be removed., defense
