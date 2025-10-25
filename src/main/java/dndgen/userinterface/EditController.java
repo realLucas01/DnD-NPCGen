@@ -2,7 +2,10 @@ package dndgen.userinterface;
 
 import dndgen.database.DBMS;
 import dndgen.tswp1.NpcClass;
+import dndgen.tswp1.RandomGenerator;
 import dndgen.tswp1.UiHistoryEditUpdate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +28,13 @@ import java.util.stream.Collectors;
 @Controller
 @SessionAttributes("updateNPC")
 public class EditController {
+    private static final Logger log = LoggerFactory.getLogger(EditController.class);
     private final DBMS dbms;
     private NpcClass npc;
     private final HelpFunctions helpFunctions;
     private NpcClass updateNPC;
     private final String switchValue = "switch";
+    private RandomGenerator randomGenerator = new RandomGenerator();
     private final List<String> availableSenses = Arrays.asList(
             "Darkvision",
             "Blindsight",
@@ -95,6 +100,8 @@ public class EditController {
      */
     @PostMapping("/editFirst")
     public String editedNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
+        System.out.println(name + " " + race + " " + genClass + " " + alignment);
+        
         // Änderungen → Kernelemente können NICHT geändert werden
         model.addAttribute(switchValue, true);
 
@@ -107,13 +114,17 @@ public class EditController {
 
         // NPC aktualisieren
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
-
-        // TODO updateNPC fixen
+        
         updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
+
+       // updateNPC.setName(name);
+       // updateNPC.setRace(race);
+       // updateNPC.setGenClass(genClass);
+       // updateNPC.setAlignment(alignment);
 
         // Anzeigen-Logik vorbereiten
         prepareEditAttributes(model, updateNPC);
-
+        model.addAttribute("updateNPC", updateNPC);
         return "edit";
     }
 
@@ -185,7 +196,7 @@ public class EditController {
         // Senses
         model.addAttribute("senses", getSelectedSenses());
         model.addAttribute("availableSenses", availableSenses);
-        System.out.println("Senses: " + getSelectedSenses());
+        //System.out.println("Senses: " + getSelectedSenses());
 
 
         // Beschreibung
@@ -520,6 +531,52 @@ public class EditController {
     public String editSenses(@RequestParam("sense") List<String> selectedSenses, Model model) {
         editListAttributes(selectedSenses, "sense", model);
         return "edit";
+    }
+
+
+
+
+    @PostMapping("/updateField")
+    @ResponseBody
+    public ResponseEntity<Void> updateField(@RequestParam String value, @ModelAttribute("updateNPC") NpcClass updateNPC) {
+
+        String[] parts = value.split(";", 2);
+        value = parts[0];
+        String field = parts.length > 1 ? parts[1] : "age";
+
+        System.out.println("Update-Request erhalten für Feld: " + value + " " + field);
+
+
+        // Update Logik
+        switch (field) {
+            case "job":
+                updateNPC.setJob(value);
+                break;
+            case "level":
+                updateNPC.setLevel(Integer.parseInt(value));
+                break;
+            case "deity":
+                updateNPC.setDeity(value);
+                break;
+            case "age":
+                updateNPC.setAge(Integer.parseInt(value));
+                break;
+            case "gender":
+                if(value.equalsIgnoreCase("Random")){
+                    updateNPC.setGender(randomGenerator.randGender());
+                } else {
+                    updateNPC.setGender(value);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unbekanntes Feld: " + field);
+        }
+
+
+        // Model aktualisieren, damit die Seite mit aktualisierten Werten neu geladen wird
+        //model.addAttribute(switchValue, true);
+
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -78,29 +78,50 @@
             <!-- Level -->
             <div class="row mb-3">
                 <label for="level" class="form-label">Level:</label>
-                <select id="level" name="level" class="form-select">
+
+                <select id="level" name="value" class="form-select"
+                        hx-post="/updateField"
+                        hx-trigger="change"
+                        hx-include="[name='field'], this"
+                        hx-swap="none">
+
                     <option value="Zufall">Zufall</option>
-                    <option th:each="levell : ${#numbers.sequence(1,20)}" th:value="${levell}" th:text="${levell}"
+                    <option th:each="levell : ${#numbers.sequence(1,20)}" th:value="${levell} + ';level'" th:text="${levell}"
                             th:selected="${levell == level}"></option>
                 </select>
             </div>
 
+
             <!-- Jobs -->
             <div class="row mb-3">
                 <label for="job" class="form-label">Beruf:</label>
-                <select id="job" name="job" class="form-select">
-                    <option value="Zufall" th:selected="${job == 'Zufall'}">Zufall</option>
-                    <option th:each="jobb : ${jobs}" th:value="${jobb}" th:text="${jobb}"
-                            th:selected="${jobb == job}"></option>
+
+                <select id="job" name="value" class="form-select"
+                        hx-post="/updateField"
+                        hx-trigger="change"
+                        hx-include="[name='field'], this"
+                        hx-swap="none">
+
+                    <option value="Zufall" th:selected="${updateNPC.job == 'Zufall'}">Zufall</option>
+                    <option th:each="jobb : ${jobs}"
+                            th:value="${jobb} + ';job'"
+                            th:text="${jobb}"
+                            th:selected="${jobb == updateNPC.job}">
+                    </option>
                 </select>
             </div>
 
             <!-- Deities -->
             <div class="row mb-3">
                 <label for="deity" class="form-label">Gottheit:</label>
-                <select id="deity" name="deity" class="form-select">
-                    <option th:each="deityValue : ${deities}" th:value="${deityValue}" th:text="${deityValue}"
-                            th:selected="${deityValue == deity}"></option>
+                <select id="deity" name="value" class="form-select"
+                        hx-post="/updateField"
+                        hx-trigger="change"
+                        hx-include="[name='field'], this"
+                        hx-swap="none">
+
+                    <option th:each="deityValue : ${deities}" th:value="${deityValue} + ';deity'" th:text="${deityValue}"
+                            th:selected="${deityValue == updateNPC.deity}"></option>
                 </select>
             </div>
 
@@ -109,19 +130,31 @@
                 <legend class="col-form-label">Geschlecht</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input type="radio" name="gender" value="Zufall" id="genderRandom" class="form-check-input"
-                               th:checked="${sex == 'Zufall'}">
-                        <label for="genderRandom" class="form-check-label">Zufall</label>
+                        <input type="radio" name="value" value="Random;gender" id="genderRandom" class="form-check-input"
+                               th:checked="${sex == 'Random'}"
+                               hx-post="/updateField"
+                               hx-trigger="change"
+                               hx-include="[name='field'], this"
+                               hx-swap="none">
+                            <label for="genderRandom" class="form-check-label">Random</label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" name="gender" value="male" id="genderMale" class="form-check-input"
-                               th:checked="${sex == 'male'}">
-                        <label for="genderMale" class="form-check-label">Männlich</label>
+                        <input type="radio" name="value" value="male;gender" id="genderMale" class="form-check-input"
+                               th:checked="${sex == 'male'}"
+                               hx-post="/updateField"
+                               hx-trigger="change"
+                               hx-include="[name='field'], this"
+                               hx-swap="none">
+                        <label for="genderMale" class="form-check-label">Male</label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" name="gender" value="female" id="genderFemale" class="form-check-input"
-                               th:checked="${sex == 'female'}">
-                        <label for="genderFemale" class="form-check-label">Weiblich</label>
+                        <input type="radio" name="value" value="female;gender" id="genderFemale" class="form-check-input"
+                               th:checked="${sex == 'female'}"
+                               hx-post="/updateField"
+                               hx-trigger="change"
+                               hx-include="[name='field'], this"
+                               hx-swap="none">
+                        <label for="genderFemale" class="form-check-label">Female</label>
                     </div>
                 </div>
             </fieldset>
@@ -129,8 +162,12 @@
             <!-- Age -->
             <div class="row mb-3">
                 <label for="age" class="form-label">Alter:</label>
-                <input id="age" name="age" type="number" class="form-control" th:value="${age}" min="0" />
+                <input id="age" name="value" type="number" class="form-control" th:value="${age}" min="0" hx-post="/updateField"
+                       hx-trigger="change"
+                       hx-include="[name='field'], this"
+                       hx-swap="none"/>
             </div>
+
 
             <!-- AC -->
             <div class="row mb-3">
