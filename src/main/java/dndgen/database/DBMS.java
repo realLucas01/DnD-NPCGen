@@ -634,8 +634,7 @@ public class DBMS implements ApplicationContextAware{
 				}
 			}
 			break;
-		case "actions":
-			for (ActionModel actions : actionRepository.findByAllActionsWithPref(pref, rownumber, pref2)) {
+		case "actions": for (ActionModel actions : actionRepository.findByAllActionsWithPref(pref, rownumber, pref2)) { //actionClass, level, Action Typ
 				rand.add(actions.getActionName());
 				rand.add(actions.getActionDescription());
 				multRowMultPref.addAll(rand);

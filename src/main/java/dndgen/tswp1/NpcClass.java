@@ -6,14 +6,11 @@ import org.springframework.context.ApplicationContext;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
-
-
 
 
 /**
@@ -23,7 +20,7 @@ public class NpcClass {
     /**
      * The Logger.
      */
-    static Logger logger = Logger.getLogger(NpcClass.class.getName());
+    static final Logger logger = Logger.getLogger(NpcClass.class.getName());
     /**
      * The App ctx.
      */
@@ -32,7 +29,7 @@ public class NpcClass {
      * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
      * neu-konstruktion von DBMS wäre sonst leer.
      */
-    ApplicationContext appCtx = DBMS.getApplicationContext();
+    final ApplicationContext appCtx = DBMS.getApplicationContext();
     /**
      * The Dbms.
      */
@@ -666,6 +663,11 @@ public class NpcClass {
         this.cantrips = this.cantrips.replace(spells, "");
     }
 
+    /**
+     * Gets first level spell.
+     *
+     * @return the first level spell
+     */
     /*
      * Get first level spell string.
      *
@@ -1006,12 +1008,15 @@ public class NpcClass {
             logger.info(s);
         }
     }
-    /*
+
+    /**
+     * Export npc.
+     */
+/*
         export des NPCs als txt Datei
      */
     public void exportNPC() {
-        Charset utf8 = StandardCharsets.UTF_8;
-        System.out.println(name);
+        System.out.println("Exported: " + name);
         File desktopPath = FileSystemView.getFileSystemView().getHomeDirectory();
         String fileName = name + ".txt";
         File file = new File(desktopPath,fileName);
@@ -1046,14 +1051,24 @@ public class NpcClass {
             e.printStackTrace();
 
         }
-        System.out.println(file.getAbsolutePath());
+        System.out.println("Dateipfad: " + file.getAbsolutePath());
 
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Integer id) {
         this.id = id;
     }

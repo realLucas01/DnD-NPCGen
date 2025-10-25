@@ -20,7 +20,7 @@ import java.util.function.Function;
 public class IndexController {
     private final RandomNpc randomNpc;
     private final HelpFunctions helpFunctions;
-    private final String zufall = "Zufall";
+    private final String random = "Zufall";
 
 
 
@@ -50,7 +50,7 @@ public class IndexController {
             model.addAttribute("npc", existingNpc);
         } else {
             // Wenn kein NPC existiert, initialisiere nur die Dropdown-Menüs
-            populateDropdowns(model, new DropdownSelection("", zufall, zufall, zufall, zufall, zufall, zufall));
+            populateDropdowns(model, new DropdownSelection("", random, random, random, random, random, random));
         }
         return "index";
 
@@ -140,13 +140,13 @@ public class IndexController {
      * @return Eine Instanz der Klasse NpcClass, die den generierten NPC mit spezifischen oder zufälligen Attributen darstellt.
      */
     private NpcClass createNPC(String name, String race, String genClass, String job, String level, String abilityScore, String gender) {
-        String finalName = zufallString(name);
-        String finalRace = zufall(race);
-        String finalClass = zufall(genClass);
-        String finalJob = zufall(job);
-        Integer finalLevel = zufallLevel(level);
-        String finalAbilityScore = zufall(abilityScore);
-        String finalGender = zufallString(gender);
+        String finalName = randomString(name);
+        String finalRace = random(race);
+        String finalClass = random(genClass);
+        String finalJob = random(job);
+        Integer finalLevel = randomLevel(level);
+        String finalAbilityScore = random(abilityScore);
+        String finalGender = randomString(gender);
 
         return randomNpc.createRandomNPC(finalName, finalRace, finalClass, finalJob, finalLevel, finalAbilityScore, finalGender);
     }
@@ -265,8 +265,8 @@ public class IndexController {
      * @param input Der Eingabestring
      * @return `null`, falls "zufall", sonst der Originalstring
      */
-    public String zufall(String input) {
-        return (zufall.equalsIgnoreCase(input) || input.isEmpty()) ? null : input;
+    public String random(String input) {
+        return (random.equalsIgnoreCase(input) || input.isEmpty()) ? null : input;
     }
 
 
@@ -275,8 +275,8 @@ public class IndexController {
      * @param input Die Level-Eingabe als String
      * @return `null` falls "zufall", sonst Integer-Wert
      */
-    public Integer zufallLevel(String input) {
-        return (zufall.equalsIgnoreCase(input) || input.isEmpty()) ? null : Integer.parseInt(input);
+    public Integer randomLevel(String input) {
+        return (random.equalsIgnoreCase(input) || input.isEmpty()) ? null : Integer.parseInt(input);
     }
 
 
@@ -285,8 +285,8 @@ public class IndexController {
      * @param string Der Eingabestring
      * @return `null` falls leer oder "zufall", sonst der String selbst
      */
-    public String zufallString(String string) {
-        return (string == null || string.equalsIgnoreCase(zufall) || string.isEmpty()) ? null : string;
+    public String randomString(String string) {
+        return (string == null || string.equalsIgnoreCase(random) || string.isEmpty()) ? null : string;
     }
 
 

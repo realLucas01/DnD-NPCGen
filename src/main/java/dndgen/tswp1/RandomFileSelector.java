@@ -17,11 +17,11 @@ public class RandomFileSelector {
     /**
      * The Random.
      */
-    static Random random = new SecureRandom();
+    static final Random random = new SecureRandom();
     /**
      * The Logger.
      */
-    static Logger logger = Logger.getLogger(RandomFileSelector.class.getName());
+    static final Logger logger = Logger.getLogger(RandomFileSelector.class.getName());
 
 
     /**
