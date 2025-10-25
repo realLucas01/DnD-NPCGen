@@ -1,57 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
-    <head>
-        <title>History</title>
+<head>
+    <title>History</title>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap">
 
-        <!-- Bootstrap CSS von CDN -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <!-- Bootstrap CSS von CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-        <!-- Eigenes CSS -->
-        <link rel="stylesheet" th:href="@{/css/styleHistory.css}">
-    </head>
+    <!-- Eigenes CSS -->
+    <link rel="stylesheet" th:href="@{/css/styleHistory.css}">
+</head>
 
-    <body>
-        <!-- NavBar -->
-        <div th:replace="~{fragments/navbar :: nav}"></div>
+<body>
+<!-- NavBar -->
+<div th:replace="~{fragments/navbar :: nav}"></div>
 
-        <!-- History NPC Grid -->
-        <div class="container mt-4">
-            <h2 class="text-center ueberschrift mb-4">Generated NPC History</h2>
+<!-- History NPC Grid -->
+<div class="container mt-4">
+    <h2 class="text-center ueberschrift mb-4">Generated NPC History</h2>
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                <div class="col" th:each="npc : ${npcHistory}">
-                    <div class="card h-100 shadow-sm">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col" th:each="npc : ${npcHistory}">
+            <div class="card h-100 shadow-sm">
 
-                        <div class="card-body row">
-                            <h5 class="card-title text-center col-12" th:text="${npc.name}"></h5>
-                            <div class="col-6">
-                                <p class="card-text">
-                                    <strong>Race:</strong> <span th:text="${npc.race}"></span><br>
-                                    <strong>Class:</strong> <span th:text="${npc.genClass}"></span><br>
-                                    <strong>Job:</strong> <span th:text="${npc.job}"></span><br>
-                                    <strong>Level:</strong> <span th:text="${npc.level}"></span>
-                                </p>
-                            </div>
-                            <div class="col-6">
-                                <p class="card-text">
-                                    <strong>AC:</strong> <span th:text="${npc.armor}"></span><br>
-                                    <strong>Gender:</strong> <span th:text="${npc.gender}"></span><br>
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <div class="card-footer text-center">
-                            <a th:href="@{/detail(id=${npc.id})}" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
+                <div class="card-body row">
+                    <h5 class="card-title text-center col-12" th:text="${npc.name}"></h5>
+                    <div class="col-6">
+                        <p class="card-text">
+                            <strong>Race:</strong> <span th:text="${npc.race}"></span><br>
+                            <strong>Class:</strong> <span th:text="${npc.genClass}"></span><br>
+                            <strong>Job:</strong> <span th:text="${npc.job}"></span><br>
+                            <strong>Level:</strong> <span th:text="${npc.level}"></span>
+                        </p>
                     </div>
+                    <div class="col-6">
+                        <p class="card-text">
+                            <strong>AC:</strong> <span th:text="${npc.armor}"></span><br>
+                            <strong>Gender:</strong> <span th:text="${npc.gender}"></span><br>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    <a th:href="@{/detail(id=${npc.id})}" class="btn btn-primary btn-sm">View Details</a>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 
-    <!-- Bootstrap JavaScript über CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+<!-- Bootstrap JavaScript über CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 </html>
