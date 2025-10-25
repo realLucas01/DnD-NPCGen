@@ -26,6 +26,8 @@ body{
     width: 100%;
     border-bottom: 2px solid var(--foreground-yellow);
     padding-bottom: 5px;
+    font-family: 'Cinzel Decorative', serif !important;
+    letter-spacing: 2px;
 }
 
 .card .card-footer{
