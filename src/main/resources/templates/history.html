@@ -23,6 +23,7 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <div class="col" th:each="npc : ${npcHistory}">
                     <div class="card h-100 shadow-sm">
+
                         <div class="card-body row">
                             <h5 class="card-title text-center col-12" th:text="${npc.name}"></h5>
                             <div class="col-6">
@@ -39,7 +40,9 @@
                                     <strong>Gender:</strong> <span th:text="${npc.gender}"></span><br>
                                 </p>
                             </div>
+
                         </div>
+
                         <div class="card-footer text-center">
                             <a th:href="@{/detail(id=${npc.id})}" class="btn btn-primary btn-sm">View Details</a>
                         </div>
