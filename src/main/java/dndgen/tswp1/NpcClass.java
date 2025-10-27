@@ -370,16 +370,18 @@ public class NpcClass {
      *
      * @param spellList the spell list
      */
+    //todo Cantrips werden in Lvl 1 Zauber kopiert
     public void setSpellList(List<Object> spellList) {
-        this.setFirstLevelSpell((String) spellList.get(0));
-        this.setSecondLevelSpell((String) spellList.get(1));
-        this.setThirdLevelSpell((String) spellList.get(2));
-        this.setFourthLevelSpell((String) spellList.get(3));
-        this.setFifthLevelSpell((String) spellList.get(4));
-        this.setSixthLevelSpell((String) spellList.get(5));
-        this.setSeventhLevelSpell((String) spellList.get(6));
-        this.setEightLevelSpell((String) spellList.get(7));
-        this.setNinthLevelSpell((String) spellList.get(8));
+        this.setSpellCantrips((String) spellList.get(0));
+        this.setFirstLevelSpell((String) spellList.get(1));
+        this.setSecondLevelSpell((String) spellList.get(2));
+        this.setThirdLevelSpell((String) spellList.get(3));
+        this.setFourthLevelSpell((String) spellList.get(4));
+        this.setFifthLevelSpell((String) spellList.get(5));
+        this.setSixthLevelSpell((String) spellList.get(6));
+        this.setSeventhLevelSpell((String) spellList.get(7));
+        this.setEightLevelSpell((String) spellList.get(8));
+        this.setNinthLevelSpell((String) spellList.get(9));
         this.spellList = spellList;
     }
 

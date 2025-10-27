@@ -253,7 +253,7 @@ INSERT INTO alignment_model(alignment_Id,alignment_Name,alignment_Shorted) VALUE
 INSERT INTO alignment_model(alignment_Id,alignment_Name,alignment_Shorted) VALUES (6,'Chaoticneutral','Chaotic Neutral');
 INSERT INTO alignment_model(alignment_Id,alignment_Name,alignment_Shorted) VALUES (7,'Lawfulevil','Lawful Evil');
 INSERT INTO alignment_model(alignment_Id,alignment_Name,alignment_Shorted) VALUES (8,'Neutralevil','Neutral Evil');
-INSERT INTO alignment_model(alignment_Id,alignment_Name,alignment_Shorted) VALUES (9,'Chaoticevil','Chaotic Neutral');
+INSERT INTO alignment_model(alignment_Id,alignment_Name,alignment_Shorted) VALUES (9,'Chaoticevil','Chaotic Evil');
 
 INSERT INTO skill_model(skill_Id,skill_Name,skill_Ability_Score) VALUES (1,'Athletics','Str');
 INSERT INTO skill_model(skill_Id,skill_Name,skill_Ability_Score) VALUES (2,'Acrobatics','Dex');

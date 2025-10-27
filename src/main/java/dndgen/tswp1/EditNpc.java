@@ -20,11 +20,11 @@ public class EditNpc {
      * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
      * neu-konstruktion von DBMS wäre sonst leer.
      */
-    ApplicationContext appCtx = DBMS.getApplicationContext();
+    final ApplicationContext appCtx = DBMS.getApplicationContext();
     /**
      * The Dbms.
      */
-    DBMS dbms = appCtx.getBean(DBMS.class);
+    final DBMS dbms = appCtx.getBean(DBMS.class);
 
     /**
      * The Rnd numb.
@@ -33,7 +33,7 @@ public class EditNpc {
     /**
      * The Rand gen.
      */
-    RandomGenerator randGen = new RandomGenerator();
+    final RandomGenerator randGen = new RandomGenerator();
     /**
      * The Rand npc.
      */
