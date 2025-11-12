@@ -225,8 +225,9 @@ public class RandomGenerator {
 	 * @return the int
 	 */
 	/* @Luca */
-	public int randLevel() {
+	public int randLevel(String inputClass) {
 		//Achtung, Level 0 ist möglich und ein Sonderfall der später beachtet werden muss
+		if(inputClass != null) return rand.nextInt(20)+1; // wenn eine Klasse ausgewählt ist sollte das Level nicht 0 erreichen können
 		return rand.nextInt(21);
 	}
 
@@ -585,6 +586,7 @@ public class RandomGenerator {
 	 * @param chosenNpc the chosen npc
 	 * @return the int
 	 */
+	//todo spells fixen, warlock
 	public int getHighestSpellLevel(NpcClass chosenNpc){
 		int dbCounter = 3;
 		int highestSpellLevel = 0 ;
@@ -664,6 +666,7 @@ public class RandomGenerator {
 	 */
 	public void assignSpellsToNpc(NpcClass chosenNpc, int spellLevel, String spellNames) {
         switch (spellLevel) {
+			case 0 -> chosenNpc.setSpellCantrips(spellNames);
             case 1 -> chosenNpc.setFirstLevelSpell(spellNames);
             case 2 -> chosenNpc.setSecondLevelSpell(spellNames);
             case 3 -> chosenNpc.setThirdLevelSpell(spellNames);
@@ -749,6 +752,7 @@ public class RandomGenerator {
 			}
 		}
 	}
+	//todo irgendwo bei race cantrips entsteht :Cantrips:  LightningLure, Light, PoisonSpray, Infestation, Dummy_Spell_88, , DancingLights
 
 	private void aufspaltungRaceCantrip(String spellFeature, NpcClass chosenNpc){
 		String inhalt = spellFeature.substring(8);

@@ -364,13 +364,30 @@ public class NpcClass {
         spellList.add(9, ninthLevelSpell);
         return spellList;
     }
+    /*
+    füllt die Spellliste und die Spells mit null
+     */
+    public void initSpellList(){
+        this.cantrips = null;
+        this.firstLevelSpell = null;
+        this.secondLevelSpell = null;
+        this.thirdLevelSpell = null;
+        this.fourthLevelSpell= null;
+        this.fifthLevelSpell = null;
+        this.sixthLevelSpell = null;
+        this.seventhLevelSpell = null;
+        this.eightLevelSpell = null;
+        this.ninthLevelSpell = null;
+    }
+
+
 
     /**
      * Sets spell list.
      *
      * @param spellList the spell list
      */
-    //todo Cantrips werden in Lvl 1 Zauber kopiert
+
     public void setSpellList(List<Object> spellList) {
         this.setSpellCantrips((String) spellList.get(0));
         this.setFirstLevelSpell((String) spellList.get(1));
@@ -653,7 +670,8 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addSpellCantrip(String spells) {
-        this.cantrips = this.cantrips + spells;
+        if(this.cantrips==null) this.cantrips = spells;
+        else this.cantrips = this.cantrips + ", " +  spells;
     }
 
     /**

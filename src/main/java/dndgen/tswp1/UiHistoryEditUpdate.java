@@ -54,11 +54,11 @@ public class UiHistoryEditUpdate {
      * Aufrufen der GENAUEN DBMS bzw. SpringApplication die gestartet wurde, jede
      * neu-konstruktion von DBMS wäre sonst leer.
      */
-    ApplicationContext appCtx = DBMS.getApplicationContext();
+    final ApplicationContext appCtx = DBMS.getApplicationContext();
     /**
      * The Dbms.
      */
-    DBMS dbms = appCtx.getBean(DBMS.class);
+    final DBMS dbms = appCtx.getBean(DBMS.class);
     /**
      * The Rnd numb.
      */
@@ -66,12 +66,12 @@ public class UiHistoryEditUpdate {
     /**
      * The Rand gen.
      */
-    RandomGenerator randGen = new RandomGenerator();
+    final RandomGenerator randGen = new RandomGenerator();
     /**
      * The Rand npc.
      */
 	@Autowired
-    RandomNpc randNpc = new RandomNpc(dbms);
+    final RandomNpc randNpc = new RandomNpc(dbms);
 
     /**
      * Update history edit npc class.
@@ -187,25 +187,74 @@ public class UiHistoryEditUpdate {
     	List<String> oldWeapons = currentNpc.getWeaponList();
 		oldWeapons.removeIf(oldSkill -> !newWeaponPossible.contains(oldSkill));
 
+		//todo weapons fixen
+		/*
     	//direkt neu befüllen? Oder (potenziell) leer lassen?
     	int weaponCount = rndNumb.nextInt(4)+2;
     	while (oldWeapons.size() < weaponCount) {
-    		int newRandWeapon = rndNumb.nextInt(newWeaponPossible.size()); // Hier trat ein Fehler auf: "bound must be positive"
+			System.out.println("weapon Possible: " + newWeaponPossible);
+			System.out.println("weapon Possible count: " + newWeaponPossible.size());
+
+			int newRandWeapon = rndNumb.nextInt(newWeaponPossible.size()); // Hier trat ein Fehler auf: "bound must be positive"
     		oldWeapons.add(newWeaponPossible.get(newRandWeapon));
     		newWeaponPossible.remove(newRandWeapon);
     	}
     	newNpc.setWeaponList(oldWeapons);
-
-    	//Spells
-		/* todo spells fixen sie sollten nicht auf null gesetzt werden
-    	newNpc.setSpellAbility(null);
-    	newNpc.setSpellList(null);
     	*/
+		if(dbms.getRowWithPref("class",newNpc.getGenClass())!=null) { // sollte die neue Klasse nicht in der Lage sein Spells zu castern, muss dies nicht durchgelaufen zu werden
+			//Spells
+			int spellAttack = randGen.spellAttackMod(newNpc.getAbilityModifier(), newNpc.getProfBonus(), newNpc.getGenClass());
+			int spellSave = randGen.spellSaveDC(randGen.spellAttackMod(newNpc.getAbilityModifier(), newNpc.getProfBonus(), newNpc.getGenClass()));
+			List<String> spellAbility = new ArrayList<>();
+
+			spellAbility.add(String.valueOf(spellAttack));
+			spellAbility.add(String.valueOf(spellSave));
+			newNpc.setSpellAbility(spellAbility);
+
+			List<Object> alteredSpellList = newNpc.getSpellList();
+			List<Object> newSpellList = new ArrayList<>();
+			for(int i=0; i<10;i++){
+				newSpellList.add(null);
+			}
+			int spellLevelIndex = 0;
+
+			if (!alteredSpellList.isEmpty()) { //sollte die gesamte Spell liste leer sein
+				for (Object spell : alteredSpellList) { // die einzelnen Spell listen durchlaufen
+					if(spell == null) continue;
+					if (spell.toString().equals(" ")) { // wenn ein spell der Spellliste nicht leer ist
+						List<String> spellObjToStr = randGen.bigStringToDividedString(spell.toString());
+						List<String> removedSpellList = new ArrayList<>(spellObjToStr);
+						boolean whitespace = false;
+						for (String subSpellToSpellListLevel : spellObjToStr) {
+							if (subSpellToSpellListLevel.startsWith(" ")) {
+								subSpellToSpellListLevel = subSpellToSpellListLevel.substring(1);
+								whitespace = true;
+							}
+							//überprüfung ob der spell in der neuen möglichen Spellist existieren kann
+							if (!(dbms.getRowWithPref("spells", subSpellToSpellListLevel)).getLast().equals(newNpc.getGenClass())) {
+								//sollte der Zauber durch ein Leerzeichen angeführt werden, wird es hinzugefügt
+								if(whitespace) removedSpellList.remove(" "+ subSpellToSpellListLevel);
+								else removedSpellList.remove(subSpellToSpellListLevel);
+							}
+						}
+						newSpellList.set(spellLevelIndex, removedSpellList);
+					}
+					spellLevelIndex++;
+				}
+			}
+			currentNpc.setSpellList(newSpellList);
+		}else{
+			newNpc.initSpellList(); // spells auf null setzten
+			randGen.addRaceCantripsAndSpells(newNpc); // sollte es spells durch die Rasse geben
+		}
+
     	//Skills
     	List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRowWithPref("class", newClass).get(6));
     	List<String> oldSkills = currentNpc.getSkillList();
 
-        oldSkills.removeIf(oldSkill -> !possibleSkillList.contains(oldSkill));
+		if(!oldSkills.isEmpty()||!oldSkills.contains("none")){
+			oldSkills.removeIf(oldSkill -> !possibleSkillList.contains(oldSkill));
+		}
     	newNpc.setSkillList(oldSkills);
     	
     	//Features

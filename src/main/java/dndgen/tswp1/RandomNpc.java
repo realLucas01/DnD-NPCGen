@@ -62,7 +62,7 @@ public class RandomNpc {
     /**
      * The Search term bonus action.
      */
-    String searchTermBonusAction = "bonus action";
+    static final String searchTermBonusAction = "bonus action";
 
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -72,7 +72,9 @@ public class RandomNpc {
     * Die Eingabe Werte sind:
     * Race, Class, Job, Level, AbilityScore, Gender
     *
-    * Zurück erhält man eine ArrayList, diese ist wie folgt aufgebaut:
+
+
+    * Zurück erhält man eine NPC Klasse, diese ist wie folgt aufgebaut:
     * (race, level, job, class, AbilityScore, AbilityModifier, HP, Armor, AC, Weapon(), walkingSpeed, SavingThrows, Skills(), Gender, Age, Name, Description, Deity, Languages, Senses, spellList)
     *   0: race
     *   1: level
@@ -161,7 +163,7 @@ public class RandomNpc {
         String alignment;
         String deity;
         String senses;
-        int level;
+        int level = 0;
         int age;
         int profBonus;
         int healthPoints;
@@ -173,7 +175,7 @@ public class RandomNpc {
         }
         randNpc.setRace(race);
         //random Level
-        level = Objects.requireNonNullElseGet(inputLevel, () -> randGen.randLevel());
+        if(inputLevel==null) level = randGen.randLevel(inputClass);
         randNpc.setLevel(level);
         //random Job
         if (inputJob == null) {
@@ -215,14 +217,13 @@ public class RandomNpc {
                 abilityScores.addAll(abilityScoreNewInteger);
                 break;
         }
-
         //distribute AbilityScore
         abilityScores = distributeAbilityScore(abilityScores, genClass);
-        abilityScores =  addRaceModifierToAbilityScore(race,abilityScores);
-        abilityScores =  abilityScoreImprovement(level, abilityScores, genClass);
+        abilityScores = addRaceModifierToAbilityScore(race,abilityScores);
+        abilityScores = abilityScoreImprovement(level, abilityScores, genClass);
         randNpc.setAbilityScores(abilityScores);
         //calc AbilityModifier
-        abilityModifier =  determineAbilityModifier(abilityScores);
+        abilityModifier = determineAbilityModifier(abilityScores);
         randNpc.setAbilityModifier(abilityModifier);
 
         //calc HP
@@ -230,8 +231,6 @@ public class RandomNpc {
         randNpc.setHealthPoints(healthPoints);
 
         determineArmorAndAC(genClass, race, randNpc);
-
-
 
         weaponList = determineWeapons(genClass, race);
         randNpc.setWeaponList(weaponList);//waffenliste
@@ -295,11 +294,10 @@ public class RandomNpc {
         senses = randGen.getVision(race) + ", Passive Perception " + randGen.passivePerception(abilityModifier, skillList, profBonus);
         randNpc.setSenses(senses);
 
-        randNpc = randGen.randomSpellsForClass(randNpc);
+        randGen.randomSpellsForClass(randNpc);
         //spells
-        List<Object> spellList =  randNpc.getSpellList();
         randGen.addRaceCantripsAndSpells(randNpc);
-        randNpc.setSpellList(spellList);
+
         //features
         List<String> actionList = determineFeatures(race,"action");
         List<String> bonusActionList = determineFeatures(race, searchTermBonusAction);
@@ -308,11 +306,12 @@ public class RandomNpc {
         randNpc.setActionList(actionList);
         randNpc.setBonusActionList(bonusActionList);
         randNpc.setBonusTextList(bonusTextList);
+        //determineClassFeatures(randNpc); // class features
 
-       //Spell Ability = Spell Attack Mod und Spell Save DC
+        //Spell Ability = Spell Attack Mod und Spell Save DC
         int spellAttack = randGen.spellAttackMod(abilityModifier, profBonus, genClass);
         int spellSave = randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass));
-        List<String> spellAbility =new ArrayList<>();
+        List<String> spellAbility = new ArrayList<>();
 
         spellAbility.add(String.valueOf(spellAttack));
         spellAbility.add(String.valueOf(spellSave)) ;
@@ -322,10 +321,8 @@ public class RandomNpc {
             race= dbms.getRandomRow("dracances").get(1) + " - " + race;
         randNpc.setRace(race);
         }
-
          */
         dbms.saveHistoryEntry(randNpc); // speichern in der History
-
         //randNpc.exportNPC(); // NPC wird in eine .txt exportiert
         return randNpc;
     }
@@ -430,7 +427,7 @@ public class RandomNpc {
                     case "Int" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(3) + profBonus));
                     case "Wis" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(4) + profBonus));
                     case "Cha" -> skillListWithNumbers.add(s + " +" + (abilityModifier.get(5) + profBonus));
-                    default -> {
+                    default -> { //does nothing, shodent ever never happend, exists to satisfy the compiler and our overlord
                         }
                 }
             }
@@ -714,17 +711,51 @@ public class RandomNpc {
         switch (searchedFeature) {
             case "action" -> searchTermDB = "natural attack";
             case "bonus text" -> searchTermDB = searchedFeature;
-            case "bonus action" -> searchTermDB = searchTermBonusAction;
+            case searchTermBonusAction -> searchTermDB = searchTermBonusAction;
             default ->{ //hi
                  }
-
         }
+        List<String> featureData;
         for(String feature: features) {
-            List<String> featureData = dbms.getRowWithPref(nameDBFeatures, feature);
+            featureData = dbms.getRowWithPref(nameDBFeatures, feature);
             if (featureData.get(3).equals(searchTermDB)){
                 finalFeatures.add(featureData.get(1) + ": " + featureData.get(2));            }
         }
+        if(race.equals("Dragonborn")){
+            featureData = dbms.getRandRow("dracances");
+            finalFeatures.add(featureData.get(1) + "Breath Weapon: " + featureData.get(2) + " Breath" + featureData.get(3) );
+        }
         return finalFeatures;
+    }
+
+    //todo schauen welche DB Funktion hier besser geeignet wäre, diese Wahl möglich aber ineffizient,getMultRowWithMultPref oder neue eigene?
+    //todo Lucas drüber schauen lassen, getColWithPref funkt, getMultRowMitMulPref
+    /**
+     * An additional to the determine Features function, for the Class Features
+     */
+    public void determineClassFeatures(NpcClass randNPC){
+        List<String> classActionFeatures = new ArrayList<>();
+        List<String> classBonusActionFeatures = new ArrayList<>();
+        int npcLevel = randNPC.getLevel();
+        for(int i =0; i!= npcLevel; i++){
+            System.out.println(randNPC.getGenClass());
+            System.out.println(npcLevel);
+            List<String> dbReturn = dbms.getMultRowWithMultPref("actions",randNPC.getGenClass(), "Action" ,npcLevel);
+            System.out.println(dbReturn);
+            dbReturn = dbms.getColWithPref("actions","Fighter");
+            System.out.println(dbReturn);
+            if(!dbReturn.isEmpty()) classActionFeatures.add(dbReturn.get(1) + ": " + dbReturn.get(2));
+
+            dbReturn = dbms.getMultRowWithMultPref("actions",randNPC.getGenClass(), "Bonus Action" ,npcLevel);
+            if(!dbReturn.isEmpty()) classBonusActionFeatures.add(dbReturn.get(1) + ": " + dbReturn.get(2));
+
+        }
+        classActionFeatures.addAll(randNPC.getActionList());
+        classBonusActionFeatures.addAll(randNPC.getBonusActionList());
+        randNPC.setActionList(classActionFeatures);
+        randNPC.setBonusActionList(classBonusActionFeatures);
+        System.out.println("hi" + randNPC.getActionList());
+        System.out.println(randNPC.getBonusActionList());
     }
 
     /**
@@ -769,7 +800,7 @@ public class RandomNpc {
             wenn beide ungerade beide um eins erhöhen, wenn beide gerade und unter 20 wird eins erhöht,
             wenn beide unter 20 werden die nächsten ungeraden um eins erhöht
          */
-        if (classNameNPC.equals("Commoner")) {
+        if (classNameNPC.equals(nameDBCommoner)) {
             //System.out.println("Commoner, abort");
             return abilityScore;
         }
