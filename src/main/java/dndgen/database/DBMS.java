@@ -638,6 +638,41 @@ public class DBMS implements ApplicationContextAware{
 	
 	/* @author Lucas
 	 *
+	 * Gibt eine gewünschte Anzahl an zufälligen Zeilen oder alle Zeilen einer ausgewählten database aus die 
+	 * vorher nach einer Präferenz sortiert wurde.
+	 * 
+	 * @param dbname: der Name der database von der Daten gewünscht sind, als
+	 * 					kleingeschriebener String.
+	 * @param pref1: String nach dem die database vor der Randomauswahl sortiert werden soll.
+	 * 
+	 * @param rownumber: Anzahl der Zeilen die Ausgegeben werden sollen. Wenn alle gewollt sind für rownumber
+	 * null angeben.
+	 * 
+	 * @return ArrayList gefüllt mit den Attributen der Zeilen, jedes Attribut 
+	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
+	 * 					werden in der ArrayList hintereinnader gehangen.
+	 */
+	public ArrayList<Object> getMultRowWithPref(String dbname, String pref, Integer rownumber){
+		ArrayList<Object> finalList = new ArrayList<Object>();
+		
+		switch(dbname) {
+			case "spells":
+				if (rownumber != null) {
+					System.out.println("Für eine rownumber =! als NULL für die DB Spells wurde kein Use-Case angegeben -> Neues Issue für Implementation benötigt."); 
+				}else {
+					for(SpellModel spell : spellRepository.findBySpellLevel(pref)) {
+						finalList.add(bobMakesSortedList(spell));
+					}
+				}
+				break;
+			default:
+				finalList=null;
+		}
+		return finalList;
+	}
+	
+	/* @author Lucas
+	 *
 	 * Gibt eine gewünschte Anzahl an zufälligen Zeilen einer ausgewählten database aus die vorher nach zwei
 	 * Präferenzen sortiert wurde.
 	 * 
