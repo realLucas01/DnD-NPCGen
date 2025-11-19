@@ -607,7 +607,6 @@ public class EditController {
                 updateNPC.setHealthPoints(Integer.parseInt(fieldValue));
                 break;
             case "walkingSpeed", "flyingSpeed":
-                System.out.println(updateNPC.getMovementSpeedList());
                 List speedList = new ArrayList<>();
 
                 // changes at walking

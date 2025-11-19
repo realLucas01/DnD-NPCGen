@@ -284,68 +284,71 @@
                     <div class="table-responsive">
                         <table class="table table-borderless">
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th th:each="ability : ${allAbilities}" th:text="${ability}"></th>
-                            </tr>
+                                <tr>
+                                    <th></th>
+                                    <th th:each="ability : ${allAbilities}" th:text="${ability}"></th>
+                                </tr>
                             </thead>
-                                <tbody>
-                                    <!-- Ability Scores with Modifiers -->
-                                    <tr>
-                                        <th>Ability Scores</th>
-                                        <td th:each="index : ${#numbers.sequence(0, allAbilities.size()-1)}">
-                                            <div class="d-flex flex-column align-items-center">
-                                                <!-- Ability Scores -->
-                                                <input type="number"
-                                                       name="value"
-                                                       th:value="${abilityScores[index]}"
-                                                       th:data-key="${allAbilities[index]}"
-                                                       hx-post="/editAbility"
-                                                       hx-include="closest div"
-                                                       hx-trigger="change"
-                                                       style="width: 70px;"
-                                                       class="form-control mb-1">
 
-
-                                                <!-- Modifier -->
-                                                <input type="number"
-                                                       name="value"
-                                                       th:value="${abilityModifiers[index]}"
-                                                       th:data-key="${allAbilities[index]}"
-                                                       hx-post="/editModifier"
-                                                       hx-include="closest div"
-                                                       hx-trigger="change"
-                                                       style="width: 70px;"
-                                                       class="form-control">
-                                                <input type="hidden" name="key" th:value="${index}">
-                                            </div>
-                                        </td>
-                                    </tr>
-
-
-                                    <!-- Saving Throws (if applicable) -->
-                                    <tr th:if="${not #lists.isEmpty(savingThrows)}">
-                                        <th>Saving Throws</th>
-                                        <td th:each="entry : ${savingThrows}">
-                                            <!-- Number field for the value -->
+                            <tbody>
+                                <!-- Ability Scores with Modifiers -->
+                                <tr>
+                                    <th>Ability Scores</th>
+                                    <td th:each="index : ${#numbers.sequence(0, allAbilities.size()-1)}">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <!-- Ability Scores -->
                                             <input type="number"
                                                    name="value"
-                                                   th:value="${entry.value}"
-                                                   min="0"
-                                                   max="20"
-                                                   hx-post="/editSavingThrows"
-                                                   hx-include="closest td"
+                                                   th:value="${abilityScores[index]}"
+                                                   th:data-key="${allAbilities[index]}"
+                                                   hx-post="/editAbility"
+                                                   th:attr="hx-include='#key-' + ${index}"
                                                    hx-trigger="change"
-                                                   style="width: 70px;">
+                                                   hx-swap="none"
+                                                   style="width: 70px;"
+                                                   class="form-control mb-1">
 
-                                            <!-- Key input (hidden) -->
-                                            <input type="hidden"
-                                                   name="key"
-                                            th:value="${entry.key}">
-                                        </td>
-                                    </tr>
 
-                                </tbody>
+                                            <!-- Modifier -->
+                                            <input type="number"
+                                                   name="value"
+                                                   th:value="${abilityModifiers[index]}"
+                                                   th:data-key="${allAbilities[index]}"
+                                                   hx-post="/editModifier"
+                                                   th:attr="hx-include='#key-' + ${index}"
+                                                   hx-trigger="change"
+                                                   hx-swap="none"
+                                                   style="width: 70px;"
+                                                   class="form-control">
+                                            <input type="hidden" th:id="${'key-' + index}" name="key" th:value="${index}">
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <!-- Saving Throws (if applicable) -->
+                                <tr th:if="${not #lists.isEmpty(savingThrows)}">
+                                    <th>Saving Throws</th>
+                                    <td th:each="entry : ${savingThrows}">
+                                        <!-- Number field for the value -->
+                                        <input type="number"
+                                               name="value"
+                                               th:value="${entry.value}"
+                                               min="0"
+                                               max="20"
+                                               hx-post="/editSavingThrows"
+                                               hx-include="closest td"
+                                               hx-trigger="change"
+                                               hx-swap="none"
+                                               style="width: 70px;">
+
+                                        <!-- Key input (hidden) -->
+                                        <input type="hidden"
+                                               name="key"
+                                               th:value="${entry.key}">
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
