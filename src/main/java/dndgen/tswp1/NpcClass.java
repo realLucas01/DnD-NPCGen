@@ -297,7 +297,7 @@ public class NpcClass {
      * @return the weapon list
      */
     public List<String> getWeaponList() {
-        return weaponList;
+        return this.weaponList;
     }
 
     /**

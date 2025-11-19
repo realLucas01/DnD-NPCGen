@@ -62,7 +62,9 @@ public class RandomNpc {
     /**
      * The Search term bonus action.
      */
-    static final String searchTermBonusAction = "bonus action";
+    String searchTermBonusAction = "bonus action";
+
+    String searchTermAction = "actions";
 
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -711,7 +713,7 @@ public class RandomNpc {
         switch (searchedFeature) {
             case "action" -> searchTermDB = "natural attack";
             case "bonus text" -> searchTermDB = searchedFeature;
-            case searchTermBonusAction -> searchTermDB = searchTermBonusAction;
+            case "bonus action" -> searchTermDB = searchTermBonusAction;
             default ->{ //hi
                  }
         }
@@ -740,13 +742,13 @@ public class RandomNpc {
         for(int i =0; i!= npcLevel; i++){
             System.out.println(randNPC.getGenClass());
             System.out.println(npcLevel);
-            List<String> dbReturn = dbms.getMultRowWithMultPref("actions",randNPC.getGenClass(), "Action" ,npcLevel);
+            List<String> dbReturn = dbms.getMultRowWithMultPref(searchTermAction,randNPC.getGenClass(), "Action" ,npcLevel);
             System.out.println(dbReturn);
-            dbReturn = dbms.getColWithPref("actions","Fighter");
+            dbReturn = dbms.getColWithPref(searchTermAction,"Fighter");
             System.out.println(dbReturn);
             if(!dbReturn.isEmpty()) classActionFeatures.add(dbReturn.get(1) + ": " + dbReturn.get(2));
 
-            dbReturn = dbms.getMultRowWithMultPref("actions",randNPC.getGenClass(), "Bonus Action" ,npcLevel);
+            dbReturn = dbms.getMultRowWithMultPref(searchTermAction,randNPC.getGenClass(), "Bonus Action" ,npcLevel);
             if(!dbReturn.isEmpty()) classBonusActionFeatures.add(dbReturn.get(1) + ": " + dbReturn.get(2));
 
         }

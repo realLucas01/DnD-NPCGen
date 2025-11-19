@@ -96,41 +96,7 @@ public class UiHistoryEditUpdate {
 
         //race change
         if(!Objects.equals(newRace, oldNpc.getRace())){
-        	//race geändert
-            //Änderungen	: RaceAbilityScore addition, Features, Skills, Language, Speed, Description:(Age, height, size), Senses
-			List<Integer> abilityScore =oldNpc.getAbilityScores();
-			newNpc.setRace(newRace);
-            abilityScore = removeRaceAbilityAddition(oldNpc.getRace(),  abilityScore);
-            abilityScore = randNpc.addRaceModifierToAbilityScore(newRace, abilityScore);
-			newNpc.setAbilityScores(abilityScore);
-
-			newNpc.setBonusTextList(randNpc.determineFeatures(newRace,"bonus text")); //Features
-			newNpc.setActionList(randNpc.determineFeatures(newRace,"action")); //Features
-			newNpc.setBonusActionList(randNpc.determineFeatures(newRace,"bonus action")); //Features
-			newNpc.setMovementSpeedList(randNpc.determineMovementSpeed(newRace));
-			newNpc.setSenses(randGen.getVision(newRace) + ", Passive Perception " + randGen.passivePerception(newNpc.getAbilityModifier(), newNpc.getSkillList(), newNpc.getProfBonus()));
-			//Description
-			List<String> newDesc = oldNpc.getDescription();
-			newDesc.set(newDesc.size()-2,randGen.randSize(newRace)); // size
-			newDesc.set(newDesc.size()-1,randGen.randSize(newRace)); // height
-			newNpc.setDescription(newDesc);
-			newNpc.setAge(randGen.randAge(newRace));//age
-
-			//Languages
-			List<String> raceLanguage = randGen.bigStringToDividedString(dbms.getRowWithPref("race", newRace).get(10));
-			raceLanguage.removeLast();
-			List<String> oldRaceLanguage = randGen.bigStringToDividedString(dbms.getRowWithPref("race", oldNpc.getRace()).get(10));
-			oldRaceLanguage.removeLast();
-			List<String> oldNpcRaceLanguage = oldNpc.getLanguages();
-			oldNpcRaceLanguage.removeAll(oldRaceLanguage);
-			raceLanguage.addAll(oldNpcRaceLanguage);
-			newNpc.setLanguages(raceLanguage);
-
-			if (!newNpc.getGenClass().equals("Commoner")) {     // Fall Commoner?
-				newNpc.setSkillList(randNpc.addAbilityScoreToSkillList(newNpc.getAbilityModifier(),randNpc.determineSkillList(newRace, newNpc.getJob(), newNpc.getGenClass()), newNpc.getProfBonus()));
-			} else {
-				newNpc.setSkillList(Collections.singletonList("none"));
-			}
+        	raceChanges(oldNpc,newNpc,newRace);
         }
 		//class change
 		if (!Objects.equals(newCharClass, oldNpc.getGenClass())) {
@@ -150,6 +116,44 @@ public class UiHistoryEditUpdate {
         return newNpc;
     }
 
+	private void raceChanges(NpcClass oldNpc, NpcClass newNpc, String newRace){
+		//race geändert
+		//Änderungen	: RaceAbilityScore addition, Features, Skills, Language, Speed, Description:(Age, height, size), Senses
+		List<Integer> abilityScore =oldNpc.getAbilityScores();
+		newNpc.setRace(newRace);
+		abilityScore = removeRaceAbilityAddition(oldNpc.getRace(),  abilityScore);
+		abilityScore = randNpc.addRaceModifierToAbilityScore(newRace, abilityScore);
+		newNpc.setAbilityScores(abilityScore);
+
+		newNpc.setBonusTextList(randNpc.determineFeatures(newRace,"bonus text")); //Features
+		newNpc.setActionList(randNpc.determineFeatures(newRace,"action")); //Features
+		newNpc.setBonusActionList(randNpc.determineFeatures(newRace,"bonus action")); //Features
+		newNpc.setMovementSpeedList(randNpc.determineMovementSpeed(newRace));
+		newNpc.setSenses(randGen.getVision(newRace) + ", Passive Perception " + randGen.passivePerception(newNpc.getAbilityModifier(), newNpc.getSkillList(), newNpc.getProfBonus()));
+		//Description
+		List<String> newDesc = oldNpc.getDescription();
+		newDesc.set(newDesc.size()-2,randGen.randSize(newRace)); // size
+		newDesc.set(newDesc.size()-1,randGen.randSize(newRace)); // height
+		newNpc.setDescription(newDesc);
+		newNpc.setAge(randGen.randAge(newRace));//age
+
+		//Languages
+		List<String> raceLanguage = randGen.bigStringToDividedString(dbms.getRowWithPref("race", newRace).get(10));
+		raceLanguage.removeLast();
+		List<String> oldRaceLanguage = randGen.bigStringToDividedString(dbms.getRowWithPref("race", oldNpc.getRace()).get(10));
+		oldRaceLanguage.removeLast();
+		List<String> oldNpcRaceLanguage = oldNpc.getLanguages();
+		oldNpcRaceLanguage.removeAll(oldRaceLanguage);
+		raceLanguage.addAll(oldNpcRaceLanguage);
+		newNpc.setLanguages(raceLanguage);
+
+		if (!newNpc.getGenClass().equals("Commoner")) {     // Fall Commoner?
+			newNpc.setSkillList(randNpc.addAbilityScoreToSkillList(newNpc.getAbilityModifier(),randNpc.determineSkillList(newRace, newNpc.getJob(), newNpc.getGenClass()), newNpc.getProfBonus()));
+		} else {
+			newNpc.setSkillList(Collections.singletonList("none"));
+		}
+	}
+
 	private void alignmentChanges(String newAlignment, NpcClass newNpc, NpcClass oldNpc){
 		//Deity
 		String deity = oldNpc.getDeity();
@@ -163,44 +167,72 @@ public class UiHistoryEditUpdate {
     	newNpc.setHealthPoints(randNpc.calculateHP(newClass, newNpc.getLevel(), newNpc.getAbilityModifier()));
     	
     	//AbilitySc
-		List<Integer> abilityScore = newNpc.getAbilityScores();
-        abilityScore = removeRaceAbilityAddition(newNpc.getRace(), abilityScore);//Race, ABiliSc
-        abilityScore = randNpc.distributeAbilityScore(abilityScore,newClass);
-        abilityScore = randNpc.addRaceModifierToAbilityScore(newNpc.getRace(),abilityScore);
-    	newNpc.setAbilityScores(abilityScore);
-    	
+		abilityScChanges(newNpc, newClass);
     	//Armor+AC
-    	List<String> newArmorPossible = randGen.figureOutProfList("armor", newClass, newNpc.getRace());
-    	String oldArmor = currentNpc.getArmor();
-    		for (String newArmor : newArmorPossible) {
-    			if (newArmor.equals(oldArmor)) {
-    				break;
-    			}else if (newArmor.equals(newArmorPossible.getLast())){
-    				oldArmor = null;
-					newNpc.setArmorClass(0);
-				}
-    		}
-    	newNpc.setArmor(oldArmor);
-
+    	armorChanges(newNpc, newClass, currentNpc);
     	//Weapons
-    	List<String> newWeaponPossible = randGen.figureOutProfList("weapon", newClass, newNpc.getRace());
-    	List<String> oldWeapons = currentNpc.getWeaponList();
-		oldWeapons.removeIf(oldSkill -> !newWeaponPossible.contains(oldSkill));
+    	weaponChanges(currentNpc, newNpc, newClass);
+		//spells
+		spellListChanges(newNpc,currentNpc);
 
-		//todo weapons fixen
-		/*
-    	//direkt neu befüllen? Oder (potenziell) leer lassen?
-    	int weaponCount = rndNumb.nextInt(4)+2;
-    	while (oldWeapons.size() < weaponCount) {
-			System.out.println("weapon Possible: " + newWeaponPossible);
-			System.out.println("weapon Possible count: " + newWeaponPossible.size());
+    	//Skills
+    	skillChanges(currentNpc, newClass, newNpc);
+    	//Features
+    }
 
-			int newRandWeapon = rndNumb.nextInt(newWeaponPossible.size()); // Hier trat ein Fehler auf: "bound must be positive"
-    		oldWeapons.add(newWeaponPossible.get(newRandWeapon));
-    		newWeaponPossible.remove(newRandWeapon);
-    	}
-    	newNpc.setWeaponList(oldWeapons);
-    	*/
+	private void abilityScChanges(NpcClass newNpc, String newClass){
+		List<Integer> abilityScore = newNpc.getAbilityScores();
+		abilityScore = removeRaceAbilityAddition(newNpc.getRace(), abilityScore);//Race, ABiliSc
+		abilityScore = randNpc.distributeAbilityScore(abilityScore,newClass);
+		abilityScore = randNpc.addRaceModifierToAbilityScore(newNpc.getRace(),abilityScore);
+		newNpc.setAbilityScores(abilityScore);
+	}
+
+	private void armorChanges(NpcClass newNpc, String newClass, NpcClass currentNpc ) {
+		List<String> newArmorPossible = randGen.figureOutProfList("armor", newClass, newNpc.getRace());
+		String oldArmor = currentNpc.getArmor();
+		boolean hasShield = false;
+		if(oldArmor.contains("Shield")) {
+			oldArmor =oldArmor.substring(0,oldArmor.indexOf("+")-1); // "+ shield " entfernen
+			hasShield = true;
+		}
+		String dbReturn = dbms.getRowWithPref("armor", oldArmor).get(2);
+
+		if(!newArmorPossible.contains(oldArmor) && !newArmorPossible.contains(dbReturn)) oldArmor = null;
+		randNpc.calculateArmorClass(oldArmor,newNpc,hasShield);
+
+		if(hasShield && newArmorPossible.contains("Shield")) oldArmor = oldArmor + "+ Shield";
+
+		newNpc.setArmor(oldArmor);
+
+	}
+
+	private void weaponChanges(NpcClass currentNpc, NpcClass newNpc, String newClass){
+		List<String> newWeaponPossible = randGen.figureOutProfList("weapon", newClass, newNpc.getRace());
+		List<String> oldWeapons = currentNpc.getWeaponList();
+		List<String> alteredOldWeapons = new ArrayList<>(oldWeapons);
+		String dbReturn;
+		for(String s: oldWeapons){
+			dbReturn = dbms.getRowWithPref("weapon", s).get(5); //ob prof mit der Waffen art
+
+			if(!newWeaponPossible.contains(s) && !newWeaponPossible.contains(dbReturn)) alteredOldWeapons.remove(s);
+		}
+
+		newNpc.setWeaponList(alteredOldWeapons);
+	}
+
+	private void skillChanges(NpcClass currentNpc, String newClass, NpcClass newNpc){
+		List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRowWithPref("class", newClass).get(6));
+		List<String> oldSkills = currentNpc.getSkillList();
+
+		if(!oldSkills.isEmpty()||!oldSkills.contains("none")){
+			oldSkills.removeIf(oldSkill -> !possibleSkillList.contains(oldSkill));
+		}
+		newNpc.setSkillList(oldSkills);
+
+	}
+
+	private void spellListChanges(NpcClass newNpc, NpcClass currentNpc){
 		if(dbms.getRowWithPref("class",newNpc.getGenClass())!=null) { // sollte die neue Klasse nicht in der Lage sein Spells zu castern, muss dies nicht durchgelaufen zu werden
 			//Spells
 			int spellAttack = randGen.spellAttackMod(newNpc.getAbilityModifier(), newNpc.getProfBonus(), newNpc.getGenClass());
@@ -247,19 +279,7 @@ public class UiHistoryEditUpdate {
 			newNpc.initSpellList(); // spells auf null setzten
 			randGen.addRaceCantripsAndSpells(newNpc); // sollte es spells durch die Rasse geben
 		}
-
-    	//Skills
-    	List<String> possibleSkillList = randGen.bigStringToDividedString(dbms.getRowWithPref("class", newClass).get(6));
-    	List<String> oldSkills = currentNpc.getSkillList();
-
-		if(!oldSkills.isEmpty()||!oldSkills.contains("none")){
-			oldSkills.removeIf(oldSkill -> !possibleSkillList.contains(oldSkill));
-		}
-    	newNpc.setSkillList(oldSkills);
-    	
-    	//Features
-
-    }
+	}
 
 	/**
 	 * Remove race ability addition list.

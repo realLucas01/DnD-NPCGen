@@ -350,7 +350,6 @@ public class RandomGenerator {
 		String kindOfFeature; // letzte Spalte aus der database um Festzustellen um was es sich hier handelt
 		databaseReturn = dbms.getRowWithPref(nameDBClass, charClass);
 		if(!Objects.equals(databaseReturn.get(3), "null")) {
-
 			profList = bigStringToDividedString(databaseReturn.get(3));
 			databaseReturn = dbms.getRowWithPref("race", race);
 			if (!Objects.equals(databaseReturn.get(3), "null")) {
