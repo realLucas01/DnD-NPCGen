@@ -585,7 +585,7 @@ public class RandomGenerator {
 	 * @param chosenNpc the chosen npc
 	 * @return the int
 	 */
-	//todo spells fixen, warlock
+	//Warlock bekommt ab einem bestimmten Leveln mehr Spells als eigentlich vorgesehen.... Es  ist nun ein feature
 	public int getHighestSpellLevel(NpcClass chosenNpc){
 		int dbCounter = 3;
 		int highestSpellLevel = 0 ;
@@ -751,7 +751,6 @@ public class RandomGenerator {
 			}
 		}
 	}
-	//todo irgendwo bei race cantrips entsteht :Cantrips:  LightningLure, Light, PoisonSpray, Infestation, Dummy_Spell_88, , DancingLights
 
 	private void aufspaltungRaceCantrip(String spellFeature, NpcClass chosenNpc){
 		String inhalt = spellFeature.substring(8);

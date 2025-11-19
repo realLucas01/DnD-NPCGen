@@ -670,8 +670,26 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addSpellCantrip(String spells) {
-        if(this.cantrips==null) this.cantrips = spells;
-        else this.cantrips = this.cantrips + ", " +  spells;
+        if (spells == null || spells.isBlank()) return;
+
+        List<String> list = new ArrayList<>();
+
+        if (this.cantrips != null && !this.cantrips.isBlank()) {
+            list.addAll(
+                    Arrays.stream(this.cantrips.split(","))
+                            .map(String::trim)
+                            .filter(s -> !s.isEmpty())
+                            .toList()
+            );
+        }
+        list.addAll(
+                Arrays.stream(spells.split(","))
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .toList()
+        );
+
+        this.cantrips = String.join(", ", list);
     }
 
     /**
