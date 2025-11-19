@@ -183,6 +183,56 @@ public class DBMS implements ApplicationContextAware{
         return methods;
 	}
 	
+	public ArrayList<String> bobMakesSortedList(Object model){
+		ArrayList<String> sl = new ArrayList<String>();
+		for (Method m : ordner(model.getClass())) {
+			if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {
+				sneaky(() -> r = m.invoke(model)); 
+				sl.add(String.valueOf(r));
+    		}
+    	}
+		return sl;
+	}
+	
+	/* @author Lucas
+	 *
+	 * Konvertiert einen Eintrag dynamisch aus einer beliebigen DB 
+	 * in den Datentyp "NpcClass".
+	 * 
+	 * @param DatabaseModel: Objekt einer Datenbank was konveritert werden soll.
+	 */
+	public NpcClass convertDatabaseEntryToNpcClass(HistoryModel HistoryEntry) {
+		NpcClass NPC = new NpcClass();
+		for (Method m : ordner(NPC.getClass())) {
+ 			for (Method l : HistoryEntry.getClass().getDeclaredMethods()) {
+ 				if (l.getName().startsWith("get") && m.getName().startsWith("set") 
+ 						&& l.getName().substring(3).equals(m.getName().substring(3))){
+ 					sneaky(() -> r = m.invoke(NPC, l.invoke(HistoryEntry)));
+ 				}
+ 			}
+		}
+		System.out.println(NPC.getLevel());
+		return NPC;
+	}
+	
+	/* @author Lucas
+	 *
+	 * Konvertiert einen NPC zu einem Objekt der History DB.
+	 * 
+	 * @param NPC: Objekt vom Typ NpcClass das konvertiert werden soll.
+	 */
+	public HistoryModel convertNpcClassToHistory(NpcClass NPC) {
+		HistoryModel HistoryEntry = new HistoryModel();
+		for (Method m : ordner(HistoryEntry.getClass())) {
+			for (Method l : NPC.getClass().getDeclaredMethods()) {
+				if (l.getName().startsWith("get") && m.getName().startsWith("set")
+						&& l.getName().substring(3).equals(m.getName().substring(3))){
+					sneaky(() -> r = m.invoke(HistoryEntry, l.invoke(NPC)));
+				}
+			}
+		}
+		return HistoryEntry;
+	}
 	/* @author Lucas
 	 *
 	 * Gibt die Namensspalte einer Datenbank für userinterface zwecke aus.
@@ -271,18 +321,7 @@ public class DBMS implements ApplicationContextAware{
 		}
 		return col;
 	}
-	
-	public ArrayList<String> bobMakesSortedList(Object model){
-		ArrayList<String> sl = new ArrayList<String>();
-		for (Method m : ordner(model.getClass())) {
-			if (m.getName().startsWith("get") && m.getParameterTypes().length == 0 && !m.getName().equals("getClass")) {
-				sneaky(() -> r = m.invoke(model)); 
-				sl.add(String.valueOf(r));
-    		}
-    	}
-		return sl;
-	}
-	
+
 	/* @author Lucas
 	 *
 	 * Gibt eine spezifische Zeile einer ausgewählten database aus.
@@ -505,8 +544,7 @@ public class DBMS implements ApplicationContextAware{
 		    	randRowPref = bobMakesSortedList(randabilipref);
 		    }
 			break;
-		default:
-		
+		default: randRowPref = null;
 		}
 		return randRowPref;
 	}
@@ -609,7 +647,7 @@ public class DBMS implements ApplicationContextAware{
 	 * 
 	 * @param pref2: String nach dem die database vor der Randomauswahl sortiert werden soll.
 	 * 
-	 * @param rownumber: Anzahl der Zeilen die Ausgegeben werden sollen.
+	 * @param rownumber: Anzahl der Zeilen die Ausgegeben werden sollen. Wenn alle gewollt sind für rownumber
 	 * 
 	 * @return ArrayList gefüllt mit den Attributen der Zeilen, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
@@ -680,23 +718,15 @@ public class DBMS implements ApplicationContextAware{
 		return Entry;
 	}
 	
-	
 	/* @author Lucas
 	 *
 	 * Iniziert das speichern eines neuen Datensatzes in die History.
 	 */
 	public void saveHistoryEntry(NpcClass NPC) {
 		HistoryModel newentry = new HistoryModel();
-	    	for (Method m : ordner(newentry.getClass())) {
-	    			for (Method l : NPC.getClass().getDeclaredMethods()) {
-	    				if (l.getName().startsWith("get") && m.getName().startsWith("set") 
-	    						&& l.getName().substring(3).equals(m.getName().substring(3))){
-	    					sneaky(() -> r = m.invoke(newentry, l.invoke(NPC)));
-	    				}
-	    			}
-	    	}
-		 manageHistory("save",newentry);
-		 return;
+		newentry = convertNpcClassToHistory(NPC);
+		manageHistory("save",newentry);
+		return;
 	 }
 	
 	/* @author Lucas
@@ -704,19 +734,12 @@ public class DBMS implements ApplicationContextAware{
 	 * Iniziert das updaten/bearbeiten eines Datensatzes in der History.
 	 */
 	public void updateHistoryEntry(NpcClass NPC, Integer ID, LocalDateTime entryAge) {
-		 HistoryModel updatedentry = new HistoryModel();
-		 updatedentry.setId(ID);
-		 updatedentry.setEntryAge(entryAge);
-		 for (Method m : ordner(updatedentry.getClass())) {
- 			for (Method l : NPC.getClass().getDeclaredMethods()) {
- 				if (l.getName().startsWith("get") && m.getName().startsWith("set") 
- 						&& l.getName().substring(3).equals(m.getName().substring(3))){
- 					sneaky(() -> r = m.invoke(updatedentry, l.invoke(NPC)));
- 				}
- 			}
-		 }
-		 manageHistory("update",updatedentry);
-		 return;
+		HistoryModel updatedentry = new HistoryModel();
+		updatedentry = convertNpcClassToHistory(NPC);
+		updatedentry.setId(ID);
+		updatedentry.setEntryAge(entryAge);
+		manageHistory("update",updatedentry);
+		return;
 	}
 
 	/* @author Lucas
@@ -728,23 +751,23 @@ public class DBMS implements ApplicationContextAware{
 	@Transactional
 	@Modifying
 	public void manageHistory(String typeOfChange, HistoryModel histchange) {
-		 switch(typeOfChange) {
-		 case "save":
-			 if (historyRepository.count() == 0) {
-				 historyRepository.findById(13).get().setRunVar(1);
-				 break;
-			 }else if (historyRepository.findById(13).get().getRunVar() == 13) {
-				 historyRepository.setRuVaManuel(1, 13);;
-				 break;
-			 }
-			 histchange.setId(historyRepository.findById(13).get().getRunVar());
-			 histchange.setEntryAge(LocalDateTime.now());
-			 historyRepository.save(histchange);
-			 historyRepository.setRuVaManuel((historyRepository.findById(13).get().getRunVar())+1, 13);
-			 break;
-		 case "update":
-			 historyRepository.save(histchange);
-			 break;
+		switch(typeOfChange) {
+		case "save":
+			if (historyRepository.count() == 0) {
+				historyRepository.findById(13).get().setRunVar(1);
+				break;
+			}else if (historyRepository.findById(13).get().getRunVar() == 13) {
+				historyRepository.setRuVaManuel(1, 13);;
+				break;
+			}
+			histchange.setId(historyRepository.findById(13).get().getRunVar());
+			histchange.setEntryAge(LocalDateTime.now());
+			historyRepository.save(histchange);
+			historyRepository.setRuVaManuel((historyRepository.findById(13).get().getRunVar())+1, 13);
+			break;
+		case "update":
+			historyRepository.save(histchange);
+			break;
 		 }
 	}
 	

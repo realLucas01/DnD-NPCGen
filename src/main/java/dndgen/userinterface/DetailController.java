@@ -43,7 +43,7 @@ public class DetailController {
         }
 
         NpcClass npc = new NpcClass();
-        npc.historyEntryToNpc(dbms.getHistoryEntry(id));
+        npc = dbms.convertDatabaseEntryToNpcClass(dbms.getHistoryEntry(id));
 
         formatNpcDataForModel(npc, model);
         return "detail";

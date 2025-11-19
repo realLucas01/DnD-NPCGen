@@ -63,7 +63,7 @@ public class EditController {
     public String editNpc(@RequestParam Integer id, Model model) {
         // create NPC-Object
         npc = new NpcClass();
-        npc.historyEntryToNpc(dbms.getHistoryEntry(id));
+        npc = dbms.convertDatabaseEntryToNpcClass(dbms.getHistoryEntry(id));
 
         // No changes yet → core elements can still be modified
         model.addAttribute(switchValue, false);

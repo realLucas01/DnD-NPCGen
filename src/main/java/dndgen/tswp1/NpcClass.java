@@ -611,42 +611,6 @@ public class NpcClass {
     }
 
     /**
-     * History entry to npc.
-     *
-     * @param entry the entry
-     */
-    public void historyEntryToNpc(HistoryModel entry) {
-        setRace(entry.getRace());
-        setGenClass(entry.getGenClass());
-        setAlignment(entry.getAlignment());
-        setDeity(entry.getDeity());
-        setName(entry.getName());
-        setLevel(entry.getLevel());
-        setJob(entry.getJob());
-        setArmorClass(entry.getArmorClass());
-        setHealthPoints(entry.getHealthPoints());
-        setMovementSpeedList(entry.getMovementSpeedList());
-        setLanguages(entry.getLanguages());
-        setAbilityScores(entry.getAbilityScores());
-        setAbilityModifier(entry.getAbilityModifier());
-        setSavingThrows(entry.getSavingThrows());
-        setArmor(entry.getArmor());
-        setWeaponList(entry.getWeaponList());
-        setSkillList(entry.getSkillList());
-        setSpellAbility(entry.getSpellAbility());
-        setDescription(entry.getDescription());
-        setActionList(entry.getActionList());
-        setBonusActionList(entry.getBonusTextList());
-        setProfBonus(entry.getProfBonus());
-        setGender(entry.getGender());
-        setAge(entry.getAge());
-        setBonusTextList(entry.getBonusTextList());
-        setSenses((entry.getSenses()));
-        setSpellList(new ArrayList<>(entry.getSpellList()));
-        setId(entry.getId());
-    }
-
-    /**
      * Get spell cantrips string.
      *
      * @return the string

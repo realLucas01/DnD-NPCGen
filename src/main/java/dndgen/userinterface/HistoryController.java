@@ -37,7 +37,7 @@ public class HistoryController {
         List<NpcClass> npcHistory = dbms.getHistory().stream()
                 .map(npcData -> {
                     NpcClass npc = new NpcClass();
-                    npc.historyEntryToNpc(npcData);
+                    npc = dbms.convertDatabaseEntryToNpcClass(npcData);
                     return npc;
                 }).toList();
 
