@@ -167,20 +167,29 @@
                 <input id="age" name="value" type="number" class="form-control" th:value="${age}" min="0" hx-post="/updateField"
                        hx-trigger="change"
                        hx-include="[name='field'], this"
-                       hx-swap="none"/>
+                       hx-swap="none"
+                       hx-vals='{"field": "age"}'/>
             </div>
-
 
             <!-- AC -->
             <div class="row mb-3">
                 <label for="AC" class="form-label">Armor Class (AC):</label>
-                <input id="AC" name="AC" type="number" class="form-control" th:value="${AC}" min="0" />
+                <input id="AC" name="value" type="number" class="form-control" th:value="${AC}" min="0" hx-post="/updateField"
+                       hx-trigger="change"
+                       hx-include="[name='field'], this"
+                       hx-swap="none"
+                       hx-vals='{"field": "AC"}'/>
             </div>
 
             <!-- HP -->
             <div class="row mb-3">
                 <label for="HP" class="form-label">Hit Points (HP):</label>
-                <input id="HP" name="HP" type="number" class="form-control" th:value="${HP}" min="0" />
+                <input id="HP" name="value" type="number" class="form-control" th:value="${HP}" min="0"
+                       hx-post="/updateField"
+                       hx-trigger="change"
+                       hx-include="[name='field'], this"
+                       hx-swap="none"
+                       hx-vals='{"field": "HP"}'/>
             </div>
 
             <!-- Speed -->
@@ -189,7 +198,12 @@
                 <div class="col-6">
                     <label for="walkingSpeed" class="form-label">Walking speed:</label>
                     <div class="input-group">
-                        <input id="walkingSpeed" name="walkingSpeed" type="number" class="form-control" th:value="${walkingSpeed}" min="0" />
+                        <input id="walkingSpeed" name="value" type="number" class="form-control" th:value="${walkingSpeed}" min="0"
+                               hx-post="/updateField"
+                               hx-trigger="change"
+                               hx-include="[name='field'], this"
+                               hx-swap="none"
+                               hx-vals='{"field": "walkingSpeed"}'/>
                         <span class="input-group-text">ft</span>
                     </div>
                 </div>
@@ -198,7 +212,12 @@
                 <div class="col-6">
                     <label for="flyingSpeed" class="form-label">Flying speed:</label>
                     <div class="input-group">
-                        <input id="flyingSpeed" name="flyingSpeed" type="number" class="form-control" th:value="${flyingSpeed}" min="0" />
+                        <input id="flyingSpeed" name="value" type="number" class="form-control" th:value="${flyingSpeed}" min="0"
+                               hx-post="/updateField"
+                               hx-trigger="change"
+                               hx-include="[name='field'], this"
+                               hx-swap="none"
+                               hx-vals='{"field": "flyingSpeed"}'/>
                         <span class="input-group-text">ft</span>
                     </div>
                 </div>

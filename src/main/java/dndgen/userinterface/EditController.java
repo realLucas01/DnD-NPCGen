@@ -564,35 +564,67 @@ public class EditController {
      */
     @PostMapping("/updateField")
     @ResponseBody
-    public ResponseEntity<Void> updateField(@RequestParam String value, @ModelAttribute("updateNPC") NpcClass updateNPC) {
+    public ResponseEntity<Void> updateField(@RequestParam String value, @RequestParam(required = false) String field, @ModelAttribute("updateNPC") NpcClass updateNPC) {
 
-        String[] parts = value.split(";", 2);
-        value = parts[0];
-        String field = parts.length > 1 ? parts[1] : "age";
+        String fieldValue = value;
+        String fieldName = field;
+
+        // Handle older format where field is part of value
+        if (fieldName == null) {
+            String[] parts = fieldValue.split(";", 2);
+            fieldValue = parts[0];
+            fieldName = parts.length > 1 ? parts[1] : "age";
+        }
 
         // Debug output
-        System.out.println("Update request received for field:" + value + " " + field);
+        System.out.println("Update request received for field:" + fieldValue + " " + fieldName);
 
         // Update logic
-        switch (field) {
+        switch (fieldName) {
             case "job":
-                updateNPC.setJob(value);
+                updateNPC.setJob(fieldValue);
                 break;
             case "level":
-                updateNPC.setLevel(Integer.parseInt(value));
+                updateNPC.setLevel(Integer.parseInt(fieldValue));
                 break;
             case "deity":
-                updateNPC.setDeity(value);
+                updateNPC.setDeity(fieldValue);
                 break;
             case "age":
-                updateNPC.setAge(Integer.parseInt(value));
+                updateNPC.setAge(Integer.parseInt(fieldValue));
                 break;
             case "gender":
-                if(value.equalsIgnoreCase("Random")){
+                if(fieldValue.equalsIgnoreCase("Random")){
                     updateNPC.setGender(randomGenerator.randGender());
                 } else {
-                    updateNPC.setGender(value);
+                    updateNPC.setGender(fieldValue);
                 }
+                break;
+            case "AC":
+                updateNPC.setArmorClass(Integer.parseInt(fieldValue));
+                break;
+            case "HP":
+                updateNPC.setHealthPoints(Integer.parseInt(fieldValue));
+                break;
+            case "walkingSpeed", "flyingSpeed":
+                System.out.println(updateNPC.getMovementSpeedList());
+                List speedList = new ArrayList<>();
+
+                // changes at walking
+                if (fieldName.equals("walkingSpeed")) {
+                    speedList.add(fieldValue + " ft walking Speed");
+                    if(updateNPC.getMovementSpeedList().size()!=1){
+                        speedList.add(updateNPC.getMovementSpeedList().get(1));
+                    }
+                } else { // changes at flying
+                    if(fieldValue.equals("")) {
+                        speedList.add(updateNPC.getMovementSpeedList().get(0));
+                    } else {
+                        speedList.add(updateNPC.getMovementSpeedList().get(0));
+                        speedList.add(fieldValue + " ft flying Speed");
+                    }
+                }
+                updateNPC.setMovementSpeedList(speedList);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown field: " + field);
