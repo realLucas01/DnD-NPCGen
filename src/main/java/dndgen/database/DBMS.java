@@ -290,30 +290,30 @@ public class DBMS implements ApplicationContextAware{
 	 * 					kleingeschriebener String.
 	 * @param Clazz: KlassenName für den die Funktion ausgeführt werden soll(z.B.: "Fighter")
 	 */
-	public ArrayList<String> getColWithPref(String dbname,String Clazz){
+	public ArrayList<String> getColWithPref(String dbname,String searchstring){
 		ArrayList<String> col = new ArrayList<String>();
 		RandomGenerator randGen = new RandomGenerator();
 		switch(dbname) {
 		case "weapon":
-			ArrayList<String> weaponprefs = (ArrayList<String>) randGen.bigStringToDividedString(classRepository.getWeaponPref(Clazz));
+			ArrayList<String> weaponprefs = (ArrayList<String>) randGen.bigStringToDividedString(classRepository.getWeaponPref(searchstring.strip()));
 			for(String weaponpref : weaponprefs) {
 				col.addAll(weaponRepository.getWeaponCol(weaponpref));
 			}
 			break;
 		case "armor":
-			ArrayList<String> armorprefs = (ArrayList<String>) randGen.bigStringToDividedString(classRepository.getArmorPref(Clazz));
+			ArrayList<String> armorprefs = (ArrayList<String>) randGen.bigStringToDividedString(classRepository.getArmorPref(searchstring.strip()));
 			for(String armorpref : armorprefs) {
 				col.addAll(armorRepository.getArmorCol(armorpref));
 			}
 			break;
 		case "spellsForClassAvailabilty":
-			col = spellRepository.getSpellColForClassAvailabilty(Clazz);
+			col = spellRepository.getSpellColForClassAvailabilty(searchstring.strip());
 			break;
 		case "actions":
-			col = actionRepository.getActionsCol(Clazz);
+			col = actionRepository.getActionsCol(searchstring.strip());
 			break;
 		case "deity":
-			col = deityRepository.getDeityByAlignmentCol(Clazz);
+			col = deityRepository.getDeityByAlignmentCol(searchstring.strip());
 			break;
 		default:
 			col = null;
@@ -341,51 +341,51 @@ public class DBMS implements ApplicationContextAware{
 		 
 			switch(dbName) {
 			case "race":
-				RaceModel entryrace = raceRepository.findByRaceName(searchstring);
+				RaceModel entryrace = raceRepository.findByRaceName(searchstring.strip());
 				row = bobMakesSortedList(entryrace);
 				break;
 			case "job":
-				JobModel entryjob = jobRepository.findByJobName(searchstring);
+				JobModel entryjob = jobRepository.findByJobName(searchstring.strip());
 				row = bobMakesSortedList(entryjob);
 				break;
 			case "class":
-				ClassModel entryclass = classRepository.findByClassName(searchstring);
+				ClassModel entryclass = classRepository.findByClassName(searchstring.strip());
 				row = bobMakesSortedList(entryclass);
 				break;
 			case "features":
-				FeatureModel entryfeature = featureRepository.findByFeatureName(searchstring);
+				FeatureModel entryfeature = featureRepository.findByFeatureName(searchstring.strip());
 				row = bobMakesSortedList(entryfeature);
 				break;
 			case "armor":
-			    ArmorModel entryarmor = armorRepository.findByArmorName(searchstring);
+			    ArmorModel entryarmor = armorRepository.findByArmorName(searchstring.strip());
 			    row = bobMakesSortedList(entryarmor);
 				break;
 			case "weapon":
-			    WeaponModel entryweapon = weaponRepository.findByWeaponName(searchstring);
+			    WeaponModel entryweapon = weaponRepository.findByWeaponName(searchstring.strip());
 			    row = bobMakesSortedList(entryweapon);
 				break;
 			case "level":
-			    LevelModel entrylevel = levelRepository.findByLevelNumber(Integer.parseInt(searchstring));
+			    LevelModel entrylevel = levelRepository.findByLevelNumber(Integer.parseInt(searchstring.strip()));
 			    row = bobMakesSortedList(entrylevel);
 				break;
 			case "skills":
-				SkillModel entryskill = skillRepository.findBySkillName(searchstring);
+				SkillModel entryskill = skillRepository.findBySkillName(searchstring.strip());
 				row = bobMakesSortedList(entryskill);
 				break;
 			case "dracances":
-				DracAncesModel entrydracances = dracAncesRepository.findByDraconicDragon(searchstring);
+				DracAncesModel entrydracances = dracAncesRepository.findByDraconicDragon(searchstring.strip());
 				row = bobMakesSortedList(entrydracances);
 				break;
 			case "spellslots":
-				SpellSlotsModel entryspellslots = spellSlotsRepository.findBySpellSlotsClass(searchstring);
+				SpellSlotsModel entryspellslots = spellSlotsRepository.findBySpellSlotsClass(searchstring.strip());
 				row = bobMakesSortedList(entryspellslots);
 				break;
 			case "spells":
-			    SpellModel entryspells = spellRepository.findBySpellName(searchstring);
+			    SpellModel entryspells = spellRepository.findBySpellName(searchstring.strip());
 			    row = bobMakesSortedList(entryspells);
 				break;
 			case "deity":
-		    	DeityModel entrydeity = deityRepository.findByDeityName(searchstring);
+		    	DeityModel entrydeity = deityRepository.findByDeityName(searchstring.strip());
 		    	row = bobMakesSortedList(entrydeity);
 			break;
 			default:
@@ -492,7 +492,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile in form von Strings, 
 	 * 				jedes Attribut ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRandRowWithPref(String dbname, String pref){
+	public ArrayList<String> getRandRowWithPref(String dbname, String searchstring){
 	    int qty;
 	    Page<?> questionPage2;
 	    int idx;
@@ -500,45 +500,45 @@ public class DBMS implements ApplicationContextAware{
 	    
 		switch(dbname) {
 		case "armor":
-			qty = armorRepository.findByArmorKind(pref).size();
+			qty = armorRepository.findByArmorKind(searchstring.strip()).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage2 = armorRepository.getArmorPref(pref,PageRequest.of(idx,1));
+		    questionPage2 = armorRepository.getArmorPref(searchstring.strip(),PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	ArmorModel randarmorpref = (ArmorModel) questionPage2.getContent().get(0);
 		    	randRowPref = bobMakesSortedList(randarmorpref);
 		    }
 			break;
 		case "weapon":
-			qty = weaponRepository.findByWeaponKind(pref).size();
+			qty = weaponRepository.findByWeaponKind(searchstring.strip()).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage2 = weaponRepository.getWeaponPref(pref,PageRequest.of(idx,1));
+		    questionPage2 = weaponRepository.getWeaponPref(searchstring.strip(),PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	WeaponModel randweaponpref = (WeaponModel) questionPage2.getContent().get(0);
 		    	randRowPref = bobMakesSortedList(randweaponpref);
 		    }
 			break;
 		case "deity":
-			qty = deityRepository.findByDeityAlignment(pref).size();
+			qty = deityRepository.findByDeityAlignment(searchstring.strip()).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage2 = deityRepository.getDeityPref(pref,PageRequest.of(idx,1));
+		    questionPage2 = deityRepository.getDeityPref(searchstring.strip(),PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	DeityModel randdeitypref = (DeityModel) questionPage2.getContent().get(0);
 		    	randRowPref = bobMakesSortedList(randdeitypref);
 		    }
 			break;
 		case "name":
-			qty = nameRepository.findByNameRace(pref).size();
+			qty = nameRepository.findByNameRace(searchstring.strip()).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage2 = nameRepository.getNamePref(pref,PageRequest.of(idx,1));
+		    questionPage2 = nameRepository.getNamePref(searchstring.strip(),PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	NameModel randnamepref = (NameModel) questionPage2.getContent().get(0);
 		    	randRowPref = bobMakesSortedList(randnamepref);
 		    }
 			break;
 		case "abilisc":
-			qty = abiliScRepository.findByAbiliScGenerationMethod(pref).size();
+			qty = abiliScRepository.findByAbiliScGenerationMethod(searchstring.strip()).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage2 = abiliScRepository.getAbiliScPref(pref,PageRequest.of(idx,1));
+		    questionPage2 = abiliScRepository.getAbiliScPref(searchstring.strip(),PageRequest.of(idx,1));
 		    if (questionPage2.hasContent()) {
 		    	AbiliScModel randabilipref = (AbiliScModel) questionPage2.getContent().get(0);
 		    	randRowPref = bobMakesSortedList(randabilipref);
@@ -595,7 +595,7 @@ public class DBMS implements ApplicationContextAware{
 	 * @return ArrayList gefüllt mit den Attributen der Zeile, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0
 	 */
-	public ArrayList<String> getRandRowWithMultPref(String dbname,String pref1,String pref2){
+	public ArrayList<String> getRandRowWithMultPref(String dbname,String searchstring1,String searchstring2){
 	    int qty;
 	    Page<?> questionPage;
 	    int idx;
@@ -603,27 +603,27 @@ public class DBMS implements ApplicationContextAware{
 	    
 		switch(dbname) {
 		case "spells":
-			qty = spellRepository.findByMultPrefsize(pref1, pref2).size();
+			qty = spellRepository.findByMultPrefsize(searchstring1.strip(), searchstring2.strip()).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage = spellRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
+		    questionPage = spellRepository.findByMultPrefdata(searchstring1.strip(), searchstring2.strip(),PageRequest.of(idx,1));
 		    if (questionPage.hasContent()) {
 		    	SpellModel spellmultpref = (SpellModel) questionPage.getContent().get(0);
 		    	rowMultPref = bobMakesSortedList(spellmultpref);
 		    }
 		    break;
 		case "spellknown":
-			qty = spellKnownRepository.findByMultPrefsize(pref1, pref2).size();
+			qty = spellKnownRepository.findByMultPrefsize(searchstring1.strip(), searchstring2.strip()).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage = spellKnownRepository.findByMultPrefdata(pref1, pref2,PageRequest.of(idx,1));
+		    questionPage = spellKnownRepository.findByMultPrefdata(searchstring1.strip(), searchstring2.strip(),PageRequest.of(idx,1));
 		    if (questionPage.hasContent()) {
 		    	SpellKnownModel spellknownmultpref = (SpellKnownModel) questionPage.getContent().get(0);
 		    	rowMultPref = bobMakesSortedList(spellknownmultpref);
 		    }
 		    break;
 		case "actions":
-			qty = actionRepository.findByMultPrefsize(pref1, Integer.valueOf(pref2)).size();
+			qty = actionRepository.findByMultPrefsize(searchstring1.strip(), Integer.valueOf(searchstring2.strip())).size();
 			idx = (int)(Math.random() * qty);
-		    questionPage = actionRepository.findByMultPrefdata(pref1, Integer.valueOf(pref2),PageRequest.of(idx,1));
+		    questionPage = actionRepository.findByMultPrefdata(searchstring1.strip(), Integer.valueOf(searchstring2.strip()),PageRequest.of(idx,1));
 		    if (questionPage.hasContent()) {
 		    	ActionModel actionnmultpref = (ActionModel) questionPage.getContent().get(0);
 		    	rowMultPref = bobMakesSortedList(actionnmultpref);
@@ -652,7 +652,7 @@ public class DBMS implements ApplicationContextAware{
 	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
 	 * 					werden in der ArrayList hintereinnader gehangen.
 	 */
-	public ArrayList<Object> getMultRowWithPref(String dbname, String pref, Integer rownumber){
+	public ArrayList<Object> getMultRowWithPref(String dbname, String searchstring, Integer rownumber){
 		ArrayList<Object> finalList = new ArrayList<Object>();
 		
 		switch(dbname) {
@@ -660,7 +660,7 @@ public class DBMS implements ApplicationContextAware{
 				if (rownumber != null) {
 					System.out.println("Für eine rownumber =! als NULL für die DB Spells wurde kein Use-Case angegeben -> Neues Issue für Implementation benötigt."); 
 				}else {
-					for(SpellModel spell : spellRepository.findBySpellLevel(pref)) {
+					for(SpellModel spell : spellRepository.findBySpellLevel(searchstring.strip())) {
 						finalList.add(bobMakesSortedList(spell));
 					}
 				}
@@ -683,21 +683,22 @@ public class DBMS implements ApplicationContextAware{
 	 * @param pref2: String nach dem die database vor der Randomauswahl sortiert werden soll.
 	 * 
 	 * @param rownumber: Anzahl der Zeilen die Ausgegeben werden sollen. Wenn alle gewollt sind für rownumber
+	 * null angeben.
 	 * 
 	 * @return ArrayList gefüllt mit den Attributen der Zeilen, jedes Attribut 
 	 * 					ein eigener Index, beginend mit der ID auf idx 0. Die Zeilen
 	 * 					werden in der ArrayList hintereinnader gehangen.
 	 */
-	public ArrayList<String> getMultRowWithMultPref(String dbname, String pref, String pref2, Integer rownumber){
+	public ArrayList<String> getMultRowWithMultPref(String dbname, String searchstring1, String searchstring2, Integer rownumber){
 		ArrayList<String> rand = new ArrayList<String>();
 		ArrayList<String> multRowMultPref = new ArrayList<String>();
 		Integer i = 2;
 		
 		switch(dbname) {
 		case "spells":
-			multRowMultPref.addAll(getRandRowWithMultPref(dbname, pref, pref2));
+			multRowMultPref.addAll(getRandRowWithMultPref(dbname, searchstring1.strip(), searchstring2.strip()));
 			while (i <= rownumber) {
-				rand.addAll(getRandRowWithMultPref(dbname, pref, pref2));
+				rand.addAll(getRandRowWithMultPref(dbname, searchstring1.strip(), searchstring2.strip()));
 				if (multRowMultPref.containsAll(rand)) {
 					rand.clear();
 				} else {
@@ -707,7 +708,7 @@ public class DBMS implements ApplicationContextAware{
 				}
 			}
 			break;
-		case "actions": for (ActionModel actions : actionRepository.findByAllActionsWithPref(pref, rownumber, pref2)) { //actionClass, level, Action Typ
+		case "actions": for (ActionModel actions : actionRepository.findByAllActionsWithPref(searchstring1.strip(), rownumber, searchstring2.strip())) { //actionClass, level, Action Typ
 				rand.add(actions.getActionName());
 				rand.add(actions.getActionDescription());
 				multRowMultPref.addAll(rand);
