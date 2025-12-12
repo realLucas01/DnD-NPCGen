@@ -14,8 +14,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Controller für die Detailseite eines NPCs
- * zeigt alle Informationen des gewählten NPCs an.
+ * Controller for the detail page of an NPC.
+ * Displays all information of the selected NPC.
  * @author Marie
  */
 @Controller
@@ -30,29 +30,28 @@ public class DetailController {
     }
 
     /**
-     * Lädt einen NPC anhand seiner ID und zeigt ihn auf der Detailseite an.
-     * @param id ID des NPCs aus der Datenbank
-     * @param model Model, das die NPC-Daten für Thymeleaf bereitstellt
-     * @return Die Thymeleaf-Template-Seite "detail"
+     * Loads an NPC by its ID and displays it on the detail page.
+     * @param id ID of the NPC from the database
+     * @param model Model that provides the NPC data for Thymeleaf
+     * @return The Thymeleaf template page "detail"
      */
     @GetMapping("/detail")
     public String getNpcDetail(@RequestParam(required = false) Integer id, Model model, RedirectAttributes redirectAttributes) {
         if (id == null) {
-            redirectAttributes.addFlashAttribute("error", "Ungültige NPC-ID.");
+            redirectAttributes.addFlashAttribute("error", "Invalid NPC ID.");
             return "redirect:/history";
         }
 
-        NpcClass npc = new NpcClass();
-        npc = dbms.convertDatabaseEntryToNpcClass(dbms.getHistoryEntry(id));
+        NpcClass npc = dbms.convertDatabaseEntryToNpcClass(dbms.getHistoryEntry(id));
 
         formatNpcDataForModel(npc, model);
         return "detail";
     }
 
     /**
-     * Bereitet die NPC-Daten für das Model vor.
-     * @param npc Der NPC, der angezeigt wird
-     * @param model Model, in das die Daten geladen werden
+     * Prepares the NPC data for the model.
+     * @param npc The NPC to be displayed
+     * @param model The model into which the data is loaded
      */
     private void formatNpcDataForModel(NpcClass npc, Model model) {
         model.addAttribute("npc", npc);
@@ -66,38 +65,34 @@ public class DetailController {
     }
 
 
-
-
     /**
-     * Fügt MovementSpeed und Senses zum bereitgestellten Modell hinzu, basierend auf den Attributen des NPCs.
+     * Adds movement speed and senses to the provided model based on the NPC's attributes.
      *
-     * @param npc Das NPC-Objekt, das Speed und Senses enthält.
-     * @param model Das Modell, zu dem Speed und Senses hinzugefügt werden.
+     * @param npc The NPC object containing speed and senses.
+     * @param model The model to which speed and senses will be added.
      */
     private void addMovementAndSensesToModel(NpcClass npc, Model model) {
         List<String> speeds = npc.getMovementSpeedList();
         model.addAttribute("walkingSpeed", speeds.stream().filter(s -> s.contains("walking")).findFirst().orElse(""));
         model.addAttribute("flyingSpeed", speeds.stream().filter(s -> s.contains("flying")).findFirst().orElse(""));
 
-        // Nullprüfung und alternative Handhabung
-        String sensesValue = npc.getSenses();  // Wert aus der Methode holen
+        // Null check and alternative handling
+        String sensesValue = npc.getSenses();  // Get value from the method
         List<String> senses = (sensesValue != null && !sensesValue.isEmpty())
                 ? new ArrayList<>(List.of(sensesValue.split(",\\s*")))
-                : new ArrayList<>();  // Leere Liste verwenden, falls null oder leer
+                : new ArrayList<>();  // Use an empty list if null or empty
         
 
-        model.addAttribute("senses", senses);  // Senses dem Model hinzufügen
-
+        model.addAttribute("senses", senses);  // Add senses to the model
     }
 
 
-
     /**
-     * Fügt Spell-Informationen aus dem bereitgestellten NPC-Objekt zum Modell hinzu, indem die Spell-Strings aufgeteilt
-     * und nach Zaubergraden kategorisiert werden.
+     * Adds spell information from the provided NPC object to the model by splitting the spell strings
+     * and categorizing them by spell level.
      *
-     * @param npc Das NPC-Objekt, das Spell-Informationen für verschiedene Grade enthält.
-     * @param model Das Modell, zu dem die verarbeiteten Spelldaten hinzugefügt werden.
+     * @param npc The NPC object containing spell information for different levels.
+     * @param model The model to which the processed spell data will be added.
      */
     private void addSpellsToModel(NpcClass npc, Model model) {
         model.addAttribute("spellCantrips", splitString(npc.getSpellCantrips()));
@@ -113,16 +108,12 @@ public class DetailController {
     }
 
 
-    // Inventory
-    //TODO
-
-
     /**
-     * Fügt eine formatierte Beschreibung eines NPC zum bereitgestellten Modell hinzu. Die Beschreibungen werden mit vordefinierten Titeln
-     * gepaart und für Anzeigezwecke formatiert. Zusätzlich wird ein zusammengefasster Beschreibungstext generiert und zum Modell hinzugefügt.
+     * Adds a formatted description of an NPC to the provided model. The descriptions are paired with predefined titles
+     * and formatted for display. Additionally, a summarized description text is generated and added to the model.
      *
-     * @param npc Das NPC-Objekt, das zu formatierende Beschreibungsdetails enthält.
-     * @param model Das Modell, dem die formatierte Beschreibung und der generierte Beschreibungstext hinzugefügt werden.
+     * @param npc The NPC object containing description details to be formatted.
+     * @param model The model to which the formatted description and the generated description text will be added.
      */
     private void addDescriptionToModel(NpcClass npc, Model model) {
         List<String> descriptions = npc.getDescription();
