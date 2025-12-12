@@ -22,12 +22,14 @@ import java.util.Random;
  */
 @SpringBootTest
 class BasicTest {
+    @Autowired
+    private DBMS dbmsInstance;
 
 
     @Autowired
     private RandomNpc randomNpc;
-    ApplicationContext appCtx = SpringApplication.run(MainApplication.class);
-    DBMS dbmsInstance = appCtx.getBean(DBMS.class);
+    //ApplicationContext appCtx = SpringApplication.run(MainApplication.class);
+    //DBMS dbmsInstance = appCtx.getBean(DBMS.class);
 
     @Test
     void profTest(){
@@ -47,7 +49,7 @@ class BasicTest {
     }
 
     /*
-    determineSavingThrows tests,default noch ungetestet
+    determineSavingThrows tests, default noch ungetestet
      */
     @Test
     void testDetermineSavingThrows(){
@@ -91,8 +93,7 @@ class BasicTest {
      */
     @Test
     void testAbilityScoreDistribution(){
-        String testClass1 = "Paladin";
-        String testClass2 = "Commoner";
+        String testClass1 = "Fighter";
         List<Integer> abilityScoreList = new ArrayList<>();
         abilityScoreList.add(10);
         abilityScoreList.add(12);
@@ -100,18 +101,16 @@ class BasicTest {
         abilityScoreList.add(16);
         abilityScoreList.add(13);
         abilityScoreList.add(19);
-        List<Integer> firstResults = new ArrayList<>();
-        List<Integer> secondResults = new ArrayList<>();
-        List<Integer> exceptedResultsFighter = new ArrayList<>(); //Str, Dex, Con, Wis, Int, Cha
+        List<Integer> firstResults;
+        List<Integer> exceptedResultsFighter = new ArrayList<>(); //Str, Con, Wis, Dex, Int, Cha
         exceptedResultsFighter.add(19);
         exceptedResultsFighter.add(12);
-        exceptedResultsFighter.add(9);
+        exceptedResultsFighter.add(16);
         exceptedResultsFighter.add(10);
         exceptedResultsFighter.add(13);
-        exceptedResultsFighter.add(16);
+        exceptedResultsFighter.add(9);
 
-        firstResults = randomNpc.distributeAbilityScore(abilityScoreList,testClass1); //Str, Con, Wis, Dex, Int, Cha
-        secondResults = randomNpc.distributeAbilityScore(abilityScoreList,testClass1);
+        firstResults  = randomNpc.distributeAbilityScore(new ArrayList<>(abilityScoreList), testClass1);
         Assertions.assertEquals(exceptedResultsFighter,firstResults);
     }
 

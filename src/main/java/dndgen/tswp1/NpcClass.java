@@ -1,7 +1,6 @@
 package dndgen.tswp1;
 
 import dndgen.database.DBMS;
-import dndgen.database.HistoryModel;
 import org.springframework.context.ApplicationContext;
 
 import javax.swing.filechooser.FileSystemView;

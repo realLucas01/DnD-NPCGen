@@ -211,9 +211,8 @@ public class RandomNpc {
                 break;
             default:
                 //arrays verwenden, nichts berechnen und Inhalt des Arrays verteilen
-                List<String> abilityScoreNew = randGen.bigStringToDividedString(inputAbilityScore);
                 List<Integer> abilityScoreNewInteger = new ArrayList<>();
-                for (String abilityStr : abilityScoreNew) {
+                for (String abilityStr : inputAbilityScore.split(", ")) {
                     abilityScoreNewInteger.add(Integer.parseInt(abilityStr));
                 }
                 abilityScores.addAll(abilityScoreNewInteger);
@@ -312,7 +311,7 @@ public class RandomNpc {
 
         //Spell Ability = Spell Attack Mod und Spell Save DC
         int spellAttack = randGen.spellAttackMod(abilityModifier, profBonus, genClass);
-        int spellSave = randGen.spellSaveDC(randGen.spellAttackMod(abilityModifier, profBonus, genClass));
+        int spellSave = randGen.spellSaveDC(spellAttack);
         List<String> spellAbility = new ArrayList<>();
 
         spellAbility.add(String.valueOf(spellAttack));
@@ -337,51 +336,25 @@ public class RandomNpc {
      * @return the list
      */
     public List<Integer> distributeAbilityScore (List<Integer> rolledAbilityScore, String charClass) {
-    	List<Integer> rawAbilityScores ;
-    	List<String> arrayForClass;
-    	List<String> dividedAbilityScores ;
-    	List<String> finishedAbilityScores = new ArrayList<>();
-    	List<Integer> parsedAbilityScores = new ArrayList<>();
-    	
-    	rawAbilityScores = rolledAbilityScore;
+    	List<Integer> rawAbilityScores = new ArrayList<>(rolledAbilityScore);
 
-        arrayForClass = dbms.getRowWithPref(nameDBClass, charClass);
-    	
-    	dividedAbilityScores = randGen.bigStringToDividedString(arrayForClass.get(8));
-    	
-    	finishedAbilityScores.add("Str");
-    	finishedAbilityScores.add("Dex");
-    	finishedAbilityScores.add("Con");
-    	finishedAbilityScores.add("Int");
-    	finishedAbilityScores.add("Wis");
-    	finishedAbilityScores.add("Cha");
-    	
-    	if(!(charClass.equals(nameDBCommoner))) {
-            int i = 0;
-            int j = 0;
+        if(charClass.equals(nameDBCommoner)){
+            Collections.shuffle(rawAbilityScores);
+            return  rawAbilityScores;
+        }
+        List<String> arrayForClass = dbms.getRowWithPref(nameDBClass, charClass);
+        List<String> prioAbilityScores = randGen.bigStringToDividedString(arrayForClass.get(8));;
+        List<String> finishedAbilityScores = List.of("Str", "Dex", "Con", "Int", "Wis", "Cha");
 
-            while(i <= 5 && j <= 5) {
+        rawAbilityScores.sort(Collections.reverseOrder());
 
-                String aScore = dividedAbilityScores.get(i);
-                Integer value = rawAbilityScores.get(i);
-                String aScoreFinished = finishedAbilityScores.get(j);
-                if(aScoreFinished.equals(aScore)  ) {
-                    finishedAbilityScores.set(j, value.toString());
-                    j++;
-                    i = 0;
-                } else {
-                    i++;
-                }
-    	    }
-            for(int k = 0; k < 6; k++) {
-                Integer parsedInt = Integer.parseInt(finishedAbilityScores.get(k));
-                parsedAbilityScores.add(parsedInt);
-            }
-    	    return parsedAbilityScores;
-    	} else {
-    		Collections.shuffle(rawAbilityScores);
-            return rawAbilityScores;
-    	}
+        List<Integer> returningAS = new ArrayList<>(Collections.nCopies(6, 0));
+        for(int i=0;i<6;i++){
+            String ability = prioAbilityScores.get(i);
+            int index = finishedAbilityScores.indexOf(ability);
+            returningAS.set(index, rawAbilityScores.get(i));
+        }
+        return returningAS;
     }
 
     /**
@@ -730,8 +703,7 @@ public class RandomNpc {
         return finalFeatures;
     }
 
-    //todo schauen welche DB Funktion hier besser geeignet wäre, diese Wahl möglich aber ineffizient,getMultRowWithMultPref oder neue eigene?
-    //todo Lucas drüber schauen lassen, getColWithPref funkt, getMultRowMitMulPref
+    //todo einbindung probieren sobald FEATURE db erweitert wurde mit bereitgestellten daten
     /**
      * An additional to the determine Features function, for the Class Features
      */
@@ -833,21 +805,18 @@ public class RandomNpc {
                         vIAS.add(abilityScore.get(2));
                     }
                     break;
-
                 case "Int":
                     if (abilityScore.get(3) < 20) {
                         aSIndex.add(3);
                         vIAS.add(abilityScore.get(3));
                     }
                     break;
-
                 case "Wis":
                     if (abilityScore.get(4) < 20) {
                         aSIndex.add(4);
                         vIAS.add(abilityScore.get(4));
                     }
                     break;
-
                 case "Cha":
                     if (abilityScore.get(5) < 20) {
                         aSIndex.add(5);

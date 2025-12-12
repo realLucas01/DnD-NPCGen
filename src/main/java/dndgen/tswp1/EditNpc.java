@@ -245,6 +245,5 @@ public class EditNpc {
         }
         randNpc.calculateArmorClass(armor,changedNPC,haseHeAlreadyAShield);
         }
-
     }
 
