@@ -5,6 +5,28 @@
     --border-orange: #c7882e;
 }
 
+body{
+    background-color: var(--background-orange);
+}
+
+.ueberschrift{
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    padding-bottom: 0.5rem;
+}
+
+.card{
+    background-color: var(--foreground-orange);
+    font-family: 'MedievalSharp';
+    font-size: 1.5rem;
+}
+
+
+
+
+
 
 
 
