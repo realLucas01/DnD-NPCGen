@@ -15,7 +15,7 @@ public class NavigationControllerAdvice {
     public String addCurrentUri(HttpServletRequest request) {
         String uri = request.getRequestURI();
 
-        // /detail und /edit sollen NICHT in der Navigation erscheinen
+        // /detail and /edit should NOT appear in the navigation
         if (uri.startsWith("/detail") || uri.startsWith("/edit")) {
             return "";
         }

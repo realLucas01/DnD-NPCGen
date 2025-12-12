@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Component
 public class HelpFunctions {
-    private DBMS dbms = new DBMS();
+    private final DBMS dbms;
 
     @Autowired
     public HelpFunctions(DBMS dbms) {
@@ -22,10 +22,10 @@ public class HelpFunctions {
     }
 
     /**
-     * Ruft eine Spalte von Strings aus der Datenbank ab, sortiert sie in aufsteigender Reihenfolge und gibt die sortierte Liste zurück.
+     * Retrieves a column of strings from the database, sorts it in ascending order, and returns the sorted list.
      *
-     * @param columnName der Name der Spalte, die abgerufen und sortiert werden soll
-     * @return eine Liste von Strings, die die sortierten Werte der angegebenen Spalte enthält
+     * @param columnName the name of the column to retrieve and sort
+     * @return a list of strings containing the sorted values from the specified column
      */
     public List<String> getSortedColumn(String columnName) {
         ArrayList<String> list = dbms.onlyColumn(columnName);
@@ -35,24 +35,24 @@ public class HelpFunctions {
 
 
     /**
-     * Generiert einen formatierten Beschreibungstext für den angegebenen NPC basierend auf dessen Attributen und Beschreibungen.
+     * Generates a formatted description text for the specified NPC based on its attributes and descriptions.
      *
-     * @param npc Das NPC-Objekt mit Attributen und Beschreibungsdetails, die für die Konstruktion des Beschreibungstextes verwendet werden.
-     * @return Ein formatierter String, der den NPC beschreibt. Wenn keine Beschreibung verfügbar ist, wird eine Standardnachricht zurückgegeben.
+     * @param npc The NPC object containing attributes and description details used to construct the description text.
+     * @return A formatted string describing the NPC. If no description is available, a default message is returned.
      */
     public String generateDescriptionText(NpcClass npc) {
         List<String> desc = npc.getDescription();
 
         if (desc == null || desc.isEmpty()) return "Keine Beschreibung verfügbar.";
 
-        // Geschlechtsspezifische Pronomen setzen
+        // Set gender-specific pronouns
         String pronoun = npc.getGender().equalsIgnoreCase("male") ? "he" : "she";
         String possessivePronoun = npc.getGender().equalsIgnoreCase("male") ? "his" : "her";
 
-        // Null-Werte durch sinnvolle Platzhalter ersetzen
+        // Replace null values with meaningful placeholders
         String hairStyle = desc.get(2) != null ? desc.get(2) : "a simple style";
 
-        // Beschreibung formatieren
+        // format description
         return String.format("%s has striking %s eyes. %s hair is %s, worn in %s. %s skin has a %s tone. %s is generally %s in behavior and has a distinctive habit: %s. %s feels strongly about \"%s\" and struggles with \"%s\". %s values \"%s\" above all. %s speaks with a %s voice. They usually wear %s and tend to come across as %s. %s is %s in size and stands at %s feet tall.",
                 npc.getName(), desc.get(0), possessivePronoun, desc.get(1), hairStyle,
                 npc.getName(), desc.get(3), pronoun, desc.get(4), desc.get(5),
@@ -63,14 +63,14 @@ public class HelpFunctions {
 
 
     /**
-     * Formatiert die Rettungswürfe einer gegebenen NPC-Klasse in eine Liste, wobei die Werte
-     * mit spezifischen Attributen (Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit, Charisma) ausgerichtet werden.
-     * Wenn der NPC keine Rettungswürfe oder ungültige Eingaben hat, wird eine Standardliste mit leeren Strings zurückgegeben.
+     * Formats the saving throws of a given NPC class into a list, aligning the values
+     * with specific attributes (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma).
+     * If the NPC has no saving throws or invalid inputs, a default list with empty strings is returned.
      *
-     * @param npc Das NPC-Objekt, das Informationen zu Rettungswürfen enthält.
-     * @return Eine Liste der Rettungswürfe, formatiert nach Attributen, wobei jeder Wert den Attributen
-     * "Str", "Dex", "Con", "Int", "Wis", "Cha" entspricht. Wenn keine gültigen Rettungswürfe
-     * gefunden werden, enthält die Liste leere Strings.
+     * @param npc The NPC object containing saving throw information.
+     * @return A list of saving throws, formatted by attributes, where each value corresponds to the attributes
+     * "Str", "Dex", "Con", "Int", "Wis", "Cha". If no valid saving throws
+     * are found, the list contains empty strings.
      */
     public List<String> formatSavingThrows(NpcClass npc) {
         List<String> formattedThrows = new ArrayList<>(List.of("", "", "", "", "", "")); // Mutable List
@@ -95,11 +95,11 @@ public class HelpFunctions {
 
 
     /**
-     * Kombiniert die Attributswerte und ihre entsprechenden Modifikatoren eines gegebenen NPCs in eine formatierte String-Liste.
-     * Jeder Eintrag in der Liste enthält einen Attributswert gefolgt von seinem Modifikator (z. B. "14 +2").
+     * Combines the attribute values and their corresponding modifiers of a given NPC into a formatted string list.
+     * Each entry in the list contains an attribute value followed by its modifier (e.g., "14 +2").
      *
-     * @param npc Das NPC-Objekt, das die Attributswerte und Modifikatoren zur Formatierung enthält.
-     * @return Eine Liste von Strings, wobei jeder String einen Attributswert und seinen Modifikator kombiniert.
+     * @param npc The NPC object containing the attribute values and modifiers to format.
+     * @return A list of strings, where each string combines an attribute value and its modifier.
      */
     public List<String> getAbilityScoresWithModifiers(NpcClass npc) {
         List<String> result = new ArrayList<>();
@@ -112,7 +112,4 @@ public class HelpFunctions {
         }
         return result;
     }
-
-
-
 }
