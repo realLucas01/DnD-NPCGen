@@ -20,58 +20,56 @@ import java.util.function.Function;
 public class IndexController {
     private final RandomNpc randomNpc;
     private final HelpFunctions helpFunctions;
-    private final String random = "Zufall";
+    private static final String RANDOM = "Random";
 
-
-
-    @Autowired // Spring injiziert automatisch eine Instanz von DBMS
+    
+    @Autowired
     public IndexController(RandomNpc randomNpc, HelpFunctions helpFunctions) {
         this.randomNpc = randomNpc;
         this.helpFunctions = helpFunctions;
     }
 
     /**
-     * Behandelt GET-Anfragen an den "/index"-Endpunkt und bereitet das Model
-     * mit den notwendigen Attributen für die Ansicht vor.
+     * Handles GET requests to the "/index" endpoint and prepares the model
+     * with the necessary attributes for the view.
      *
-     * @param model Das Model-Objekt, das verwendet wird, um Attribute an die Ansicht zu übergeben
-     * @return der Name der Thymeleaf-Vorlage, um den Index (Generator)-Seite anzuzeigen
+     * @param model The model object used to pass attributes to the view
+     * @return the name of the Thymeleaf template to display the index (generator) page
      */
     @GetMapping(value = {"/", "/index"})
     String getGeneratorPage(Model model, HttpSession session) {
-        // Prüfe, ob ein NPC in der Session existiert
+        // Check if an NPC exists in the session
         NpcClass existingNpc = (NpcClass) session.getAttribute("currentNpc");
         DropdownSelection existingSelection = (DropdownSelection) session.getAttribute("currentSelection");
 
         if (existingNpc != null) {
-            // Wenn ein NPC existiert, verwende die gespeicherten Daten
+            // If an NPC exists, use the stored data
             formatNpcDataForModel(existingNpc, model);
             populateDropdowns(model, existingSelection);
             model.addAttribute("npc", existingNpc);
         } else {
-            // Wenn kein NPC existiert, initialisiere nur die Dropdown-Menüs
-            populateDropdowns(model, new DropdownSelection("", random, random, random, random, random, random));
+            // If no NPC exists, only initialize the dropdown menus
+            populateDropdowns(model, new DropdownSelection("", RANDOM, RANDOM, RANDOM, RANDOM, RANDOM, RANDOM));
         }
         return "index";
 
     }
 
-
-
+    
     /**
-     * Generiert einen NPC (Nicht-Spieler-Charakter) basierend auf den angegebenen Parametern und fügt diesen dem Model hinzu.
-     * Bereitet Dropdown-Menüdaten vor, erstellt den NPC, formatiert die NPC-Daten und gibt das entsprechende
-     * Thymeleaf-Template zurück.
+     * Generates an NPC (Non-Player Character) based on the specified parameters and adds it to the model.
+     * Prepares dropdown menu data, creates the NPC, formats the NPC data, and returns the corresponding
+     * Thymeleaf template.
      *
-     * @param name     der Name des NPCs; kann null oder leer sein
-     * @param race     die Rasse des NPCs; kann null oder leer sein
-     * @param genClass die allgemeine Klasse oder der Archetyp des NPCs; kann null oder leer sein
-     * @param job      die spezifische Aufgabe oder Rolle des NPCs; kann null oder leer sein
-     * @param level    die Stufe oder Machtstufe des NPCs; kann null oder leer sein
-     * @param abilisc  die Fähigkeitspunkte oder Beschreibung des NPCs; kann null oder leer sein
-     * @param gender   das Geschlecht des NPCs; kann null oder leer sein
-     * @param model    das Model, dem Dropdown-Menüdaten und NPC-Daten hinzugefügt werden
-     * @return der Name des Thymeleaf-Templates, das die NPC-Index(Generator)-Seite rendert
+     * @param name     the name of the NPC; can be null or empty
+     * @param race     the race of the NPC; can be null or empty
+     * @param genClass the general class or archetype of the NPC; can be null or empty
+     * @param job      the specific job or role of the NPC; can be null or empty
+     * @param level    the level or power level of the NPC; can be null or empty
+     * @param abilisc  the ability points or description of the NPC; can be null or empty
+     * @param gender   the gender of the NPC; can be null or empty
+     * @param model    the model to which dropdown menu data and NPC data are added
+     * @return the name of the Thymeleaf template that renders the NPC index (generator) page
      */
     @PostMapping("/index")
     public String generateNPC(@RequestParam(required = false) String name,
@@ -90,31 +88,27 @@ public class IndexController {
         NpcClass npc = createNPC(name, race, genClass, job, level, abilisc, gender);
         formatNpcDataForModel(npc, model);
 
-        // Speichere NPC und Selection in der Session
+        // Save NPC and Selection in the session
         session.setAttribute("currentNpc", npc);
         session.setAttribute("currentSelection", selection);
 
         return "redirect:/index";
-
-
     }
 
-
-
-
+    
     /**
-     * Füllt die Dropdown-Optionen im angegebenen Model mit sortierten Daten für verschiedene Kategorien.
+     * Populates dropdown options in the specified model with sorted data for various categories.
      *
-     * @param model Das Model-Objekt, zu dem Dropdown-Attribute hinzugefügt werden
+     * @param model The model object to which dropdown attributes are added
      */
     private void populateDropdowns(Model model, DropdownSelection selection) {
-        // Dropdown-Daten hinzufügen
+        // Add dropdown data
         model.addAttribute("races", helpFunctions.getSortedColumn("race"));
         model.addAttribute("classes", helpFunctions.getSortedColumn("class"));
         model.addAttribute("jobs", helpFunctions.getSortedColumn("job"));
         model.addAttribute("abilisc", helpFunctions.getSortedColumn("abilisc"));
 
-        // vorher gewählte Daten übergeben
+        // Pass previously selected data
         model.addAttribute("name", selection.getName());
         model.addAttribute("selectedRace", selection.getRace());
         model.addAttribute("selectedClass", selection.getGenClass());
@@ -122,22 +116,21 @@ public class IndexController {
         model.addAttribute("selectedLevel", selection.getLevel());
         model.addAttribute("selectedAbilisc", selection.getAbilisc());
         model.addAttribute("selectedGender", selection.getGender());
-
     }
 
-    
+
     /**
-     * Erstellt einen neuen NPC (Non-Player Character) mit zufälligen oder spezifischen Attributen
-     * basierend auf den bereitgestellten Eingabeparametern.
+     * Creates a new NPC (Non-Player Character) with random or specific attributes
+     * based on the provided input parameters.
      *
-     * @param name         Der Name des NPCs; wenn "zufall" angegeben wird, wird ein zufälliger Name generiert.
-     * @param race         Die Rasse des NPCs; wenn "zufall" angegeben wird, wird eine zufällige Rasse ausgewählt.
-     * @param genClass     Die generelle Klasse (z. B. Krieger, Magier) des NPCs; wenn "zufall" angegeben wird, wird eine zufällige Klasse ausgewählt.
-     * @param job          Der spezifische Beruf oder die Aufgabe des NPCs; wenn "zufall" angegeben wird, wird ein zufälliger Beruf zugewiesen.
-     * @param level        Die Stufe des NPCs; wenn "zufall" angegeben wird, wird eine zufällige Stufe als Ganzzahl generiert.
-     * @param abilityScore Die Attributswerte des NPCs (z. B. Stärke, Intelligenz); wenn "zufall" angegeben wird, wird ein zufälliger Wert generiert.
-     * @param gender       Das Geschlecht des NPCs; wenn "zufall" angegeben wird, wird ein zufälliges Geschlecht ausgewählt.
-     * @return Eine Instanz der Klasse NpcClass, die den generierten NPC mit spezifischen oder zufälligen Attributen darstellt.
+     * @param name         The name of the NPC; if "random" is provided, a random name will be generated.
+     * @param race         The race of the NPC; if "random" is provided, a random race will be selected.
+     * @param genClass     The general class (e.g., warrior, mage) of the NPC; if "random" is provided, a random class will be selected.
+     * @param job          The specific job or task of the NPC; if "random" is provided, a random job will be assigned.
+     * @param level        The level of the NPC; if "random" is provided, a random integer level will be generated.
+     * @param abilityScore The ability scores of the NPC (e.g., strength, intelligence); if "random" is provided, a random value will be generated.
+     * @param gender       The gender of the NPC; if "random" is provided, a random gender will be selected.
+     * @return An instance of the NpcClass class representing the generated NPC with specific or random attributes.
      */
     private NpcClass createNPC(String name, String race, String genClass, String job, String level, String abilityScore, String gender) {
         String finalName = randomString(name);
@@ -151,15 +144,15 @@ public class IndexController {
         return randomNpc.createRandomNPC(finalName, finalRace, finalClass, finalJob, finalLevel, finalAbilityScore, finalGender);
     }
 
-    
+
     /**
-     * Formatiert NPC-Daten und fügt dem bereitgestellten Modell verschiedene Attribute zur Anzeige in der Benutzeroberfläche hinzu.
+     * Formats NPC data and adds various attributes to the provided model for display in the user interface.
      *
-     * @param npc   Das NPC-Objekt, das Daten enthält, die formatiert und dem Modell hinzugefügt werden sollen.
-     * @param model Das Model-Objekt, zu dem die NPC-Daten und Attribute als Schlüssel-Wert-Paare hinzugefügt werden.
+     * @param npc   The NPC object containing data to be formatted and added to the model.
+     * @param model The model object to which the NPC data and attributes are added as key-value pairs.
      */
     private void formatNpcDataForModel(NpcClass npc, Model model) {
-        Map<String, Object> formattedNpcData = formatNpcData(npc); // Main-NPC-Daten
+        Map<String, Object> formattedNpcData = formatNpcData(npc);
         model.addAttribute("npc", formattedNpcData);
 
         model.addAttribute("abilityScores", helpFunctions.getAbilityScoresWithModifiers(npc));
@@ -179,12 +172,12 @@ public class IndexController {
 
 
     /**
-     * Fügt die Bewegungsraten und Sinne eines NPCs in das bereitgestellte Model ein.
-     * Die Methode extrahiert Geh- und Fluggeschwindigkeiten aus dem NPC und fügt diese zusammen
-     * mit einer Liste der Sinne in das Model ein.
+     * Inserts the movement rates and senses of an NPC into the provided model.
+     * The method extracts walking and flying speeds from the NPC and adds these along
+     * with a list of senses to the model.
      *
-     * @param npc   Das NPC-Objekt, aus dem die Bewegungsraten und Sinne entnommen werden.
-     * @param model Das Model-Objekt, dem die Bewegungsraten und Sinne als Attribute hinzugefügt werden.
+     * @param npc   The NPC object from which movement rates and senses are taken.
+     * @param model The model object to which movement rates and senses are added as attributes.
      */
     private void addMovementAndSensesToModel(NpcClass npc, Model model) {
         String walkingSpeed = "";
@@ -206,14 +199,14 @@ public class IndexController {
         model.addAttribute("senses", sensesList);
     }
 
-    
+
     /**
-     * Fügt die Zauber eines NPCs auf verschiedenen Stufen als Attribute zum bereitgestellten Model hinzu.
-     * Wandelt kommagetrennte Zauberstrings in Listen um und weist sie den entsprechenden
-     * Zauberstufen-Attributen im Model zur Anzeige in der Ansicht zu.
+     * Adds the spells of an NPC at various levels as attributes to the provided model.
+     * Converts comma-separated spell strings into lists and assigns them to the corresponding
+     * spell level attributes in the model for display in the view.
      *
-     * @param npc   Das NPC-Objekt, das die Zauberdetails für verschiedene Stufen enthält.
-     * @param model Das Model-Objekt, dem die Zauberattribute hinzugefügt werden.
+     * @param npc   The NPC object containing the spell details for various levels.
+     * @param model The model object to which the spell attributes are added.
      */
     private void addSpellsToModel(NpcClass npc, Model model) {
         Function<String, List<String>> stringToList = str ->
@@ -232,17 +225,13 @@ public class IndexController {
     }
 
 
-    // Inventory
-
-
-    
     /**
-     * Fügt eine formatierte Beschreibung eines NPCs zum bereitgestellten Model hinzu.
-     * Die Methode formatiert einzelne beschreibende Attribute des NPCs, wie Augen, Haare und Eigenschaften,
-     * in eine strukturierte Liste und erzeugt außerdem einen zusammenhängenden Beschreibungstext zur Anzeige.
+     * Adds a formatted description of an NPC to the provided model.
+     * The method formats individual descriptive attributes of the NPC, such as eyes, hair, and traits,
+     * into a structured list and also generates a cohesive description text for display.
      *
-     * @param npc   Das NPC-Objekt, das die Beschreibungsdetails enthält und dem Model hinzugefügt werden soll.
-     * @param model Das Model-Objekt, dem die formatierte Beschreibungsliste und der Text hinzugefügt werden.
+     * @param npc   The NPC object containing the description details to be added to the model.
+     * @param model The model object to which the formatted description list and text are added.
      */
     private void addDescriptionToModel(NpcClass npc, Model model) {
         List<String> descriptionTitles = Arrays.asList("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
@@ -261,40 +250,40 @@ public class IndexController {
 
 
     /**
-     * Überprüft, ob ein String "zufall" ist. Falls ja, wird `null` zurückgegeben.
-     * @param input Der Eingabestring
-     * @return `null`, falls "zufall", sonst der Originalstring
+     * Checks if a string is "random". If so, returns `null`.
+     * @param input The input string
+     * @return `null` if "random", otherwise the original string
      */
     public String random(String input) {
-        return (random.equalsIgnoreCase(input) || input.isEmpty()) ? null : input;
+        return (RANDOM.equalsIgnoreCase(input) || input.isEmpty()) ? null : input;
     }
 
 
     /**
-     * Überprüft eine Level-Eingabe. Falls "zufall" ausgewählt wurde, gibt sie `null` zurück.
-     * @param input Die Level-Eingabe als String
-     * @return `null` falls "zufall", sonst Integer-Wert
+     * Validates a level input. If "random" was selected, returns `null`.
+     * @param input The level input as a string
+     * @return `null` if "random", otherwise the integer value
      */
     public Integer randomLevel(String input) {
-        return (random.equalsIgnoreCase(input) || input.isEmpty()) ? null : Integer.parseInt(input);
+        return (RANDOM.equalsIgnoreCase(input) || input.isEmpty()) ? null : Integer.parseInt(input);
     }
 
 
     /**
-     * Überprüft, ob ein String leer ist. Falls ja, wird `null` zurückgegeben.
-     * @param string Der Eingabestring
-     * @return `null` falls leer oder "zufall", sonst der String selbst
+     * Checks if a string is empty. If yes, returns `null`.
+     * @param string The input string
+     * @return `null` if empty or "random", otherwise the string itself
      */
     public String randomString(String string) {
-        return (string == null || string.equalsIgnoreCase(random) || string.isEmpty()) ? null : string;
+        return (string == null || string.equalsIgnoreCase(RANDOM) || string.isEmpty()) ? null : string;
     }
 
 
     /**
-     * Formatiert die bereitgestellten NPC-Daten in eine Kartenstruktur zur weiteren Verarbeitung oder Anzeige.
+     * Formats the provided NPC data into a map structure for further processing or display.
      *
-     * @param npc Das NPC-Objekt, das zu formatierende Daten enthält.
-     * @return Eine Map, bei der die Schlüssel Eigenschaftsnamen (z. B. "name", "level") und die Werte die entsprechenden NPC-Daten sind.
+     * @param npc The NPC object containing data to be formatted.
+     * @return A map where keys are property names (e.g., "name", "level") and values are the corresponding NPC data.
      */
     private Map<String, Object> formatNpcData(NpcClass npc) {
         Map<String, Object> npcData = new HashMap<>();
@@ -311,6 +300,4 @@ public class IndexController {
 
         return npcData;
     }
-
-
 }

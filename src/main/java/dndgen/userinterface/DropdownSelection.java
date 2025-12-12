@@ -1,18 +1,23 @@
 package dndgen.userinterface;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
- * Enthält die Parameter für die Dropdown-Auswahl und die vorher ausgewählten Werte.
+ * Contains the parameters for the dropdown selection and the previously selected values.
  */
-public class DropdownSelection {
+public class DropdownSelection implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private String race;
     private String genClass;
     private String job;
     private String level;
-    private String abilisc;
+    private final String abilisc;
     private String gender;
 
-    // Konstruktor
     public DropdownSelection(String name, String race, String genClass, String job, String level, String abilisc, String gender) {
         this.name = name;
         this.race = race;
@@ -66,10 +71,6 @@ public class DropdownSelection {
 
     public String getAbilisc() {
         return abilisc;
-    }
-
-    public void setAbilisc(String abilisc) {
-        this.abilisc = abilisc;
     }
 
     public String getGender() {
