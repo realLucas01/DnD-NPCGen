@@ -23,6 +23,24 @@ body{
     font-size: 1.5rem;
 }
 
+.color {
+  --bs-table-bg: var(--background-orange);
+  --bs-table-striped-bg: var(--foreground-yellow);
+  --bs-table-striped-color: #000000;
+  color: var(--foreground-orange);
+}
+
+.yellow{
+    background-color: var(--foreground-yellow);
+}
+
+.orange{
+    background-color: var(--background-orange);
+}
+
+.yellow .list-group-item {
+  background-color: var(--background-orange);
+}
 
 
 

@@ -46,11 +46,11 @@
 
             <!-- Stats -->
             <div class="container mt-3">
-                <div class="row border rounded p-3 bg-light">
+                <div class="card row border rounded p-3">
                     <h3>Stats</h3>
 
                     <div class="table-responsive">
-                        <table class="table table-borderless table-striped">
+                        <table class="color table table-borderless table-striped">
                             <thead>
                             <tr>
                                 <th></th>
@@ -78,7 +78,7 @@
 
             <!-- HP, AC, Movement & Languages -->
             <div class="container mt-3">
-                <div class="row border rounded p-3 bg-light">
+                <div class="card row border rounded p-3">
                     <h4>Defensive Stats</h4>
                     <div class="row">
                         <!-- Hit Points & Armor Class -->
@@ -111,7 +111,7 @@
 
             <!-- Inventory -->
             <div class="container mt-3">
-                <div class="row border rounded p-3 bg-light">
+                <div class="card row border rounded p-3">
                     <h3>Inventory</h3>
                     <div class="row">
                         <!-- Armor -->
@@ -135,7 +135,7 @@
 
             <!-- Skills & Senses -->
             <div class="container mt-3">
-                <div class="row border rounded p-3 bg-light">
+                <div class="card row border rounded p-3">
                     <h3>Skills & Senses</h3>
                     <div class="row">
                         <!-- Skills -->
@@ -159,7 +159,7 @@
 
             <!-- Spells -->
             <div class="container mt-3">
-                <div class="row border rounded p-3 bg-light">
+                <div class="card row border rounded p-3">
                     <div class="col-md-6">
                         <h3>Spells</h3>
 
@@ -238,20 +238,20 @@
 
             <!-- Beschreibung -->
             <div class="container mt-3">
-                <div class="row border rounded p-3 bg-light">
+                <div class="card row border rounded p-3">
                     <div class="container mt-4">
                         <h3>Beschreibung</h3>
                         <div class="row">
                             <!-- Fließtext (linke Spalte) -->
                             <div class="col-md-6">
-                                <div class="p-3 border rounded">
+                                <div class="orange p-3 border rounded">
                                     <p th:text="${descriptionText}"></p>
                                 </div>
                             </div>
 
                             <!-- Liste (rechte Spalte) -->
                             <div class="col-md-6">
-                                <div class="p-3 border rounded">
+                                <div class="yellow p-3 border rounded">
                                     <ul class="list-group">
                                         <li class="list-group-item" th:each="desc : ${descriptionList}" th:text="${desc}"></li>
                                     </ul>
