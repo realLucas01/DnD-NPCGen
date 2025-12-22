@@ -496,7 +496,7 @@ public class EditController {
                         isUpdated = true;
                         break;
                     } catch (NumberFormatException e) {
-                        System.err.println("Invalid number format: " + saving);
+                        log.error("Invalid number format: " + saving);
                     }
                 }
             }
@@ -682,7 +682,6 @@ public class EditController {
                     updateNPC.addNinthLevelSpell(name);
                     break;
                 default:
-                    System.out.println("Unknown level: " + level + " for spell: " + name + ".");
                     log.warn("Unknown level: {} for spell: {}.", level, name);
                     break;
             }
@@ -757,9 +756,6 @@ public class EditController {
             fieldName = parts.length > 1 ? parts[1] : "age";
         }
 
-        // Debug output
-        System.out.println("Update request received for field:" + fieldValue + " " + fieldName);
-
         // Update logic
         switch (fieldName) {
             case "job":
@@ -819,15 +815,15 @@ public class EditController {
      * field with values collected from a map.
      *
      * @param value the value to be associated with the specified field in the description map
-     * @param field the key to be used for storing the value in the description map
+     * @param descKey the key to be used for storing the value in the description map
      * @param updateNPC the NPC object to be updated with the new description
      * @return a ResponseEntity with HTTP status 200 (OK) indicating that the operation was successful
      * @author Marie
      */
     @PostMapping("/updateDescription")
     @ResponseBody
-    public ResponseEntity<Void> updateDescription(@RequestParam String value, @RequestParam String field, @ModelAttribute("updateNPC") NpcClass updateNPC) {
-        descriptionMap.put(field, value);
+    public ResponseEntity<Void> updateDescription(@RequestParam String value, @RequestParam String descKey, @ModelAttribute("updateNPC") NpcClass updateNPC) {
+        descriptionMap.put(descKey, value);
 
         List<String> desriptionList = new ArrayList<>();
 
