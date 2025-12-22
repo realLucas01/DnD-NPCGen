@@ -214,17 +214,18 @@ public class EditController {
 
 
         // Spells
+        String spells = "spells";
         // all spells from the DB
-        model.addAttribute("cantrips", dbms.getMultRowWithPref("spells","cantrip",null));
-        model.addAttribute("firstSpell",dbms.getMultRowWithPref("spells","1",null));
-        model.addAttribute("secondSpell",dbms.getMultRowWithPref("spells","2",null));
-        model.addAttribute("thirdSpell",dbms.getMultRowWithPref("spells","3",null));
-        model.addAttribute("fourthSpell",dbms.getMultRowWithPref("spells","4",null));
-        model.addAttribute("fifthSpell",dbms.getMultRowWithPref("spells","5",null));
-        model.addAttribute("sixthSpell",dbms.getMultRowWithPref("spells","6",null));
-        model.addAttribute("seventhSpell",dbms.getMultRowWithPref("spells","7",null));
-        model.addAttribute("eightSpell",dbms.getMultRowWithPref("spells","8",null));
-        model.addAttribute("ninthSpell",dbms.getMultRowWithPref("spells","9",null));
+        model.addAttribute("cantrips", dbms.getMultRowWithPref(spells,"cantrip",null));
+        model.addAttribute("firstSpell",dbms.getMultRowWithPref(spells,"1",null));
+        model.addAttribute("secondSpell",dbms.getMultRowWithPref(spells,"2",null));
+        model.addAttribute("thirdSpell",dbms.getMultRowWithPref(spells,"3",null));
+        model.addAttribute("fourthSpell",dbms.getMultRowWithPref(spells,"4",null));
+        model.addAttribute("fifthSpell",dbms.getMultRowWithPref(spells,"5",null));
+        model.addAttribute("sixthSpell",dbms.getMultRowWithPref(spells,"6",null));
+        model.addAttribute("seventhSpell",dbms.getMultRowWithPref(spells,"7",null));
+        model.addAttribute("eightSpell",dbms.getMultRowWithPref(spells,"8",null));
+        model.addAttribute("ninthSpell",dbms.getMultRowWithPref(spells,"9",null));
 
         // all spells from the npc
         model.addAttribute("spellCantrips", helpFunctions.splitString(npc.getSpellCantrips()));
@@ -496,7 +497,7 @@ public class EditController {
                         isUpdated = true;
                         break;
                     } catch (NumberFormatException e) {
-                        log.error("Invalid number format: " + saving);
+                        log.error("Invalid number format: {}", saving);
                     }
                 }
             }
@@ -608,42 +609,12 @@ public class EditController {
      */
     @PostMapping("editSpells")
     public String editSpells(@RequestParam("spells") List<String> selectedSpells, Model model) {
-        String level, name;
+        String level;
+        String name;
         List<String> spellList = getAllSpells();
 
         // remove old spells
-        for (String spells : spellList) {
-            boolean contains = false;
-            for (String selectedSpell : selectedSpells) {
-                name = selectedSpell.substring(selectedSpell.indexOf(";")+1);
-
-                if (name.contains(spells)) {
-                    contains = true;
-                }
-            }
-
-            if (!contains) {
-                updateNPC.removeSpellCantrip(spells);
-
-                updateNPC.removeFirstLevelSpell(spells);
-
-                updateNPC.removeSecondLevelSpell(spells);
-
-                updateNPC.removeThirdLevelSpell(spells);
-
-                updateNPC.removeFourthLevelSpell(spells);
-
-                updateNPC.removeFifthLevelSpell(spells);
-
-                updateNPC.removeSixthLevelSpell(spells);
-
-                updateNPC.removeSeventhLevelSpell(spells);
-
-                updateNPC.removeEightLevelSpells(spells);
-
-                updateNPC.removeNinthLevelSpell(spells);
-            }
-        }
+        removeSpell(spellList, selectedSpells);
 
         // add new spells
         for (String spell : selectedSpells) {
@@ -691,6 +662,42 @@ public class EditController {
 
         prepareEditAttributes(model, updateNPC);
         return "edit";
+    }
+
+
+    private void removeSpell(List<String> spellList, List<String> selectedSpells) {
+        for (String spells : spellList) {
+            boolean contains = false;
+            for (String selectedSpell : selectedSpells) {
+                String name = selectedSpell.substring(selectedSpell.indexOf(";")+1);
+
+                if (name.contains(spells)) {
+                    contains = true;
+                }
+            }
+
+            if (!contains) {
+                updateNPC.removeSpellCantrip(spells);
+
+                updateNPC.removeFirstLevelSpell(spells);
+
+                updateNPC.removeSecondLevelSpell(spells);
+
+                updateNPC.removeThirdLevelSpell(spells);
+
+                updateNPC.removeFourthLevelSpell(spells);
+
+                updateNPC.removeFifthLevelSpell(spells);
+
+                updateNPC.removeSixthLevelSpell(spells);
+
+                updateNPC.removeSeventhLevelSpell(spells);
+
+                updateNPC.removeEightLevelSpells(spells);
+
+                updateNPC.removeNinthLevelSpell(spells);
+            }
+        }
     }
 
 
