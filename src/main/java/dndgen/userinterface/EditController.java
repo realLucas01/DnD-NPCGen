@@ -814,6 +814,16 @@ public class EditController {
     }
 
 
+    /**
+     * Updates the description of the given NPC object by setting its description
+     * field with values collected from a map.
+     *
+     * @param value the value to be associated with the specified field in the description map
+     * @param field the key to be used for storing the value in the description map
+     * @param updateNPC the NPC object to be updated with the new description
+     * @return a ResponseEntity with HTTP status 200 (OK) indicating that the operation was successful
+     * @author Marie
+     */
     @PostMapping("/updateDescription")
     @ResponseBody
     public ResponseEntity<Void> updateDescription(@RequestParam String value, @RequestParam String field, @ModelAttribute("updateNPC") NpcClass updateNPC) {
