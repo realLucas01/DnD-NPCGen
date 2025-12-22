@@ -198,6 +198,7 @@ public class EditController {
 
 
         // Spells
+        // all spells from the DB
         model.addAttribute("cantrips", dbms.getMultRowWithPref("spells","cantrip",null));
         model.addAttribute("firstSpell",dbms.getMultRowWithPref("spells","1",null));
         model.addAttribute("secondSpell",dbms.getMultRowWithPref("spells","2",null));
@@ -209,16 +210,32 @@ public class EditController {
         model.addAttribute("eightSpell",dbms.getMultRowWithPref("spells","8",null));
         model.addAttribute("ninthSpell",dbms.getMultRowWithPref("spells","9",null));
 
+        // all spells from the npc
+        model.addAttribute("spellCantrips", helpFunctions.splitString(npc.getSpellCantrips()));
+        model.addAttribute("spellFirstLevel", helpFunctions.splitString(npc.getFirstLevelSpell()));
+        model.addAttribute("spellSecondLevel", helpFunctions.splitString(npc.getSecondLevelSpell()));
+        model.addAttribute("spellThirdLevel", helpFunctions.splitString(npc.getThirdLevelSpell()));
+        model.addAttribute("spellFourthLevel", helpFunctions.splitString(npc.getFourthLevelSpell()));
+        model.addAttribute("spellFifthLevel", helpFunctions.splitString(npc.getFifthLevelSpell()));
+        model.addAttribute("spellSixthLevel", helpFunctions.splitString(npc.getSixthLevelSpell()));
+        model.addAttribute("spellSeventhLevel", helpFunctions.splitString(npc.getSeventhLevelSpell()));
+        model.addAttribute("spellEighthLevel", helpFunctions.splitString(npc.getEightLevelSpell()));
+        model.addAttribute("spellNinthLevel", helpFunctions.splitString(npc.getNinthLevelSpell()));
+
         // Description
         List<String> descriptions = npc.getDescription();
         List<String> titles = List.of("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
                 "Bond", "Flaw", "Ideal", "Voice", "Clothing", "Attitude", "Size", "Height");
 
-        List<String> formattedDesc = new ArrayList<>();
+        Map<String, String> descriptionMap = new HashMap<>();
+
         for (int i = 0; i < descriptions.size(); i++) {
-            formattedDesc.add(titles.get(i) + ": " + descriptions.get(i));
+            descriptionMap.put(titles.get(i), descriptions.get(i));
         }
-        model.addAttribute("descriptionList", formattedDesc);
+
+        model.addAttribute("descriptionList",descriptionMap);
+        model.addAttribute("descriptionListTitles", titles);
+        model.addAttribute("descriptionListAttribute", descriptions);
         model.addAttribute("descriptionText", helpFunctions.generateDescriptionText(npc));
     }
 
@@ -250,6 +267,7 @@ public class EditController {
         return "edit";
 
     }
+
 
     /**
      * Processes the selected armors for an NPC by updating the armor list

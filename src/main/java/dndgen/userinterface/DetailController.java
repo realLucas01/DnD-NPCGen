@@ -95,16 +95,16 @@ public class DetailController {
      * @param model The model to which the processed spell data will be added.
      */
     private void addSpellsToModel(NpcClass npc, Model model) {
-        model.addAttribute("spellCantrips", splitString(npc.getSpellCantrips()));
-        model.addAttribute("spellFirstLevel", splitString(npc.getFirstLevelSpell()));
-        model.addAttribute("spellSecondLevel", splitString(npc.getSecondLevelSpell()));
-        model.addAttribute("spellThirdLevel", splitString(npc.getThirdLevelSpell()));
-        model.addAttribute("spellFourthLevel", splitString(npc.getFourthLevelSpell()));
-        model.addAttribute("spellFifthLevel", splitString(npc.getFifthLevelSpell()));
-        model.addAttribute("spellSixthLevel", splitString(npc.getSixthLevelSpell()));
-        model.addAttribute("spellSeventhLevel", splitString(npc.getSeventhLevelSpell()));
-        model.addAttribute("spellEighthLevel", splitString(npc.getEightLevelSpell()));
-        model.addAttribute("spellNinthLevel", splitString(npc.getNinthLevelSpell()));
+        model.addAttribute("spellCantrips", helpFunctions.splitString(npc.getSpellCantrips()));
+        model.addAttribute("spellFirstLevel", helpFunctions.splitString(npc.getFirstLevelSpell()));
+        model.addAttribute("spellSecondLevel", helpFunctions.splitString(npc.getSecondLevelSpell()));
+        model.addAttribute("spellThirdLevel", helpFunctions.splitString(npc.getThirdLevelSpell()));
+        model.addAttribute("spellFourthLevel", helpFunctions.splitString(npc.getFourthLevelSpell()));
+        model.addAttribute("spellFifthLevel", helpFunctions.splitString(npc.getFifthLevelSpell()));
+        model.addAttribute("spellSixthLevel", helpFunctions.splitString(npc.getSixthLevelSpell()));
+        model.addAttribute("spellSeventhLevel", helpFunctions.splitString(npc.getSeventhLevelSpell()));
+        model.addAttribute("spellEighthLevel", helpFunctions.splitString(npc.getEightLevelSpell()));
+        model.addAttribute("spellNinthLevel", helpFunctions.splitString(npc.getNinthLevelSpell()));
     }
 
 
@@ -127,10 +127,5 @@ public class DetailController {
 
         model.addAttribute("descriptionList", formattedDesc);
         model.addAttribute("descriptionText", helpFunctions.generateDescriptionText(npc));
-    }
-
-
-    private List<String> splitString(String input) {
-        return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*,\\s*"));
     }
 }

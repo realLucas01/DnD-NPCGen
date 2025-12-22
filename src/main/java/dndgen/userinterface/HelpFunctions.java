@@ -112,4 +112,9 @@ public class HelpFunctions {
         }
         return result;
     }
+
+    public List<String> splitString(String input) {
+        return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*,\\s*"));
+    }
+
 }

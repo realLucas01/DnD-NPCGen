@@ -567,73 +567,73 @@
                         <div class="col-md-6">
                             <h3>Spells</h3>
 
-                            <div th:if="${!npc.getSpellCantrips().isEmpty()}">
+                            <div th:if="${!spellCantrips.isEmpty()}">
                                 <strong>Cantrips:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getSpellCantrips()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellCantrips}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getFirstLevelSpell().isEmpty()}">
+                            <div th:if="${!spellFirstLevel.isEmpty()}">
                                 <strong>1st Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getFirstLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellFirstLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getSecondLevelSpell().isEmpty()}">
+                            <div th:if="${!spellSecondLevel.isEmpty()}">
                                 <strong>2nd Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getSecondLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellSecondLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getThirdLevelSpell().isEmpty()}">
+                            <div th:if="${!spellThirdLevel.isEmpty()}">
                                 <strong>3rd Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getThirdLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellThirdLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getFourthLevelSpell().isEmpty()}">
+                            <div th:if="${!spellFourthLevel.isEmpty()}">
                                 <strong>4th Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getFourthLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellFourthLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getFifthLevelSpell().isEmpty()}">
+                            <div th:if="${!spellFifthLevel.isEmpty()}">
                                 <strong>5th Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getFifthLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellFifthLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getSixthLevelSpell().isEmpty()}">
+                            <div th:if="${!spellSixthLevel.isEmpty()}">
                                 <strong>6th Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getSixthLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellSixthLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getSeventhLevelSpell().isEmpty()}">
+                            <div th:if="${!spellSeventhLevel.isEmpty()}">
                                 <strong>7th Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getSeventhLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellSeventhLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getEightLevelSpell().isEmpty()}">
+                            <div th:if="${!spellEighthLevel.isEmpty()}">
                                 <strong>8th Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getEightLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellEighthLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
 
-                            <div th:if="${!npc.getNinthLevelSpell().isEmpty()}">
+                            <div th:if="${!spellNinthLevel.isEmpty()}">
                                 <strong>9th Level Spells:</strong>
                                 <ul>
-                                    <li th:each="spell : ${npc.getNinthLevelSpell()}" th:text="${spell}"></li>
+                                    <li th:each="spell : ${spellNinthLevel}" th:text="${spell}"></li>
                                 </ul>
                             </div>
                         </div>
@@ -913,11 +913,41 @@
             </div>
 
 
-
-
-
             <!-- TODO Description -->
+            <!-- Description -->
+            <div class="container mt-3">
+                <div class="card row border rounded p-3">
+                    <div class="container mt-4">
+                        <h3>Description</h3>
+                        <div class="row">
+                            <!-- Flowing text (left column) -->
+                            <div class="col-md-6">
+                                <div class="orange p-3 border rounded">
+                                    <p th:text="${descriptionText}"></p>
+                                </div>
+                            </div>
 
+                            <!-- List (right column) -->
+                            <div class="col-md-6">
+                                <div class="yellow p-3 border rounded">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" th:each="entry : ${descriptionList}">
+                                            <div class="input-group">
+                                                <span class="input-group-text" th:text="${entry.key} + ':'">Hair:</span>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       th:value="${entry.value}"
+                                                       th:name="${'desc_' + entry.key}"
+                                                       th:placeholder="'Enter ' + ${entry.key}">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
