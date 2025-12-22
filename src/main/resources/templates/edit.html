@@ -528,7 +528,7 @@
                     <p th:text="${senses}" class="form-control-plaintext mb-0"></p>
                 </div>
 
-                <!-- Display checkbox list directly -->
+                <!-- Display the checkbox list directly -->
                 <div class="col-12">
                     <div class="row g-2">
                         <div th:each="sense : ${availableSenses}" class="col-md-6">
@@ -559,15 +559,84 @@
             </div>
 
 
-
-            <!-- TODO Spells -->
             <!-- Spells -->
             <div class="include-modal">
                 <div class="row mb-3">
                     <div class="d-flex align-items-center">
-                        <label class="form-label me-2 mb-0"><b>Spells:</b></label>
-                        <!-- List of Languages -->
-                        <p th:text="${npc.getSpellList()}" class="form-control-plaintext mb-0"></p>
+                        <!-- Enumeration of Spells -->
+                        <div class="col-md-6">
+                            <h3>Spells</h3>
+
+                            <div th:if="${!npc.getSpellCantrips().isEmpty()}">
+                                <strong>Cantrips:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getSpellCantrips()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getFirstLevelSpell().isEmpty()}">
+                                <strong>1st Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getFirstLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getSecondLevelSpell().isEmpty()}">
+                                <strong>2nd Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getSecondLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getThirdLevelSpell().isEmpty()}">
+                                <strong>3rd Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getThirdLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getFourthLevelSpell().isEmpty()}">
+                                <strong>4th Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getFourthLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getFifthLevelSpell().isEmpty()}">
+                                <strong>5th Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getFifthLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getSixthLevelSpell().isEmpty()}">
+                                <strong>6th Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getSixthLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getSeventhLevelSpell().isEmpty()}">
+                                <strong>7th Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getSeventhLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getEightLevelSpell().isEmpty()}">
+                                <strong>8th Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getEightLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+
+                            <div th:if="${!npc.getNinthLevelSpell().isEmpty()}">
+                                <strong>9th Level Spells:</strong>
+                                <ul>
+                                    <li th:each="spell : ${npc.getNinthLevelSpell()}" th:text="${spell}"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Button to open the pop-up -->
