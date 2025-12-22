@@ -64,7 +64,7 @@ public class HelpFunctions {
 
 
     /**
-     * Formats the saving throws of a given NPC class into a list, aligning the values
+     * Formats the saving throes of a given NPC class into a list, aligning the values
      * with specific attributes (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma).
      * If the NPC has no saving throws or invalid inputs, a default list with empty strings is returned.
      *
@@ -114,6 +114,17 @@ public class HelpFunctions {
         return result;
     }
 
+
+    /**
+     * Splits a given string into a list of substrings based on commas,
+     * trimming any surrounding whitespace from each substring.
+     * If the input string is null or empty, an empty list is returned.
+     *
+     * @param input the string to be split into substrings
+     * @return a list of substrings obtained by splitting the input string on commas,
+     *         or an empty list if the input string is null or empty
+     * @author Marie
+     */
     public List<String> splitString(String input) {
         return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*,\\s*"));
     }

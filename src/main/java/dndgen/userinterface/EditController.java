@@ -34,7 +34,7 @@ public class EditController {
     private NpcClass npc;
     private final HelpFunctions helpFunctions;
     private NpcClass updateNPC;
-    private final String switchValue = "switch";
+    private static final String SWITCH = "switch";
     private final RandomGenerator randomGenerator = new RandomGenerator();
     private final List<String> availableSenses = Arrays.asList(
             "Darkvision",
@@ -43,7 +43,12 @@ public class EditController {
             "Truesight",
             "Passive Perception"
     );
-    private Map<String, String> descriptionMap;
+    private final Map<String, String> descriptionMap;
+    private static final String WALKING_SPEED = "walkingSpeed";
+    private static final String ARMOR_TEXT = "armor";
+    private static final String DEITY_TEXT = "deity";
+    private static final String WEAPON_TEXT = "weapon";
+    private static final String SKILL_TEXT = "skill";
 
     @Autowired
     public EditController(DBMS dbms, HelpFunctions helpFunctions) {
@@ -83,7 +88,7 @@ public class EditController {
         npc = dbms.convertDatabaseEntryToNpcClass(dbms.getHistoryEntry(id));
 
         // No changes yet → core elements can still be modified
-        model.addAttribute(switchValue, false);
+        model.addAttribute(SWITCH, false);
 
         // create dropdown
         model.addAttribute("races", helpFunctions.getSortedColumn("race"));
@@ -118,7 +123,7 @@ public class EditController {
     @PostMapping("/editFirst")
     public String editedNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
         // Changes made → core elements can no longer be modified
-        model.addAttribute(switchValue, true);
+        model.addAttribute(SWITCH, true);
 
         // Make changes
         List<String> changes = new ArrayList<>(4);
@@ -131,11 +136,6 @@ public class EditController {
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
 
         updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
-
-       // updateNPC.setName(name);
-       // updateNPC.setRace(race);
-       // updateNPC.setGenClass(genClass);
-       // updateNPC.setAlignment(alignment);
 
         // Prepare display logic
         prepareEditAttributes(model, updateNPC);
@@ -169,8 +169,8 @@ public class EditController {
         model.addAttribute("level", npc.getLevel());
         model.addAttribute("jobs", helpFunctions.getSortedColumn("job"));
         model.addAttribute("job", npc.getJob());
-        model.addAttribute("deities", dbms.getColWithPref("deity", npc.getAlignment()));
-        model.addAttribute("deity", npc.getAlignment());
+        model.addAttribute("deities", dbms.getColWithPref(DEITY_TEXT, npc.getAlignment()));
+        model.addAttribute(DEITY_TEXT, npc.getAlignment());
 
         // further data (Sex, Age, HP, Speed)
         model.addAttribute("sex", npc.getGender());
@@ -188,7 +188,7 @@ public class EditController {
                 .filter(s -> s.contains("flying"))
                 .findFirst()
                 .orElse("");
-        model.addAttribute("walkingSpeed", walkingSpeed.replaceAll("\\D+", ""));
+        model.addAttribute(WALKING_SPEED, walkingSpeed.replaceAll("\\D+", ""));
         model.addAttribute("flyingSpeed", flyingSpeed.replaceAll("\\D+", ""));
 
         // Languages
@@ -199,14 +199,14 @@ public class EditController {
         formatNpcDataForStats(npc, model);
 
         // Inventory
-        model.addAttribute("armors", dbms.onlyColumn("armor"));
-        model.addAttribute("armor", String.join(", ", npc.getArmor())); // TODO: Currently a String – should probably be a List due to multiple possible objects
-        model.addAttribute("weapons", dbms.onlyColumn("weapon"));
-        model.addAttribute("weapon", String.join(", ", npc.getWeaponList()));
+        model.addAttribute("armors", dbms.onlyColumn(ARMOR_TEXT));
+        model.addAttribute(ARMOR_TEXT, String.join(", ", npc.getArmor())); // TODO: Currently a String – should probably be a List due to multiple possible objects
+        model.addAttribute("weapons", dbms.onlyColumn(WEAPON_TEXT));
+        model.addAttribute(WEAPON_TEXT, String.join(", ", npc.getWeaponList()));
 
         // Skills
         model.addAttribute("skills", filterSkills(npc.getSkillList()));
-        model.addAttribute("availableSkills", dbms.onlyColumn("skill"));
+        model.addAttribute("availableSkills", dbms.onlyColumn(SKILL_TEXT));
 
         // Senses
         model.addAttribute("senses", getSelectedSenses());
@@ -248,12 +248,10 @@ public class EditController {
 
     @PostMapping("saveNpc")
     public String saveEdit() {
-        // TODO: Entire saving logic for the edited NPC is missing
         // TODO: Iterate over skills again – "+..." values are missing
 
         dbms.updateHistoryEntry(updateNPC, updateNPC.getId(), dbms.getHistoryEntry(updateNPC.getId()).getEntryAge());
 
-        //return "redirect:/detail?id=" + npc.getId();
         return "redirect:/history";
     }
 
@@ -286,7 +284,7 @@ public class EditController {
      */
     @PostMapping("editArmors")
     public String editArmors(@RequestParam("arm") List<String> selectedArmors, Model model) {
-        editListAttributes(selectedArmors, "armor", model);
+        editListAttributes(selectedArmors, ARMOR_TEXT, model);
         return "edit";
     }
 
@@ -302,7 +300,7 @@ public class EditController {
      */
     @PostMapping("editWeapons")
     public String editWeapons(@RequestParam("wea") List<String> selectedWeapons, Model model) {
-        editListAttributes(selectedWeapons, "weapon", model);
+        editListAttributes(selectedWeapons, WEAPON_TEXT, model);
         return "edit";
     }
 
@@ -317,20 +315,20 @@ public class EditController {
      * @throws IllegalArgumentException if an unknown attribute type is provided
      */
     private void editListAttributes(List<String> selectedList, String type, Model model) {
-        model.addAttribute(switchValue, true);
+        model.addAttribute(SWITCH, true);
 
         // update list
         switch (type) {
             case "lang":
                 updateNPC.setLanguages(selectedList);
                 break;
-            case "armor":
+            case ARMOR_TEXT:
                 updateNPC.setArmor(String.valueOf(selectedList));
                 break;
-            case "skill":
+            case SKILL_TEXT:
                 updateNPC.setSkillList(selectedList);
                 break;
-            case "weapon":
+            case WEAPON_TEXT:
                 updateNPC.setWeaponList(selectedList);
                 break;
             case "sense":
@@ -525,8 +523,8 @@ public class EditController {
      * @author Marie
      */
     @PostMapping("editSkills")
-    public String editSkills(@RequestParam("skill") List<String> selectedSkills, Model model) {
-        editListAttributes(selectedSkills, "skill", model);
+    public String editSkills(@RequestParam(SKILL_TEXT) List<String> selectedSkills, Model model) {
+        editListAttributes(selectedSkills, SKILL_TEXT, model);
         return "edit";
     }
 
@@ -649,7 +647,7 @@ public class EditController {
             }
         }
 
-        model.addAttribute(switchValue, true);
+        model.addAttribute(SWITCH, true);
 
         prepareEditAttributes(model, updateNPC);
         return "edit";
@@ -771,7 +769,7 @@ public class EditController {
             case "level":
                 updateNPC.setLevel(Integer.parseInt(fieldValue));
                 break;
-            case "deity":
+            case DEITY_TEXT:
                 updateNPC.setDeity(fieldValue);
                 break;
             case "age":
@@ -790,11 +788,11 @@ public class EditController {
             case "HP":
                 updateNPC.setHealthPoints(Integer.parseInt(fieldValue));
                 break;
-            case "walkingSpeed", "flyingSpeed":
+            case WALKING_SPEED, "flyingSpeed":
                 List<String> speedList = new ArrayList<>();
 
                 // changes at walking
-                if (fieldName.equals("walkingSpeed")) {
+                if (fieldName.equals(WALKING_SPEED)) {
                     speedList.add(fieldValue + " ft walking Speed");
                     if(updateNPC.getMovementSpeedList().size()!=1){
                         speedList.add(updateNPC.getMovementSpeedList().get(1));
