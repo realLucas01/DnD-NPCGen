@@ -43,11 +43,27 @@ public class EditController {
             "Truesight",
             "Passive Perception"
     );
+    private Map<String, String> descriptionMap;
 
     @Autowired
     public EditController(DBMS dbms, HelpFunctions helpFunctions) {
         this.dbms = dbms;
         this.helpFunctions = helpFunctions;
+        descriptionMap = new LinkedHashMap<>();
+        descriptionMap.put("Eyes", "");
+        descriptionMap.put("Hair Color", "");
+        descriptionMap.put("Hairstyle", "");
+        descriptionMap.put("Skin", "");
+        descriptionMap.put("Trait", "");
+        descriptionMap.put("Mannerism", "");
+        descriptionMap.put("Bond", "");
+        descriptionMap.put("Flaw", "");
+        descriptionMap.put("Ideal", "");
+        descriptionMap.put("Voice", "");
+        descriptionMap.put("Clothing", "");
+        descriptionMap.put("Attitude", "");
+        descriptionMap.put("Size", "");
+        descriptionMap.put("Height", "");
     }
 
     /**
@@ -226,8 +242,6 @@ public class EditController {
         List<String> descriptions = npc.getDescription();
         List<String> titles = List.of("Eyes", "Hair Color", "Hairstyle", "Skin", "Trait", "Mannerism",
                 "Bond", "Flaw", "Ideal", "Voice", "Clothing", "Attitude", "Size", "Height");
-
-        Map<String, String> descriptionMap = new HashMap<>();
 
         for (int i = 0; i < descriptions.size(); i++) {
             descriptionMap.put(titles.get(i), descriptions.get(i));
@@ -799,4 +813,20 @@ public class EditController {
         return ResponseEntity.ok().build();
     }
 
+
+    @PostMapping("/updateDescription")
+    @ResponseBody
+    public ResponseEntity<Void> updateDescription(@RequestParam String value, @RequestParam String field, @ModelAttribute("updateNPC") NpcClass updateNPC) {
+        descriptionMap.put(field, value);
+
+        List<String> desriptionList = new ArrayList<>();
+
+        for(Map.Entry<String, String> entry : descriptionMap.entrySet()) {
+            desriptionList.add(entry.getValue());
+        }
+
+        updateNPC.setDescription(desriptionList);
+
+        return ResponseEntity.ok().build();
+    }
 }

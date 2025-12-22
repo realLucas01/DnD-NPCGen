@@ -937,8 +937,13 @@
                                                 <input type="text"
                                                        class="form-control"
                                                        th:value="${entry.value}"
-                                                       th:name="${'desc_' + entry.key}"
-                                                       th:placeholder="'Enter ' + ${entry.key}">
+                                                       th:attr="data-field-id='field-${entry.key}'"
+                                                       name="value"
+                                                       hx-post="/updateDescription"
+                                                       hx-trigger="change"
+                                                       hx-swap="none"
+                                                       hx-include="next input">
+                                                <input type="hidden" th:id="'field-${entry.key}'" name="field" th:value="${entry.key}">
                                             </div>
                                         </li>
                                     </ul>
