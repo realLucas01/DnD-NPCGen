@@ -7,7 +7,6 @@ import dndgen.tswp1.UiHistoryEditUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -229,16 +228,7 @@ public class EditController {
         model.addAttribute("ninthSpell",dbms.getMultRowWithPref(spells,"9",null));
 
         // all spells from the npc
-        model.addAttribute("spellCantrips", helpFunctions.splitString(npc.getSpellCantrips()));
-        model.addAttribute("spellFirstLevel", helpFunctions.splitString(npc.getFirstLevelSpell()));
-        model.addAttribute("spellSecondLevel", helpFunctions.splitString(npc.getSecondLevelSpell()));
-        model.addAttribute("spellThirdLevel", helpFunctions.splitString(npc.getThirdLevelSpell()));
-        model.addAttribute("spellFourthLevel", helpFunctions.splitString(npc.getFourthLevelSpell()));
-        model.addAttribute("spellFifthLevel", helpFunctions.splitString(npc.getFifthLevelSpell()));
-        model.addAttribute("spellSixthLevel", helpFunctions.splitString(npc.getSixthLevelSpell()));
-        model.addAttribute("spellSeventhLevel", helpFunctions.splitString(npc.getSeventhLevelSpell()));
-        model.addAttribute("spellEighthLevel", helpFunctions.splitString(npc.getEightLevelSpell()));
-        model.addAttribute("spellNinthLevel", helpFunctions.splitString(npc.getNinthLevelSpell()));
+        helpFunctions.addSpellsToModel(npc, model);
 
         // Description
         List<String> descriptions = npc.getDescription();

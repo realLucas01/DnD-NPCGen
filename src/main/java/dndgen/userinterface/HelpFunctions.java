@@ -4,6 +4,7 @@ import dndgen.database.DBMS;
 import dndgen.tswp1.NpcClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -117,4 +118,24 @@ public class HelpFunctions {
         return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*,\\s*"));
     }
 
+
+    /**
+     * Adds spell information from the provided NPC object to the model by splitting the spell strings
+     * and categorizing them by spell level.
+     *
+     * @param npc The NPC object containing spell information for different levels.
+     * @param model The model to which the processed spell data will be added.
+     */
+    public void addSpellsToModel(NpcClass npc, Model model) {
+        model.addAttribute("spellCantrips", splitString(npc.getSpellCantrips()));
+        model.addAttribute("spellFirstLevel", splitString(npc.getFirstLevelSpell()));
+        model.addAttribute("spellSecondLevel", splitString(npc.getSecondLevelSpell()));
+        model.addAttribute("spellThirdLevel", splitString(npc.getThirdLevelSpell()));
+        model.addAttribute("spellFourthLevel", splitString(npc.getFourthLevelSpell()));
+        model.addAttribute("spellFifthLevel", splitString(npc.getFifthLevelSpell()));
+        model.addAttribute("spellSixthLevel", splitString(npc.getSixthLevelSpell()));
+        model.addAttribute("spellSeventhLevel", splitString(npc.getSeventhLevelSpell()));
+        model.addAttribute("spellEighthLevel", splitString(npc.getEightLevelSpell()));
+        model.addAttribute("spellNinthLevel", splitString(npc.getNinthLevelSpell()));
+    }
 }

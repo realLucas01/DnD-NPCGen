@@ -28,6 +28,7 @@ public class DetailController {
         this.helpFunctions = helpFunctions;
     }
 
+
     /**
      * Loads an NPC by its ID and displays it on the detail page.
      * @param id ID of the NPC from the database
@@ -47,6 +48,7 @@ public class DetailController {
         return "detail";
     }
 
+
     /**
      * Prepares the NPC data for the model.
      * @param npc The NPC to be displayed
@@ -59,7 +61,7 @@ public class DetailController {
         model.addAttribute("allAbilities", List.of("Str", "Dex", "Con", "Int", "Wis", "Cha"));
 
         addMovementAndSensesToModel(npc, model);
-        addSpellsToModel(npc, model);
+        helpFunctions.addSpellsToModel(npc, model);
         addDescriptionToModel(npc, model);
     }
 
@@ -83,27 +85,6 @@ public class DetailController {
         
 
         model.addAttribute("senses", senses);  // Add senses to the model
-    }
-
-
-    /**
-     * Adds spell information from the provided NPC object to the model by splitting the spell strings
-     * and categorizing them by spell level.
-     *
-     * @param npc The NPC object containing spell information for different levels.
-     * @param model The model to which the processed spell data will be added.
-     */
-    private void addSpellsToModel(NpcClass npc, Model model) {
-        model.addAttribute("spellCantrips", helpFunctions.splitString(npc.getSpellCantrips()));
-        model.addAttribute("spellFirstLevel", helpFunctions.splitString(npc.getFirstLevelSpell()));
-        model.addAttribute("spellSecondLevel", helpFunctions.splitString(npc.getSecondLevelSpell()));
-        model.addAttribute("spellThirdLevel", helpFunctions.splitString(npc.getThirdLevelSpell()));
-        model.addAttribute("spellFourthLevel", helpFunctions.splitString(npc.getFourthLevelSpell()));
-        model.addAttribute("spellFifthLevel", helpFunctions.splitString(npc.getFifthLevelSpell()));
-        model.addAttribute("spellSixthLevel", helpFunctions.splitString(npc.getSixthLevelSpell()));
-        model.addAttribute("spellSeventhLevel", helpFunctions.splitString(npc.getSeventhLevelSpell()));
-        model.addAttribute("spellEighthLevel", helpFunctions.splitString(npc.getEightLevelSpell()));
-        model.addAttribute("spellNinthLevel", helpFunctions.splitString(npc.getNinthLevelSpell()));
     }
 
 
