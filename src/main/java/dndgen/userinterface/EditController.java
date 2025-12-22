@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -665,6 +666,13 @@ public class EditController {
     }
 
 
+    /**
+     * Removes spells from the NPC's spell list if they are not present in the list of selected spells.
+     *
+     * @param spellList The list of spells to be checked and potentially removed.
+     * @param selectedSpells The list of selected spells to determine which spells should remain.
+     * @author Marie
+     */
     private void removeSpell(List<String> spellList, List<String> selectedSpells) {
         for (String spells : spellList) {
             boolean contains = false;
@@ -701,41 +709,43 @@ public class EditController {
     }
 
 
-    @NonNull
+    /**
+     * Retrieves a list of all spells, including cantrips and spells from first to ninth level.
+     * Combines spells from various levels into a single list.
+     *
+     * @return a list of all spells as strings
+     * @author Marie
+     */
     private List<String> getAllSpells() {
-        // Creation of a List with all npc spells
         List<String> spellList = new ArrayList<>();
-        if (updateNPC.getSpellCantrips() != null && !updateNPC.getSpellCantrips().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getSpellCantrips().split(", ")));
-        }
-        if (updateNPC.getFirstLevelSpell() != null && !updateNPC.getFirstLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getFirstLevelSpell().split(", ")));
-        }
-        if (updateNPC.getSecondLevelSpell() != null && !updateNPC.getSecondLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getSecondLevelSpell().split(", ")));
-        }
-        if (updateNPC.getThirdLevelSpell() != null && !updateNPC.getThirdLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getThirdLevelSpell().split(", ")));
-        }
-        if (updateNPC.getFourthLevelSpell() != null && !updateNPC.getFourthLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getFourthLevelSpell().split(", ")));
-        }
-        if (updateNPC.getFifthLevelSpell() != null && !updateNPC.getFifthLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getFifthLevelSpell().split(", ")));
-        }
-        if (updateNPC.getSixthLevelSpell() != null && !updateNPC.getSixthLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getSixthLevelSpell().split(", ")));
-        }
-        if (updateNPC.getSeventhLevelSpell() != null && !updateNPC.getSeventhLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getSeventhLevelSpell().split(", ")));
-        }
-        if (updateNPC.getEightLevelSpell() != null && !updateNPC.getEightLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getEightLevelSpell().split(", ")));
-        }
-        if (updateNPC.getNinthLevelSpell() != null && !updateNPC.getNinthLevelSpell().isEmpty()) {
-            spellList.addAll(Arrays.asList(updateNPC.getNinthLevelSpell().split(", ")));
-        }
+
+        addSpells(spellList, updateNPC::getSpellCantrips);
+        addSpells(spellList, updateNPC::getFirstLevelSpell);
+        addSpells(spellList, updateNPC::getSecondLevelSpell);
+        addSpells(spellList, updateNPC::getThirdLevelSpell);
+        addSpells(spellList, updateNPC::getFourthLevelSpell);
+        addSpells(spellList, updateNPC::getFifthLevelSpell);
+        addSpells(spellList, updateNPC::getSixthLevelSpell);
+        addSpells(spellList, updateNPC::getSeventhLevelSpell);
+        addSpells(spellList, updateNPC::getEightLevelSpell);
+        addSpells(spellList, updateNPC::getNinthLevelSpell);
+
         return spellList;
+    }
+
+
+    /**
+     * Adds spells to the provided spell list using the spell data supplied by the given supplier.
+     *
+     * @param spellList the list to which the spells should be added
+     * @param spellSupplier a supplier that provides a string of spell names, separated by commas
+     * @author Marie
+     */
+    private void addSpells(List<String> spellList, Supplier<String> spellSupplier) {
+        String spells = spellSupplier.get();
+        if (spells != null && !spells.isEmpty()) {
+            spellList.addAll(Arrays.asList(spells.split(", ")));
+        }
     }
 
 
