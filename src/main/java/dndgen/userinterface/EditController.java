@@ -618,8 +618,8 @@ public class EditController {
 
         // add new spells
         for (String spell : selectedSpells) {
-            level = spell.substring(0,spell.indexOf(";"));
-            name = spell.substring(spell.indexOf(";")+1);
+            level = (spell.substring(0,spell.indexOf(";"))).replaceAll("[\n\r]", "_");
+            name = (spell.substring(spell.indexOf(";")+1)).replaceAll("[\n\r]", "_");
 
             switch (level) {
                 case "Cantrip":
