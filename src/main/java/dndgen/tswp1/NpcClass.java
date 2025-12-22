@@ -633,26 +633,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addSpellCantrip(String spells) {
-        if (spells == null || spells.isBlank()) return;
-
-        List<String> list = new ArrayList<>();
-
-        if (this.cantrips != null && !this.cantrips.isBlank()) {
-            list.addAll(
-                    Arrays.stream(this.cantrips.split(","))
-                            .map(String::trim)
-                            .filter(s -> !s.isEmpty())
-                            .toList()
-            );
-        }
-        list.addAll(
-                Arrays.stream(spells.split(","))
-                        .map(String::trim)
-                        .filter(s -> !s.isEmpty())
-                        .toList()
-        );
-
-        this.cantrips = String.join(", ", list);
+        this.cantrips = addToSpellList(this.cantrips, spells);
     }
 
     /**
@@ -661,14 +642,20 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeSpellCantrip(String spells) {
-        this.cantrips = this.cantrips.replace(spells, "");
+        // Check for null or empty
+        if (this.cantrips == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.cantrips.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.cantrips = removeFromSpellList(this.cantrips, spells);
     }
 
-    /**
-     * Gets first level spell.
-     *
-     * @return the first level spell
-     */
     /*
      * Get first level spell string.
      *
@@ -693,7 +680,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addFirstLevelSpell(String spells) {
-        this.firstLevelSpell = this.firstLevelSpell + spells;
+        this.firstLevelSpell = addToSpellList(this.firstLevelSpell, spells);
     }
 
     /**
@@ -702,7 +689,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeFirstLevelSpell(String spells) {
-        this.firstLevelSpell = this.firstLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.firstLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.firstLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+       this.firstLevelSpell = removeFromSpellList(this.firstLevelSpell, spells);
     }
 
     /**
@@ -729,7 +727,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addSecondLevelSpell(String spells) {
-        this.secondLevelSpell = this.secondLevelSpell + spells;
+        this.secondLevelSpell = addToSpellList(this.secondLevelSpell, spells);
     }
 
     /**
@@ -738,7 +736,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeSecondLevelSpell(String spells) {
-        this.secondLevelSpell = this.secondLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.secondLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.secondLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.secondLevelSpell = removeFromSpellList(this.secondLevelSpell, spells);
     }
 
     /**
@@ -765,7 +774,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addThirdLevelSpell(String spells) {
-        this.thirdLevelSpell = this.thirdLevelSpell + spells;
+        this.thirdLevelSpell = addToSpellList(this.thirdLevelSpell, spells);
     }
 
     /**
@@ -774,7 +783,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeThirdLevelSpell(String spells) {
-        this.thirdLevelSpell = this.thirdLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.thirdLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.thirdLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.thirdLevelSpell = removeFromSpellList(this.thirdLevelSpell, spells);
     }
 
     /**
@@ -801,7 +821,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addFourthLevelSpell(String spells) {
-        this.fourthLevelSpell = this.fourthLevelSpell + spells;
+        this.fourthLevelSpell = addToSpellList(this.fourthLevelSpell, spells);
     }
 
     /**
@@ -810,7 +830,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeFourthLevelSpell(String spells) {
-        this.fourthLevelSpell = this.fourthLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.fourthLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.fourthLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.fourthLevelSpell = removeFromSpellList(this.fourthLevelSpell, spells);
     }
 
     /**
@@ -837,7 +868,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addFifthLevelSpell(String spells) {
-        this.fifthLevelSpell = this.fifthLevelSpell + spells;
+        this.fifthLevelSpell = addToSpellList(this.fifthLevelSpell, spells);
     }
 
     /**
@@ -846,7 +877,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeFifthLevelSpell(String spells) {
-        this.fifthLevelSpell = this.fifthLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.fifthLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.fifthLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.fifthLevelSpell = removeFromSpellList(this.fifthLevelSpell, spells);
     }
 
     /**
@@ -873,7 +915,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addSixthLevelSpell(String spells) {
-        this.sixthLevelSpell = this.sixthLevelSpell + spells;
+        this.sixthLevelSpell = addToSpellList(this.sixthLevelSpell, spells);
     }
 
     /**
@@ -882,7 +924,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeSixthLevelSpell(String spells) {
-        this.sixthLevelSpell = this.sixthLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.sixthLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.sixthLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.sixthLevelSpell = removeFromSpellList(this.sixthLevelSpell, spells);
     }
 
     /**
@@ -909,7 +962,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addSeventhLevelSpell(String spells) {
-        this.seventhLevelSpell = this.seventhLevelSpell + spells;
+        this.seventhLevelSpell = addToSpellList(this.seventhLevelSpell, spells);
     }
 
     /**
@@ -918,7 +971,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeSeventhLevelSpell(String spells) {
-        this.seventhLevelSpell = this.seventhLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.seventhLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.seventhLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.seventhLevelSpell = removeFromSpellList(this.seventhLevelSpell, spells);
     }
 
     /**
@@ -945,7 +1009,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addEightLevelSpell(String spells) {
-        this.eightLevelSpell = this.eightLevelSpell + spells;
+        this.eightLevelSpell = addToSpellList(this.eightLevelSpell, spells);
     }
 
     /**
@@ -954,7 +1018,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeEightLevelSpells(String spells) {
-        this.eightLevelSpell = this.eightLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.eightLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.eightLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.eightLevelSpell = removeFromSpellList(this.eightLevelSpell, spells);
     }
 
     /**
@@ -981,7 +1056,7 @@ public class NpcClass {
      * @param spells the spells
      */
     public void addNinthLevelSpell(String spells) {
-        this.ninthLevelSpell = this.ninthLevelSpell + spells;
+        this.ninthLevelSpell = addToSpellList(this.ninthLevelSpell, spells);
     }
 
     /**
@@ -990,7 +1065,18 @@ public class NpcClass {
      * @param spells the spells
      */
     public void removeNinthLevelSpell(String spells) {
-        this.ninthLevelSpell = this.ninthLevelSpell.replace(spells, "");
+        // Check for null or empty
+        if (this.ninthLevelSpell == null || spells == null || spells.isEmpty()) {
+            return;
+        }
+
+        // Check for spells existence
+        if (!this.ninthLevelSpell.contains(spells)) {
+            return;
+        }
+
+        // remove spell
+        this.ninthLevelSpell = removeFromSpellList(this.ninthLevelSpell, spells);
     }
 
     /**
@@ -1073,4 +1159,58 @@ public class NpcClass {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    /**
+     * removes a spell from a spell list and cleans the list up
+     *
+     * @param npcSpellList is the String of spells -> the List of the Spells
+     * @param removeSpell the spell to remove
+     * @return a String -> SpellList without the spell
+     * @author Marie
+     */
+    private String removeFromSpellList(String npcSpellList, String removeSpell) {
+        npcSpellList = npcSpellList.replace(removeSpell, "");
+
+        // clean spell list
+        String cleanSpellList = "";
+        String[] spellList = npcSpellList.split(",");
+        for (String spell : spellList) {
+            String trimSpell = spell.trim();
+            if (!trimSpell.isEmpty()) {
+                cleanSpellList = cleanSpellList.concat(trimSpell + ", ");
+            }
+        }
+
+        logger.info("removed spell: " + removeSpell);
+        // if there are no spells, the list will be NULL
+        if(cleanSpellList.isEmpty()) {
+            return null;
+        } else {
+            cleanSpellList = cleanSpellList.substring(0, cleanSpellList.length() - 2);
+            return cleanSpellList;
+        }
+    }
+
+
+    /**
+     * Adds a spell to the NPC's spell list if it is not already present.
+     * If the spell list is null, the provided spell becomes the new list.
+     *
+     * @param npcSpellList The current spell list of the NPC as a comma-separated string, or null if no spells are present.
+     * @param addSpell The spell to add to the NPC's spell list.
+     * @return The updated spell list as a comma-separated string.
+     * @author Marie
+     */
+    private String addToSpellList(String npcSpellList, String addSpell){
+        if(npcSpellList == null) {
+            logger.info("added spell: " + addSpell);
+            return addSpell;
+        } else if (npcSpellList.contains(addSpell)) {
+            return npcSpellList;
+        } else {
+            logger.info("added spell: " + addSpell);
+            return npcSpellList + ", " + addSpell;
+        }
+    }
 }
+

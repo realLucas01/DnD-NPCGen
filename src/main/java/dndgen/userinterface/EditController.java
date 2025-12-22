@@ -7,6 +7,7 @@ import dndgen.tswp1.UiHistoryEditUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class EditController {
     private final HelpFunctions helpFunctions;
     private NpcClass updateNPC;
     private final String switchValue = "switch";
-    private RandomGenerator randomGenerator = new RandomGenerator();
+    private final RandomGenerator randomGenerator = new RandomGenerator();
     private final List<String> availableSenses = Arrays.asList(
             "Darkvision",
             "Blindsight",
@@ -100,8 +101,6 @@ public class EditController {
      */
     @PostMapping("/editFirst")
     public String editedNPC(@RequestParam String name, @RequestParam String race, @RequestParam String genClass, @RequestParam String alignment, Model model) {
-        System.out.println(name + " " + race + " " + genClass + " " + alignment);
-
         // Changes made → core elements can no longer be modified
         model.addAttribute(switchValue, true);
 
@@ -114,7 +113,7 @@ public class EditController {
 
         // update NPC
         UiHistoryEditUpdate uiHistoryEditUpdate = new UiHistoryEditUpdate();
-        
+
         updateNPC = uiHistoryEditUpdate.updateHistoryEdit(changes, npc);
 
        // updateNPC.setName(name);
@@ -182,7 +181,7 @@ public class EditController {
 
         // Ability Scores
         formatNpcDataForStats(npc, model);
-        
+
         // Inventory
         model.addAttribute("armors", dbms.onlyColumn("armor"));
         model.addAttribute("armor", String.join(", ", npc.getArmor())); // TODO: Currently a String – should probably be a List due to multiple possible objects
@@ -196,8 +195,19 @@ public class EditController {
         // Senses
         model.addAttribute("senses", getSelectedSenses());
         model.addAttribute("availableSenses", availableSenses);
-        //System.out.println("Senses: " + getSelectedSenses());
 
+
+        // Spells
+        model.addAttribute("cantrips", dbms.getMultRowWithPref("spells","cantrip",null));
+        model.addAttribute("firstSpell",dbms.getMultRowWithPref("spells","1",null));
+        model.addAttribute("secondSpell",dbms.getMultRowWithPref("spells","2",null));
+        model.addAttribute("thirdSpell",dbms.getMultRowWithPref("spells","3",null));
+        model.addAttribute("fourthSpell",dbms.getMultRowWithPref("spells","4",null));
+        model.addAttribute("fifthSpell",dbms.getMultRowWithPref("spells","5",null));
+        model.addAttribute("sixthSpell",dbms.getMultRowWithPref("spells","6",null));
+        model.addAttribute("seventhSpell",dbms.getMultRowWithPref("spells","7",null));
+        model.addAttribute("eightSpell",dbms.getMultRowWithPref("spells","8",null));
+        model.addAttribute("ninthSpell",dbms.getMultRowWithPref("spells","9",null));
 
         // Description
         List<String> descriptions = npc.getDescription();
@@ -375,7 +385,7 @@ public class EditController {
     @ResponseBody
     public ResponseEntity<Void> editAbility(@RequestParam String key, @RequestParam int value,
                                             @ModelAttribute("updateNPC") NpcClass updateNPC) {
-        
+
         List<Integer> abilityScores = updateNPC.getAbilityScores();
 
         abilityScores.set(Integer.parseInt(key), value);
@@ -413,7 +423,7 @@ public class EditController {
 
 
     /**
-     * Updates the saving throws of a given NPC. This method processes the existing
+     * Updates the saving throes of a given NPC. This method processes the existing
      * saving throws and applies the provided updates or adds a new entry if the specified
      * key does not exist. After processing, the updated list of saving throws is stored
      * in the NPC object.
@@ -552,6 +562,145 @@ public class EditController {
         return "edit";
     }
 
+
+    /**
+     * Updates the spells associated with an NPC by removing obsolete spells and adding selected spells
+     * based on their levels and names. Also prepares the model attributes for rendering the edit view.
+     *
+     * @param selectedSpells the list of selected spells to be processed. Each spell entry should be a
+     *                       string formatted as "level;name", where "level" represents the spell level
+     *                       (e.g., "Cantrip", "1", "2", etc.) and "name" represents the spell's name.
+     * @param model          the Model object used to populate attributes required for the edit view.
+     * @return a string representing the name of the view to be rendered, specifically the "edit" view.
+     * @author Marie
+     */
+    @PostMapping("editSpells")
+    public String editSpells(@RequestParam("spells") List<String> selectedSpells, Model model) {
+        String level, name;
+        List<String> spellList = getAllSpells();
+
+        // remove old spells
+        for (String spells : spellList) {
+            boolean contains = false;
+            for (String selectedSpell : selectedSpells) {
+                name = selectedSpell.substring(selectedSpell.indexOf(";")+1);
+
+                if (name.contains(spells)) {
+                    contains = true;
+                }
+            }
+
+            if (!contains) {
+                updateNPC.removeSpellCantrip(spells);
+
+                updateNPC.removeFirstLevelSpell(spells);
+
+                updateNPC.removeSecondLevelSpell(spells);
+
+                updateNPC.removeThirdLevelSpell(spells);
+
+                updateNPC.removeFourthLevelSpell(spells);
+
+                updateNPC.removeFifthLevelSpell(spells);
+
+                updateNPC.removeSixthLevelSpell(spells);
+
+                updateNPC.removeSeventhLevelSpell(spells);
+
+                updateNPC.removeEightLevelSpells(spells);
+
+                updateNPC.removeNinthLevelSpell(spells);
+            }
+        }
+
+        // add new spells
+        for (String spell : selectedSpells) {
+            level = spell.substring(0,spell.indexOf(";"));
+            name = spell.substring(spell.indexOf(";")+1);
+
+            switch (level) {
+                case "Cantrip":
+                    updateNPC.addSpellCantrip(name);
+                    break;
+                case "1":
+                    updateNPC.addFirstLevelSpell(name);
+                    break;
+                case "2":
+                    updateNPC.addSecondLevelSpell(name);
+                    break;
+                case "3":
+                    updateNPC.addThirdLevelSpell(name);
+                    break;
+                case "4":
+                    updateNPC.addFourthLevelSpell(name);
+                    break;
+                case "5":
+                    updateNPC.addFifthLevelSpell(name);
+                    break;
+                case "6":
+                    updateNPC.addSixthLevelSpell(name);
+                    break;
+                case "7":
+                    updateNPC.addSeventhLevelSpell(name);
+                    break;
+                case "8":
+                    updateNPC.addEightLevelSpell(name);
+                    break;
+                case "9":
+                    updateNPC.addNinthLevelSpell(name);
+                    break;
+                default:
+                    System.out.println("Unknown level: " + level + " for spell: " + name + ".");
+                    log.warn("Unknown level: {} for spell: {}.", level, name);
+                    break;
+            }
+        }
+
+        model.addAttribute(switchValue, true);
+
+        prepareEditAttributes(model, updateNPC);
+        return "edit";
+    }
+
+
+    @NonNull
+    private List<String> getAllSpells() {
+        // Creation of a List with all npc spells
+        List<String> spellList = new ArrayList<>();
+        if (updateNPC.getSpellCantrips() != null && !updateNPC.getSpellCantrips().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getSpellCantrips().split(", ")));
+        }
+        if (updateNPC.getFirstLevelSpell() != null && !updateNPC.getFirstLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getFirstLevelSpell().split(", ")));
+        }
+        if (updateNPC.getSecondLevelSpell() != null && !updateNPC.getSecondLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getSecondLevelSpell().split(", ")));
+        }
+        if (updateNPC.getThirdLevelSpell() != null && !updateNPC.getThirdLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getThirdLevelSpell().split(", ")));
+        }
+        if (updateNPC.getFourthLevelSpell() != null && !updateNPC.getFourthLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getFourthLevelSpell().split(", ")));
+        }
+        if (updateNPC.getFifthLevelSpell() != null && !updateNPC.getFifthLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getFifthLevelSpell().split(", ")));
+        }
+        if (updateNPC.getSixthLevelSpell() != null && !updateNPC.getSixthLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getSixthLevelSpell().split(", ")));
+        }
+        if (updateNPC.getSeventhLevelSpell() != null && !updateNPC.getSeventhLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getSeventhLevelSpell().split(", ")));
+        }
+        if (updateNPC.getEightLevelSpell() != null && !updateNPC.getEightLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getEightLevelSpell().split(", ")));
+        }
+        if (updateNPC.getNinthLevelSpell() != null && !updateNPC.getNinthLevelSpell().isEmpty()) {
+            spellList.addAll(Arrays.asList(updateNPC.getNinthLevelSpell().split(", ")));
+        }
+        return spellList;
+    }
+
+
     /**
      * Updates a specific field of the provided NPC object based on the input parameters.
      * The `value` parameter determines the value to be set, and optionally, the field to update.
@@ -569,7 +718,7 @@ public class EditController {
         String fieldValue = value;
         String fieldName = field;
 
-        // Handle older format where field is part of value
+        // Handle older format where the field is part of the value
         if (fieldName == null) {
             String[] parts = fieldValue.split(";", 2);
             fieldValue = parts[0];
@@ -607,7 +756,7 @@ public class EditController {
                 updateNPC.setHealthPoints(Integer.parseInt(fieldValue));
                 break;
             case "walkingSpeed", "flyingSpeed":
-                List speedList = new ArrayList<>();
+                List<String> speedList = new ArrayList<>();
 
                 // changes at walking
                 if (fieldName.equals("walkingSpeed")) {
@@ -616,10 +765,10 @@ public class EditController {
                         speedList.add(updateNPC.getMovementSpeedList().get(1));
                     }
                 } else { // changes at flying
-                    if(fieldValue.equals("")) {
-                        speedList.add(updateNPC.getMovementSpeedList().get(0));
+                    if(fieldValue.isEmpty()) {
+                        speedList.add(updateNPC.getMovementSpeedList().getFirst());
                     } else {
-                        speedList.add(updateNPC.getMovementSpeedList().get(0));
+                        speedList.add(updateNPC.getMovementSpeedList().getFirst());
                         speedList.add(fieldValue + " ft flying Speed");
                     }
                 }
