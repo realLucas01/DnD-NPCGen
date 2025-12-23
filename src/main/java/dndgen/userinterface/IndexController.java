@@ -110,7 +110,7 @@ public class IndexController {
 
         // Pass previously selected data
         model.addAttribute("name", selection.getName());
-        model.addAttribute("selectedRace", selection.getRace());
+        model.addAttribute("race", selection.getRace());
         model.addAttribute("selectedClass", selection.getGenClass());
         model.addAttribute("selectedJob", selection.getJob());
         model.addAttribute("selectedLevel", selection.getLevel());

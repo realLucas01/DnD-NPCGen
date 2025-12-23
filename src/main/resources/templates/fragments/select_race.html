@@ -1,0 +1,13 @@
+<!-- fragments/select_race.html -->
+<div th:fragment="race" class="row mb-3">
+    <label for="race" class="form-label">Race:</label>
+    <select id="race" name="race" class="form-select" th:disabled="${switch}">
+        <!-- Default options -->
+        <option value="Random" th:selected="${race == 'Random'}" th:disabled="${switch}">Random</option>
+        <option th:each="rac : ${races}" th:value="${rac}" th:text="${rac}" th:selected="${rac == race}">
+        </option>
+
+        <!-- New options, only when switch == true -->
+        <option th:if="${switch}" th:value="${race}" th:selected="${race}" th:text="${race}"></option>
+    </select>
+</div>

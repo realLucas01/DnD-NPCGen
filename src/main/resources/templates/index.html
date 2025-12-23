@@ -23,15 +23,8 @@
                     <input type="text" id="name" name="name" class="form-control" th:value="${name}">
                 </div>
 
-                <div class="row mb-3">
-                    <label for="race" class="form-label">Race:</label>
-                    <select id="race" name="race" class="form-select">
-                        <option value="Random" th:selected="${selectedRace == 'Random'}">Random</option>
-                        <option th:each="race : ${races}" th:value="${race}" th:text="${race}"
-                                th:selected="${race == selectedRace}">
-                        </option>
-                    </select>
-                </div>
+                <!-- Race -->
+                <div th:replace="~{fragments/select_race :: race}"></div>
 
                 <div class="row mb-3">
                     <label for="class" class="form-label">Class:</label>

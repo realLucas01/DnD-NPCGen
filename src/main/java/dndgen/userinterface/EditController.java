@@ -159,7 +159,7 @@ public class EditController {
 
         // Prepare shared parameters
         model.addAttribute("name", npc.getName());
-        model.addAttribute("selectedRace", npc.getRace());
+        model.addAttribute("race", npc.getRace());
         model.addAttribute("selectedClass", npc.getGenClass());
         model.addAttribute("selectedAlignment", npc.getAlignment());
         model.addAttribute("selectedSkills", npc.getSkillList());
