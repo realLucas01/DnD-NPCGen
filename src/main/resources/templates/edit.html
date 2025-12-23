@@ -259,7 +259,7 @@
                                                            th:value="${lang}"
                                                            th:checked="${language.contains(lang)}"
                                                            class="form-check-input me-2">
-                                                    <label th:for="${'language_' + lang}" class="form-check-label" th:text="${lang}"></label>
+                                                    <label th:for="${'language_' + lang}" class="form-check-label"><span th:text="${lang}"></span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -457,8 +457,6 @@
                     </div>
                 </form>
             </div>
-
-
 
 
             <!-- TODO Skills -->
@@ -913,7 +911,6 @@
             </div>
 
 
-            <!-- TODO Description -->
             <!-- Description -->
             <div class="container mt-3">
                 <div class="card row border rounded p-3">
@@ -955,8 +952,6 @@
             </div>
 
 
-
-            <!-- TODO Save redirect -->
             <div class="row mb-3 text-center">
                 <form th:action="@{/saveNpc}" method="post">
                     <button type="submit" class="btn btn-primary w-100">Save</button>

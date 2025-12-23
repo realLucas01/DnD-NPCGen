@@ -125,6 +125,7 @@ public class EditController {
         // Changes made → core elements can no longer be modified
         model.addAttribute(SWITCH, true);
 
+
         // Make changes
         List<String> changes = new ArrayList<>(4);
         changes.add(race);

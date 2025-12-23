@@ -1173,15 +1173,15 @@ public class NpcClass {
 
         // clean spell list
         String cleanSpellList = "";
-        String[] spellList = npcSpellList.split(",");
-        for (String spell : spellList) {
+        String[] spellListSplit = npcSpellList.split(",");
+        for (String spell : spellListSplit) {
             String trimSpell = spell.trim();
             if (!trimSpell.isEmpty()) {
                 cleanSpellList = cleanSpellList.concat(trimSpell + ", ");
             }
         }
 
-        logger.info("removed spell: " + removeSpell);
+        logger.info(STR."removed spell: {}\{removeSpell}");
         // if there are no spells, the list will be NULL
         if(cleanSpellList.isEmpty()) {
             return null;
@@ -1203,12 +1203,12 @@ public class NpcClass {
      */
     private String addToSpellList(String npcSpellList, String addSpell){
         if(npcSpellList == null) {
-            logger.info("added spell: " + addSpell);
+            logger.info(STR."added spell: \{addSpell}");
             return addSpell;
         } else if (npcSpellList.contains(addSpell)) {
             return npcSpellList;
         } else {
-            logger.info("added spell: " + addSpell);
+            logger.info(STR."added spell: \{addSpell}");
             return npcSpellList + ", " + addSpell;
         }
     }
