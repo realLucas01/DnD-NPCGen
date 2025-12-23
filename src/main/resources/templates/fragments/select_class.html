@@ -1,0 +1,12 @@
+<!-- fragments/select_class.html -->
+<div th:fragment="class" class="row mb-3">
+  <label for="class" class="form-label">Class:</label>
+  <select id="class" name="genClass" class="form-select" th:disabled="${switch}">
+    <option value="Random" th:selected="${class == 'Random'}">Random</option>
+    <option th:each="cla : ${classes}" th:value="${cla}" th:text="${cla}" th:selected="${cla == class}">
+    </option>
+
+    <!-- New options, only when switch == true -->
+    <option th:if="${switch}" th:value="${class}" th:selected="${class}" th:text="${class}"></option>
+  </select>
+</div>

@@ -31,17 +31,7 @@
             <div th:replace="~{fragments/select_race :: race}"></div>
 
             <!-- Class -->
-            <div class="row mb-3">
-                <label for="class" class="form-label">Class:</label>
-                <select id="class" name="genClass" class="form-select" th:disabled="${switch}">
-                    <option value="Zufall" th:selected="${class == 'Zufall'}">Zufall</option>
-                    <option th:each="cla : ${classes}" th:value="${cla}" th:text="${cla}" th:selected="${cla == class}">
-                    </option>
-
-                    <!-- New options, only when switch == true -->
-                    <option th:if="${switch}" th:value="${selectedClass}" th:selected="${selectedClass}" th:text="${selectedClass}"></option>
-                </select>
-            </div>
+            <div th:replace="~{fragments/select_class :: class}"></div>
 
             <!-- Alignment -->
             <div class="row mb-3">

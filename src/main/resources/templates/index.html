@@ -26,14 +26,8 @@
                 <!-- Race -->
                 <div th:replace="~{fragments/select_race :: race}"></div>
 
-                <div class="row mb-3">
-                    <label for="class" class="form-label">Class:</label>
-                    <select id="class" name="genClass" class="form-select">
-                        <option value="Random" th:selected="${selectedClass == 'Random'}">Random</option>
-                        <option th:each="class : ${classes}" th:value="${class}" th:text="${class}"
-                                th:selected="${class == selectedClass}"></option>
-                    </select>
-                </div>
+                <!-- Class -->
+                <div th:replace="~{fragments/select_class :: class}"></div>
 
                 <div class="row mb-3">
                     <label for="job" class="form-label">Job:</label>
