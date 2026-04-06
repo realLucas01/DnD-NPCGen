@@ -495,11 +495,7 @@
 
             <!-- Senses -->
             <div class="row mb-3">
-                <div class="d-flex align-items-center">
-                    <label class="form-label mb-2"><b>Senses:</b></label>
-                    <!-- List of senses -->
-                    <p th:text="${senses}" class="form-control-plaintext mb-0"></p>
-                </div>
+                <label class="form-label mb-2"><b>Senses:</b></label>
 
                 <!-- Display the checkbox list directly -->
                 <div class="col-12"
@@ -507,7 +503,7 @@
                      hx-post="/editSenses"
                      hx-include="#senses-form input"
                      hx-trigger="change"
-                     hx-swap="none">>
+                     hx-swap="none">
                     <div class="row g-2">
                         <!-- Checkbox for all senses with range -->
                         <div th:each="sense : ${availableSensesFeet}" class="col-md-6">
