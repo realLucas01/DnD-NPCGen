@@ -438,7 +438,6 @@
             </div>
 
 
-            <!-- TODO Skills -->
             <!-- Skills -->
             <div class="include-modal">
                 <div class="row mb-3">
@@ -467,16 +466,24 @@
                                     <div class="row g-2">
                                         <!-- List of skills -->
                                         <div th:each="skill : ${availableSkills}" class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <!-- Checkbox for the skill -->
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check me-2">
                                                     <input type="checkbox"
                                                            th:id="${'skill_' + skill}"
-                                                           th:name="skill"
+                                                           name="skill"
                                                            th:value="${skill}"
-                                                           th:checked="${skills.contains(skill)}"
-                                                           class="form-check-input me-2">
+                                                           th:checked="${skills.keySet().contains(skill)}"
+                                                           class="form-check-input" />
                                                     <label th:for="${'skill_' + skill}" class="form-check-label" th:text="${skill}"></label>
+                                                </div>
+
+                                                <div class="input-group" style="width: 120px;">
+                                                    <input type="number"
+                                                           th:name="${'skillBonus_' + skill}"
+                                                           min="-100" max="100" step="1"
+                                                           class="form-control"
+                                                           placeholder="0"
+                                                           th:value="${skills.get(skill) != null ? skills.get(skill) : 0}">
                                                 </div>
                                             </div>
                                         </div>

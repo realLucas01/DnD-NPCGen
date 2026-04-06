@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.support.SessionStatus;
 
 
 import java.util.*;
@@ -48,6 +49,7 @@ public class EditController {
     private static final String DEITY_TEXT = "deity";
     private static final String WEAPON_TEXT = "weapon";
     private static final String SKILL_TEXT = "skill";
+    private static final String CLASS_TEXT = "class";
 
     @Autowired
     public EditController(DBMS dbms, HelpFunctions helpFunctions) {
@@ -91,13 +93,13 @@ public class EditController {
 
         // create dropdown
         model.addAttribute("races", helpFunctions.getSortedColumn("race"));
-        model.addAttribute("classes", helpFunctions.getSortedColumn("class"));
+        model.addAttribute("classes", helpFunctions.getSortedColumn(CLASS_TEXT));
         model.addAttribute("alignments", helpFunctions.getSortedColumn("alignment"));
 
         // Pass previously selected data
         model.addAttribute("name", npc.getName());
         model.addAttribute("race", npc.getRace());
-        model.addAttribute("class", npc.getGenClass());
+        model.addAttribute(CLASS_TEXT, npc.getGenClass());
         model.addAttribute("alignment", npc.getAlignment());
 
         updateNPC = new NpcClass();
@@ -159,7 +161,7 @@ public class EditController {
         // Prepare shared parameters
         model.addAttribute("name", npc.getName());
         model.addAttribute("race", npc.getRace());
-        model.addAttribute("class", npc.getGenClass());
+        model.addAttribute(CLASS_TEXT, npc.getGenClass());
         model.addAttribute("selectedAlignment", npc.getAlignment());
         model.addAttribute("selectedSkills", npc.getSkillList());
         model.addAttribute("selectedSenses", npc.getSenses());
@@ -205,7 +207,7 @@ public class EditController {
         model.addAttribute(WEAPON_TEXT, String.join(", ", npc.getWeaponList()));
 
         // Skills
-        model.addAttribute("skills", filterSkills(npc.getSkillList()));
+        model.addAttribute("skills", helpFunctions.listToMap(npc.getSkillList()));
         model.addAttribute("availableSkills", dbms.onlyColumn(SKILL_TEXT));
 
         // Senses
@@ -247,10 +249,10 @@ public class EditController {
 
 
     @PostMapping("saveNpc")
-    public String saveEdit() {
-        // TODO: Iterate over skills again – "+..." values are missing
-
+    public String saveEdit(SessionStatus sessionStatus) {
         dbms.updateHistoryEntry(updateNPC, updateNPC.getId(), dbms.getHistoryEntry(updateNPC.getId()).getEntryAge());
+
+        sessionStatus.setComplete();
 
         return "redirect:/history";
     }
@@ -332,7 +334,7 @@ public class EditController {
                 updateNPC.setWeaponList(selectedList);
                 break;
             case "sense":
-                updateNPC.setSenses(helpFunctions.ListToString(selectedList));
+                updateNPC.setSenses(helpFunctions.listToString(selectedList));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown attribute type: " + type);
@@ -523,8 +525,28 @@ public class EditController {
      * @author Marie
      */
     @PostMapping("editSkills")
-    public String editSkills(@RequestParam(SKILL_TEXT) List<String> selectedSkills, Model model) {
-        editListAttributes(selectedSkills, SKILL_TEXT, model);
+    public String editSkills(@RequestParam(value = SKILL_TEXT, required = false) List<String> selectedSkills,
+                             @RequestParam Map<String, String> allParams,
+                             Model model) {
+        List<String> skills = new ArrayList<>();
+
+        if (selectedSkills == null) {
+            skills.add("none");
+        }
+
+        for (String skill : selectedSkills) {
+            for (Map.Entry<String,String> param : allParams.entrySet()) {
+                if (param.getKey().contains(skill)) {
+                    if(Integer.parseInt(param.getValue()) > 0) {
+                        skills.add(skill + " +" + param.getValue());
+                    } else {
+                        skills.add(skill + " " + param.getValue());
+                    }
+                }
+            }
+        }
+
+        editListAttributes(skills, SKILL_TEXT, model);
         return "edit";
     }
 
@@ -539,7 +561,7 @@ public class EditController {
     public static List<String> filterSkills(List<String> skills) {
         return skills.stream()
                 .map(skill -> skill.replaceAll("\\s*\\+\\d+", ""))
-                .collect(Collectors.toList());
+                .toList();
     }
 
 
@@ -583,15 +605,10 @@ public class EditController {
         List<String> senses = new ArrayList<>();
 
         for (String sense : selectedSenses) {
-            for (String param : allParams.keySet()) {
-                if (param.contains(sense)) {
-                    switch(sense) {
-                        case "Passive Perception":
-                            senses.add(sense + " " + allParams.get(param));
-                            break;
-                        default:
-                            senses.add(sense + " " + allParams.get(param) + "feet");
-                            break;
+            for (Map.Entry<String,String> param : allParams.entrySet()) {
+                if (param.getKey().contains(sense)) {
+                    if(sense.equals("Passive Perception")) {
+                        senses.add(sense + " " + param.getValue());
                     }
                     break;
                 }

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marie
@@ -157,10 +158,36 @@ public class HelpFunctions {
      * @param list the list of strings to be converted
      * @return a string representation of the list with elements separated by commas and no square brackets
      */
-    public String ListToString(List<String> list){
+    public String listToString(List<String> list){
         String string = list.toString();
-        String result = string.substring(1, string.length()-1);
-        return result;
+        return string.substring(1, string.length()-1);
+    }
+
+
+    /**
+     * Converts a list of strings into a map where the key is derived from each string and the value is an integer.
+     * Strings in the list that do not contain spaces are assigned a value of 0 in the resulting map.
+     * If a string contains a space, the substring before the first space becomes the key,
+     * and the integer value after the last space (with the optional "+" prefix stripped) becomes the value.
+     *
+     * @param list the list of strings to be converted into a map, where each string potentially contains a key-value format
+     * @return a map where the keys are strings derived from the input list and their corresponding integer values
+     */
+    public Map<String,Integer> listToMap(List<String> list){
+        Map<String,Integer> map = new java.util.HashMap<>();
+
+        for(String string : list){
+            if(!string.contains(" ")) {
+                map.put(string, 0);
+                continue;
+            }
+
+            String value = string.substring(string.lastIndexOf(" "));
+            value = value.replace("+","");
+            value = value.trim();
+            map.put(string.substring(0,string.indexOf(" ")),Integer.parseInt(value));
+        }
+        return map;
     }
 
 }
