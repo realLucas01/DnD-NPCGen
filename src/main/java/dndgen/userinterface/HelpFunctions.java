@@ -149,4 +149,18 @@ public class HelpFunctions {
         model.addAttribute("spellEighthLevel", splitString(npc.getEightLevelSpell()));
         model.addAttribute("spellNinthLevel", splitString(npc.getNinthLevelSpell()));
     }
+
+
+    /**
+     * Converts a list of strings into a single comma-separated string without square brackets.
+     *
+     * @param list the list of strings to be converted
+     * @return a string representation of the list with elements separated by commas and no square brackets
+     */
+    public String ListToString(List<String> list){
+        String string = list.toString();
+        String result = string.substring(1, string.length()-1);
+        return result;
+    }
+
 }

@@ -3,7 +3,7 @@
     <head>
         <title>Edit</title>
 
-        <!-- Bootstrap CSS von CDN -->
+        <!-- Bootstrap CSS from CDN -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
         <!-- HTMX -->
@@ -493,10 +493,6 @@
             </div>
 
 
-
-
-
-            <!-- TODO Senses -->
             <!-- Senses -->
             <div class="row mb-3">
                 <div class="d-flex align-items-center">
@@ -506,9 +502,15 @@
                 </div>
 
                 <!-- Display the checkbox list directly -->
-                <div class="col-12">
+                <div class="col-12"
+                     id="senses-form"
+                     hx-post="/editSenses"
+                     hx-include="#senses-form input"
+                     hx-trigger="change"
+                     hx-swap="none">>
                     <div class="row g-2">
-                        <div th:each="sense : ${availableSenses}" class="col-md-6">
+                        <!-- Checkbox for all senses with range -->
+                        <div th:each="sense : ${availableSensesFeet}" class="col-md-6">
                             <div class="d-flex align-items-center">
                                 <div class="form-check me-2">
                                     <input type="checkbox"
@@ -529,6 +531,41 @@
                                            th:value="${senses.get(sense) != null ? senses.get(sense) : 0}">
                                     <span class="input-group-text">ft.</span>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox for Passive Perception -->
+                        <div class="d-flex align-items-center">
+                            <div class="form-check me-2">
+                                <input type="checkbox"
+                                       th:id="${'sense_' + 'Passive Perception'}"
+                                       name="sense"
+                                       th:value="${'Passive Perception'}"
+                                       th:checked="${senses.keySet().contains('Passive Perception')}"
+                                       class="form-check-input" />
+                                <label th:for="${'sense_' + 'Passive Perception'}" class="form-check-label" th:text="${'Passive Perception'}"></label>
+                            </div>
+
+                            <div class="input-group" style="width: 120px;">
+                                <input type="number"
+                                       th:name="${'senseRange_' + 'Passive Perception'}"
+                                       min="10" max="120" step="5"
+                                       class="form-control"
+                                       placeholder="10"
+                                       th:value="${senses.get('Passive Perception') != null ? senses.get('Passive Perception') : 0}">
+                            </div>
+                        </div>
+
+                        <!-- Checkbox for 'your blind in the dark... live with it' -->
+                        <div class="d-flex align-items-center">
+                            <div class="form-check me-2">
+                                <input type="checkbox"
+                                       th:id="${'sense_' + 'your blind in the dark... live with it'}"
+                                       name="sense"
+                                       th:value="${'your blind in the dark... live with it'}"
+                                       th:checked="${senses.keySet().contains('your blind in the dark... live with it')}"
+                                       class="form-check-input" />
+                                <label th:for="${'sense_' + 'your blind in the dark... live with it'}" class="form-check-label" th:text="${'your blind in the dark... live with it'}"></label>
                             </div>
                         </div>
                     </div>

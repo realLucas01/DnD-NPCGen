@@ -36,12 +36,11 @@ public class EditController {
     private NpcClass updateNPC;
     private static final String SWITCH = "switch";
     private final RandomGenerator randomGenerator = new RandomGenerator();
-    private final List<String> availableSenses = Arrays.asList(
+    private final List<String> availableSensesFeet = Arrays.asList(
             "Darkvision",
             "Blindsight",
             "Tremorsense",
-            "Truesight",
-            "Passive Perception"
+            "Truesight"
     );
     private final Map<String, String> descriptionMap;
     private static final String WALKING_SPEED = "walkingSpeed";
@@ -211,7 +210,7 @@ public class EditController {
 
         // Senses
         model.addAttribute("senses", getSelectedSenses());
-        model.addAttribute("availableSenses", availableSenses);
+        model.addAttribute("availableSensesFeet", availableSensesFeet);
 
 
         // Spells
@@ -333,7 +332,7 @@ public class EditController {
                 updateNPC.setWeaponList(selectedList);
                 break;
             case "sense":
-                updateNPC.setSenses(String.valueOf(selectedList));
+                updateNPC.setSenses(helpFunctions.ListToString(selectedList));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown attribute type: " + type);
@@ -565,7 +564,7 @@ public class EditController {
                         sense -> sense.replaceAll("\\s+\\d+.*$", ""),
                         // Extract only the number, ignore the unit
                         sense -> {
-                            Matcher matcher = Pattern.compile("\\b(\\d+)\\b").matcher(sense);
+                            Matcher matcher = Pattern.compile("\\b(\\d+)").matcher(sense);
                             return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0;
                         }
                 ));
@@ -580,8 +579,30 @@ public class EditController {
      * @return a string representing the name of the view to render
      */
     @PostMapping("editSenses")
-    public String editSenses(@RequestParam("sense") List<String> selectedSenses, Model model) {
-        editListAttributes(selectedSenses, "sense", model);
+    public String editSenses(@RequestParam("sense") List<String> selectedSenses, @RequestParam Map<String, String> allParams, Model model) {
+        List<String> senses = new ArrayList<>();
+
+        for (String sense : selectedSenses) {
+            for (String param : allParams.keySet()) {
+                if (param.contains(sense)) {
+                    switch(sense) {
+                        case "Passive Perception":
+                            senses.add(sense + " " + allParams.get(param));
+                            break;
+                        default:
+                            senses.add(sense + " " + allParams.get(param) + "feet");
+                            break;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if(selectedSenses.contains("your blind in the dark... live with it")) {
+            senses.add("your blind in the dark... live with it");
+        }
+
+        editListAttributes(senses, "sense", model);
         return "edit";
     }
 
