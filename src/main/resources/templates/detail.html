@@ -5,10 +5,10 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap">
 
-        <!-- Bootstrap CSS von CDN -->
+        <!-- Bootstrap CSS from CDN -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-        <!-- Eigenes CSS -->
+        <!-- Own CSS -->
         <link rel="stylesheet" th:href="@{/css/styleDetail.css}">
     </head>
 
@@ -20,24 +20,24 @@
         <div class="container mt-4">
             <h1 class="text-center ueberschrift mb-4" th:text="${npc.name}">NPC Name</h1>
 
-            <!-- Allgemeine Informationen -->
+            <!-- General Information -->
             <div class="container mt-3">
                 <div class="card row border rounded p-1">
                     <div class="row g-2">
                         <div class="col-md-6 text-center">
                             <div class="text-start d-inline-block">
-                                <p><strong>Klasse:</strong> <span th:text="${npc.genClass}"></span></p>
+                                <p><strong>Class:</strong> <span th:text="${npc.genClass}"></span></p>
                                 <p><strong>Level:</strong> <span th:text="${npc.level}"></span></p>
                                 <p><strong>Deity:</strong> <span th:text="${npc.deity}"></span></p>
-                                <p><strong>Alter:</strong> <span th:text="${npc.age}"></span></p>
+                                <p><strong>Age:</strong> <span th:text="${npc.age}"></span></p>
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
                             <div class="text-start d-inline-block">
-                                <p><strong>Rasse:</strong> <span th:text="${npc.race}"></span></p>
-                                <p><strong>Beruf:</strong> <span th:text="${npc.job}"></span></p>
+                                <p><strong>Race:</strong> <span th:text="${npc.race}"></span></p>
+                                <p><strong>Job:</strong> <span th:text="${npc.job}"></span></p>
                                 <p><strong>Alignment:</strong> <span th:text="${npc.alignment}"></span></p>
-                                <p><strong>Geschlecht:</strong> <span th:text="${npc.gender}"></span></p>
+                                <p><strong>Sex:</strong> <span th:text="${npc.gender}"></span></p>
                             </div>
                         </div>
                     </div>
@@ -53,19 +53,19 @@
                         <table class="color table table-borderless table-striped">
                             <thead>
                             <tr>
-                                <th></th>
-                                <th th:each="ability : ${allAbilities}" th:text="${ability}"></th>
+                                <th scope="col"></th>
+                                <th scope="col" th:each="ability : ${allAbilities}" th:text="${ability}"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <!-- Ability Scores mit Modifiers -->
+                            <!-- Ability Scores with Modifiers -->
                             <tr>
-                                <th>Ability Scores</th>
+                                <th scope="row">Ability Scores</th>
                                 <td th:each="score : ${abilityScores}" th:text="${score}"></td>
                             </tr>
-                            <!-- Saving Throws (nur wenn vorhanden) -->
+                            <!-- Saving Throws -->
                             <tr>
-                                <th>Saving Throws</th>
+                                <th scope="row">Saving Throws</th>
                                 <td th:each="savingThrow : ${savingThrows}">
                                     <span th:text="${savingThrow}"></span>
                                 </td>
@@ -236,20 +236,20 @@
                 </div>
             </div>
 
-            <!-- Beschreibung -->
+            <!-- Description -->
             <div class="container mt-3">
                 <div class="card row border rounded p-3">
                     <div class="container mt-4">
-                        <h3>Beschreibung</h3>
+                        <h3>Description</h3>
                         <div class="row">
-                            <!-- Fließtext (linke Spalte) -->
+                            <!-- Running text (left column) -->
                             <div class="col-md-6">
                                 <div class="orange p-3 border rounded">
                                     <p th:text="${descriptionText}"></p>
                                 </div>
                             </div>
 
-                            <!-- Liste (rechte Spalte) -->
+                            <!-- List (right column) -->
                             <div class="col-md-6">
                                 <div class="yellow p-3 border rounded">
                                     <ul class="list-group">
