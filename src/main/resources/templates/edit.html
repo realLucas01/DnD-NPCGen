@@ -71,7 +71,6 @@
                 </select>
             </div>
 
-
             <!-- Jobs -->
             <div class="row mb-3">
                 <label for="job" class="form-label">Job:</label>
@@ -205,7 +204,7 @@
             <div class="include-modal">
                 <div class="row mb-3">
                     <div class="d-flex align-items-center">
-                        <label class="form-label me-2 mb-0"><b>Languages:</b></label>
+                        <span class="form-label me-2 mb-0"><b>Languages:</b></span>
                         <!-- List of Languages -->
                         <p th:text="${language}" class="form-control-plaintext mb-0"></p>
                     </div>
@@ -232,13 +231,15 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <!-- Checkbox for the language -->
-                                                    <input type="checkbox"
-                                                           th:id="${'language_' + lang}"
-                                                           th:name="lang"
-                                                           th:value="${lang}"
-                                                           th:checked="${language.contains(lang)}"
-                                                           class="form-check-input me-2">
-                                                    <label th:for="${'language_' + lang}" class="form-check-label"><span th:text="${lang}"></span></label>
+                                                    <label th:for="${'language_' + lang}" class="form-check-label">
+                                                        <input type="checkbox"
+                                                               th:id="${'language_' + lang}"
+                                                               th:name="lang"
+                                                               th:value="${lang}"
+                                                               th:checked="${language.contains(lang)}"
+                                                               class="form-check-input me-2">
+                                                        <span th:text="${lang}"></span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -263,19 +264,21 @@
                         <table class="table table-borderless">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th th:each="ability : ${allAbilities}" th:text="${ability}"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col" th:each="ability : ${allAbilities}" th:text="${ability}"></th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 <!-- Ability Scores with Modifiers -->
                                 <tr>
-                                    <th>Ability Scores</th>
+                                    <th scope="row">Ability Scores</th>
                                     <td th:each="index : ${#numbers.sequence(0, allAbilities.size()-1)}">
                                         <div class="d-flex flex-column align-items-center">
                                             <!-- Ability Scores -->
+                                            <label for="AS" class="visually-hidden">Ability Scores</label>
                                             <input type="number"
+                                                   id="AS"
                                                    name="value"
                                                    th:value="${abilityScores[index]}"
                                                    th:data-key="${allAbilities[index]}"
@@ -288,8 +291,10 @@
 
 
                                             <!-- Modifier -->
+                                            <label for="mod" class="visually-hidden">Modifier</label>
                                             <input type="number"
                                                    name="value"
+                                                   id="mod"
                                                    th:value="${abilityModifiers[index]}"
                                                    th:data-key="${allAbilities[index]}"
                                                    hx-post="/editModifier"
@@ -306,10 +311,12 @@
 
                                 <!-- Saving Throws (if applicable) -->
                                 <tr th:if="${not #lists.isEmpty(savingThrows)}">
-                                    <th>Saving Throws</th>
+                                    <th scope="row">Saving Throws</th>
                                     <td th:each="entry : ${savingThrows}">
                                         <!-- Number field for the value -->
+                                        <label for="numField" class="visually-hidden">Number field for the value</label>
                                         <input type="number"
+                                               id="numField"
                                                name="value"
                                                th:value="${entry.value}"
                                                min="0"
@@ -338,7 +345,7 @@
                     <div class="col-6">
                         <!-- List of the NPCs armors -->
                         <div class="d-flex align-items-center">
-                            <label class="form-label me-2 mb-0"><b>Armors:</b></label>
+                            <span class="form-label me-2 mb-0"><b>Armors:</b></span>
                             <p th:text="${armor}" class="form-control-plaintext mb-0"></p>
                         </div>
 
@@ -352,7 +359,7 @@
                     <div class="col-6">
                         <!-- List of the NPCs weapons -->
                         <div class="d-flex align-items-center">
-                            <label class="form-label me-2 mb-0"><b>Weapons:</b></label>
+                            <span class="form-label me-2 mb-0"><b>Weapons:</b></span>
                             <p th:text="${weapon}" class="form-control-plaintext mb-0"></p>
                         </div>
 
@@ -378,13 +385,15 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <!-- Checkbox for the armors -->
-                                                    <input type="checkbox"
-                                                           th:id="${'armor_' + arm}"
-                                                           th:name="arm"
-                                                           th:value="${arm}"
-                                                           th:checked="${armor.contains(arm)}"
-                                                           class="form-check-input me-2">
-                                                    <label th:for="${'armor_' + arm}" class="form-check-label" th:text="${arm}"></label>
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox"
+                                                               th:id="${'armor_' + arm}"
+                                                               th:name="arm"
+                                                               th:value="${arm}"
+                                                               th:checked="${armor.contains(arm)}"
+                                                               class="form-check-input me-2">
+                                                        <span th:text="${arm}"></span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -415,13 +424,15 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <!-- Checkbox for weapons -->
-                                                    <input type="checkbox"
-                                                           th:id="${'weapon_' + wea}"
-                                                           th:name="wea"
-                                                           th:value="${wea}"
-                                                           th:checked="${weapon.contains(wea)}"
-                                                           class="form-check-input me-2">
-                                                    <label th:for="${'weapon_' + wea}" class="form-check-label" th:text="${wea}"></label>
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox"
+                                                               th:id="${'weapon_' + wea}"
+                                                               th:name="wea"
+                                                               th:value="${wea}"
+                                                               th:checked="${weapon.contains(wea)}"
+                                                               class="form-check-input me-2">
+                                                        <span th:text="${wea}"></span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -437,12 +448,11 @@
                 </form>
             </div>
 
-
             <!-- Skills -->
             <div class="include-modal">
                 <div class="row mb-3">
                     <div class="d-flex align-items-center">
-                        <label class="form-label me-2 mb-0"><b>Skills:</b></label>
+                        <span class="form-label me-2 mb-0"><b>Skills:</b></span>
                         <!-- List of skills -->
                         <p th:text="${skills}" class="form-control-plaintext mb-0"></p>
                     </div>
@@ -468,17 +478,21 @@
                                         <div th:each="skill : ${availableSkills}" class="col-md-6">
                                             <div class="d-flex align-items-center">
                                                 <div class="form-check me-2">
-                                                    <input type="checkbox"
-                                                           th:id="${'skill_' + skill}"
-                                                           name="skill"
-                                                           th:value="${skill}"
-                                                           th:checked="${skills.keySet().contains(skill)}"
-                                                           class="form-check-input" />
-                                                    <label th:for="${'skill_' + skill}" class="form-check-label" th:text="${skill}"></label>
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox"
+                                                               th:id="${'skill_' + skill}"
+                                                               name="skill"
+                                                               th:value="${skill}"
+                                                               th:checked="${skills.keySet().contains(skill)}"
+                                                               class="form-check-input" />
+                                                        <span th:text="${skill}"></span>
+                                                    </label>
                                                 </div>
 
                                                 <div class="input-group" style="width: 120px;">
+                                                    <label for="skillBonus" class="visually-hidden" th:for="${'skillBonus_' + skill}">Bonus</label>
                                                     <input type="number"
+                                                           id="skillBonus"
                                                            th:name="${'skillBonus_' + skill}"
                                                            min="-100" max="100" step="1"
                                                            class="form-control"
@@ -499,10 +513,9 @@
                 </form>
             </div>
 
-
             <!-- Senses -->
             <div class="row mb-3">
-                <label class="form-label mb-2"><b>Senses:</b></label>
+                <span class="form-label mb-2"><b>Senses:</b></span>
 
                 <!-- Display the checkbox list directly -->
                 <div class="col-12"
@@ -516,17 +529,22 @@
                         <div th:each="sense : ${availableSensesFeet}" class="col-md-6">
                             <div class="d-flex align-items-center">
                                 <div class="form-check me-2">
-                                    <input type="checkbox"
-                                           th:id="${'sense_' + sense}"
-                                           name="sense"
-                                           th:value="${sense}"
-                                           th:checked="${senses.keySet().contains(sense)}"
-                                           class="form-check-input" />
-                                    <label th:for="${'sense_' + sense}" class="form-check-label" th:text="${sense}"></label>
+                                    <label>
+                                        <input type="checkbox"
+                                               th:id="${'sense_' + sense}"
+                                               name="sense"
+                                               th:value="${sense}"
+                                               th:checked="${senses.keySet().contains(sense)}"
+                                               class="form-check-input" />
+                                        <span th:text="${sense}">sense</span>
+                                    </label>
                                 </div>
 
                                 <div class="input-group" style="width: 120px;">
+                                    <label for="feet" class="visually-hidden" th:for="${'senseRange_' + sense}">Range</label>
                                     <input type="number"
+                                           id="feet"
+                                           th:id="${'senseRange_' + sense}"
                                            th:name="${'senseRange_' + sense}"
                                            min="10" max="120" step="5"
                                            class="form-control"
@@ -540,17 +558,21 @@
                         <!-- Checkbox for Passive Perception -->
                         <div class="d-flex align-items-center">
                             <div class="form-check me-2">
-                                <input type="checkbox"
-                                       th:id="${'sense_' + 'Passive Perception'}"
-                                       name="sense"
-                                       th:value="${'Passive Perception'}"
-                                       th:checked="${senses.keySet().contains('Passive Perception')}"
-                                       class="form-check-input" />
-                                <label th:for="${'sense_' + 'Passive Perception'}" class="form-check-label" th:text="${'Passive Perception'}"></label>
+                                <label class="form-check-label">
+                                    <input type="checkbox"
+                                           th:id="${'sense_' + 'Passive Perception'}"
+                                           name="sense"
+                                           th:value="${'Passive Perception'}"
+                                           th:checked="${senses.keySet().contains('Passive Perception')}"
+                                           class="form-check-input" />
+                                    <span th:text="${'Passive Perception'}">Passive Perception</span>
+                                </label>
                             </div>
 
                             <div class="input-group" style="width: 120px;">
+                                <label for="passivePerception" class="visually-hidden">Passive Perception</label>
                                 <input type="number"
+                                       id="passivePerception"
                                        th:name="${'senseRange_' + 'Passive Perception'}"
                                        min="10" max="120" step="5"
                                        class="form-control"
@@ -562,19 +584,20 @@
                         <!-- Checkbox for 'your blind in the dark... live with it' -->
                         <div class="d-flex align-items-center">
                             <div class="form-check me-2">
-                                <input type="checkbox"
-                                       th:id="${'sense_' + 'your blind in the dark... live with it'}"
-                                       name="sense"
-                                       th:value="${'your blind in the dark... live with it'}"
-                                       th:checked="${senses.keySet().contains('your blind in the dark... live with it')}"
-                                       class="form-check-input" />
-                                <label th:for="${'sense_' + 'your blind in the dark... live with it'}" class="form-check-label" th:text="${'your blind in the dark... live with it'}"></label>
+                                <label class="form-check-label">
+                                    <input type="checkbox"
+                                           th:id="${'sense_' + 'your blind in the dark... live with it'}"
+                                           name="sense"
+                                           th:value="${'your blind in the dark... live with it'}"
+                                           th:checked="${senses.keySet().contains('your blind in the dark... live with it')}"
+                                           class="form-check-input" />
+                                    <span th:text="${'your blind in the dark... live with it'}">your blind in the dark... live with it</span>
+                                </label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <!-- Spells -->
             <div class="include-modal">
@@ -681,17 +704,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'cantrip_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getSpellCantrips() != null && npc.getSpellCantrips().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'cantrip_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'cantrip_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'cantrip_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getSpellCantrips() != null && npc.getSpellCantrips().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}"></span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -705,17 +732,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'first_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getFirstLevelSpell() != null && npc.getFirstLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'first_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'first_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'first_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getFirstLevelSpell() != null && npc.getFirstLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">First Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -729,17 +760,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'second_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getSecondLevelSpell() != null && npc.getSecondLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'second_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'second_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'second_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getSecondLevelSpell() != null && npc.getSecondLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Second Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -753,17 +788,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'third_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getThirdLevelSpell() != null && npc.getThirdLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'third_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'third_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'third_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getThirdLevelSpell() != null && npc.getThirdLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Third Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -777,17 +816,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'fourth_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getFourthLevelSpell() != null && npc.getFourthLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'fourth_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'fourth_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'fourth_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getFourthLevelSpell() != null && npc.getFourthLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Fourth Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -801,17 +844,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'fifth_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getFifthLevelSpell() != null && npc.getFifthLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'fifth_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'fifth_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'fifth_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getFifthLevelSpell() != null && npc.getFifthLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Fifth Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -825,17 +872,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'sixth_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getSixthLevelSpell() != null && npc.getSixthLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'sixth_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'sixth_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'sixth_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getSixthLevelSpell() != null && npc.getSixthLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Sixth Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -849,17 +900,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'seventh_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getSeventhLevelSpell() != null && npc.getSeventhLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'seventh_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'seventh_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'seventh_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getSeventhLevelSpell() != null && npc.getSeventhLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Seventh Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -873,17 +928,21 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'eighth_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getEightLevelSpell() != null && npc.getEightLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'eighth_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'eighth_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'eighth_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getEightLevelSpell() != null && npc.getEightLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Eighth Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
@@ -897,25 +956,27 @@
                                                     <div class="card-list">
                                                         <details>
                                                             <summary>
-                                                                <div class="long-card">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'ninth_spell_' + spell[1]}"
-                                                                           th:name="spells"
-                                                                           th:value="${spell[2] + ';' + spell[1]}"
-                                                                           th:checked="${npc.getNinthLevelSpell() != null && npc.getNinthLevelSpell().contains(spell[1])}"
-                                                                           class="form-check-input me-2">
-                                                                    <label th:for="${'ninth_spell_' + spell[1]}" class="form-check-label" th:text="${spell[1]}"></label>
-                                                                    <p th:text="${'Casting Time: '+ spell[4]}"></p>
-                                                                    <p th:text="${'Duration: '+ spell[7]}"></p>
-                                                                </div>
+                                                                <span class="long-card">
+                                                                    <label th:for="${'ninth_spell_' + spell[1]}" class="form-check-label">
+                                                                        <input type="checkbox"
+                                                                               th:id="${'ninth_spell_' + spell[1]}"
+                                                                               th:name="spells"
+                                                                               th:value="${spell[2] + ';' + spell[1]}"
+                                                                               th:checked="${npc.getNinthLevelSpell() != null && npc.getNinthLevelSpell().contains(spell[1])}"
+                                                                               class="form-check-input me-2">
+                                                                        <span th:text="${spell[1]}">Ninth Level</span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <span th:text="${'Casting Time: '+ spell[4]}"></span>
+                                                                    <br>
+                                                                    <span th:text="${'Duration: '+ spell[7]}"></span>
+                                                                </span>
                                                             </summary>
                                                             <p th:text="${spell[8]}"></p>
                                                         </details>
                                                     </div>
                                                 </div>
                                             </details>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -928,7 +989,6 @@
                     </div>
                 </form>
             </div>
-
 
             <!-- Description -->
             <div class="container mt-3">
@@ -950,15 +1010,18 @@
                                         <li class="list-group-item" th:each="entry : ${descriptionList}">
                                             <div class="input-group">
                                                 <span class="input-group-text" th:text="${entry.key} + ':'">Hair:</span>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       th:value="${entry.value}"
-                                                       th:attr="data-field-id='field-${entry.key}'"
-                                                       name="value"
-                                                       hx-post="/updateDescription"
-                                                       hx-trigger="change"
-                                                       hx-swap="none"
-                                                       hx-include="next input">
+                                                <label th:for="${'description_list_' + entry.key}" class="form-check-label">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           th:value="${entry.value}"
+                                                           th:attr="data-field-id='field-${entry.key}'"
+                                                           name="value"
+                                                           hx-post="/updateDescription"
+                                                           hx-trigger="change"
+                                                           hx-swap="none"
+                                                           hx-include="next input">
+                                                    <span class="visually-hidden">Description</span>
+                                                </label>
                                                 <input type="hidden" th:id="'field-${entry.key}'" name="descKey" th:value="${entry.key}">
                                             </div>
                                         </li>
