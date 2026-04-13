@@ -156,8 +156,6 @@ public class EditController {
      * @author Marie
      */
     private void prepareEditAttributes(Model model, NpcClass npc) {
-        // TODO: Reduce function size → extract logic / refactor
-
         // Prepare shared parameters
         model.addAttribute("name", npc.getName());
         model.addAttribute("race", npc.getRace());
@@ -249,6 +247,13 @@ public class EditController {
     }
 
 
+    /**
+     * Handles the saving of edits made to an NPC entity and updates its history entry.
+     * After processing, the session status is marked as complete and redirects to the history page.
+     *
+     * @param sessionStatus the status of the current web session, used to indicate that the session is complete
+     * @return a redirection path to the history page
+     */
     @PostMapping("saveNpc")
     public String saveEdit(SessionStatus sessionStatus) {
         dbms.updateHistoryEntry(updateNPC, updateNPC.getId(), dbms.getHistoryEntry(updateNPC.getId()).getEntryAge());
@@ -448,71 +453,58 @@ public class EditController {
 
 
     /**
-     * Updates the saving throes of a given NPC. This method processes the existing
-     * saving throws and applies the provided updates or adds a new entry if the specified
-     * key does not exist. After processing, the updated list of saving throws is stored
-     * in the NPC object.
+     * Formats the ability and its corresponding value into a single string representation.
      *
-     * @param key       the attribute key (e.g., "Str", "Dex", etc.) to update or add
-     * @param value     the new value for the specified attribute key
-     * @param updateNPC the NPC object whose saving throws are to be updated
-     * @return a ResponseEntity indicating the result of the operation
+     * @param ability the name or identifier of the ability
+     * @param val the integer value associated with the ability; positive values are prefixed with a plus sign
+     * @return a formatted string combining the ability and its value, with appropriate sign formatting for the value
+     */
+    private String formatThrow(String ability, int val) {
+        return ability + " " + (val >= 0 ? "+" : "") + val;
+    }
+
+
+
+    /**
+     * Updates the saving throws for a given NPC by adjusting the specified ability key with a new value.
+     * The method updates the NPC's saving throws list and rebuilds it to include the modified or newly added value.
+     *
+     * @param key the ability key to update (e.g., "Str", "Dex", "Con").
+     * @param value the value to assign to the specified ability key.
+     * @param updateNPC the NPC object whose saving throws are being updated.
+     * @return a ResponseEntity with an HTTP status indicating the result of the operation.
      */
     @PostMapping("/editSavingThrows")
     @ResponseBody
     public ResponseEntity<Void> editSavingThrows(@RequestParam String key, @RequestParam int value,
                                                  @ModelAttribute("updateNPC") NpcClass updateNPC) {
-        List<String> throwsList = updateNPC.getSavingThrows();
-
         List<String> allAbilities = Arrays.asList("Str", "Dex", "Con", "Int", "Wis", "Cha");
 
-        // Initialize a list for updated saving throws
-        List<String> updatedThrowsList = new ArrayList<>();
-
-        // Update list based on existing data
-        for (String ability : allAbilities) {
-            boolean isUpdated = false;
-
-            for (String saving : throwsList) {
-                // Check if ability is contained in the list
-                if (saving.substring(0, 3).equalsIgnoreCase(ability)) {
-                    try {
-                        // Parse substring: extract "+1" or numeric value starting at index 4
-                        int parsedValue = Integer.parseInt(saving.substring(4));
-
-                        // If ability matches `key`, update the value
-                        if (ability.equals(key)) {
-                            updatedThrowsList.add(ability + " " + (value >= 0 ? "+" : "") + value); // Format: Con +1
-                        } else {
-                            updatedThrowsList.add(ability + " " + (parsedValue >= 0 ? "+" : "") + parsedValue); // Keep current value
-                        }
-                        isUpdated = true;
-                        break;
-                    } catch (NumberFormatException e) {
-                        log.error("Invalid number format: {}", saving);
-                    }
-                }
-            }
-            // If ability is not in the throwsList, add it with 0 (default) or update it
-            if (!isUpdated) {
-                if (ability.equals(key)) {
-                    updatedThrowsList.add(ability + " " + (value >= 0 ? "+" : "") + value);
-                } else {
-                    updatedThrowsList.add(ability + " +0");
-                }
+        // Existing throws → Map<"Str", 1> etc.
+        Map<String, Integer> throwsMap = new HashMap<>();
+        for (String saving : updateNPC.getSavingThrows()) {
+            try {
+                throwsMap.put(saving.substring(0, 3), Integer.parseInt(saving.substring(4)));
+            } catch (NumberFormatException e) {
+                log.error("Invalid number format: {}", saving);
             }
         }
 
-        // Verify that `key` is correctly included in the updated list
+        // Update/add the target key
+        throwsMap.put(key, value);
+
+        // Rebuild list
+        List<String> updatedThrowsList = allAbilities.stream()
+                .map(ability -> formatThrow(ability, throwsMap.getOrDefault(ability, 0)))
+                .collect(Collectors.toList());
+
+        // Non-standard key (z.B. custom ability)
         if (!allAbilities.contains(key)) {
-            updatedThrowsList.add(key + " " + (value >= 0 ? "+" : "") + value);
+            updatedThrowsList.add(formatThrow(key, value));
         }
 
-        // Set the updated list back into the NPC
         updateNPC.setSavingThrows(updatedThrowsList);
-
         return ResponseEntity.ok().build();
-
     }
 
 
@@ -549,20 +541,6 @@ public class EditController {
 
         editListAttributes(skills, SKILL_TEXT, model);
         return "edit";
-    }
-
-
-    /**
-     * Cleans up a list of ability strings by removing numeric suffixes (e.g. "+1")
-     * and trimming surrounding whitespace.
-     *
-     * @param skills list of ability strings to process
-     * @return a new list of ability strings after filtering
-     */
-    public static List<String> filterSkills(List<String> skills) {
-        return skills.stream()
-                .map(skill -> skill.replaceAll("\\s*\\+\\d+", ""))
-                .toList();
     }
 
 
@@ -711,6 +689,7 @@ public class EditController {
 
                 if (name.contains(spells)) {
                     contains = true;
+                    break;
                 }
             }
 
