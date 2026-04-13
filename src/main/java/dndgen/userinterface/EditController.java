@@ -818,11 +818,7 @@ public class EditController {
                 updateNPC.setAge(Integer.parseInt(fieldValue));
                 break;
             case "gender":
-                if(fieldValue.equalsIgnoreCase("Random")){
-                    updateNPC.setGender(randomGenerator.randGender());
-                } else {
-                    updateNPC.setGender(fieldValue);
-                }
+                setGenderFromInput(updateNPC, fieldValue);
                 break;
             case "AC":
                 updateNPC.setArmorClass(Integer.parseInt(fieldValue));
@@ -854,6 +850,24 @@ public class EditController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+
+    /**
+     * Sets the gender of the specified NPC based on the input value.
+     * If the input value is "Random" (case-insensitive), a random gender
+     * is assigned using the random generator. Otherwise, the input
+     * value is directly assigned as the gender.
+     *
+     * @param updateNPC the NPC whose gender is being updated
+     * @param fieldValue the input value specifying the gender or the keyword "Random"
+     */
+    private void setGenderFromInput(NpcClass updateNPC, String fieldValue) {
+        if(fieldValue.equalsIgnoreCase("Random")){
+            updateNPC.setGender(randomGenerator.randGender());
+        } else {
+            updateNPC.setGender(fieldValue);
+        }
     }
 
 
