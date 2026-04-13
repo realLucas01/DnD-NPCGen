@@ -202,7 +202,8 @@ public class EditController {
 
         // Inventory
         model.addAttribute("armors", dbms.onlyColumn(ARMOR_TEXT));
-        model.addAttribute(ARMOR_TEXT, String.join(", ", npc.getArmor())); // TODO: Currently a String – should probably be a List due to multiple possible objects
+        model.addAttribute(ARMOR_TEXT, String.join(", ", npc.getArmor()));
+
         model.addAttribute("weapons", dbms.onlyColumn(WEAPON_TEXT));
         model.addAttribute(WEAPON_TEXT, String.join(", ", npc.getWeaponList()));
 
@@ -325,7 +326,7 @@ public class EditController {
                 updateNPC.setLanguages(selectedList);
                 break;
             case ARMOR_TEXT:
-                updateNPC.setArmor(String.valueOf(selectedList));
+                updateNPC.setArmor(helpFunctions.listToString(selectedList));
                 break;
             case SKILL_TEXT:
                 updateNPC.setSkillList(selectedList);
