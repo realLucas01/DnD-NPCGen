@@ -609,6 +609,8 @@ public class EditController {
                 if (param.getKey().contains(sense)) {
                     if(sense.equals("Passive Perception")) {
                         senses.add(sense + " " + param.getValue());
+                    }else{
+                     senses.add(sense + " " + param.getValue() + "feet");
                     }
                     break;
                 }
