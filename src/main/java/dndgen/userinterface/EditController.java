@@ -683,35 +683,20 @@ public class EditController {
      */
     private void removeSpell(List<String> spellList, List<String> selectedSpells) {
         for (String spells : spellList) {
-            boolean contains = false;
-            for (String selectedSpell : selectedSpells) {
-                String name = selectedSpell.substring(selectedSpell.indexOf(";")+1);
-
-                if (name.contains(spells)) {
-                    contains = true;
-                    break;
-                }
-            }
+            boolean contains = selectedSpells.stream()
+                    .map(s -> s.substring(s.indexOf(";") + 1))
+                    .anyMatch(name -> name.contains(spells));
 
             if (!contains) {
                 updateNPC.removeSpellCantrip(spells);
-
                 updateNPC.removeFirstLevelSpell(spells);
-
                 updateNPC.removeSecondLevelSpell(spells);
-
                 updateNPC.removeThirdLevelSpell(spells);
-
                 updateNPC.removeFourthLevelSpell(spells);
-
                 updateNPC.removeFifthLevelSpell(spells);
-
                 updateNPC.removeSixthLevelSpell(spells);
-
                 updateNPC.removeSeventhLevelSpell(spells);
-
                 updateNPC.removeEightLevelSpells(spells);
-
                 updateNPC.removeNinthLevelSpell(spells);
             }
         }
