@@ -45,7 +45,7 @@ public class HelpFunctions {
     public String generateDescriptionText(NpcClass npc) {
         List<String> desc = npc.getDescription();
 
-        if (desc == null || desc.isEmpty()) return "Keine Beschreibung verfügbar.";
+        if (desc == null || desc.isEmpty()) return "No Description available.";
 
         // Set gender-specific pronouns
         String pronoun = npc.getGender().equalsIgnoreCase("male") ? "he" : "she";
@@ -127,7 +127,7 @@ public class HelpFunctions {
      * @author Marie
      */
     public List<String> splitString(String input) {
-        return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*,\\s*"));
+        return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*+,\\s*+"));
     }
 
 
