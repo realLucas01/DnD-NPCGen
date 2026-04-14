@@ -522,22 +522,28 @@ public class EditController {
                              @RequestParam Map<String, String> allParams,
                              Model model) {
         List<String> skills = new ArrayList<>();
-
-        if (selectedSkills == null) {
+        if (selectedSkills == null || selectedSkills.isEmpty()) {
             skills.add("none");
+            editListAttributes(skills, SKILL_TEXT, model);
+            return "edit";
         }
 
-        for (String skill : selectedSkills) {
-            for (Map.Entry<String,String> param : allParams.entrySet()) {
-                if (param.getKey().contains(skill)) {
-                    if(Integer.parseInt(param.getValue()) > 0) {
-                        skills.add(skill + " +" + param.getValue());
-                    } else {
-                        skills.add(skill + " " + param.getValue());
-                    }
-                }
-            }
-        }
+         skills = new ArrayList<>(selectedSkills.stream()
+                .flatMap(skill -> allParams.entrySet().stream()
+                        .filter(param -> param.getKey().contains(skill))
+                        .map(param -> {
+                            try {
+                                int val = Integer.parseInt(param.getValue());
+                                return skill + (val > 0 ? " +" : " ") + val;
+                            } catch (NumberFormatException e) {
+                                log.error("Invalid value for skill {}: {}", skill, param.getValue());
+                                return null;
+                            }
+                        })
+                        .filter(Objects::nonNull)
+                )
+            .toList()
+        );
 
         editListAttributes(skills, SKILL_TEXT, model);
         return "edit";
