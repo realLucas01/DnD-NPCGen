@@ -568,7 +568,7 @@ public class EditController {
                 .map(String::trim)
                 .collect(Collectors.toMap(
                         // Remove the number and everything after it, keep the full name
-                        sense -> sense.replaceAll("\\s+\\d+.*$", ""),
+                        sense -> sense.replaceAll("\\s+\\d.*$", ""),
                         // Extract only the number, ignore the unit
                         sense -> {
                             Matcher matcher = Pattern.compile("\\b(\\d+)").matcher(sense);
