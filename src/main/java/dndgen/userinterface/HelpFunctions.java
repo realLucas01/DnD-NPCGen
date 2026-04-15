@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Marie
@@ -127,7 +124,23 @@ public class HelpFunctions {
      * @author Marie
      */
     public List<String> splitString(String input) {
-        return (input == null || input.isEmpty()) ? Collections.emptyList() : List.of(input.split("\\s*+,\\s*+"));
+        final int MAX_LENGTH = 1000;
+        final int MAX_ELEMENTS = 100;
+
+        if (input != null && input.length() > MAX_LENGTH) {
+            throw new IllegalArgumentException("Input too long");
+        }
+
+        if((input == null || input.isEmpty())) {
+            return new ArrayList<>();
+        }
+
+        String[] parts = input.split("\\s*,\\s*");
+        if (parts.length > MAX_ELEMENTS) {
+            throw new IllegalArgumentException("Too many elements");
+        }
+
+        return Arrays.stream(parts).toList();
     }
 
 
