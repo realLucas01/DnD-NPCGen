@@ -57,7 +57,7 @@ public class HelpFunctions {
                 npc.getName(), desc.get(3), pronoun, desc.get(4), desc.get(5),
                 pronoun, desc.get(6), desc.get(7),
                 pronoun, desc.get(8), pronoun, desc.get(9),
-                desc.get(10), pronoun, desc.get(11), desc.get(12), desc.get(13));
+                desc.get(10), desc.get(11), pronoun, desc.get(12), desc.get(13));
     }
 
 
