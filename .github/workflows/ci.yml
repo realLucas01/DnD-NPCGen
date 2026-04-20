@@ -58,6 +58,7 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: rootpassword
           SPRING_JPA_HIBERNATE_DDL_AUTO: create
           SPRING_SQL_INIT_MODE: always
+          SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: true
         run: mvn clean verify
 
 #      --- JaCoCo Coverage Report ---
