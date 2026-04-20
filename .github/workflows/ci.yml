@@ -58,8 +58,6 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: rootpassword
           SPRING_JPA_HIBERNATE_DDL_AUTO: create
           SPRING_SQL_INIT_MODE: always
-          # Falls H2 trotzdem dazwischenfunkt, hiermit abschalten:
-          SPRING_AUTOCONFIGURE_EXCLUDE: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$EmbeddedDatabaseConfiguration
         run: mvn clean verify
 
 #      --- JaCoCo Coverage Report ---
