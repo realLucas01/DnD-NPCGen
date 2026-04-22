@@ -476,22 +476,22 @@ INSERT INTO armor_model(armor_Id,armor_Name,armor_Kind,armor_Ac,Armor_Max,Armor_
 INSERT INTO armor_model(armor_Id,armor_Name,armor_Kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (15,'Barbarian Defense','Class Armor',10,100,'Dex, Con',NULL,NULL);
 INSERT INTO armor_model(armor_Id,armor_Name,armor_Kind,armor_Ac,Armor_Max,Armor_Bonus,armor_Strength,armor_Stealth) VALUES (16,'None','Class Armor',10,100,'Dex',NULL,NULL);
 
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (1,'Random 3d6 Methode','Dice','3d6');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (2,'Random 4d6 Methode','Dice','4d6');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (3,'Random 5d6 Methode','Dice','5d6');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (4,'Terrible Array','Array','8, 8, 8, 8, 7, 7');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (5,'Bad Array','Array','10, 10, 10, 10, 10, 8');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (6,'Poor Array','Array','12, 12, 11, 10, 10, 8');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (7,'MediumArray','Array','14, 12, 12, 10, 10, 8');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (8,'StandardArray','Array','15, 14, 13, 12, 10, 8');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (9,'Good Array','Array','16, 14, 12, 11, 10, 10');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (10,'Hero Array','Array','18, 16, 14, 12, 10, 10');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (11,'Epic Array','Array','20, 16, 14, 14, 12, 10');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (12,'Terrible Focused Array','Array','12, 8, 8, 8, 8, 7');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (13,'Bad Focused Array','Array','13, 10, 8, 8, 8, 8');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (14,'Lower Focused Array','Array','13, 10, 10, 10, 8, 8');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (15,'Medium Focused Array','Array','14, 12, 10, 10, 8, 8');
-INSERT INTO abili_Sc_Model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (16,'Higher Focused Array','Array','16, 14, 12, 10, 8, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (1,'Random 3d6 Methode','Dice','3d6');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (2,'Random 4d6 Methode','Dice','4d6');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (3,'Random 5d6 Methode','Dice','5d6');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (4,'Terrible Array','Array','8, 8, 8, 8, 7, 7');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (5,'Bad Array','Array','10, 10, 10, 10, 10, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (6,'Poor Array','Array','12, 12, 11, 10, 10, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (7,'MediumArray','Array','14, 12, 12, 10, 10, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (8,'StandardArray','Array','15, 14, 13, 12, 10, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (9,'Good Array','Array','16, 14, 12, 11, 10, 10');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (10,'Hero Array','Array','18, 16, 14, 12, 10, 10');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (11,'Epic Array','Array','20, 16, 14, 14, 12, 10');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (12,'Terrible Focused Array','Array','12, 8, 8, 8, 8, 7');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (13,'Bad Focused Array','Array','13, 10, 8, 8, 8, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (14,'Lower Focused Array','Array','13, 10, 10, 10, 8, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (15,'Medium Focused Array','Array','14, 12, 10, 10, 8, 8');
+INSERT INTO abili_sc_model(abili_Sc_id,abili_Sc_Name,abili_Sc_kind,abili_Sc_Generation_Method) VALUES (16,'Higher Focused Array','Array','16, 14, 12, 10, 8, 8');
 
 INSERT INTO spell_model(spell_Id,spell_Name,spell_Level,spell_School,spell_Casting_Time,spell_Range,spell_Components,spell_Duration,spell_Description,spell_Level_Up_Scale,spell_Availability) VALUES (1,'AcidSplash','Cantrip','Conjuration','1action','60feet','V,S','Instantaneous','Youhurlabubbleofacid.Chooseonecreatureyoucanseewithinrange,orchoosetwocreaturesyoucanseewithinrangethatarewithin5feetofeachother.AtargetmustsucceedonaDexteritysavingthrowortake1d6aciddamage.','Thisspell\'sdamageincreasesby1d6whenyoureach5thlevel(2d6),11thlevel(3d6),and17thlevel(4d6).','Artificer,Sorcerer,Wizard,WaterGenasi');
 INSERT INTO spell_model(spell_Id,spell_Name,spell_Level,spell_School,spell_Casting_Time,spell_Range,spell_Components,spell_Duration,spell_Description,spell_Level_Up_Scale,spell_Availability) VALUES (2,'BladeWard','Cantrip','Abjuration','1action','Self','V,S','1round','Youextendyourhandandtraceasigilofwardingintheair.Untiltheendofyournextturn,youhaveresistanceagainstbludgeoning,piercing,andslashingdamagedealtbyweaponattacks.',NULL,'Bard,Sorcerer,Warlock,Wizard,EarthGenasi');
