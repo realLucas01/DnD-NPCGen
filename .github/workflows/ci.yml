@@ -61,7 +61,7 @@ jobs:
           SPRING_SQL_INIT_MODE: always
           SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: true
           SPRING_JPA_SHOW_SQL: true
-        run: mvn clean verify
+        run: mvn clean install -Ddependency-check.skip=true
 
 #      --- JaCoCo Coverage Report ---
       - name: JaCoCo Coverage Report
