@@ -84,6 +84,6 @@ jobs:
 #            -Dsonar.projectKey=DEIN_PROJEKT_KEY
 
       - name: Print Coverage Summary
-        run: COVERAGE=$(grep -oP 'Total.*?(\d+%)' target/site/jacoco/index.html | grep -oP '\d+%' | head -1)
+        run: COVERAGE=$(sed -n 's/.*Total<\/td><td class="bar">.*<\/td><td class="ctr2">\([0-9]\{1,3\}%\)<\/td>.*/\1/p' target/site/jacoco/index.html | head -1)
               echo "## 📊 Code Coverage Report" >> $GITHUB_STEP_SUMMARY
               echo "*Die aktuelle Testabdeckung beträgt:* **$COVERAGE**" >> $GITHUB_STEP_SUMMARY
