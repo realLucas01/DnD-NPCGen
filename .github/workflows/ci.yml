@@ -53,13 +53,12 @@ jobs:
       - name: Build with Maven
         env:
           # Diese Variablen sagen Spring Boot: "Nutze die MySQL-DB."
-          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/testdb
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/dbtest
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: rootpassword
           SPRING_JPA_HIBERNATE_DDL_AUTO: create
           SPRING_SQL_INIT_MODE: always
           SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: true
-          SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
           SPRING_JPA_SHOW_SQL: true
         run: mvn clean verify
 
