@@ -48,6 +48,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+#      --- Create Test Database ---
+      - name: Create test database
+        run: mysql -u root -e "CREATE DATABASE IF NOT EXISTS dbtest;"
 
 #      --- Build Project ---
       - name: Build with Maven
